@@ -2,7 +2,7 @@ project:
   type: website
   output-dir: docs
   resources:
-    - CV.pdf
+    - cv.pdf
     
 website:
   title: "Yin-Yun Li"

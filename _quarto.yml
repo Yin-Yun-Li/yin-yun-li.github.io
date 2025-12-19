@@ -9,12 +9,14 @@ website:
     right:
       - text: Home
         href: index.qmd
-      - text: Research
+      - text: About
         href: about.qmd
-      - text: CV
-        href: cv.pdf
-      - text: Notes
-        href: notes.qmd
+      # - text: Research
+      #   href: about.qmd
+      # - text: CV
+      #   href: cv.pdf
+      # - text: Notes
+      #   href: notes.qmd
 
 format:
   html:

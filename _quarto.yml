@@ -1,7 +1,9 @@
 project:
   type: website
   output-dir: docs
-
+  resources:
+    - CV.pdf
+    
 website:
   title: "Yin-Yun Li"
   navbar:
@@ -13,8 +15,6 @@ website:
         href: about.qmd
       # - text: Research
       #   href: about.qmd
-      - text: CV
-        href: CV.pdf
       # - text: Notes
       #   href: notes.qmd
 

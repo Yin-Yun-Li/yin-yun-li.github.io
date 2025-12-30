@@ -1,1 +1,20 @@
-/* css styles */
+/* 1. 針對導覽列標題 (Title) 的設計 */
+.navbar-brand {
+  /* 設定 Palatino 字體 */
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  
+  /* 字體放大 (原本大約是 1.25rem) */
+  font-size: 2.2rem !important;  /* 你可以調整這個數字，例如 2.0rem 或 2.5rem */
+  
+  /* 加粗 */
+  font-weight: 700;
+  
+  /* 微調字距，讓大字體看起來不那麼擠 */
+  letter-spacing: 0.05em;
+}
+
+/* 2. (選用) 調整右邊選項 (Home, About) 的字體大小 */
+.navbar-nav .nav-link {
+  font-size: 1.1rem; /* 稍微大一點點比較好點 */
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif; /* 讓選項也統一字體 */
+}

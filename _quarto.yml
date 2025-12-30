@@ -7,12 +7,13 @@ project:
 website:
   title: "Yin-Yun Li"
   navbar:
-    background: dark
+    background: "#4B5358" 
+    foreground: "white"   
     right:
       - text: Home
         href: index.qmd
-      - text: About
-        href: about.qmd
+      - text: CV
+        href: cv.qmd
       # - text: Research
       #   href: about.qmd
       # - text: Notes
@@ -23,3 +24,4 @@ format:
     theme: cosmo
     css: styles.css
     toc: true
+    page-layout: full

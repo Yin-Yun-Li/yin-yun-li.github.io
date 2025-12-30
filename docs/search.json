@@ -2,15 +2,15 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Welcome to My Website",
+    "title": "About",
     "section": "",
-    "text": "This is the homepage of my Quarto website. I am currently working on some tests."
+    "text": "I am an undergraduate student at Department of Economics, National Taiwan University.\nYou can contact me at b10302331@ntu.edu.tw."
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "Undergraduate student at Department of Economics, NTU\nThe following is my CV"
+    "text": "Undergraduate student at Department of Economics, NTU\nHere is my CV"
   }
 ]

@@ -1,5 +1,7 @@
 ---
-title: "Welcome to My Website"
+title: "About"
 ---
 
-This is the homepage of my Quarto website. I am currently working on some tests.
+I am an undergraduate student at [Department of Economics, National Taiwan University](https://econ.ntu.edu.tw/).
+
+You can contact me at [b10302331@ntu.edu.tw](mailto:b10302331@ntu.edu.tw).

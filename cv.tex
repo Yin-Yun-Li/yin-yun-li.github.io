@@ -1,0 +1,217 @@
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{palatino}
+\usepackage[usenames,dvipsnames]{color}
+%\usepackage{newpxtext,newpxmath}
+\usepackage[T1]{fontenc}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+%\input{glyphtounicode}
+
+
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+
+% href color
+\hypersetup{%
+unicode,
+breaklinks,%
+colorlinks=true,%
+urlcolor=[rgb]{0.1,0.1,0.5},%
+linkcolor=[rgb]{0.5,0.0,0.0},%
+citecolor=[rgb]{0,0.2,0.445},%
+filecolor=[rgb]{0,0,0.4},
+anchorcolor=[rgb]={0.0,0.1,0.2}%
+}
+
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+%\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1}\vspace{-2pt}
+  }
+}
+
+\newcommand{\resumeSubheading}[5]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & 
+      {\small #2} \\
+      \textit{\small #3} &  \textit{\small #4} \\
+      \ifx#5\empty\else\textit{\small #5}\fi
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2}\\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\begin{center}
+    \textbf{\Huge Yin-Yun Li} 
+\end{center}
+
+\begin{center}
+\small
+\href{https://github.com/Yin-Yun-Li}{\faGithubSquare\, Yin-Yun-Li} 
+$|$
+\href{mailto:b10302331@ntu.edu.tw}{b10302331@ntu.etu.tw} 
+$|$
+Taipei, Taiwan
+\end{center}
+
+%-----------EDUCATION-----------
+\section{\textbf{Education}}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {National Taiwan University}{Taipei, Taiwan}
+      {Bachelor of Arts\ in Economics}{Expected Jun 2026}{Double Major in Political Science, Public Administration Division}
+      \resumeItemListStart
+        \resumeItem{GPA: 4.12/4.3 (Overall); 4.26/4.3 (All economics courses)}
+        \resumeItem{Dean's List Award: Fall 2023, Fall 2025, Spring 2026 (Top 5\% of the department)}
+        \resumeItem{NTU Presidential Award, 2023 (Top 2\% of the department)}
+        \resumeItem{Courses: Introduction to Mathematical Analysis, Introduction to Linear Algebra, Labor Economics, Game Theory}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+%--------Field of Interest--------
+\section{\textbf{Fields of Interest}}
+    \hspace{0.5em} Applied Microeconomics, Labor Economics, Monetary Policy
+
+%-----Research Experience-----
+
+\section{\textbf{Research Experience}}
+\resumeSubHeadingListStart
+\resumeSubheading{C2L2 Lab, National Taiwan University}{Taipei, Taiwan}{Research Assistant}{Sep 2024-Present}{}
+\resumeItemListStart
+\resumeItem{Examine how a retired worker's political preference and trust in government affect pension scheme choice.}
+
+\resumeItem{Cleaned and merged administrative labor insurance records with village-level election data in Taiwan for regression analysis.}
+
+% \resumeItem{Analyzed real-world and synthetic data using R to enhance understanding of various identification strategies, including IV, DiD, and RD.}
+\resumeItemListEnd
+\resumeSubHeadingListEnd
+
+\section{\textbf{Selected Projects}}
+\resumeSubHeadingListStart
+\resumeSubheading{College of Social Sciences, National Taiwan University}{Taipei, Taiwan}{The Effect of Substitute and Adjunct Teachers on High School Students' Academic Achievement}{Jun 2025}{}
+\resumeItemListStart
+\resumeItem{Validated that students taught by non-regular teachers and those experiencing teacher reassignment in the third year had significantly lower GSAT scores in Math and English, controlling for covariates through linear regression.}
+\resumeItemListEnd
+
+\resumeSubSubheading{Career Pathways: Advanced Study or Immediate Work}{Jan 2025}
+\resumeItemListStart
+\resumeItem{Constructed and numerically solved a single agent's dynamic discrete choice model.}
+\resumeItem{Simulated career trajectory data and estimated predetermined parameters via the nested fixed point algorithm.}
+\resumeItemListEnd
+
+% \resumeSubSubheading{Monte Carlo Study: Stochastic Frontier Model}{May 2023}
+% \resumeItemListStart
+% \resumeItem{ Adopted a parametric approach under truncated-normal \& normal distribution to develop a structured data generating process.}
+% \resumeItem{ Estimated simulated data using various MLE methods to derive the sampling distribution of the estimators and evaluate the efficacy of different strategies.}
+% \resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+
+
+
+%-----Activities-----
+
+\section{\textbf{Activities}}
+\resumeSubHeadingListStart
+\resumeSubheading{Institute for Social Science Methodology, Academia Sinica}{Taipei, Taiwan}{Annual Student}{Jul 2025}{}
+\resumeItemListStart
+\resumeItem{Participated in the program on advanced social science techniques, including machine learning, social network analysis, and agent-based modeling.}
+
+\resumeItem{Received the Professor Jih-wen Lin Scholarship for a proposal on the effect of military service reform on future income, employing reduced-form and structural models and addressing identification issues in RD analysis.}
+
+\resumeItemListEnd
+\resumeSubHeadingListEnd
+
+
+
+
+
+
+%-----------Skills-----------
+\section{\textbf{Skills}}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+    \vspace{1mm}
+     \textbf{Languages}{: Mandarin (native), English (fluent)} \\
+     \vspace{1mm}
+     \textbf{Programming}{: R, Julia, \LaTeX}}}
+ \end{itemize}
+ 
+\end{document}

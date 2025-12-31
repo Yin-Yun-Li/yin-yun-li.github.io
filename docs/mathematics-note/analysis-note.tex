@@ -1,0 +1,1405 @@
+\documentclass[12pt]{article}
+\RequirePackage{style}
+
+\title{Introduction to Analysis Notes}
+
+\begin{document}
+\maketitle
+
+\begin{mybox}
+Most proof details are documented in my handwritten notes.
+This note serves as a well-organized summary of key concepts and theorems in real analysis,
+and gives some hints on how to approach the proofs.
+\end{mybox}
+
+\section{Point Set Topology}
+
+Let $(X,d)$ be a metric space. 
+
+\begin{definition}[interior, exterior, boundary point, adherent point]
+Let $E$ be a subset of $X$ and $x_0 \in X$.
+    \begin{enumerate}
+        \item $x_0$ be an interior point of $E$ if there exists $r > 0$ such that $B(x_0,r) \subseteq E$.
+        \item $x_0$ be an exterior point of $E$ if there exists $r > 0$ such that $B(x_0,r) \subseteq X\setminus E$.
+        \item $x_0$ be a boundary point of $E$ if for every $r > 0$, $B(x_0,r)\cap E\neq \emptyset$ and $B(x_0,r)\cap (X\setminus E)\neq \emptyset$.
+        \item $x_0$ be an adherent point of $E$ if for every $r > 0$, $B(x_0,r)\cap E\neq \emptyset$.
+    \end{enumerate}
+\end{definition}
+
+\begin{exercise}
+    Express the negation of each of the above statements.
+\end{exercise}
+
+With the above definitions, collect all interior points of $E$ to form the interior of $E$, denoted by $int(E)$. 
+Similarly, we can define $ext(E),\, \partial E,\, \overline{E}$.
+
+\begin{theorem}
+    $X = int(E) \cup ext(E) \cup \partial E$ and these three sets are pairwise disjoint.
+\end{theorem}
+
+\begin{theorem}
+    Let E be a subset and $x_0\in X$. TFAE:
+    \begin{enumerate}
+        \item $x_0$ is an adherent point of $E$.
+        \item There exists a sequence $\{x_n\}^\infty_{n=1}$ in $E$ that converges $x_0$.
+    \end{enumerate}
+\end{theorem}
+\begin{pf}
+\begin{itemize}
+\item ($\Rightarrow$) Consider $B(x_0,\frac{1}{n})\cap E \neq \emptyset$.
+\item ($\Leftarrow$) For every $r>0$, by definition of limits, $d(x_0,x_n)<r \,\, \forall n\geq N\in \mathbb{N} \Leftrightarrow x_n \in B(x_0,r)\cap E$.
+\end{itemize}
+\end{pf}
+
+
+\begin{definition}[Open, Closed]
+    Let $E$ be a subset of $X$.
+\begin{enumerate}
+        \item E is open in $X$ if for every $x \in E, \exists\,r > 0$ s.t. $B(x,r) \subseteq E$.
+        \item E is closed in $X$ if for every $x \in E, \forall\,r > 0$ s.t. $B(x,r) \cap E \neq \emptyset$.
+\end{enumerate}
+We can also define as:
+\begin{enumerate}
+    \item E is open if $\partial E \cap E =\emptyset \Leftrightarrow E = int(E) $.
+    \item E is closed if $\partial E \subseteq E \Leftrightarrow E = \overline{E} \Leftrightarrow X\setminus E$ is open.
+\end{enumerate}
+\end{definition}
+
+\begin{bbox}
+\begin{definition}[Limit point]
+x is a limit point of $E$ if for every $r > 0$, $B(x,r)\cap E\setminus \{x\} \neq \emptyset$.
+
+Sequence version definition: We say $x\in X$ is a limit point of the sequence $\{x_n\}^\infty_{n=1}$
+if there exists a subsequence with strictly increasing indices s.t. $x_{n_k}\rightarrow\infty$ as $k\rightarrow\infty$.
+That is, every neighborhood of $x$ contains infinitely many terms of the sequence.
+\end{definition}
+
+\begin{theorem}
+    TFAE:
+    \begin{enumerate}
+        \item $E$ is closed in $X$.
+        \item $E$ contains all its limit points. That is, if $x_n$ is a sequence in $E$ that converges to $x_0 \in X$, then $x_0 \in E$. 
+    \end{enumerate}
+\end{theorem}
+\end{bbox}
+
+
+
+\begin{pf}
+With the concept of limit points, we can prove $E$ is open iff $X\setminus E$ is closed.
+\begin{itemize}
+\item ($\Rightarrow$) Suppose $E$ is open. Let $x$ be any limit point of $X\setminus E$. Our goal is to show $x \in X\setminus E$ (containing all limit points).
+\item ($\Leftarrow$) Given $X\setminus E$ is closed. Suppose, by contradiction, $E$ is not open, i.e. \textcolor{red}{$x\in E, x\notin int(E), B(x,r)\cap(X\setminus E)\neq \emptyset$}.
+So $x$ is a limit point of $X\setminus E$ but $x\notin X\setminus E$, contradicting the assumption that $X\setminus E$ is closed (containing all its limit points).
+\end{itemize}
+\end{pf}
+
+
+
+\begin{dbox}
+\begin{property}
+Memorize the following properties:
+    \begin{enumerate} 
+    \item $int(X\setminus E)=ext(E)$
+    \item $\partial E = \partial (X\setminus E)$
+    \item $ext(E)\cap  E = \emptyset$
+    \item $int(E) \subseteq E \subseteq \overline{E}$
+    \item $\partial E \subseteq \overline{E}$
+    \item $\overline{E} = int(E) \cup \partial E = X\setminus ext(E) = E\cup\partial E$
+\end{enumerate}
+\end{property}
+\end{dbox}
+
+
+
+\begin{theorem}
+    $E$ is both open and closed (clopen)$\Leftrightarrow \partial E = \emptyset$.
+\end{theorem}
+
+Example: any subset is open and closed in $X$ w.r.t the discrete metric.
+
+\begin{theorem}
+If $A \cap \overline{B} = \emptyset$ and $\overline{A}\cap B= \emptyset$, 
+then $int(A \cup B) = int A \cup int B$. 
+Note that $\overline{A}\cap \overline{B}=\emptyset$  is a stronger condition.
+\end{theorem}
+
+\begin{corollary}
+If $A \cap \overline{B} = \emptyset$ and $\overline{A}\cap B= \emptyset$, 
+then $\partial(A \cup B) = \partial A \cup \partial B$. 
+\end{corollary}
+
+\begin{theorem}
+Let $B(x_0, r)$ be an open ball and $\overline{B}(x_0,r)=\{x\in X: d(x,x_0)\leq r\}$ be a closed ball:
+\begin{enumerate}
+    \item Open ball is open.
+    \item Closed ball is closed.
+    \item $\overline{B(x_0,r)}\subseteq\overline{B}(x_0,r)$.
+\end{enumerate}    
+\end{theorem}
+
+\begin{exercise}
+    $\overline{B(x_0,r)}\supseteq\overline{B}(x_0,r)$ is not generally true. Find a counter-example (Hint: Discrete metric).
+\end{exercise}
+
+
+\begin{theorem}[Lipschitz Equivalent]
+    If there exists positive constants $c,C>0$ such that for any $x, y\in X$,
+    \[
+    cd_1(x,y)\leq d_2(x,y)\leq Cd_1(x,y),
+    \]
+then $d_1, d_2$ are topologically equivalent.
+\end{theorem}
+\begin{pf}
+Let $u$ be $d_1$-open and take any $x \in u,\ \exists\ r>0$ s.t. $B_{d_1}(x, r)\subseteq u.$ Consider $B_{d_2}(x,cr)$, we want to show $B_{d_2}(x,cr)\subseteq B_{d_1}(x, r).$
+
+Let $z \in B_{d_2}(x,cr),$ that is $d_2(x,z)<rc$. Given $d_1(x,z)\leq \frac{1}{c}d_2(x,z)<\frac{1}{c}rc=r,$ we have $z \in  B_{d_1}(x, r).$ Thus, $B_{d_2}(x,cr)\subseteq B_{d_1}(x, r)\subseteq u,$ where $u$ is also $d_2$-open.
+
+The converse argument can be proved by the right side of the inequality, which left as an exercise. 
+\end{pf}
+
+
+\begin{theorem}
+    Let $(V,\norm{.})$ be a vector space endowed with a norm-induced metric.
+    \begin{enumerate}
+        \item Verify this is a metric space.
+        \item $\overline{B(x_0,r)}=\overline{B}(x_0,r)$.
+    \end{enumerate}
+\end{theorem}
+
+
+\subsection*{Relative Topology}
+
+\begin{definition}[Relative Openness and Closedness]
+    Let $(X,d)$ be a metric space, $Y\subseteq X$ and $E\subseteq Y$.
+    \begin{enumerate}
+        \item $E$ is (relative) open in $Y$ if for every $x\in E$, $\exists\, r>0$ s.t. $B_Y(x,r)\subseteq E$.
+        \item $E$ is (relative) closed in $Y$ if for every $x\in E$, $\exists\, r>0$ s.t. $B_Y(x,r)\cap E \neq \emptyset$,
+    \end{enumerate}
+    where $B_Y(x,r) = B(x,r)\cap Y$.
+\end{definition}
+
+\begin{theorem}
+     Let $(X,d)$ be a metric space, $Y\subseteq X$ and $E\subseteq Y$.
+    \begin{enumerate}
+        \item E is (relative) open in $Y$ iff $\exists\, V$ open in $X$ s.t. $E = V\cap Y$.
+        \item E is (relative) closed in $Y$ iff $\exists\, K$ closed in $X$ s.t. $E = K\cap Y$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{pf}
+\begin{itemize}
+    \item Verify $V=\cup_{x\in E}B_X(x,r_x)\cap Y=E.$
+\end{itemize}
+\end{pf}
+
+\begin{theorem}
+    Let $A\subseteq S\subseteq T$ in a metric space $(X,d)$.
+    Then $\overline{A}^S\subseteq \overline{A}^T$.
+\end{theorem}
+
+\begin{pf}
+    \begin{enumerate}
+        \item Consider $B_S(x_0,\epsilon)=B_T(x_0,\epsilon)$ is a relative open ball in $S$.
+        \item $V\subseteq W$, if $V\neq\emptyset$ then $W\neq\emptyset$, equivalently, if $W=\emptyset$ then $V=\emptyset$.
+    \end{enumerate}
+\end{pf}
+
+
+\section{Completeness}
+Let $(X,d)$ be a metric space, and let $(Y,d|_{Y\times Y})$ be a subspace of $(X,d)$.
+
+\begin{bbox}
+ \begin{exercise}
+    Warm-up question
+    \begin{enumerate}
+        \item Write down the definition of Cauchy sequence.
+        \item A convergent sequence implies a Cauchy sequence.
+        \item Cauchy sequence with a convergent subsequence implies a convergent sequence.
+    \end{enumerate}
+ \end{exercise}
+\end{bbox}
+
+
+\begin{definition}[Complete metric space]
+$(X,d)$ is complete if every Cauchy sequence in $(X,d)$ is also a convergent sequence which converges to some point in \textbf{$X$}.
+\end{definition}
+
+\begin{theorem}[Complete Subspace and closedness]
+    Let $(Y,d|_{Y\times Y})$ be a subspace of $(X,d)$.
+    \begin{enumerate}
+        \item If $(Y,d|_{Y\times Y})$ is complete, then $Y$ is closed in $X$. Note that completeness of $(X,d)$ is not required.
+        \item If $(X,d)$ is complete and $Y$ is closed, then $Y$ is complete.
+    \end{enumerate}
+\end{theorem}
+
+
+\begin{theorem}
+    If $d_1$ and $d_2$ are Lipschitz equivalent in $X$, then $(X,d_1)$ is complete iff $(X,d_2)$ is complete.
+\end{theorem}
+
+\begin{remark}
+    Note that if $d_1$ and $d_2$ are topologically equivalent in $X$, then the completeness invariance might not be true.
+\end{remark}
+
+
+\section{Compactness}
+Let $(X,d)$ be a metric space. Let $Y\subseteq X$.
+
+\begin{definition}
+  $Y$ is compact if any open cover admits a finite subcover.
+\end{definition}
+
+
+\begin{definition}[Sequential Compactness]
+  $Y$ is compact if every sequence in $Y$ has least one convergent subsequence whose limit lies in $Y$.
+\end{definition}
+
+\begin{theorem}
+    A compact metric space is both complete and bounded.
+\end{theorem}
+
+\begin{pf}
+\begin{enumerate}
+    \item Completeness is relatively easier. Think.
+    \item Boundedness: Suppose not.
+    $\forall x_0\in X$ and $r>0$, $B(x_0,r)$ cannot contain X.
+    Fix $x_0$ and consider $x_n\notin B(x_0,n)$ for any $n\in \mathbb{N}.$
+    By compactness, we obtain a subsequence $\{x_{n_k}\}^\infty_{0}$, which converges to $x^{*}$. Then we have:
+    \[
+    n_k \leq d(x_{n_k}, x_0) \leq d(x_{n_k}, x^{*}) + d(x_0, x^{*}).
+    \]
+    LHS goes to $\infty$ but RHS is fixed, this forces a contradiction.
+
+    Alternatively, consider $\cup_{n\geq 1}B(x,n)$ forms a open cover of X w/o finite subcover.
+\end{enumerate}
+\end{pf}
+
+
+
+\begin{definition}[Totally Bounded]
+    $(X,d)$ is totally bounded if $\forall\epsilon>0$, there exists a finite number of open balls $B(x_i,\epsilon),\, i=1,2,\cdots,n$ s.t. $X\subseteq \cup^n_{i=1}B(x_i,\epsilon).$ 
+\end{definition}
+
+\begin{theorem}
+    $(X,d)$ is complete and totally bounded iff it is compact.
+\end{theorem}
+
+\begin{pf}
+$(\Leftarrow)$
+\begin{enumerate}
+    \item Suppose $(X,d)$ is not totally bounded. $\exists\,\epsilon>0$ and for any finite set of points $\{x_i\}^n_{i=1}$, there exists $y\in X$ s.t. $d(y,x_i)\geq \epsilon$ for any $i=1,2,\cdots,n$.
+    So we can construct a infinite sequence which is not a Cauchy $\rightarrow$ not a convergent sequence $\rightarrow$ no convergent subsequece, contradicts compactness.
+    \item Direct proof might be more efficient. Fix $\epsilon>0$, $\cup_{x\in X}B(x,\epsilon) = X$, and compactness admits a finite subcover. 
+\end{enumerate}
+$(\Rightarrow)$
+\begin{enumerate}
+    \item Take any sequence $(x_n)^\infty_{n=1}$ in $X$.
+    \item By total boundedness, for some $i=1,2,\cdots,m(1)$, $B(x^{(1)}_i, 1)$ contains infinitely many terms of $(x_n)^\infty_{n=1}$, denoted by $(x^{(1)}_{n_k})^\infty_{k=1}$.
+    \item For some $i=1,2,\cdots,m(2)$, $B(x^{(2)}_i, \frac{1}{2})$ contains infinitely many terms of $(x^{(1)}_{n_k})^\infty_{k=1}$, denoted by $(x^{(2)}_{n_k})^\infty_{k=1}$.
+    \item Check the nested condition, and shows that the diagnol subsequence $(x^{(k)}_{n_k})$.
+\end{enumerate}
+\end{pf}
+
+This is a stronger version of the previous theorem since totally bounded implies bounded (exercise).
+
+
+
+
+\begin{theorem}
+    If $Y$ is compact, then $Y$ is closed and bounded.
+    \label{cpt is closed and bd}
+\end{theorem}
+
+\begin{pf}
+\begin{itemize}
+    \item $Y$ is bounded in $Y$, $Y$ is also bounded in $X$. (Use relative topology)
+    \item Goal: $\overline{Y}\subseteq Y$. Take an adherent point and construct a sequence. This sequence has a convergent subsequence. Use the uniqueness of limit. Then we show the inclusion.
+\end{itemize}    
+\end{pf}
+
+
+\begin{theorem}[Heine-Borel Theorem]
+    Given $\mathbb{R}^n$ is endowed with $l_p$ metric. Let $E\subseteq \mathbb{R}^n$.
+    $E$ is compact iff $E$ is closed and bounded.
+\end{theorem}
+
+\begin{pf}
+    $(\Rightarrow)$ is true any metric space. $(\Leftarrow)$ Use Bolzano-Weierstrass Theorem to verify sequential compact.
+\end{pf}
+
+\begin{pbox}
+\begin{remark}
+In general , the reverse statement might not hold.
+Take $\mathbb{N}$ endowed with discrete metric. The sequence of natural numbers has no convergent subsequece. Or, the open cover $\cup_{n\in \mathbb{N}}B(n,\frac{1}{2})$ has no finite subcover.
+\end{remark}
+\end{pbox}
+
+\begin{theorem}
+    In a metric space $(X,d)$, subset $Y$ in $X$ is compact iff $Y$ is sequentially compact.
+\end{theorem}
+
+
+\begin{pf}
+$(\Leftarrow)$ Suppose $Y$ has no finite subcover. Let $\cup_{\alpha\in A}V_\alpha$ forms an open cover of $Y$.
+\begin{itemize}
+\item Fix $y\in Y$, we know $y$ lies in some open set. Now define 
+\begin{align*}
+    r(y)&:=\sup\{r>0:B_d(y,r)\subseteq V_{\alpha} \text{ for some }\alpha\in A\}\\
+    r_0 &:= \inf\{r(y):y\in Y\}.
+\end{align*}
+
+\item If $r_0=0$, there exists a sequence $y_n$ s.t. $0\leq r(y_n)<\frac{1}{n}$ (Common-Used technique regarding infimum).
+      By compactness, we obtain $y_{n_k}\rightarrow y_0\in Y$.
+      Construct an open ball $B(y_0, \epsilon)$, there exists $y_{n_j}\in B(y_0, \epsilon) \forall j\geq N$.
+      We wish $B(x_{n_j},\epsilon/2)\subseteq B(y_0, \epsilon)\subseteq V_{\alpha}$ for some $\alpha$.
+      Then we have:
+      \[r(x_{n_j})\geq \epsilon/2,\] which contradicts $0\leq r(y_{n_j})<\frac{1}{n_j}.$
+\item If $0<r_0<\infty$, for each $y\in Y,\, \frac{r_0}{2}<r(y)$ by construction.
+      Construct a sequence $\{y_n\}^\infty_1$ s.t. $B(y_n,\epsilon/2)\subseteq V_{\alpha_n}$. (This works since we assume no finite subcover).
+      Verify the sequence is not a Cauchy, so it has no convergent subsequence. Contradicts with compactness.
+\item If $r_0=\infty$, the argument is similar to case 2. The only difference is replace $r_0/2$ with a constant, say 1.
+\end{itemize}
+\end{pf}
+
+
+\begin{corollary}
+    Let $K_1, K_2,...$ be a sequence of non-empty of compact sets of $X$ s.t.
+    \(K_1\supseteq K_2\supseteq K_3\supseteq\cdots\). Then $\bigcap^{\infty}_{i=1} K_i\neq\emptyset.$
+\end{corollary}
+
+\begin{pf}
+    \begin{itemize}
+        \item Suppose $\bigcap^{\infty}_{i=1} K_i=\emptyset$, then we have $K_1=K_1\setminus\bigcap^{\infty}_{i=1} K_i=\bigcup^{\infty}_1 (K_1\setminus K_i).$
+        \item $V_i \equiv K_1\setminus K_i = K_1\cup(X\setminus K_i)\rightarrow V_i$ is open in $K_1$. $\bigcup^{\infty}_1 (K_1\setminus K_i) =\bigcup^{\infty}_1 V_i$ forms a open cover of $K_1$.
+        \item $K_1$ is compact so it admits a finite subcover, the intersection of finite $K_i$ family forces $K_i$ to be empty, contradiction.
+    \end{itemize}
+\end{pf}
+
+
+\begin{exercise}
+    The problems are similar to the previous corollary:
+    \begin{enumerate}
+    \item Let $(X,d)$ be a compact set and $K_1, K_2,...$ be a sequence of non-empty of closed sets of $X$ s.t.
+    \(K_1\supseteq K_2\supseteq K_3\supseteq\cdots\). Then $\bigcap^{\infty}_{i=1} K_i\neq\emptyset.$
+    \item  Let $(X,d)$ be a compact set and $K_1, K_2,...$ be a sequence of closed sets in $X$ s.t.
+    \(\bigcap^{n}_{i=1} K_i\neq\emptyset\). Then $\bigcap^{\infty}_{i=1} K_i\neq\emptyset.$
+    \end{enumerate}
+\end{exercise}
+
+\begin{theorem}
+    Let $F_1,F_2,\cdots F_n$ be a finite collection of compact subsets of $X$, then $F_1\cap F_2\cap\cdots F_n$ remains compact.
+\end{theorem}
+
+The proof can be shown via the definition of open cover. With the above theorem, we can show that:
+
+\begin{theorem}
+    Every finite subset of $X$ is compact.
+\end{theorem}
+
+\begin{pf}
+    Consider a (sequential) compact singleton $\{x_i\}$, and the finite union forms a finite subset which is compact.
+\end{pf}
+
+\begin{theorem}
+    If $Y$ is compact and $H\subseteq Y$ is closed, then $H$ is compact.
+    Note that if $H$ is compact, then $H$ is closed and bounded (Recall \eqref{cpt is closed and bd}).
+\end{theorem}
+
+\begin{pf}
+    Construct an open cover of $H$, denoted by $\cup_i V_i$. $\cup_i V_i\cup (X\setminus H)$ forms a open cover of $Y$.
+    $Y$ is compact, there exists a finite subcover covering $Y$ as well as $H$.
+\end{pf}
+
+
+\begin{theorem}
+    Let $H_1,H_2,\cdots$ be a infinite collection of compact sets in $(X,d)$, then $\bigcap^{\infty}_{i=1}H_i$ is compact.
+\end{theorem}
+ 
+\begin{pf}
+    \begin{itemize}
+        \item  Every compact subset is closed.
+        \item  Infinte intersection of closed sets remains closed.
+        \item  $\bigcap^{\infty}_{i=1}H_i\subseteq H_1$, where $H_1$ is compact.
+    \end{itemize}
+\end{pf}
+
+\begin{theorem}[Compactness as topologically invariant]
+    Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces and $f:X\rightarrow Y$ be a continuous mapping.
+    If $K\subseteq X$ is compact, then $f(K)$ is compact.
+\end{theorem}
+
+
+\begin{theorem}
+    Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces and $f:X\rightarrow Y$ be a continuous bijection.
+    If $X$ and $Y$ are compact, then $f^{-1}$ is continuous. (i.e. $f$ is a homeomorphism).
+\end{theorem}
+
+\begin{pf}
+    \begin{itemize}
+        \item Take any open set $u$ in $X$, $X\setminus u\subseteq X$ is compact.
+        \item $f(X\setminus u)$ is compact by continuity. (Every compact set is $\cdots$ ?)
+        \item The preimage of $f^{-1}(u)$: $(f^{-1})^{-1}(u)=f(u) = Y\setminus f(X\setminus u)$ is open.
+    \end{itemize}
+\end{pf}
+
+
+\begin{bbox}
+\begin{definition}[Continuity]
+    $f$ is continous at $x_0$ if
+    $\,\forall \epsilon>0\, \exists\, \delta>0$ s.t. $d_X(x,x_0)<\delta\rightarrow d_Y(f(x),f(x_0))<\epsilon \Leftrightarrow B_X(x_0,\delta)\subseteq f^{-1}(B_Y(x_0, \epsilon))$.
+
+\end{definition}
+\begin{theorem}
+    Let $f:X\rightarrow Y$ be a mapping. TFAE:
+\begin{enumerate}
+    \item $f$ is continous at $x_0$.
+    \item Whenever a sequence $\{x_n\}^\infty_{n=1}$ in $X$ s.t. $x_n\xrightarrow{d_X} x_0$, then $f(x_n)\xrightarrow{d_Y} f(x_0).$ (Sequential continuity)
+    \item For any open set $u$ in $Y$, $f^{-1}(u)$ is also open in $X$.
+    \item For any closed set $u$ in $Y$, $f^{-1}(u)$ is also closed in $X$.
+\end{enumerate}
+\end{theorem}
+\end{bbox}
+
+
+\begin{bbox}
+\begin{definition}[Uniform Continuity]
+    Let $f: X\rightarrow Y$ be a map btw $(X,d_X)$ and $(Y,d_Y)$.
+    $f$ is uniformly continous if $\forall \epsilon>0\,\exists\,\delta>0$ s.t. for any $x,y\in X$ $d_X(x,y)<\delta\rightarrow d_Y(f(x),f(y))<\epsilon.$
+    This means $\delta$ is independent of the location of $x\in X$.
+\end{definition}
+\end{bbox}
+
+\begin{theorem}
+    If $f$ is compact, then $f$ is continuous iff $f$ is uniformly continous.
+\end{theorem}
+
+\begin{pf}
+    \begin{enumerate}
+        \item Uniform continuity implies continuity is trivial.
+        \item Given $f$ is continuous. Suppose $f$ is not uniformly continous. Consider a paritcular $\delta=\frac{1}{n}$, $\exists p^n, q^n\in X$ s.t. $d_X(p_n, q_n)<\frac{1}{n}$,
+              but $d_Y(f(p_n), f(q_n))\geq\epsilon$
+        \item Since $X$ is compact, $d_X(p_{n_k}, q_{n_k})\rightarrow 0$.
+        \item Since $f$ is continuous, $d_Y(f(p_{n_k}),f(q_{n_k}))\rightarrow 0$, contradiction.
+    \end{enumerate}
+\end{pf}
+
+
+\begin{theorem}[Exetreme Value Theorem]
+    Let $(X,\mathcal{F})$ be a compact topological space and $f:X\rightarrow\mathbb{R}$ be a continous function. Then $f$ is bounded and attains its maximum and minimum on $X$.
+\end{theorem}
+
+\begin{pf}
+    $f(X)$ is compact in $\mathbb{R}$ (standard topology). This proves boundedness.
+    By axiom of completeness, $f(X)$ has a supremum and an infimum. By closedness, $\sup f(X), \inf f(X)\in f(X)$ (attainable).
+\end{pf}
+
+
+\section{Connectedness}
+
+\begin{exercise}
+    Let $(X, d)$ be a metric space.
+    \begin{enumerate}
+        \item Write down the definition of disconnectedness. Equivalently, $X$ is disconnected iff $X$ has a non-empty proper subset that is clopen.
+    \end{enumerate}
+\end{exercise}
+
+
+
+\begin{theorem}
+    Let $(X,d)$ be a non-empty subset in $\mathbb{R}$, TFAE:
+    \begin{enumerate}
+        \item $X$ is connected.
+        \item $X$ is an interval, i.e. whenever $x,y\in X$ and $x<z<y$, then $z\in X$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Connectedness as topologically invariant]
+    Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces and $f:X\rightarrow Y$ be a continuous mapping.
+    If $A\subseteq X$ is connected, then $f(A)$ is connected.
+\end{theorem}
+
+
+\begin{theorem}[Intermediate Value Theorem]
+    Let $f:X\rightarrow \mathbb{R}$ be continuous. Let $E\subseteq X$ be a connected subset and $a,b\in E$. If $f(a)<c<f(b)$, then $\exists\, x\in (a,b)$ s.t. $f(x)=c$.
+\end{theorem}
+
+\begin{property}
+    Let $(X,d)$ be a metric space with the discrete metric.
+    Let $E$ be a subset of $X$ with at least two elements. Then $E$ is disconnected.
+\end{property}
+So any connected subset with discrete metric must be a singleton. 
+(Empty set is a little tricky, usually we define it as connected.)
+
+\begin{corollary}
+    Let $(X,d)$ be a metric space with the discrete metric.
+    A function $f:X\rightarrow Y$ is continuous iff it is constant.
+\end{corollary}
+
+Some theorem is in progress.
+
+
+\section{Topological Space}
+
+
+\begin{exercise}
+    Let $(X,\mathcal{F})$ be a topological space.
+    \begin{enumerate}
+        \item Write down the definition of a power set.
+        \item Write down the definition of a topological space. 
+    \end{enumerate}
+\end{exercise}
+
+\begin{definition}[Neighborhood]
+    We say a neighborhood of $x$ is any open set $V\in\mathcal{F}$ s.t. $x\in V$.
+\end{definition}
+
+\begin{exercise}
+    With the definition of neighborhood, write down the defintion of interior, exterior, boundary, and adherent point.
+\end{exercise}
+
+
+\begin{definition}[Continuity]
+    Let $(X,\mathcal{F})$ and $(Y,\mathcal{G})$ be two topological spaces, and $f: X\rightarrow Y$ be a function.
+    $f$ is continuous at $x_0\in X$ if for every nbhd $V\in \mathcal{G}$ of $f(x_0)$, $\exists$ a nbhd $U\in \mathcal{F}$ of $x_0$ s.t. $U\subseteq f^{-1}(V).$ 
+\end{definition}
+
+\begin{definition}[Topological Convergence]
+    Let ${x_n}^\infty_1$ be a sequence in $X$. We say $x_n\rightarrow x$ if for every nbhd of $x$, called $V$, $\exists N\in\mathbb{N}$ s.t. $x_n\in V$ for $n\geq N$.
+\end{definition}
+
+\begin{exercise}
+Let a sequence $\{x_n\}^\infty_{n=1}$ does not converge to $x$ for any $x\in X$.
+That is, $\forall x\in X,\, \exists$, a nbhd of $x$, called $u_x$ s.t. $u_x$ only contains finite many points.
+Negatate the statement you will get the definition of convergence. 
+\end{exercise}
+
+\begin{exercise}
+    Write down the definition of a Hausdorff space.
+\end{exercise}
+
+\begin{theorem}
+    Suppose $(X,\mathcal{F})$ is a Hausdorff space. Then every convergent sequence in $X$ converges to a unique limit.
+\end{theorem}
+
+\begin{pf}
+    Suppose $\exists x\neq y$ s.t. $x_n\rightarrow x$ and $x_n\rightarrow y$. Use the defintion of Hausdorff space and find the contradiction (non-empty intersection).
+\end{pf}
+
+
+
+\section{Function Sequence and Convergence}
+
+Let $\{f_n(x)\}^\infty_{n=1}$ be a sequence of functions from $(X,d_X)$ to $(Y,d_Y)$.
+Let $f:X\rightarrow Y$ be an another function.
+\begin{definition}[Pointwise Convergence]
+We say $f_n\rightarrow f$ pointwise if for every $x\in X$ (fixed), $\exists\,N_x$ s.t. $d_Y(f_n(x), f(x))<\epsilon$ for $n\geq N_x$ and $\epsilon>0$.
+\end{definition}
+
+\begin{definition}[Uniform Convergence]
+We say $f_n\rightarrow f$ uniformly if $\exists\, N$ s.t. $d_Y(f_n(x), f(x))<\epsilon$ for $n\geq N$ and $\epsilon>0$ for any $x\in X$ (not only a fixed point).
+\end{definition}
+
+\begin{theorem}
+    Suppose $f_n$ is continous at $x_0$. If $f_n\rightarrow f$ uniformly, then $f$ is continous at $x_0$.
+\end{theorem}
+
+\begin{pf}
+    \begin{enumerate}
+        \item $f_n\rightarrow f$ uniformly, write down the defintion with $\frac{\epsilon}{3}$.
+        \item Fix $N_1\geq N$, $f_{N_1}$ is continuous at $x_0$, write down the defintion with $\frac{\epsilon}{3}$.
+        \item By triangle inequality, we have $d_Y(f(x), f(x_0))<\epsilon$ for $d_X(x,x_0)<\delta$.
+        \item Given $x_0\in X$ is arbitrary, we can further prove $f$ is continuous in $X$.
+    \end{enumerate}
+\end{pf}
+
+
+\begin{theorem}
+    Let $(Y,d_Y)$ be a complete metric space, and let $E\subseteq X$.
+    Suppose $f_n$ is a sequence from $E$ to $Y$ that converges to some function $f:E\rightarrow Y$ uniformly.
+    Let $x_0$ be an adherent point of $E$.
+    Suppose that for each $n$,$\lim_{x\rightarrow x_0, x\in E}f_n(x)$ exists,
+    then $\lim_{x\rightarrow x_0, x\in E}f(x)$ also exists. Moreover, 
+    \[
+\lim_{n\to\infty}\,\lim_{\substack{x\to x_0\\x\in E}} f_n(x)
+\;=\;
+\lim_{\substack{x\to x_0\\x\in E}}\,\lim_{n\to\infty} f(x).
+\]
+\end{theorem}
+
+\begin{theorem}
+    If $f_n\rightarrow f$ uniformly and $\lim_{n\rightarrow}x_n=x\in X$, then $\lim_{n\rightarrow\infty}f_n(x_n)=f(x).$ 
+\end{theorem}
+
+\begin{definition}[Bounded Function]
+    $f$ is bounded if $\exists\, y_0\in Y$ and $R>0$ s.t. $f(X)\subseteq B_Y(y_0,R),$ i.e. $d_Y(f(x), y_0)<R$ for any $x\in X$.
+\end{definition}
+
+\begin{theorem}
+    If $f_n$ is bounded for each $n$ and $f_n\rightarrow f$ uniformly, then $f$ is bounded.
+\end{theorem}
+
+
+\begin{definition}[Supremum Norm]
+    Let $B(X\rightarrow Y)$ be the set of all bounded functions from $(X,d_X)$ to $(Y,d_Y)$.
+    Define 
+    \[
+    d_{\infty}(f,g) := \sup_{x\in X} d_Y(f(x), g(x))=\norm{f(x)-g(x)}_{\infty}\quad \forall f,g\in B(X\rightarrow Y).
+    \]
+\end{definition}
+
+\begin{theorem}
+    $f_n\rightarrow f$ in $(B(X\rightarrow Y),d_{\infty})$ iff $f_n\rightarrow f$ uniformly.
+\end{theorem}
+
+\begin{theorem}
+Let $C(X\rightarrow Y)$ be the set of bounded and continuous function. That is, $C(X\rightarrow Y)$ is a subspace induced by $d_\infty$ in $B(X\rightarrow Y)$.
+If $Y$ is complete, then $(C(X\rightarrow Y),d_\infty)$ is a complete metric space.  
+\end{theorem}
+
+
+\begin{definition}[Partial Sum]
+    \[S_N(x)=\sum_{i=1}^{N}f_i(x).\]
+\end{definition}
+
+\begin{exercise}
+    Write down the definition of pointwise convergence of infinite series.
+    \[\sum_{i=1}^{\infty}f_i=f \Longleftrightarrow \lim_{N\rightarrow\infty}S_N(x)=f\]
+\end{exercise}
+
+
+\begin{theorem}[Weierstrass M-test]
+   Let $\{f_n(x)\}^\infty_{n=1}$ be a sequence of bounded, real-valued, continuous function on $X$.
+   Suppose $\sum_{n=1}^{\infty}\norm{f_n}_\infty$ converges. Then $\sum_{n=1}^{\infty}f_n$ converges uniformly to some bounded, real valued, and continous function on $X$.
+\end{theorem}
+
+
+\subsection*{Uniform convergence, Integral and Derivative}
+Firstly, uniform convergence allows us to exchange infinite summation and integration.
+
+\begin{theorem}
+Let $f_n:I([a,b])\rightarrow\mathbb{R}$ be a sequence of Riemann integrable function.
+Suppose $f_n\rightarrow f$ uniformly, where $f:[a,b]\rightarrow\mathbb{R}$.
+Then $f$ is Riemann integrable and $\lim_{n\rightarrow\infty}\int_{I}f_n = \int_{I}f$, where $I=[a,b].$   
+\end{theorem}
+
+\begin{corollary}
+Let $f_n:[a,b]\rightarrow\mathbb{R}$ be a sequence of Riemann integrable function.
+Suppose $\sum_{n=1}^{\infty}f_n$ converges uniformly, where $f(x)=\sum_{n=1}^{\infty}f_n(x)$.
+Then $f$ is Riemann integrable and $\lim_{n\rightarrow\infty}\int_{I}f_n = \int_{I}f$, where $I=[a,b].$   
+\end{corollary}
+
+However, we require reversed side argument with additional assumptions to gurantee the uniform convergence of derivative.
+
+\begin{theorem}
+    Let $f_n:[a,b]\rightarrow\mathbb{R}$ be a differentiable function whose derivative $f'_n:[a,b]\rightarrow\mathbb{R}$ is continuous.
+    Suppose $f'_n\rightarrow g$ uniformly, where $g:[a,b]\rightarrow\mathbb{R}$ is continous (Think why?).
+    Additionally, suppose $\exists\, x_0\in [a,b]$ s.t. $\lim_{n\rightarrow\infty}f_n(x_0)$ exists.
+    Then:
+    \begin{enumerate}
+        \item $f_n\rightarrow f$ uniformly.
+        \item $f'=g.$ Informally:
+        \[\frac{d}{dx}(\lim_{n\rightarrow\infty}f_n(x))= \lim_{n\rightarrow\infty}f'_n(x).\]
+    \end{enumerate}
+\end{theorem}
+
+
+\begin{corollary}
+    Let $f_n:[a,b]\rightarrow\mathbb{R}$ be a differentiable function whose derivative $f'_n:[a,b]\rightarrow\mathbb{R}$ is continuous.
+    Suppose the series $\sum_{n=1}^{\infty}\norm{f'_n}$ converges absolutely (By M-test, what series converges uniformly ?).
+    Additionally, suppose $\sum_{n=1}^{\infty}f_n(x_0)$ converges for some $x_0\in [a,b]$.
+    Then:
+    \begin{enumerate}
+        \item $\sum_{n=1}^{\infty}f_n$ converges uniformly.
+        \item Exchangeable btw derivative and infinite summation.
+        \[\frac{d}{dx}(\sum_{n=1}^{\infty}f_n(x))= \sum_{n=1}^{\infty}f'_n(x).\]
+    \end{enumerate}
+\end{corollary}
+
+
+
+\section{Power Series}
+
+\begin{definition}[Power Series]
+    Let $a$ be a real number. We say a (formal) power series centered at $a$ is any series of the form
+    \[\sum_{n=0}^{\infty}c_n(x-a)^n,\]
+    where $c_n$ is a sequence of real numbers independent of $x$.
+\end{definition}
+
+\begin{definition}[Radius of Convergence]
+For any power series $\sum_{n=0}^{\infty
+}c_n(x-a)^n,$ we define the radius of convergence $R$ of this series as:
+\[R \coloneqq \frac{1}{\limsup_{n\rightarrow\infty}\lvert c_n\rvert^\frac{1}{n}}.\]
+By conventions, $\frac{1}{0}=+\infty$ and $\frac{1}{+\infty}=0$.    
+\end{definition}
+\begin{theorem}[Ratio Test]
+    Let $\{a_n\}$ be a sequence of real numbers and $\sum_{n=0}^{\infty}a_n$ be a series. Suppose $L\coloneqq\lim_{n\rightarrow\infty}\lvert\frac{a_{n+1}}{a_n}\rvert$ exists in $[0,\infty]$.
+    \begin{enumerate}
+        \item If $L<1$, the series converges absolutely.
+        \item If $L>1$, the series diverges.
+        \item If $L=1$, the convergence of series is indetermined.
+    \end{enumerate}
+\end{theorem}
+
+
+\begin{theorem}
+Given a power series $f(x)= \sum_{n=0}^{\infty}c_n(x-a)^n$ and radius of convergence $R$.
+\begin{enumerate}
+    \item If $|x-a|<R$, then $f$ converges absolutely.
+    \item If $|x-a|>R$, then $f$ diverges.
+    \item For $0<r<R$, $f$ converges uniformly on $[a-r, a+r].$
+    \item If $f$ is differentiable when $|x-a|<R$, then $\sum_{n=0}^{\infty}n c_n(x-a)^{n-1}\rightarrow f'$ uniformly on $[a-r, a+r].$
+    \item For any $[y,z]\subseteq(a-R,a+R),$ $\int_{z}^{y}f(x)dx=\sum_{n=0}^{\infty}\frac{c_n(z-a)^{n+1}-c_n(y-z)^{n+1}}{n+1}.$
+\end{enumerate}
+\end{theorem}
+
+\begin{pf}
+    For (4),  $\sum_{n=1}^{N}f_n$ is uniformly convergent as $N\rightarrow\infty$ since $|x-a|<r$; $\sum_{n=1}^{N}f'_N$ converges uniformly by ratio test, comparison test and Weierstrass M-test.
+\end{pf}
+
+\begin{theorem}
+Let $(b_n)_n$ be a sequence such that $b_n>0\,\forall n\in\mathbb{N}$.
+If $\lim_{n\rightarrow\infty}\frac{b_{n+1}}{b_n}=\ell$, then $\lim_{n\rightarrow\infty}\sqrt[n]{b_n} = \ell.$
+\end{theorem}
+
+This theorem shows that root test is a stronger version than ratio test (Think).
+
+\begin{definition}[Real analytic function]
+    Let $E\subseteq\mathbb{R},$ and $f:E\rightarrow\mathbb{R}$ be a function.
+    Fix an interior point $a\in E$, we say $f$ is real analytic at $a$ if there exists a power series $\sum_{n=0}^{\infty}c_n(x-a)^n$ on a neighborhood of $a$ s.t.
+    \[f(x)=\sum_{n=0}^{\infty}c_n(x-a)^n\]
+    for all $x\in (a-r, a+r),$ where $r$ is the radius of convergence.
+\end{definition}
+
+\begin{remark}
+    $f$ is real analytic at $a$ $\rightarrow$ its Taylor series at $a$ converges to $f$. $a$ is arbitrary on $E$.
+\end{remark}
+
+\begin{theorem}[Real analytic function is smooth]
+    If $f$ is real analytic at $a$, then $f$ is inifinitely differentiable at $a$.
+    That is, for every integer $k\geq 0$, the function is k-times differentiable on $(a-r, a+r).$
+    The k-th derivative is given by:
+    \begin{equation*}
+    \begin{split}
+        &\sum_{n=0}^{\infty}c_{n+k}\frac{(n+k)!}{n!}(x-a)^{n},\\
+        &c_k = \frac{f^{(k)}(a)}{k!}.
+    \end{split}
+    \end{equation*}
+\end{theorem}
+
+\begin{corollary}[Uniqueness of power series expansions]
+    If $f$ is real analytic at $a$ and admits two power series expansions:
+    \[f(x)=\sum_{n=0}^{\infty}c_n(x-a)^a\quad \text{and}\quad f(x)=\sum_{n=0}^{\infty}d_n(x-a)^a\]
+    then $c_n = d_n\,\forall n\geq 0.$
+\end{corollary}
+
+\begin{example}[$C^\infty$ does not imply real analytic]
+Consider a bump function (Cauchy, 1823):
+\[f(x)=\begin{cases}
+    e^{-1/x^2},\, x\neq 0\\
+    0,\, x=0.
+\end{cases}\]
+\begin{enumerate}
+    \item f is inifinitely differentiable and $f^{(n)}(x)=0\,\forall n\in\mathbb{N}.$
+    \item f is not real analytic at $x=0$ since its Taylor series does not equal f on any nhbd of $0$.
+\end{enumerate}
+\end{example}
+
+\begin{theorem}[Abel's Theorem]
+    Let $f(x)=\sum_{n=0}^{\infty}c_n(x-a)^n$ be a power series with r.o.c. $0<R<\infty.$
+    \begin{enumerate}
+        \item If the series converges at $x=a+R$, then $f$ is continuous at $x=a+R$, i.e. $\lim_{x\rightarrow a+R^-}\sum_{n=0}^{\infty}c_n(x-a)^n = \sum_{n=0}^{\infty}c_n R^n.$
+        \item If the series converges at $x=a-R$, then $f$ is continuous at $x=a-R$, i.e. $\lim_{x\rightarrow a-R^+}\sum_{n=0}^{\infty}c_n(x-a)^n = \sum_{n=0}^{\infty}c_n (-R)^n.$
+    \end{enumerate}
+\end{theorem}
+
+Note that the theorem only states the boundary behavior of power series.
+For general series, convergence at the boundary does not imply continuity.
+
+
+\subsection*{Exponential and Logarithm Function}
+
+
+\begin{definition}[Exponential Function]
+    For every real number $x$, define $\exp(x)\coloneq \sum_{n=0}^{\infty}\frac{x^n}{n!}$.
+\end{definition}
+
+\begin{property}
+    The function $\exp(x)$ satisfies the following properties:
+    \begin{enumerate}
+        \item For every real number $x$, $\exp(x)$ is absolutely convergent. Moreover, $\exp(x)$ is real analytic on $(-\infty, \infty)$.
+        \item $\frac{d}{dx}\exp(x)=\exp(x).$
+        \item For each $[a,b]\subseteq \mathbb{R},\, \int_{a}^{b}\exp(x)dx = \exp(b)-\exp(a)$.
+        \item For $x,y\in\mathbb{R},\, \exp(x+y)=\exp(x)\exp(y).$
+        \item $\exp(0)=1,\,\exp(x)>0\,\forall x\in\mathbb{R},\, \exp(-x)=\frac{1}{\exp(x)}$.
+        \item $\exp(x)>\exp(y)$ if $x>y$.
+    \end{enumerate}
+\end{property}
+
+
+\begin{pf}
+    \begin{enumerate}
+        \item Use ratio test.
+        \item Real analytic function is smooth, differentiate the power series term by term.
+        \item Given (2), use FTC.
+        \item Use the Cauchy product of two series.
+        \item For the third part, use (4).
+        \item Apply $\exp(x)$ on $x-y>0$, and use (5). 
+    \end{enumerate}
+\end{pf}
+
+
+\begin{definition}[Euler Number]
+    Define $e\coloneq \exp(1)=\sum_{0}^{\infty}\frac{1}{n!}$.
+\end{definition}
+
+\begin{theorem}
+    For every real number $x$, $\exp(x)=e^x$.
+\end{theorem}
+
+\begin{pf}
+    \begin{enumerate}
+        \item For $x\in\mathbb{Z}$, use the property (4) and (5).
+        \item For $x\in\mathbb{Q},$ let $x=\frac{p}{q}$, consider $(\exp(\frac{p}{q}))^q.$
+        \item For $x\in\mathbb{R}\setminus\mathbb{Q},$ use sequential continuity.
+    \end{enumerate}
+\end{pf}
+
+
+
+\begin{definition}[Logarithm Function]
+    Define $\ln:(0,\infty)\rightarrow\mathbb{R}$ as the inverse function of $\exp(x)$.
+\end{definition}
+
+\begin{remark}
+    First justify $\exp(x)$ is a bijection, so the inverse function exists.
+\end{remark}
+
+\begin{property}
+    The function $\exp(x)$ satisfies the following properties:
+    \begin{enumerate}
+        \item $\frac{d}{dx}\ln(x)=\frac{1}{x}.$
+        \item For each $(a,b)\subseteq \mathbb{R},\, \int_{a}^{b}\frac{1}{x}dx = \ln(b)-\ln(a)$.
+        \item For $x,y\in (0,\infty),$ we have $\ln(x+y)=\ln(x)\ln(y).$
+        \item $\ln(1)=0,\, \ln(\frac{1}{x})=-\ln(x)\,\forall x\in (0,\infty)$.
+        \item For $x,y\in (0,\infty),\, \ln(x^y)=y\ln(x).$
+        \item For $x\in (-1,1),$ $\ln(1-x)=-\sum_{n=1}^{\infty}\frac{x^n}{n}$.
+        \item For $x\in (0,2),$ $\ln(x)=\sum_{n=1}^{\infty}\frac{(-1)^{n+1}(x-1)^n}{n}.$
+        \item For any $a>0,$ $\ln(x)$ is real analytic at $a$, where 
+        \[\ln(x)=\ln(a)+\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{a^n n}(x-a)^n.\]
+    \end{enumerate}
+\end{property}
+
+\begin{pf}
+    \begin{enumerate}
+        \item Let $y=\ln(x)$, then $x=\exp(y)$. Derive $\frac{dx}{dx}=\frac{d\exp(y)}{dx}=\exp(y)\frac{dy}{dx}.$
+        \item Exercise (FTC).
+        \item LHS: $\exp(\ln(xy))=xy$;\\
+              RHS: $\exp(\ln(x)+\ln(y))=\exp(\ln(x))\exp(\ln(y))=xy$. Note that $\exp(x)$ is injective.
+        \item Use (3).
+        \item LHS: $\exp(y\ln(x))=e^{y\ln(x)}=(e^{\ln(x)})^y = x^y$.\\
+              RHS: $\exp(\ln(x^y))=x^y$. Then use $\exp(x)$ is injective.
+        \item Consider $\frac{d\ln(1-x)}{dx}=\frac{-1}{1-x}$.
+        \item Change of variable $z=1-x$.
+        \item Change of variable $y=x-a$.
+    \end{enumerate}
+\end{pf}
+
+
+\subsection*{Trigonometric Function}
+
+\begin{definition}[Cosine and Sine Function]
+    Suppose $z\in\mathbb{C}$. Define:
+    \[
+    \begin{cases}
+        \cos(z)=\frac{e^{iz}+e^{-iz}}{2}\\
+        \sin(z)=\frac{e^{iz}-e^{-iz}}{2},
+    \end{cases}
+    \]
+    where \(i=\sqrt{-1}\).
+\label{tri_exp_def}
+\end{definition}
+
+\begin{theorem}[Euler's Formula]
+    For $z\in\mathbb{C},$ we have:
+    \[
+    \begin{cases}
+     e^{iz}=\cos(z)+i\sin(z)\\
+     e^{-iz}=\cos(z)-i\sin(z).    
+    \end{cases}
+    \]
+\end{theorem}
+
+\begin{pf}
+    Derive from the above definition.
+\end{pf}
+
+\begin{theorem}[Power Series of Cosine and Sine]
+    \begin{equation*}
+    \begin{split}
+        \cos(z)&=\sum_{n=0}^{\infty}\frac{(-1)^n z^{2n}}{(2n)!},\\
+        \\
+        \sin(z)&=\sum_{n=0}^{\infty}\frac{(-1)^n z^{2n+1}}{(2n+1)!}
+    \end{split}
+    \end{equation*}
+\label{tri_power_series}
+\end{theorem}
+
+\begin{pf}
+    Extend power series of exponential function to complex plane.
+    Derive the power series of $e^{iz}$, by Euler's formula, compare the real part and imaginary part.
+\end{pf}
+
+In particular, if $z\in\mathbb{R}$, we can obtain the similar results from above.
+
+\begin{property}
+Let $x,y\in\mathbb{R}$, we have:
+\begin{enumerate}
+    \item $\sin^2(x) + \cos^2(x) = 1;\, \sin(x)\in [-1,1], \cos(x)\in [-1,1]$.
+    \item $\sin^\prime(x)=\cos(x);\, \cos^\prime (x) = -\sin(x)$.
+    \item $\sin(-x)=-\sin(x);\, \cos(-x)=\cos(x)$.
+    \item $\sin(x+y)=\sin(x)\cos(y)+\cos(x)\sin(y);\\
+           \cos(x+y)=\cos(x)\cos(y)-\sin(x)\sin(y)$ 
+    \item $\sin(0)=0, \, \cos(0)=1$
+\end{enumerate}
+\end{property}
+
+\begin{pf}
+    \begin{enumerate}
+        \item For (1) and (2), compute directly using definition \eqref{tri_exp_def}.
+        \item For (3), use \eqref{tri_power_series}. This shows that sine is an odd function and cosine is an even function.
+        \item For (4), consider $e^{i(x+y)} = e^{ix}e^{iy}= \cos(x+y) + i\sin(x+y).$ 
+        \item For (5), use \eqref{tri_power_series}.        
+    \end{enumerate}
+\end{pf}
+
+\begin{exercise}
+    Basic trigonometric identities
+    \begin{enumerate}
+        \item $\sin(\pi-x)=\sin(x), \, \cos(\pi-x)=-\cos(x)$.
+        \item $\sin(x+\pi)=-\sin(x), \, \cos(\pi+x)=-\cos(x)$.
+        \item $\sin(x+2\pi)=\sin(x), \, \cos(x+2\pi)=\cos(x)$ ($2\pi$ periodic).
+        \item $\sin(x \pm \tfrac{\pi}{2}) = \pm \cos(x), \, \cos(x\pm\tfrac{\pi}{2}) = \mp\sin(x)$.
+        \item $\sin(2x)=2\sin(x)\cos(x), \, \cos(2x)=\cos^2(x)-\sin^2(x)$.
+    \end{enumerate}
+\end{exercise}
+
+
+
+\section{Fourier Series}
+
+\begin{definition}[Periodic Function]
+    Let $L$ be a positive real number.
+    A function $f:\mathbb{R}\rightarrow\mathbb{C}$ is said to be $L-$ periodic, 
+    if for every $x\in\mathbb{R},\, f(x+L)=f(x).$
+\end{definition}
+
+
+\begin{example}
+    $e^{2\pi inx}$ is 1-periodic, and so are $\cos(2\pi nx), \sin(2\pi nx)$.
+\end{example}
+
+
+\begin{remark}
+    $1-$periodic functions is also called $\mathbb{Z}-$periodic functions.
+\end{remark}
+
+\begin{definition}[Quotient Space $\mathbb{R}/\mathbb{Z}$]
+    Define an equivalence relation:
+    $x\sim y \Leftrightarrow x-y\in\mathbb{Z}$.
+    Then the equivalence class $[x]$ is given by:
+    $[x]=\{y:x-y\in\mathbb{Z}\}$.
+    So the quotient space $\mathbb{R}/\mathbb{Z} \cong [0,1)$.
+\end{definition}
+
+\begin{definition}[Supremum Metric on $C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$]
+ The set of continous complex-valued, $1-$periodic functions on $\mathbb{R}/\mathbb{Z}$ is denoted by $C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$.
+ Take $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$, $f(x)=f^1(x)+if^2(x),$ where $f^1, f^2$ are real-valued continous functions.
+ Define the supremum norm:
+ \begin{align*}
+     d_\infty(f,g)&=\sup_{x\in\mathbb{R}}|f(x)-g(x)|\\
+                  &=\sup_{[0,1]} |f(x)-g(x)|\\
+                  &=\sup_{[0,1]}\sqrt{(f^1(x)-g^1(x))^2+(f^2(x)-g^2(x))^2}.
+ \end{align*}
+
+\end{definition}
+
+\begin{theorem}
+    If $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$, then $f$ is bounded.
+\end{theorem}
+
+\begin{pf}
+     Take $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$, $f(x)=f^1(x)+if^2(x).$
+     For each $i=1,2$, there exists $M_i>0$ s.t. $|f^i(x)|\le M_i$ by EVT.
+     So $|f(x)|=\sqrt{(f^1(x))^2 + (f^2(x))^2}\le \sqrt{M^2_1 + M^2_2}$
+\end{pf}
+
+
+\begin{theorem}
+    If $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$, then $f$ is uniform continous.
+\end{theorem}
+
+\begin{theorem}
+Basic properties of $C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$:
+    \begin{enumerate}
+        \item $C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$ over $\mathbb{C}$ is a vector space.
+        \item $(C(\mathbb{R}/\mathbb{Z}; \mathbb{C}), d_\infty)$ is a complete metric space.
+    \end{enumerate}
+\end{theorem}
+
+\begin{pf}
+    \begin{enumerate}
+        \item Verify the basic 10 axioms from linear algebra.
+        \item The plan goes as following:
+        \begin{enumerate}
+            \item Take any Cauchy $(f_n)^{\infty}_{n=1}$ in $C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$ and deduce the Cauchy sequence of $(f^i_n)^{\infty}_{n=1}$ in $C(\mathbb{R}/\mathbb{Z}; \mathbb{R}),\, i=1,2$.
+            \item Use the completeness of $(C(\mathbb{R}/\mathbb{Z}; \mathbb{R}) ,d_\infty)$ to show $f^n\rightarrow f$ uniformly.
+            \item Show $f$ is continuous, we need to fix a sufficient large $N$ and arbitrary $x_0\in [0,1]$.
+            \item Show $f$ is $1-$periodic by $|f(x+1)-f(x)|\le |f_n(x+1)-f(x)| + |f_n(x+1)-f_n(x)| + |f_n(x)-f(x)|.$
+        \end{enumerate}
+    \end{enumerate}
+\end{pf}
+
+\begin{definition}[Inner Product]
+Let $f,g\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$, 
+we define $\langle \cdot, \cdot \rangle: C(\mathbb{R}/\mathbb{Z}; \mathbb{C})\times C(\mathbb{R}/\mathbb{Z}; \mathbb{C}) \rightarrow \mathbb{C}$ by:
+\[
+\langle f, g \rangle = \int_0^1 f(x) \, \overline{g(x)} \, dx.
+\]
+\end{definition}
+
+\begin{property}
+Let $f,g,h\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$:
+\begin{enumerate}
+    \item (Hermitian property) $\langle g,f \rangle = \langle \overline{f,g} \rangle$
+    \item (Positivity) $\langle f,f \rangle \geq 0$. In particular, $\langle f,f \rangle = 0 \leftrightarrow f=0$.
+    \item (Linearity in 1st component) $\langle f+g, h \rangle = \langle f,h \rangle + \langle g,f \rangle, \quad \langle cf,g \rangle = c\langle f,g \rangle$.
+    \item (Anti-linearity in 2nd component) $\langle f, g+h \rangle = \langle f,g \rangle + \langle f,h \rangle, \quad \langle f,cg \rangle = \overline{c}\langle f,g \rangle$.
+\end{enumerate}
+\end{property}
+
+
+\begin{definition}[$L^2$ Norm]
+    For $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$, we define
+    \[
+    \|f\|_{2} \coloneq \sqrt{\langle f,f\rangle}= \left(\int_0^1 f(x) \, \overline{f(x)} \, dx \right)^{1/2} = \left(\int_0^1 |f(x)|^2 \, dx\right)^{1/2}.
+    \]
+\end{definition}
+
+
+\begin{theorem}
+    Let $f,g\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$:
+    \begin{enumerate}
+        \item (Non-degeneracy) $\|f\|_{2} = 0 \leftrightarrow \langle f,f \rangle = 0 \leftrightarrow f=0$.
+        \item (Cauchy-Schwarz inequality) $|\langle f,g\rangle|\leq \|f\|_{2} \|g\|_{2}.$
+        \item (Triangle inequality) $\|f+g\|_{2}\le \|f\|_{2} + \|g\|_{2}.$
+        \item (Pythagora's theorem) If $\langle\ f,g \rangle = 0$, then $\|f+g\|_{2}^2 = \|f\|_{2}^2 + \|g\|_{2}^2$.
+        \item For any $c\in\mathbb{C}, \|cf\|_{2} = |c|\|f\|_{2}.$
+    \end{enumerate}
+\end{theorem}
+
+\begin{pf}
+Property (1),(5) can be derived through direct compuation.
+For Cachy-Schwarz inequality, we prove the real case first.
+\begin{enumerate}
+    \item For any $\lambda\in\mathbb{R}$, consider $g(\lambda) = \int_{0}^{1}(u(x)-\lambda v(x))^2 dx>0\,\forall u,v\in C(\mathbb{R}/\mathbb{Z}; \mathbb{R}).$ 
+    \item Note $g>0$ and with positive leading coefficient, then we can derive the Cauchy inequality for real case.
+    \item Next, show $|\int_{0}^{1}f(x)dx|\leq \int_{0}^{1}|f(x)|dx\,\forall f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C}).$
+     Let $I = \int_{0}^{1}f(x)dx$ and $c=\frac{\overline{I}}{|I|}$, $cI=|I|\in\mathbb{R}$.
+     Since $cI=\int_{0}^{1}\operatorname{Re}(cf(x))dx + \int_{0}^{1}\operatorname{Im}(cf(x))dx,$ which implies $Im(cf(x))=0.$
+     $|cI| = |\operatorname{Re}(cf)|\leq|cf(x)| =(\operatorname{Re}(cf)^2 + \operatorname{Im}(cf)^2 )^{1/2}$.
+     So $|I| = |cI| = |\int_{0}^{1}\operatorname{Re}(cf(x))dx|\le \int_{0}^{1}|\operatorname{Re}(cf(x))|dx\le \int_{0}^{1}|cf(x)|dx = \int_{0}^{1}|c||f(x)|dx,$ where $|c|=1$.
+    \item Now consider $|\int_{0}^{1}f\bar{g}dx|\le \int_{0}^{1}|f||g|dx = \left|\int_{0}^{1}|f||g|dx\right|<(\int_{0}^{1}f^2 dx)^{1/2} + (\int_{0}^{1}g^2 dx)^{1/2}.$  
+     This completes the proof of complex version.
+\end{enumerate}
+For triangle inequality, we prove property (3) and (4) is just a special case:
+\begin{enumerate}
+    \item Calculate $\|f+g\|_{2}^2$ and obtain $\langle f,g\rangle + \langle g, f\rangle$.
+    \item Consider $\langle f,g\rangle + \langle g, f\rangle = 2|\operatorname(Re)(\langle f,g\rangle)|\le 2|\langle f,g\rangle|\le 2\|f\|_{2}\|g\|_{2}$.
+    \item Note that $\|f+g\|_{2}^2=\|f\|_{2}^2+\|g\|_{2}^2+\langle f,g\rangle + \langle g, f\rangle \leq \|f\|_{2}^2+\|g\|_{2}^2 + 2\|f\|_{2}\|g\|_{2} = (\|f\|_{2}^2+\|g\|_{2}^2)^2$.
+\end{enumerate}
+\end{pf}
+
+
+
+\begin{definition}[$L^2$ metric]
+    Let $f,g\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$
+    We define
+    \[d_{L^2}(f,g):
+    \|f-g\|_{2} = (\int_{0}^{1}|f(x)-g(x)|^2 dx)^{1/2}
+    \]
+\end{definition}
+
+\begin{exercise}
+    Show that $(C(\mathbb{R}/\mathbb{Z}; \mathbb{C}), d_{L^2})$ is not complete by a counterexample.
+\end{exercise}
+
+
+
+\begin{definition}[Trigonometric Polynomial]
+A function $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$ is called trigonometric polynomial is the form of
+\[f(x)=\sum_{n=-N}^{N}c_n e_n(x),\] where:
+\begin{enumerate}
+    \item $e_n(x)=e^{2\pi inx}$ is called the charcter of frequency $n$ and $1-$ periodic.
+    \item $c_n=\hat{f}(n)=\int_{0}^{1}f(x)e^{-2\pi inx}dx$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    For any integers $n,m$, we have
+    \[\langle e_n(x), e_m(x)\rangle=
+    \begin{cases}
+        1, \text{ if } i=j,\\
+        0, \text{ if } i\neq j.
+    \end{cases}
+    \]
+    This shows that charcters form an orthonormal basis for Fourier series.
+\end{theorem}
+
+\begin{definition}[Fourier Transformation]
+Let $f\in  C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$.
+The $n$-th Fourier coefficient of $f$ is defined by:
+\[
+\hat{f}(n) = \int_{0}^{1}f(x)e^{-2\pi inx}dx.
+\] 
+The mapping $\hat{f}:\mathbb{Z}\rightarrow\mathbb{C}$ is called the Fourier transformation of $f$.
+\end{definition}
+
+
+\begin{theorem}
+    Let $f(x)=\sum_{n=-N}^{N}c_n e_n(x)$ be a trigonometric polynomial, 
+    where 
+    \[c_n=\hat{f}(n) = \langle f,e_n\rangle = \int_{0}^{1}f(x)e^{-2\pi inx} dx.\]
+    Then we have:
+    \begin{enumerate}
+        \item (Inversion Formula) $f(x)=\sum_{n=-N}^{N}\hat{f}(n)e_n = \sum_{n=-N}^{N}\hat{f}(n)e^{2\pi inx} = \sum_{n=-\infty}^{\infty}\hat{f}(n)e^{2\pi inx}$.
+        \item (Plancherel Formula) $\|f\|^2_2 = \sum_{n=-N}^{N}|c_n|^2 = \sum_{n=-N}^{N}|\hat{f}(n)|^2 = \sum_{n=-\infty}^{\infty}|\hat{f}(n)|^2.$
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    If $f$ is a trigonometric polynomial, it has only finitely many non-zero Fourier coefficients by construction. In particular,
+    \[\hat f(k) =
+    \begin{cases}
+        c_k, & |k| \le N, \\
+        0, & |k| > N.
+\end{cases}\]
+So the infinite sum is equivalent to finite sum.
+\end{remark}
+
+\begin{definition}[Fourier Series for 1-Periodic]
+ The Fourier series of $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$ is defined by:
+ \[
+  F(x)=\frac{1}{2}a_0 + \sum_{n=1}^{\infty} \left(a_n \cos(2\pi nx)+b_n \sin(2\pi nx)\right),
+ \] 
+ where:
+ \begin{enumerate}
+    \item $a_0=2\int_{0}^{1}f(x)dx,$
+    \item $a_n=2\int_{0}^{1}f(x)\cos(2\pi nx)dx,$
+    \item $b_n=2\int_{0}^{1}f(x)\sin(2\pi nx)dx$.
+ \end{enumerate}
+\end{definition}
+
+\begin{remark}
+ The definition of Trigonometric polynomial and truncated Fourier series are equivalent.
+ We can fix a integer $N$, express $e^{2\pi inx}=\cos(2\pi nx)+i\sin(2\pi nx)$ and $e^{2\pi i(-n)x} = \cos{2\pi nx}-i\sin(2\pi nx)$.
+ Additionally, we can use the change of variable to express Fourier series for $2\pi-$ periodic.
+ Let $t=2\pi x$, $G(t)=F(\frac{t}{2\pi})$ and $g$ is $2-\pi$ periodic, we have:
+ \[
+  G(t)=\frac{1}{2}A_0 + \sum_{n=1}^{N} \left(A_n \cos(nt)+B_n \sin(nt)\right),
+ \] 
+ where
+ \begin{enumerate}
+    \item $A_0=\frac{2}{\pi}\int_{0}^{2\pi}g(t)dt,$
+    \item $A_n=\frac{1}{\pi}\int_{0}^{2\pi}g(t)\cos(nt)dt = \frac{1}{\pi}\int_{-\pi}^{\pi}g(t)\cos(nt)dt,$
+    \item $B_n=\frac{1}{\pi}\int_{0}^{2\pi}g(t)\sin(nt)dt = \frac{1}{\pi}\int_{-\pi}^{\pi}g(t)\sin(nt)dt$.
+ \end{enumerate}
+
+ Alternatively, we have:
+ \[G(t) = \sum_{-N}^{N} \tilde{c}_n e^{int},\]
+ 
+where 
+\[\tilde{c}_n = \frac{1}{2\pi}\int_{-\pi}^{\pi}g(t) e^{-int}dt.\]
+
+The question is whether $G$ converges to $g$ in what sense ($L_2$, pointwise or uniform convergence) as $N\rightarrow\infty$ ?
+\end{remark}
+
+
+\begin{definition}[Periodic Convolution]
+Let $f,g\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$. 
+Define the periodic convolution $f*g:\mathbb{R}\rightarrow\mathbb{C}$ by
+\[
+(f * g)(x) = \int_{0}^{1} f(y)\, g(x-y)\, dy.
+\]
+\end{definition}
+
+\begin{exercise}
+    Show that periodic convolution is a linear transformation.
+\end{exercise}
+
+
+\begin{property}
+Let $f,g,h\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$:
+\begin{enumerate}
+    \item (Closure under convolution) $f*g\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C}).$
+    \item (Commutativity) $f*g = g*f$
+    \item (Bilinearity) Fix $h, \,(f+g)*h = f*h + g*h$; fix $f, \, f*(g+h)=f*g + f*h$; $c(f*g)=(cf)*g=f*(cg).$
+\end{enumerate}    
+\end{property}
+
+\begin{pf}
+Hint: To show $f*g$ is continous, we need to use $f$ is bounded and $g$ is uniform continous.
+\end{pf}
+
+
+\begin{theorem}
+    For any $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C}),$
+    $f*e_n=\hat{f}(n)e_n(x),$ where $\hat{f}(n)=\int_{0}^{1}f(y)e^{-2\pi ny}dy$.
+\end{theorem}
+
+\begin{exercise}
+Define $T_f:  C(\mathbb{R}/\mathbb{Z}; \mathbb{C})\rightarrow  C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$ by
+$(T_f g)(x)=(f*g)(x)$ with the fixed $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$.
+Show that $T$ is a linear map and $e_n$ is an eigenvector of  w.r.t eigenvalue $\hat{f}(n)$.
+\end{exercise}
+
+\begin{lemma}
+    Let $P = \sum_{-N}^{N}c_n e_n$ be a trigonometric polynomial, then $(f*P)(x) = \sum_{-N}^{N}c_n\hat{f}(n)e_n$.
+\end{lemma}
+
+
+\begin{definition}
+    Let $\epsilon>0$ and $0<\delta<\frac{1}{2}$. A function $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$ is called periodic $(\epsilon, \delta)$ approximation to identity if:
+    \begin{enumerate}
+        \item $f(x)>0\,\forall x\in\mathbb{R}$ and $\int_{0}^{1} f(x)=1$.
+        \item $f(x)<\epsilon\, \forall x\in[\delta, 1-\delta]$.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[Fejer kernal]
+    For each integer $N\geq 1$, define
+    \[F_N(x)\coloneq \sum_{-N}^{N}\left(1-\frac{|n|}{N}\right)e_n.\]
+    Alternatively, the Fejer can be written as
+    \[F_N(x) = \frac{1}{N}\left|\sum_{k=0}^{N-1}e_k(x)\right|^2\]
+    since
+    \begin{equation*}
+        \begin{split}
+            F_N(x) &= \frac{1}{N}\sum_{k=0}^{N-1}e_k(x)\overline{\sum_{l=0}^{N-1}e_l(x)}\\
+             &= \frac{1}{N}\sum_{k=0}^{N-1}\sum_{l=0}^{N-1}e_k(x)\overline{e_l(x)}\\
+             &= \frac{1}{N}\sum_{k=0}^{N-1}\sum_{l=0}^{N-1}e_{k-l}(x)\\
+             &= \frac{1}{N}\sum_{m=-(N-1)}^{N-1}\left(N-|m|\right)e_m(x)=\sum_{m=-(N-1)}^{N-1}\left(1-\frac{|m|}{N}\right)e_m(x), 
+        \end{split}
+    \end{equation*}
+where $m=k-l$.
+\end{definition}
+
+
+\begin{remark}
+    For $x\in\mathbb{Z}$,
+    \[F_N(x) = \frac{1}{N}\left|\sum_{k=0}^{N-1}e_k(x)\right|^2 = F_N(x) = \frac{1}{N}\left|\sum_{k=0}^{N-1}1\right|^2 = N.\]
+    
+    For $x \notin\mathbb{Z}$,
+    We can simplify $F_N(x)$ by computing:
+    \begin{align*}
+    \sum_{k=0}^{N-1}e_k(x)&=\sum_{k=0}^{N-1}e^{2\pi ikx} = \frac{e^{2\pi iNx}-1}{e^{2\pi ix}-1}\\
+     &= \frac{e^{\pi iNx}-e^{-\pi iNx}}{e^{\pi ix}-e^{-\pi ix}}\frac{e^{\pi iNx}}{e^{\pi ix}} = e^{\pi i(N-1)x}\frac{\sin(\pi Nx)}{\sin(\pi x)}. 
+    \end{align*}
+
+    So 
+    \begin{align*}
+        F_N(x) &= \frac{1}{N}\left|\sum_{k=0}^{N-1}e_k(x)\right|^2\\
+        & = \frac{1}{N}\underbrace{\left|e^{2\pi i(N-1)x}\right|}_{1}\left|\frac{\sin^2(\pi Nx)}{\sin^2(\pi x)}\right| 
+    \end{align*}
+
+\end{remark}
+
+
+\begin{theorem}
+    Let $\epsilon>0$ and $0<\delta<\frac{1}{2}$.
+    There exists a trigonometric polynomial $P$ which is a periodic $(\epsilon, \delta)$ approximation to identity.
+\end{theorem}
+
+\begin{pf}
+    Consider the Fejer kernal. Want to show Fejer kernal is indeed a approximation to identity.
+\begin{enumerate}
+    \item Compute 
+    \[
+    \int_{0}^{1}F_N(x)dx =  \sum_{-N}^{N}\left(1-\frac{|n|}{N}\right)e_n = (1-\frac{0}{N})\cdot 1 = 1,
+    \]
+
+    where
+    \[
+    \int_{0}^{1}e^{2\pi inx} dx = \begin{cases}
+        1, \text{ if } n = 0,\\
+        0, \text{ if } n \neq 0.
+    \end{cases}
+    \]
+
+    \item Fix $\epsilon>0,\, 0<\delta<\frac{1}{2}$ and $\delta<|x|<\frac{1}{2}<1-\delta$.
+    Derive $\sin(\pi\delta)<\sin(\pi x)<1,$ then we have:
+    \[
+    F_N(x) = \frac{1}{N}\left|\frac{\sin^2(\pi Nx)}{\sin^2(\pi x)}\right|\le \frac{1}{N}\frac{1}{\sin^2(\pi\delta)},
+    \]
+    we can choose sufficient large $N$ to satisfy the inequality.
+\end{enumerate}
+\end{pf}
+
+\begin{theorem}[Weierstrass Approximation for Trigonometric Polynomial]
+    Let $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$. $\forall\epsilon>0,\,\exists$ a trigonometric polynomial $P\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$
+    s.t. $\| f-p \|_{\infty}<\epsilon$.
+\end{theorem}
+
+\begin{remark}
+    This theorem implies that the set of trigonometric polynomial is dense in $C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$ w.r.t $d_\infty$.
+\end{remark}
+
+
+\begin{pf}
+Fix $\epsilon>0$.
+\begin{enumerate}
+    \item $f$ is bounded (Why?), there exists $M>0$ s.t. $|f(x)|\leq M$.
+    \item $f$ is uniformly continous (Why?), there exists $\delta>0$ s.t. $|f(x)-f(y)|<\frac{\epsilon}{4}$ whenever $|x-y|<\delta$.
+    \item Let $P$ be a trigonometric polynomial which is $(\frac{\epsilon}{4M},\delta)$ approximation to the identity.
+    \item $(f*P)(x)$ is also a trigonometric polynomial (Why?) and $(f*P)(x) = (P*f)(x)$.
+    \item Goal:
+    \begin{align*}
+    &\left|f(x)-(f*P)(x)\right| = \left|f(x)-(P*f)(x)\right| \\
+    &= \left| f(x) \int_{0}^{1} P(y)dy - \int_{0}^{1}P(y)f(x-y)dy\right|\\
+    &\leq \int_{0}^{\delta}\left|f(x)-f(x-y)\right|P(y)dy \text{ (Use uniform continuity)}\\
+    &+ \int_{\delta}^{1-\delta}\left|f(x)-f(x-y)\right|P(y)dy \text{ (Use Approximation to identity and boundedness)}\\
+    &+\int_{1-\delta}^{1}\left|f(x)-f(x-y)\right|P(y)dy \text{ (Use uniform continuity)}\\
+    &\le \frac{\epsilon}{4} + 2M\frac{\epsilon}{4M} + \frac{\epsilon}{4} =\epsilon.
+    \end{align*}
+\end{enumerate}
+\end{pf}
+
+\begin{theorem}[Fourier Theorem]
+    For any $f \in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$, the series $\sum_{n\in\mathbb{Z}}\hat{f}(n)e_n$ converges to $f$ in $L^2$ metric,
+    i.e. for $\epsilon>0,$
+    \[\lim_{N\rightarrow\infty}\left\|f-\sum_{n=-N}^{N}\hat{f}(n)e^{2\pi inx}\right\|_{L^2}<\epsilon.\]
+\end{theorem}
+
+\begin{pf}
+    \begin{enumerate}
+        \item By Weierstrass approximation, there exists a trig polynomial $P$ s.t. $\| f-p \|_{\infty}<\epsilon$, which implies $\| f-p \|_{L^2}<\epsilon$.
+        \item Show that $\langle f-F_N, e_k\rangle = 0$ for each integer $k$, i.e. $f-F_N\perp \{e_k\}^{N}_{k=-N}$.
+        \item For $N\ge N_0$, $P$ and $F_N$ lie in the subspace spanned by $\{e_k\}^{N}_{k=-N}$. Show that $\langle f-F_N, P-F_N\rangle = 0.$
+        \item By Pythagoras theorem, $\left\|f-F_N\right\|^2_{L^2} = \left\|f-P\right\|^2_{L^2} + \left\|P-F_N\right\|^2_{L^2} \Rightarrow \left\|f-F_N\right\|_{L^2} \le \left\|f-P\right\|_{L^2} \le \left\|f-P\right\|_{\infty}<\epsilon.$
+    \end{enumerate}
+\end{pf}
+
+\begin{theorem}
+    If $f\in  C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$ and the Fourier coefficients of $f$ s.t.
+    $\sum_{n=-\infty}^{\infty}\left|\hat{f}(n)\right|<\infty$, then the Fourier series $F_N = \sum_{n=-N}^{N}\hat{f}(n)e_n$ converges to $f$ uniformly.
+\end{theorem}
+
+\begin{pf}
+\begin{enumerate}
+    \item $\sum_{n=-N}^{N}\left|\hat{f}(n)e_n\right| = \sum_{n=-N}^{N}\left|\hat{f}(n)\right|$. (Why?)
+    \item By assumption $\sum_{n=-N}^{N}\left|\hat{f}(n)e_n\right|<\infty$. Then by Weierstrass M-test, $F_n\rightarrow F$ uniformly for some $F\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C}),$ which implies $F_n\in F$ in $L^2$ metric.
+    \item By Fourier's theorem $F_N\rightarrow f$ in $L^2$ metric.    
+    \item By uniqueness of limit or triangle inequality, $F=f$.
+\end{enumerate}    
+\end{pf}
+
+\end{document}

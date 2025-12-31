@@ -1,0 +1,1498 @@
+\documentclass[12pt]{article}
+\RequirePackage{style}
+\title{Linear Algebra Notes}
+\author{Yin-Yun Li\thanks{Undergraduate student, Department of Economics, National Taiwan University. Please feel free to contact me at \texttt{b10302331@ntu.edu.tw} with any comments or corrections.}}
+\date{Fall 2025}
+
+\begin{document}
+\maketitle
+
+These notes are based on the course \emph{Introduction to Linear Algebra (Math4018)} taught by Prof. Kowk-Wing Tsoi at the Department of Mathematics, NTU. 
+The structure follows the material prepared by Prof. Tsoi, with some adjustments and simplifications to aid exercises and comprehension. 
+The details and complete arguments are documented in my handwritten notes.
+
+
+
+
+\newpage
+\tableofcontents
+
+
+\newpage
+\section{Fields and Vector Space}
+
+Fields generalize the concepts of scalars. A set $F$ is called a field if we can define addition and multiplication operations to satisfy $11$ axioms.
+\begin{exercise}
+Write down the 11 axioms (5+5+1). These rules ensure we can add, subtract, multiply and divide by non-zero element in the field.
+\end{exercise}
+
+\begin{example}
+    Some non-examples of fields:
+    \begin{enumerate}
+        \item $\mathbb{Z}$ is not a field (division).
+        \item $M_n(\mathbb{R})$ is not a field (commutativity under multiplication).
+    \end{enumerate}
+\end{example}
+
+A set $V$ is called a vector space over a field $F$ if the space endowed with two operations satisfies 10 axioms.
+\begin{exercise}
+Write down the 10 axioms (5+5). 
+These rules help us determine whether a given space is a vector space.
+\end{exercise}
+
+\begin{example}
+    Let $F$ be a field ($\mathbb{R}, \mathbb{C}, \mathbb{Q}, F_2$).
+    $F^n = \{(x_1,x_2,\cdots x_n)\}$ is a vector space over $F$.
+    In general, if two fields $F_1\subseteq F_2$, then $F_2$ is a vector space over $F_1$.
+\end{example}
+
+
+\begin{exercise}
+    Prove for each $\mathbf{v}\in V$, its additive inverse $-\mathbf{v}$ is unique.
+\end{exercise}
+\begin{pf}
+Suppose $\exists\,\mathbf{v'}\neq \mathbf{v''}$ be two additive inverse of $\mathbf{v}.$
+Use $\mathbf{0}$ to relate $\mathbf{v'}=\mathbf{v''}.$
+\end{pf}
+
+
+Use the axioms to derive the related property:
+\begin{property}
+Let $V$ be a vector space over $F$. Let $\mathbf{v}\in V$ and $a\in F$.
+\begin{enumerate}
+    \item $0\cdot\mathbf{v}=\mathbf{0}$
+    \item $a\cdot\mathbf{0}=\mathbf{0}$
+    \item $(-a)\mathbf{v} = -(a\mathbf{v})$
+    \item $a(-\mathbf{v}) = -(a\mathbf{v})$
+\end{enumerate}
+\end{property}
+
+\begin{pf}
+    The first two: let LHS be a vector $\mathbf{w}$, and use $\mathbf{w}+\mathbf{w}=\mathbf{w}$ to show $\mathbf{w}=\mathbf{0}.$
+    The last two: use the uniqueness of additive inverse and the result of 1, 2.
+\end{pf}
+
+
+\begin{definition}
+Let $V$ be a vector space over $F$. $W\subseteq V$ is a subspace of $V$ if $W$ is also a vector space over $F$ with addition and scalar multiplication inherited from V.
+\end{definition}
+
+\begin{exercise}
+    Write down the sufficient and necessarily condition of a subspace.
+\end{exercise}
+
+\begin{theorem}[Subspace of $\mathbb{R}^n$]
+    Let $A$ be a $m$ by $n$ matrix. Then the solution space of a homogeneous linear system of equations:
+    \[W=\{\mathbf{v}\in \mathbb{R}^n: A\mathbf{v}=\mathbf{0}\}\]
+    forms a subspace of $\mathbb{R}^n$.
+\end{theorem}
+
+\begin{pf}
+    We can prove $W$ is a subspace directly using the above theorem.
+    Alternatively, consider a linear transformation $f: \mathbb{R}^n\rightarrow\mathbb{R}^m$, the matrix $A$ is exactly the matrix representing $f$.
+    By construction, $W$ is the kernal of $f$. $ker(f)$ is a subspace of domain $\mathbb{R}^n$ (We will prove this in the future).
+\end{pf}
+
+\begin{theorem}
+Fix a positive integer $n$. The subset of trace-free matrices:
+\[W=\{A\in M_n(F): tr(A)=0\}\]
+forms a subspace of $M_n(F)$.
+\end{theorem}
+
+\begin{pf}
+    This proof is similar to the previous one and left as an exercise.
+\end{pf}
+
+\begin{example}
+    Differentiable function space is a subspace of continuous function space. This is an easy exercise.
+\end{example}
+
+\begin{theorem}
+    Intersection of subspaces is also a subspace.
+\end{theorem}
+\begin{pf}
+    Left as an exercise.
+\end{pf}
+
+\begin{example}
+    Consider a vector space $M_n(F)$, $W_1$ be a symmetric matrices, and $W_2$ be a upper-triangular matrices.
+    The intersection $W_1\cap W_2$ is a diagonal matrices, which is a subspace of the $n-$square matrices vector space. 
+\end{example}
+
+Lastly, we introduce some concepts earlier.
+\begin{property}
+Reminder: 
+\begin{enumerate}
+    \item Union of two subspaces is not necessarily a subspace.
+    \item Intersection of two subspaces is a subspace.
+    \item The sum of two subspaces is the smallest subspace containing both.
+    \item Spanning set is a subspace.
+\end{enumerate}
+\end{property}
+
+\newpage
+\section{Basis and Dimension}
+
+Let $V$ be a (finite-dimension) vector space over a field $F$.
+Let $S=\{\mathbf{v}_1,\mathbf{v}_2,\ldots,\mathbf{v}_n\}$ be a finite subset of $V$.
+
+\begin{definition}[Linear Combination]
+    Any vector of the form
+    \begin{align*}
+        a_1\mathbf{v_1}+a_2\mathbf{v}_2+\cdots+a_n\mathbf{v}_n\ \text{ where } a_i\, \in F
+    \end{align*}
+    is called a linear combination of $S$.
+\end{definition}
+
+\begin{definition}[Linear Independence]
+    \begin{align*}
+        a_1\mathbf{v_1}+a_2\mathbf{v}_2+\cdots+a_n\mathbf{v}_n=\mathbf{0}\ \text{ implies }\, a_i =0 ,\ i=1,2,\ldots,n
+    \end{align*}
+The only way to express the zero vector as a linear combination of $S$ is to take all scalars to zeros.
+\end{definition}
+
+S is linear dependent if it is not linearly independent.
+
+\begin{theorem}
+   S is linearly dependent iff either $\mathbf{v}_1=0$ or for some $r$,
+   $\mathbf{v}_r$ is a linear combination of the preceding vectors $\mathbf{v}_1,\mathbf{v}_2,\ldots,\mathbf{v}_{r-1}$.
+\label{linear-dependent-algorithm}
+\end{theorem}
+
+
+\begin{tcolorbox}[boxrule=0.5pt]
+\begin{pf}
+($\Rightarrow$) Let $r$ be the largest integer such that $a_r\neq 0$.\\
+($\Leftarrow$) There exists a linear combination and show that the scalars are not all zeors.
+\end{pf}
+\end{tcolorbox}
+
+\begin{definition}[Linear Span]
+    The set of all linear combinations of $S$ is:
+    \begin{align*}
+        span(S)=\{a_1\mathbf{v_1}+a_2\mathbf{v}_2+\cdots+a_n\mathbf{v}_n:a_i\in F\}.
+    \end{align*}
+\end{definition}
+
+Note that \textcolor{red}{$\text{span}(\emptyset)=\{\mathbf{0}\}$}.
+
+\begin{theorem}
+    $span(S)$ is a subspace of $V$.
+\end{theorem}
+
+\begin{definition}[Spanning / Generating Set]
+    We say that $S$ spans $V$ / $S$ is a spanning/generating set of $V$
+     if $span(S)=V$.
+\end{definition}
+For every $\mathbf{v} \in V$ can be expressed as a linear combination of $S$.
+
+\begin{definition}[Basis]
+    A subset $S$ of $V$ is a basis of $V$ if
+    \begin{enumerate}
+        \item $S$ is linearly independent.
+        \item $S$ spans $V$.
+    \end{enumerate}
+\end{definition}
+If $S$ is a finite set, then $V$ is finite-dimensional.
+Otherwise, $V$ is infinite-dimensional.
+Additionally, a basis is not unique.
+
+
+\begin{pbox}
+\begin{remark}
+ If $S$ spans $V$ and $\mathbf{w}\in S$, then $\{\mathbf{w}\}\cup S$ is not linearly independent.
+ Conversely, if $\mathbf{w}\notin S$, then $\{\mathbf{w}\}\cup S$ is still linearly independent.
+\end{remark}
+\end{pbox}
+
+
+
+\begin{theorem}
+    Suppose $S$ is a basis of $V$.
+    Then for every $\mathbf{v}\in V,$ there exists a unique collection of scalars $a_1,a_2,\ldots,a_n$ such that
+    \begin{align*}
+        \mathbf{v}=a_1\mathbf{v_1}+a_2\mathbf{v}_2+\cdots+a_n\mathbf{v}_n.  
+    \end{align*}
+\end{theorem}
+\begin{tcolorbox}[boxrule=0.5pt]
+\begin{pf}
+When we want to show the uniqueness, we could prove by contradiction.
+That is, fix a vector which could be expressed as two different linear combinations of $S$.
+\end{pf}
+\end{tcolorbox}
+
+\begin{definition}[Coordinates of vector]
+    Fix an order of elements in a basis $S$.
+    We call $(a_1,a_2,\ldots a_n)$ is the coordinates of $\mathbf{v}$ w.r.t the basis $S$.
+\end{definition}
+
+The coordinates are denoted by $[\mathbf{v}]_S = (a_1,a_2,\ldots, a_n)$,
+and the same vector could have different coordinates w.r.t different bases or
+different orders of the same basis.
+
+
+\begin{definition}[Dimension]
+    Suppose $V$ is finite-dimensional vector space.
+    The dimension of $V$ is the size of a /any basis of $V$.
+    \begin{align*}
+        \dim_F(V) = |S|,
+    \end{align*}
+where $S$ is a basis of $V$, $|\cdot|$ represents the size / cardinality of a set.
+\end{definition}
+
+Note that \textcolor{red}{$\text{span}(\emptyset)=\{\mathbf{0}\}$}.
+The empty set spans zero vector space, and the empty set forms a basis of $\{\mathbf{0}\},\ \dim_F(\{\mathbf{0}\})=|\emptyset|=0$.
+So zero vector space is the only zero-dimensional vector space.
+
+\begin{theorem}[Exchange / Replacement Theorem]
+    Suppose $S_1=\{\mathbf{v}_1,\mathbf{v}_2, \ldots ,\mathbf{v}_n\}$ is a spanning set of $V$ and
+    $S_2=\{\mathbf{w}_1, \mathbf{w}_2, \ldots ,\mathbf{w}_m\}$ is linearly independent.
+    Then $m\leq n$.
+\end{theorem}
+
+\begin{theorem}
+    Let $V$ be a vector space over $F$ and $W$ be a subspace of $V$. Then $dim_F(W)\leq dim_F(V)$.
+\end{theorem}
+
+\begin{pf}
+    If $V$ is infinite-dimensional, there is nothing to prove.
+    Now suppose $V$ is finite-dimensional. Claim: $W$ must be finite-dimensional.
+    Suppose, by contradiction, there exists a subspace with an infinite basis $B_W$. $B_W$ is linearly independent in $V$. 
+    Let $B_V$ be a basis of $V$, which is a finite-dimensional spanning set in $V$. By replacement theorem, which is a contradiction.
+    Note the above argument uses the axiom of choice.
+\end{pf}
+
+\begin{theorem}
+    If both $S_1$ and $S_2$ are both bases of $V$, then $|S_1|=|S_2|$.
+\end{theorem}
+\begin{tcolorbox}[boxrule=0.5pt]
+\begin{pf}  
+    Recall the definition of basis.
+    Apply the exchange theorem to $S_1$ and $S_2$ from the 'both' sides.
+\end{pf}
+\end{tcolorbox}
+
+
+\begin{theorem}
+    Let $V$ be a vector space of dimension $n$ and $S\subseteq V$ be a subset.
+    \begin{enumerate}
+        \item If $|S|>n$, then $S$ is linearly dependent.
+        \item If $|S|<n$, then $S$ does not span $V$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{tcolorbox}[boxrule=0.5pt]
+\begin{pf}  
+    \begin{enumerate}
+    \item Suppose, by contradiction, that $S$ is linearly independent. 
+    Let $B$ be any basis of $V$. We have $|B|=n$.
+    By the exchange theorem, $|S|\leq|B|=n$, which is a contradiction.
+    Thus $S$ is linearly dependent.
+    \item Suppose, by contradiction, that $S$ spans $V$.
+    Let $B$ be any basis of $V$. We have $|B|=n$.
+    $B$ is linearly independent and $S$ spans $V$,
+    by the exchange theorem, $|B|=n\leq|S|$, this contradicts $|S|<n$.
+    \end{enumerate}
+\end{pf}
+\end{tcolorbox}
+
+The proof from the above theorem provides a refined version of the exchange theorem:
+\begin{theorem}[Refined Exchange / Replacement Theorem]
+Let $T$ be any linearly independent subset of $V$.
+Let $B$ be any basis of $V$.
+Let $S$ be any spanning set of $V$.
+Then $|T|\leq|B|\leq|S|$, where $|B|=\dim_F(V)$.
+\end{theorem}
+
+\begin{theorem}
+    Let $V$ and $W$ be two finite-dimensional v.s. If $W\subseteq V$ and $\dim_F(W)=\dim_F(V)$,
+    then $V=W$.
+\end{theorem}
+
+\begin{tcolorbox}[boxrule=0.5pt]
+\begin{pf}  
+It suffices to show that $W\supseteq V$.
+Suppose by contradiction,\dots
+Let $S$ be a basis of $W$. Then we have $W=span(S)$ and
+$\mathbf{v}\notin span(S)$. Construct the larger size of linearly independent set in $V$.
+Apply the replacement theorem, then we have a contradiction.
+\end{pf}
+\end{tcolorbox}
+
+
+\begin{theorem}
+    Let $V$ be a v.s. of dimension $n$.
+    Then any $n$ linearly independent subset of forms a basis of $V$.
+\end{theorem}
+
+\begin{pf}
+Easy proof.
+Let $W=span(S)$ and show that $W=V$.
+Recall any spanning set is a subspace of $V$.
+\end{pf}
+
+\begin{exercise}
+    The above theorem shows that a maximal linearly independent set forms a basis of $V$.
+    In duality, a minimal spanning set also forms a basis of $V$. Prove the theorem.
+\end{exercise}
+
+
+
+
+\begin{theorem}
+    Let $S=\{\mathbf{v}_1, \mathbf{v}_2\, \cdots \mathbf{v}_n, \mathbf{w}\}$.
+    If $\mathbf{w}$ is a linear combination of $\mathbf{v}_1, \mathbf{v}_2, \ldots, \mathbf{v}_n$,
+    then $span(S)=span(S\setminus\{\mathbf{w}\})$.
+\end{theorem}
+
+
+Apply \eqref{linear-dependent-algorithm} iteratively, we have the following sifting method.
+\begin{theorem}[Sifting method]
+    Let $S=\{\mathbf{v}_1,\mathbf{v}_2,\ldots,\mathbf{v}_n\}$.
+    There exists $S' \subseteq S$ s.t. $S'$ is linearly independent and $span(S')=span(S)$. 
+\end{theorem}
+
+\begin{theorem}[Basis Extension Theorem]
+    Let $S$ be a linearly independent subset of $V$.
+    Then $S$ can be extended into a basis of $V$.
+\end{theorem}
+\begin{tcolorbox}[boxrule=0.5pt]
+\begin{pf}
+    Let $B$ be any basis of $V$. Consider $S\cup B$. Apply the sifting method to $S\cup B$.
+    Question: Does $S$ remain in the sifted set?
+\end{pf}
+\end{tcolorbox}
+
+\begin{theorem}[Duality of the Basis Extension Theorem]
+Given $S$ spans $V$, then there exists a subset $S'\subseteq S$ forms a basis of $V$.
+\end{theorem}
+
+
+Now let us prove replacement theorem
+\begin{pf}
+Let  $S_1=\{\mathbf{v}_1,\mathbf{v}_2, \ldots ,\mathbf{v}_n\}$ be a spanning set of $V$ and
+    $S_2=\{\mathbf{w}_1, \mathbf{w}_2, \ldots ,\mathbf{w}_m\}$ be linearly independent.
+Idea is that insert each $\mathbf{w}_i$ in front of $S_1$ and sift.
+Think why $\{w_i\}\cup S$ must be linearly dependent, then we get the inequality.
+\end{pf}
+
+Here we introduce sum of spaces as a subspace.
+\begin{exercise}
+Let $W_1$ and $W_2$ be two subspaces of a vector space $V$.
+\begin{enumerate}
+    \item Write down the definition of sum of spaces.
+    \item Prove this is smallest subspace containing $W_1$ and $W_2$.
+    \item Write down the definition of the direct sum of spaces.
+    \item Write down the dimension formula when the subspace is a direct sum of two spaces.
+\end{enumerate}
+\end{exercise}
+
+\begin{theorem}[Dimension Formula for Sum of Subspaces]
+    Let $V_1$ and $V_2$ be two subspaces of a finite-dimensional vector space $V$.
+    Then
+    \begin{align*}
+        \dim_F(V_1+V_2)=\dim_F(V_1)+\dim_F(V_2)-\dim_F(V_1\cap V_2).
+    \end{align*}
+\end{theorem}
+
+\begin{tcolorbox}[boxrule=0.5pt]
+    \begin{pf}
+    Note that $W_1\cap W_2\subseteq W_1, W_2\subseteq W_1+W_2$.
+    Start with the smallest set, apply basis extension theorem w.r.t $W_1$ and $W_2$. Check the union of the three basis, $S$, forms the basis in $W1+W2$,
+    i.e. $S$ is L.I. and spans $W_1+W_2$.
+    \end{pf}
+\end{tcolorbox}
+
+
+\newpage
+\section{Linear Transformation}
+\subsection{Linear function}
+
+Let $f:V\rightarrow W$ be a linear transformation, and $V$ is finite dimensional.
+
+\begin{definition}[linear function/transformation/map/homomorphism]
+Check the function $f$: (i) Distribution on addition (ii) Scalars can be taken out of $f$.
+\end{definition}
+
+\begin{example}
+    Verify the following examples are linear maps.
+    \begin{enumerate}
+        \item Differentiation function: $D: \mathbb{R}[x]_{\leq n} \rightarrow \mathbb{R}[x]_{\leq n-1}$
+        \item Trace: $\text{tr}: M_n(F) \rightarrow F$
+        \item Fix a continuous function $g\in C(\mathbb{R})$. $S_g: C(\mathbb{R}) \rightarrow  C(\mathbb{R}) $ defined by $S_g(f(x))=f(g(x))$
+    \end{enumerate}
+\end{example}
+
+\begin{theorem}
+If $f:V\rightarrow W$ is a linear map. Then $f(\mathbf{0}_V)=\mathbf{0}_W$.
+\end{theorem}
+Alternatively, one can verify linearity via a contrapositive argument. 
+
+
+\begin{pbox}
+\begin{remark}
+Note the following difference:
+\begin{enumerate}
+    \item $C(\mathbb{R}) \rightarrow  C(\mathbb{R}): f(x)\rightarrow f(x-1)$ is about replacing the domain with some function.
+    \item $\mathbb{R}^2\rightarrow\mathbb{R}^2: \{(x,y): y=f(x)\}\rightarrow \{(x,y): y=f(x-1)\}$ is about shifting the graph of function $f(x)$ to $1$ unit to the right.
+\end{enumerate}
+\end{remark}
+\end{pbox}
+
+\begin{theorem}
+    Let $\{\mathbf{v}_1,\mathbf{v}_2,\ldots,\mathbf{v}_n\}$ be a basis of $V$, then f is determined by $\{f(\mathbf{v}_1),f(\mathbf{v}_2),\ldots,f(\mathbf{v}_n)\}$, i.e., 
+\begin{enumerate}
+    \item For every $\mathbf{v}\in V$, $f(\mathbf{v})$ is a linear combination of $\{f(\mathbf{v}_1),f(\mathbf{v}_2),\ldots,f(\mathbf{v}_n)\}$. Actually, this shows $im(f)=span(\{f(\mathbf{v}_1),f(\mathbf{v}_2),\ldots,f(\mathbf{v}_n)\}).$
+    \item Suppose the linear map $g: V\rightarrow W$ satisfies $g(\mathbf{v}_i)=f(\mathbf{v}_i)\, \forall i=1,2,\cdots ,n$. Then $g(\mathbf{v})=f(\mathbf{v})$ for all $\mathbf{v}\in V.$ 
+\end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    If $f$ is an injection ($ker(f)=0$), then $\{f(\mathbf{v}_1),f(\mathbf{v}_2),\ldots,f(\mathbf{v}_n)\}$ forms a basis in $im(f)$.
+\end{corollary}
+
+The definitions of kernal and image are left as an exercise.
+
+\begin{theorem}
+    Let $dim(V)=n$ and $dim(W)=k$
+    \begin{enumerate}
+        \item $ker(f)$ is a subspace of $V$.
+        \item $dim(ker(f))=nullity(f)=0\Leftrightarrow ker(f)=\{\mathbf{0}_w\}\Leftrightarrow$ f is injective.
+        \item $im(f)$ is a subspace of $W$.
+        \item $dim(im(f))=rank(f)=k\Leftrightarrow im(f)=W\Leftrightarrow$ f is surjective.
+    \end{enumerate}
+\end{theorem}
+
+
+\begin{theorem}[Rank-Nullity Theorem]
+\[ nullity(f) + rank (f) = dim_F(V) \]    
+\end{theorem}
+
+\begin{tcolorbox}[boxrule=0.5pt]
+\begin{pf}
+Start with the smallest set. 
+
+Since $ker(f)\subseteq V$, let $\{\mathbf{v}_1,\mathbf{v}_2,\ldots,\mathbf{v}_n\}$ be a basis of $ker(f)$ and extend it to a basis of $V$, denoted by $\{\mathbf{v}_1,\mathbf{v}_2,\ldots,\mathbf{v}_n, \mathbf{w}_1, \mathbf{w}_2,\cdots,\mathbf{w}_k\}$.
+
+Show that $\{ f(\mathbf{w}_1),f(\mathbf{w}_2),\ldots,f(\mathbf{w}_k)\}$ forms a basis of $im(f)$.
+\end{pf}
+\end{tcolorbox}
+
+
+\begin{theorem}
+    If $f:V\rightarrow W$ is a linear bijection, then $f^{-1}$ is also linear.
+\end{theorem}
+Note that if $f$ is bijective, then the inverse function of $f\, (f^{-1})$ exists.
+
+\begin{definition}[Linear Isomorphism]
+    Let $V$ and $W$ be two finite dimension vector spaces over a field $F$.
+    \begin{enumerate}
+        \item $f:V\rightarrow W$ is a (linear) isomorphism from $V$ onto $W$ $(V\cong W)$ if $f$ is a bijective linear map.
+        \item $V$ and $W$ are said to be isomorphic as vector spaces if there exists a isomorphism $f: V\rightarrow W$.
+    \end{enumerate}
+\end{definition}
+
+An trivial but important example is that $id_V:V\rightarrow V$ is a isomorphism. So every vector space is isomorphic to itself.
+
+
+\begin{gbox}
+\begin{definition}[Homeomorphism]
+    Let $(X,d_X)$ and $(Y,d_Y)$ be two metric spaces.
+\begin{enumerate}
+    \item $f:X\rightarrow Y$ is a homeomorphism ($X\cong Y$) if $f$ is bijection, $f$ is continuous and $f^{-1}$ is also continuous.
+    \item $X$ and $Y$ are said to be homeomorphic as vector spaces if there exists a homeomorphism $f: X\rightarrow Y$.
+\end{enumerate}
+\end{definition}
+\end{gbox}
+
+
+\begin{theorem}
+    Fix $S$ as a basis of $V$, the coordinate mapping $\phi: V_S\rightarrow F^n$ defined by $\mathbf{v}\rightarrow [\mathbf{v}]_S$, is an isomorphism.
+\end{theorem}
+
+\begin{theorem}
+    $V\cong W\Leftrightarrow dim(V)=dim(F)$.
+\end{theorem}
+
+\begin{tcolorbox}[boxrule=0.5pt]
+\begin{pf}
+$(\Leftarrow)$: $\phi_S: V\rightarrow F^n$ and $\phi_S': W\rightarrow F^n$  are isomorphism. So $\phi^{-1}_{S'}\circ\phi_S$ is still an isomorphism.
+\end{pf}    
+\end{tcolorbox}
+
+
+\begin{definition}
+    Let a linear map $f:V\rightarrow W$. Fix $B_1$ and $B_2$ as bases of $V$ and $W$, where $dim(V)=n$ and $dim(W)=m$
+    The matrix is called the matrix representing $f$ w.r.t the bases $B_1$ and $B_2$.
+    We denote it as $[f]^{B_2}_{B_1}=(a_{ij})_{i,j}$. Equivalently, given any vector $\mathbf{v}_j\in V$, we have $f(\mathbf{v}_j)=\sum_{i=1}^{m}a_{ij}\mathbf{w}_i$.
+\end{definition}
+
+Draw the fundamental diagram. The bridge between vector space and actual vector world is linear isomorphism.
+
+\begin{theorem}[Linear maps and matrix]
+    \[[f]^{B_2}_{B_1}\cdot [\mathbf{v}]_{B_1} = [f(\mathbf{v})]_{B_2}\]
+\end{theorem}
+
+\begin{corollary}
+    Rank and nullity are invariant under different choices of bases.
+    $\mathbf{v}\in ker(f) \Leftrightarrow f(\mathbf{v})=\mathbf{0} \Leftrightarrow [f(\mathbf{v})]_{B_2} = [f]^{B_2}_{B_1}\cdot [\mathbf{v}]_{B_1} = \mathbf{0} \Leftrightarrow [\mathbf{v}]_{B_1} \in ker([f]^{B_2}_{B_1})$.
+    Note that the choice of bases $(B_1, B_2)$ is arbitrary. By dimension formula, we deduce that rank and nullity are preserved.
+\end{corollary}
+
+
+
+\begin{theorem}[Composition and matrix multiplication]
+    \[[g\circ f]^{B_3}_{B_1} =  [g]^{B_3}_{B_2} \cdot [f]^{B_2}_{B_1}\]
+\end{theorem}
+
+Similarly, we can show the connection regarding sum and scaling (linear homomorphism, exercise), inverse function / matrix (later).
+
+
+\begin{theorem}[Rank inequality]
+    Let $f:U\rightarrow V$ and $g:V\rightarrow W$ be two linear maps.
+    Linear map version:
+    \[rank(g\circ f)\leq \min\{rank(f), rank(g)\}.\]
+    Matrix version:
+    \[rank(AB)\leq \min\{rank(A), rank(B)\}.\]
+\end{theorem}
+
+\begin{theorem}
+    Let $A\in M_{m\times n}(F)$ and $B\in M_{n\times m}(F)$.
+    If $BA=I_n$ and $AB=I_m$, then $n=m=rank(A)$.
+\end{theorem}
+
+This theorem shows that only square matrices can possibly be invertible. 
+
+\begin{definition}
+    Let $A$ be a n-square matrix. If there exists $B$ such that $AB=BA=I_n$,
+    then we say $A$ is invertible/non-singular. And $B$ is called the inverse (matrix) of $A (A^{-1})$. 
+\end{definition}
+
+\begin{theorem}
+    \[([f]^{B_2}_{B_1})^{-1} = [f^{-1}]^{B_1}_{B_2}.\]
+\end{theorem}
+Check $[id_V]^{B_1}_{B_1}=I_n$. Use the definition of inverse matrix.
+
+
+\subsection{Matrix Operations}
+
+\begin{exercise}
+    Row / column operations:
+    \begin{enumerate}
+        \item Write down the three types of row operations and define the corresponding elementary row matrix.
+        \item Write down the three types of column operations and define the corresponding elementary column matrix
+    \end{enumerate}
+\end{exercise}
+
+\begin{theorem}
+    Let $A$ be a $m\times n$ matrix.
+    \begin{enumerate}
+        \item Performing a row operation on $A$ is equivalent to left-multiplying an elementary row matrix to $A$.
+        \item Performing a column operation on $A$ is equivalent to right-multiplying an elementary column matrix to $A$.
+    \end{enumerate}
+\end{theorem}
+
+
+\begin{theorem}
+    Let $A$ be a $m\times n$ matrix.
+    \begin{enumerate}
+        \item If $Q$ is an invertible $m\times m$ matrix, then $rank(QA)=rank(A)$.
+        \item If $P$ is an invertible $n\times n$ matrix, then $rank(AP)=rank(A)$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{pf}
+    Hint: rank inequality.
+\end{pf}
+
+The theorem shows that row / column operations preserves rank.
+
+\begin{exercise}
+    \begin{enumerate}
+        \item Define the row echelon form (REF) and column echelon form (CEF).
+        \item Prove elementary row matrix and elementary column matrix are invertible (Apply operations reversely).
+    \end{enumerate}
+\end{exercise}
+
+\begin{theorem}
+    Let $A$ be a $m\times n$ matrix.
+    \begin{enumerate}
+        \item A can be transformed into a REF by a finite number of row operations. Equivalently, there exists an invertible $m\times m$ matrix $Q$ such that $QA$ is in REF.
+        \item A can be transformed into a CEF by a finite number of column operations. Equivalently, there exists an invertible $n\times n$ matrix $P$ such that $AP$ is in CEF.
+    \end{enumerate}
+\end{theorem}
+
+\begin{pf}
+    An algorithm helps us transform any matrix into echelon form. This is suitable for calculations with concrete examples.
+    Invertiable matrix is the product of elementary matrices.
+\end{pf}
+
+\begin{theorem}
+    Let $A$ be a matrix with $m$ columns $\{\mathbf{c}_1, \mathbf{c}_2\cdots\mathbf{c}_m\}$.
+    Then 
+    \begin{enumerate}
+        \item $im(A)=span(\{\mathbf{c}_1, \mathbf{c}_2\cdots\mathbf{c}_m\})$.
+        \item $rank(A)$ equals the maximal number of linearly independent columns of $A$.
+        \item $rank(A)$ equals the number of non-zero columns when $A$ is transformed into a CEF.
+    \end{enumerate} 
+\end{theorem}
+
+\begin{pf}
+    \begin{enumerate}
+        \item Matrix vector multiplication.
+        \item By sifting method, the sifted subset forms a basis of $im(A)$.
+        \item Sifting method is equivalent to tranform $A$ into CEF.
+    \end{enumerate}
+\end{pf}
+
+\begin{definition}[Smith Normal Form]
+ A $m\times n$ matrix is said to be in its Smith normal form if the matrix is both in its REF and CEF.
+ Additionally, all non-zero entires of the matrix are $1$.
+\end{definition}
+
+\begin{theorem}[QAP Theorem]
+Let $A$ be a $m\times n$ matrix.
+There exsits invertible matrices $Q\in M_m(F)$ and $P\in M_n(F)$ s.t.
+$QAP$ is in its Smith normal form.
+\end{theorem}
+
+
+\begin{theorem}
+    Let $A$ be a $m\times n$ matrix. Then $rank(A)=rank(A^{\top})$.
+\end{theorem}
+
+\begin{pf}
+    $rank(A)=rank(QAP)=rank(I_r)=r=rank(P^\top A^\top Q^\top)=rank(A^\top).$
+\end{pf}
+
+
+\begin{theorem}
+    TFAE:
+    \begin{enumerate}
+        \item the rank of $A$ ($dim(im(A))$).
+        \item the maximal number of linearly independent columns of $A$.
+        \item the number of non-zero columns when $A$ is transformed into a CEF.
+        \item the rank of $A^\top$.
+        \item the maximal number of linearly independent rows of $A$.
+        \item the number of non-zero rows when $A$ is transformed into a REF.
+    \end{enumerate}
+\end{theorem}
+
+\begin{pf}
+    $rank(A)=rank(A^\top)$\\
+    = maximal \# of linearly independent columns of $A^\top$\\
+    = maximal \# of linearly independent rows of $A$\\
+    = \# of non-zero columns in CEF of $A^\top$ = \# of non-zero rows in REF of $A$.
+\end{pf}
+
+
+\begin{theorem}
+    Every invertible matrix is a product of elementary matrices.
+\end{theorem}
+
+With the above theorem, we can easily find the inverse of an invertible matrix $A$.
+\begin{theorem}
+    Let $A$ be a n-square matrix. If we conduct row operations to transform the argumented matrix:
+    \[(A\mid I_n)\xrightarrow{\text{row operation}}(I_n\mid B)\]
+    Then $B=A^{-1}$.
+\end{theorem}
+
+\begin{pf}
+    Left multiplying the inverse matrix of $A$ is equivalent to Perform row operations since each invertible matrix is a product of elementary matrices.
+\end{pf}
+
+
+\begin{exercise}
+    Write down the definition of homogeneous and inhomogeneous linear system of equations. Record the coefficient and argumented matrix.
+\end{exercise}
+
+\begin{theorem}
+    The solution of a homogenous system $(A\mid \mathbf{0})$ coincides $ker(A)$.
+    Particularly, $dim(ker(A))=(\#\text{ of columns (domain)}) - rank(A).$
+\end{theorem}
+
+\begin{theorem}
+    Let $A\in M_{m\times n}(F)$. If $m<n$, then the homogenous system $(A\mid \mathbf{0})$ has a non-trivial / non-zero solution.
+\end{theorem}
+
+\begin{pf}
+    Intuitively, there are more variables than equations. \\
+    $im(A)\subseteq F^m\rightarrow rank(A)<m$. By rank-nullity theorem, $dim(ker(A))=n-rank(A)\geq n-m\geq 1 (\because n>m)$.
+\end{pf}
+
+
+\begin{theorem}
+    Let $(A\mid\mathbf{b})$ be a general system of equations.
+    The system is consistent (has at least one solution) iff $rank(A)=rank(A\mid \mathbf{b})$.
+\end{theorem}
+
+\begin{theorem}[Principle of linearity]
+Suppose $\mathbf{v}$ be a solution to the system of equation $(A\mid\mathbf{b})$,
+then the general solution of $(A\mid\mathbf{b})$ is
+\[\mathbf{v}+ker(A)=\{\mathbf{v}+\mathbf{u}:\mathbf{u}\in ker(A)\}.\]
+\end{theorem}
+
+\begin{corollary}
+    The system $(A\mid\mathbf{b})$ has a unique solution iff
+    \begin{enumerate}
+        \item $rank(A)=rank(A\mid\mathbf{b})$.
+        \item $ker(A)=\{\mathbf{0}\}$.
+    \end{enumerate}
+\end{corollary}
+
+\begin{theorem}[TFAE Version 1]
+Let $T:V\rightarrow W$ be a linear transformation such that $dim(V)=dim(W)$.
+Having fixed bases, $T$ can be represened by a square matrix $A$.
+TFAE:
+\begin{enumerate}
+    \item $T$ is injective.
+    \item $ker(T)=\{\mathbf{0}\}$.
+    \item $nullity(T)=0$.
+    \item $rank(T)=dim(V)=dim(W)$.
+    \item $T$ is surjective.
+    \item $im(T)=W$.
+    \item $T$ is an isomorphism.
+    \item $A$ is invertible ($A^{-1}$ exists).
+    \item $ker(A)=\{\mathbf{0}\}\rightarrow nullity(A)=0$.
+    \item $A$ is full rank ($rank(A)=rank(T)$).
+    \item All of rows of $A$ are linearly independent.
+    \item All of columns of $A$ are linearly independent.
+    \item The system of equations $A\mathbf{x}=\mathbf{v}$ has a unique solution, where $\mathbf{x}=A^{-1}\mathbf{v}$\\
+     ($\because rank(A) = rank(A\mid\mathbf{b})$ and $ker(A)=0$).
+    \item $det(A)=det(A^\top)\neq 0.$
+\end{enumerate}
+\label{TFAE_ver1}
+\end{theorem}
+
+\subsection{Change of coordinate \& Linear Operator}
+
+\begin{definition}[Change of coordinate matrix]
+    A matrix representing $id_V: V\rightarrow V$ w.r.t two bases of $V$.
+    Then the matrix from $S_1$ basis to $S_2$ basis is denoted by $[id_V]^{S_2}_{S_1}.$ 
+\end{definition}
+
+\begin{definition}
+    A linear transformation $T:V\rightarrow V$ is called a linear operator on $V$ or an endomorphism on $V$. 
+\end{definition}
+
+\begin{theorem}
+    Let $T:V\rightarrow V$ be a linear operator and $Q=[id_V]^{S_2}_{S_1}$ be a change of coordinate matrix. Then:
+    \[[T]^{S_1}_{S_1}=Q^{-1}\cdot[T]^{S_2}_{S_2}\cdot Q.\]
+\end{theorem}
+
+\begin{pf}
+    Draw the diagram to derive the equation.
+\end{pf}
+
+Application: Diagonalization through $B=Q^{-1}AQ$. That is, choose a good basis ($Q$) appropriately s.t. $B$ is as simple as possible (ideally a diagonal matrix).
+
+\begin{theorem}
+   Let $T:V\rightarrow V$ be a linear operator on a finite-dimensional vector space $V$.
+   Suppose $S$ and $S'$ are two bases of $V$. Then:
+   \[det([T]^{S}_{S})=det([T]^{S'}_{S'}).\]
+\end{theorem}
+
+\begin{definition}
+     Let $T:V\rightarrow V$ be a linear operator on a finite-dimensional vector space $V$.
+     Define the determinant of $T$ by $det(T)\coloneq det([T]^{S}_{S})$ for any choice of a basis $S$ on $V$.
+\end{definition}
+
+
+\newpage
+\section{Determinants}
+
+\begin{exercise}
+    Let $A=(a_{ij})_{i,j}\in M_n(F).$
+    \begin{enumerate}
+        \item Write down the definition of determinants $det(A)$ by Laplace expansion (Consider $n=1$ and $n\geq 2$).
+        \item Write down the definition of $(i,j)-$minor and $(i,j)-$cofactor.
+    \end{enumerate}
+\end{exercise}
+
+\begin{remark}
+ Let $det: M_n(F)\rightarrow F$. 
+ \begin{enumerate}
+    \item $det$ is not linear.
+    \item $det$ is a multi-linear function.
+ \end{enumerate}
+\end{remark}
+
+\begin{example}
+    Let $A$ be an upper triangular matrix. Then $det(A)=\prod_{i=1}^{n}a_{ii}.$
+\end{example}
+
+\begin{pf}
+    Prove by induction. 
+    \begin{enumerate}
+        \item When $n=1, det(A_1)=1$.
+        \item Suppose $n=k$ holds. Then for $n=k+1$, $det(A_{k+1})=a_{11}M_{11}.$ 
+        Note that $M_{1,j}=0\,\, \forall j\neq 1$. 
+        \item So for a matrix $A_k$, we extend a larger matrix $A_{k+1}$ by the left row and upper column.
+    \end{enumerate}
+\end{pf}
+
+\begin{theorem}[Determinants of elementary matrices]
+    For elementary matrices, we have:
+    \begin{itemize}
+        \item $det(E^I_{p,q})=-1$
+        \item $det(E^{II}_{\lambda,p})=\lambda$
+        \item $det(E^{III}_{\mu,p,q})=1$
+        \item $det(E)=det(E^\top)\neq 0$
+    \end{itemize}
+\end{theorem}
+
+
+\begin{theorem}
+    Let $A\in M_n(F)$:
+    \begin{enumerate}
+        \item Exchangeing two rows of $A$ multiplies $det(A)$ by 1.
+        \item Multiplying a row of $A$ by a non-zero $\lambda\in F$ multiplies $det(A)$ by $\lambda$.
+        \item Adding a multiple of a row to another row does not change $det(A)$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{pf}
+    \textcolor{red}{This proof is very hard.}
+    \begin{itemize}
+        \item For (1), we first prove swapping two rows and generalize to swap any two rows. Express the determinant as a linear combination of some $N_{p,q}$, which are minors deleting $1,2$ rows and $p,q$ columns.
+        \item For (2) and (3), it suffices to show $det: M_n(F)\rightarrow F$ is row-wise linear, or a multi-linear function. That is, determinants is linear on each row with other rows fixed.
+    \end{itemize}
+\end{pf}
+
+\begin{theorem}
+Let $A\in M_n(F).$
+\begin{enumerate}
+    \item If $det(A)$ contains a zero row, then $det(A)=0$.
+    \item Let $\lambda\in F$. Then $det(\lambda A) = \lambda^n det(A)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{exercise}
+    Compute $det(-A)$.
+\end{exercise}
+
+\begin{theorem}
+    $A$ is not invertible if and only if $det(A)=0$.
+\end{theorem}
+\begin{pf}
+    $(\Rightarrow)$
+    \begin{enumerate}
+        \item By theorem \eqref{TFAE_ver1}, $A$ is not invertible $\Leftrightarrow$ $REF(A)$ contains (at least) one zero row $\Leftrightarrow$ $det(REF(A))=0$.
+        \item Note $det(REF(A))=det(E_1 E_2 \cdots E_k A)=det(E_1)det(E_2)\cdots det(E_k)det(A)$, where determinants of elementary matrices are non-zero. So $det(A)=0$.
+    \end{enumerate}
+    $(\Leftarrow)$
+    \begin{enumerate}
+        \item Suppose by contradiction, then $det(A)det(A^{-1})=det(I)$.
+        \item Logically equivalent to show that $A$ is invertible then $det(A)=0$. Since every invertible matrix is a product of elementary matrices, whose determinant are non-zeros.
+    \end{enumerate}
+    \end{pf}
+
+\begin{remark}
+    The above theroem is logically equivalent to the \eqref{thm_5.6}.
+\end{remark}
+
+
+\begin{theorem}
+    Let $A,B\in M_n(F)$, $det(AB)=det(A)det(B).$
+\end{theorem}
+
+\begin{pf}
+    If $A$ is invertible, then it is an easy proof.
+    If $A$ is not invertible, we have $det(A)=0$.
+    Wish $det(AB)=det(A)=0.$ Since $rank(AB)\leq rank(A)<n$, we have $det(AB)=0.$
+\end{pf}
+
+
+
+\begin{theorem}
+Let $A\in M_n(F).$
+\begin{enumerate}
+    \item $A$ is invertible $\Longleftrightarrow det(A)\neq 0$.
+    \item If $A$ is invertible, then $det(A^{-1})=\frac{1}{det(A)}$
+\end{enumerate}
+\label{thm_5.6}
+\end{theorem}
+
+\begin{theorem}
+    $det(A^\top)=det(A).$
+\end{theorem}
+\begin{pf}
+    If $A$ is invertible, then we can prove through elementary matrices.
+    If $A$ is not invertible, then we compute $rank(A^\top)$ by QAP and TFAE.
+\end{pf}
+This implies column operations on determinants is workable.
+
+
+\begin{exercise}
+    Write down the general form of Laplace expansion and prove it.
+\end{exercise}
+
+
+\begin{definition}[Adjugate Matrix]
+    Let $A=(a_{ij}\in M_n(F)).$
+    The adjugate matrix of $A$ is defined by $adj(A)\coloneq\big((-1)^{i+j}M_{ij}\big)^\top.$
+\end{definition}
+
+
+\begin{theorem}
+     Let $A\in M_n(F)$.Then we have:
+     \begin{enumerate}
+        \item $A\cdot adj(A)=det(A)\cdot I_n.$
+        \item If $A$ is invertible, then $A^{-1}=\frac{1}{det(A)}\cdot adj(A).$
+     \end{enumerate}
+\end{theorem}
+\begin{pf}
+    Refer to the handwritten notes.
+\end{pf}
+
+\begin{theorem}[Cramer's rule]
+    Let $A\in M_n(F)$ be an invertible matrix. Then the system of equations 
+    $A\mathbf{x}=\mathbf{b}$ has a unique solution (TFAE).
+    Moreover, if $\mathbf{x}=(x_1,x_2,\cdots,x_n)^\top,$ then $x_i=\frac{det(A_i)}{det(A)},$
+    where $A_i$ is the matrix obtained by replace the $i-$th column of $A$ by the column vector $\mathbf{b}.$
+\end{theorem}
+
+\begin{pf}
+    $\mathbf{x}=A^{-1}\mathbf{b}=\frac{1}{det(A)}adj(A)\mathbf{b}$. Spell the expression out.
+\end{pf}
+
+
+\subsection*{Block Matrix}
+\begin{exercise}
+    Write down the definition of $2\times 2$ block matrix.
+    Show the multiplication of two block matrices.
+\end{exercise}
+
+\begin{theorem}[Block inversion formula]
+    Suppose:
+    \begin{enumerate}
+        \item $\textbf{A}$ and $\textbf{D}$ are invertible square matrices.
+        \item $\textbf{A}$ and $\textbf{D}$ are possibly different sizes.
+    \end{enumerate}
+\[
+\begin{pmatrix}
+\mathbf{A} & \mathbf{B}\\
+\mathbf{O} & \mathbf{D}
+\end{pmatrix}^{-1}
+=
+\begin{pmatrix}
+\mathbf{A}^{-1} & -\mathbf{A}^{-1}\mathbf{B}\mathbf{D}^{-1}\\
+\mathbf{O} & \mathbf{D}^{-1}
+\end{pmatrix}.
+\]
+
+In particular, by determinant formula, 
+$det\begin{pmatrix}
+\mathbf{A} & \mathbf{B}\\
+\mathbf{O} & \mathbf{D}
+\end{pmatrix} = det(\mathbf{A})det(\mathbf{D})\neq 0. $
+\end{theorem}
+
+\begin{theorem}[Block determinant formula]
+    Suppose:
+    \begin{enumerate}
+        \item $\textbf{A}$ and $\textbf{D}$ are square matrices.
+        \item $\textbf{A}$ and $\textbf{D}$ are possibly different sizes.
+    \end{enumerate}
+
+$det\begin{pmatrix}
+\mathbf{A} & \mathbf{B}\\
+\mathbf{O} & \mathbf{D}
+\end{pmatrix} = det(\mathbf{A})det(\mathbf{D})$.
+
+\end{theorem}
+
+\begin{pf}
+    Both formulas need some observations about multiplication of matrices.
+    For the second one, we wish to transform 
+    \[\begin{pmatrix}
+\mathbf{I} & \mathbf{B}\\
+\mathbf{O} & \mathbf{I}
+\end{pmatrix}\Rightarrow\begin{pmatrix}
+\mathbf{A} & \mathbf{B}\\
+\mathbf{O} & \mathbf{D}
+\end{pmatrix}.\]
+Then apply the follwoing formula.
+\end{pf}
+
+\begin{theorem}
+    Let $n$ be a positive integer and $A$ be a square matrix. Then:
+    \[det\begin{pmatrix}
+\mathbf{I_n} & \mathbf{O}\\
+\mathbf{O} & \mathbf{A}
+\end{pmatrix}=det\begin{pmatrix}
+\mathbf{A} & \mathbf{O}\\
+\mathbf{O} & \mathbf{I_n}
+\end{pmatrix}=det(A).\]
+\end{theorem}
+
+\begin{pf}
+    Prove by induction.
+\end{pf}
+
+\begin{exercise}
+Let $\textbf{A}$ and $\textbf{B}$ be square matrices of the same size, prove 
+\[det\begin{pmatrix}
+\mathbf{A} & \mathbf{B}\\
+\mathbf{B} & \mathbf{A}
+\end{pmatrix} = det(\mathbf{A}+\mathbf{B})det(\mathbf{A}-\mathbf{B}).\]
+\end{exercise}
+
+
+\begin{theorem}[Schur's factorization]
+    Suppose
+    \begin{enumerate}
+       \item $\textbf{A}$ and $\textbf{D}$ are square matrices.
+       \item $\textbf{A}$ and $\textbf{D}$ are possibly different sizes.
+       \item $\textbf{A}$ is invertible. 
+    \end{enumerate}
+    \[det\begin{pmatrix}
+\mathbf{A} & \mathbf{B}\\
+\mathbf{C} & \mathbf{D}
+\end{pmatrix} = det(\mathbf{A})det(\mathbf{D}-\mathbf{CA^{-1}B}).\]
+\end{theorem}
+
+
+\begin{pf}
+    Observation: To kill $\textbf{C}$, do row operations with a block of rows at the same time.
+    Consider left multiplying a "block" elementary matrix.
+\end{pf}
+
+\newpage
+\section{Diagonalization}
+\subsection{Similarity}
+
+\begin{definition}
+    We say $A$ and $B$ of $M_n(F)$ are similar if there exists an invertible $Q\in M_n(F)$ s.t. $B=Q^{-1}AQ$.
+\end{definition}
+
+
+\begin{theorem}[Sufficient condition for similarity]
+    If $A\sim B$ and $A,B\in M_n(\mathbb{F})$, then
+    \begin{enumerate}
+        \item $rank(A)=rank(B)$.
+        \item $nullity(A)=nullity(B)$.
+        \item $det(A)=det(B)$.
+        \item $tr(A)=tr(B)$.
+        \item $p_A(x)=p_B(x)$: the same chracteristic polynoimal.
+    \end{enumerate}
+
+    If we further assume that $F$ is algebratically closed (e.g. $\mathbb{C}$), then they have the same:
+    \begin{enumerate}
+        \item Multi-set of eigenvalues (counted with algebraic multiplicities).
+        \item algebraic multiplicity of each eigenvalue.
+        \item geometric multiplicity of each eigenvalue.
+    \end{enumerate}
+\end{theorem}
+
+
+\begin{tcolorbox}[boxrule=0.5pt]
+\begin{pf}
+\begin{enumerate}
+    \item By rank inequality, multiplying an invertible matrix preserves the rank of the original matrix.
+    \item By rank-nullity theorem.
+    \item Easy proof.
+    \item First prove $tr(AB)=tr(BA)$, where $A\in M_{m\times n}(F)$ and $B\in M_{n\times m}(F)$.
+    \item Derive $det(A-xI)=det(B-xI)$.
+\end{enumerate}
+
+If we assume $A,B\in M_n(\mathbb{C})$, by the fundamental theorem of algebra,
+\begin{enumerate}
+    \item Same chracteristic polynomial implies same set of eigenvalues.
+    \item Similar argument for algebraic multiplicites of eigenvalues.
+    \item Show $nullity(A-\lambda I_n)=nullity(B-\lambda I_n)$.
+\end{enumerate}
+
+\end{pf}
+\end{tcolorbox}
+
+
+\begin{remark}
+    \begin{enumerate}
+        \item Multi-set of eigenvalues, which means the repetition of an eigenvalue matters. We will introduce the concept of spectrum later, and the statement is equivalent to say two similar matrix have the same spectrum.
+        \item $A\sim B \Leftrightarrow$ $A$ and $B$ represent the same linear operator under different bases.
+    \end{enumerate}
+\end{remark}
+
+
+\begin{definition}[Diagonalizable operators and matrices]
+    \begin{enumerate}
+        \item A linear operator $T:V\rightarrow V$ is diagonalizable if $\exists$ a basis $S$ of $V$ s.t. the matrix $[T]^{S}_{S}$ is diagonal.
+        \item A matrix $A\in M_n(F)$ is diagonalizable if $A$ is similar to a diagonal matrix, i.e., $\exists$ an invertible matrix $Q$ s.t. $Q^{-1}AQ$ is diagonal.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    Let $T:V\rightarrow V$ be a linear operator.
+    \begin{enumerate}
+        \item $\lambda\in F$ is an eigenvalue of $T$ if $T(\mathbf{v})=\lambda\mathbf{v}$ for some non-zero $\mathbf{v}\in V$.
+        \item $E_\lambda(T)=ker(A-\lambda\cdot \text{id})$ is called the eigenspace w.r.t the eigenvalue $\lambda$.
+        \item Any \textcolor{red}{non-zero} $\mathbf{v}\in E_\lambda(T)$ is called an eigenvector of $T$ w.r.t the eigenvalue $\lambda$. So any eigenvector satisfies $T(\mathbf{v})=\lambda\mathbf{v}$.
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    If $\lambda_1, \lambda_2,\cdots\lambda_n$ be distinct eigenvalues of $T$ and $\mathbf{v}_1,\mathbf{v}_2\cdots\mathbf{v}_n$ be the corresponding eigenvectors,
+    then $\{\mathbf{v}_1,\mathbf{v}_2\cdots\mathbf{v}_n\}$ is linearly independent.
+\end{theorem}
+
+\begin{tcolorbox}[boxrule=0.5pt]
+\begin{pf}
+    Prove by induction.
+    Suppose it holds for $n=k-1$. Then consider $n=k$.
+    Suppose $a_1\mathbf{v}_1 + a_2\mathbf{v}_2 + \cdots a_k\mathbf{v}_k = 0$ (Equation 1).
+    Apply $T$ on both sides and use the identity $T(\lambda_i)=\lambda_i\lambda_i\,\forall i=1,2,\cdots k$ (Equation 2).
+    Note that $\lambda_i\neq\lambda_j\,\forall i\neq j$.
+    Reduce the $k-th$ term to obtain a linear combination of $\{\mathbf{v}_1,\mathbf{v}_2\cdots\mathbf{v}_{k-1}\}$. 
+    By induction hypothesis and distinctness of eigenvalues, we have $a_1=a_2=\cdots a_{k-1}=0$. Simplify the equation 1 to get $a_k=0$.
+    By the principle of mathematical induction, the proof is completed.
+\end{pf}
+\end{tcolorbox}
+
+
+\begin{definition}[Chracteristic polynomial]
+    Two cases:
+    \begin{enumerate}
+        \item Let $A\in M_n(F)$. The chracteristic polynoimal of $A$ is defined by $p_A(x)=det(A-x I_n)$.
+        \item Let $T:V\rightarrow V$ be a linear operator. The chracteristic polynoimal of $T$ is defined by $p_T(x)=det([T]^{s}_{s} -x I_n)$ (For any basis $s$ of $V$).
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    Eigenvalues are the roots of the chracteristic polynomial of $A$.
+    That is, $\lambda$ is an eigenvalue of $A$ iff $p_A(\lambda)=det(A-\lambda I_n) = 0.$
+\end{theorem}
+
+\begin{remark}
+    The above theorem demonstrates how to find eigenvalues practically.
+\end{remark}
+
+
+\subsection{Diagonalizability}
+\begin{theorem}[Diagonalizability Criterion I: Eigen-basis]
+$A\in M_n(F)$ is diagonalizable iff $\exists$ a basis ${\mathbf{v}_1,\mathbf{v}_2\cdots\mathbf{v}_n}$ in $F^n$ s.t. each $v_i$ is an eigenvector of $A$ w.r.t. some eigenvalue $\lambda_i$.
+\end{theorem}
+
+\begin{pf}
+    This is the definition of diagonalizability itself.
+    Associate $A$ with a linear operator $f_A:F^n\rightarrow F^n$. Let $B$ be the standard basis.
+    \begin{enumerate}
+        \item Think why $A=[f_A]^B_{B}$.
+        \item $f_A$ is diagonalizable iff $\exists$ a basis $S$ of $F^n$ s.t. $[f_A]^{S}_{S}$ is diagonal.
+        $\Leftrightarrow$ $A$ is diagonalizable iff $\exists$ an invertible $Q=[id_V]^{B}_{S}$.
+        \item Think: $Q$ is essentially formed by putting each eignevectors in $S$ as columns. 
+        \item Think: Why $S$ is a set of eigenvectors? Why the diagonal entries in $[f_A]^{S}_{S}$ are the corresponding eigenvalues? ($f_A(\mathbf{v}_i) = A\mathbf{v}_i = \lambda\mathbf{v}_i$).
+    \end{enumerate}
+\end{pf}
+
+\begin{theorem}
+    If $A\in M_n(F)$ has $n$ distinct eigenvalues, then $A$ is diagonalizable.
+\end{theorem}
+
+\begin{pf}
+    \begin{enumerate}
+        \item Distinct eigenvalues shows that ...?
+        \item By replacement theorem, we find exactly a set of eigen-basis, hence $A$ is diagonalizable.
+    \end{enumerate}
+\end{pf}
+
+
+
+
+\begin{definition}
+    Let $A \in M_n(\mathbb{C})$. By the fundamental theorem of algebra,
+    $p_A(x)$ can be factorized as $(-1)^n(x-\lambda_1)^{r_1}(x-\lambda_2)^{r_2}\cdots(x-\lambda_k)^{r_k}$,
+    where $\lambda_1,\lambda_2,\cdots\lambda_k$ are distinct. For each eigenvalue $\lambda_i$,
+    \begin{enumerate}
+        \item Algebraic multiplicity of $\lambda_i$: \# of copies of $(x-\lambda_i)$ in $p_A(x)$, denoted by $a(\lambda_i)=r_i$.
+        \item Geometric multiplicity of $\lambda_i$, denoted by $g(\lambda_i)=nullity(A-\lambda_i I_n)$, which measures the dimension of the eigenspace of $\lambda_i$.
+    \end{enumerate}
+\end{definition}
+
+
+\begin{theorem}
+    Let $A \in M_n(\mathbb{C})$. For each $\lambda$ of $A$:
+    \[1\leq g(\lambda)\leq a(\lambda).\]
+\end{theorem}
+
+\begin{pf}
+    \begin{enumerate}
+        \item $1\leq g(\lambda):$ $det(A-\lambda I_n)=0$ and use TFAE.
+        \item $g(\lambda)\leq a(\lambda):$ Take a basis of $(A-\lambda I_n)$ (assume dimension equals $p$). By basis extension theorem, we can obtain a basis $S$ of $\mathbb{C}^n$. 
+        Apply associated linear operator $T$ and get a "quasi-diagonla" matrix. Note that $p_{[T]^{S}_{S}}(x)=(-1)^n(x-\lambda)^p\times r(x)$. $r(x)$ may or may not contain $(x-\lambda)$.
+    \end{enumerate}
+\end{pf}
+
+
+\begin{theorem}[Diagonalizability Criterion II: Multiplicity]
+Let $A\in M_n(\mathbb{C})$. TFAE:
+\begin{enumerate}
+    \item $A$ is diagonalizable.
+    \item $\exists$ a basis ${\mathbf{v}_1,\mathbf{v}_2\cdots\mathbf{v}_n}$ in $\mathbb{C}^n$ s.t. each $v_i$ is an eigenvector of $A$ w.r.t. some eigenvalue $\lambda_i$.
+    \item For each $\lambda$ of $A$, we have $g(\lambda)=a(\lambda)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{pf}
+    It suffices to show:
+    \begin{enumerate}
+        \item (1) implies (3): Let $D$ be a diagonal matrix, $A\sim D$ implies they have the same geometric multiplicities.
+        \item (3) implies (2): For each eigenspace, choose $S_i$ to be a basis of $E_{\lambda_i}(A)$. Claim that $S=S_1\cup S_2\cup\cdots\cup S_k$ forms an eigen basis of $A$. Detail: for each $\lambda_i$, we may choose more than one eigenvector, why is the whole set $S$ linearly independent?
+    \end{enumerate}
+\end{pf}
+
+
+
+
+\begin{exercise}
+    Take a polynomial $f\in F[x]$. For $A\in M_n(F)$, define $f(A)$.
+\end{exercise}
+
+
+\begin{theorem}[Cayley-Hamilton Theorem]
+    Let $A\in M_n(F)$ and its chracteristic polynoimal $p_A(x)$.
+    Then $p_A(A)=\mathbf{O}$ (the zero matrix). 
+\end{theorem}
+
+\begin{pf}
+    Use $(A-xI)adj(A-xI)=det(A-xI)I=p_A(x)I$. Compare coefficients.
+\end{pf}
+
+
+
+\begin{definition}[Minimal Polynomial]
+    Let $A\in M_n(\mathbb{C})$. The minimal polynoimal is the monic polynoimal of minimal degree s.t. $m_A(A)=\mathbf{O}$.
+\end{definition}
+
+Monic means the leading coefficient is $1$.
+
+\begin{theorem}
+     Let $A\in M_n(\mathbb{C})$, $p_A(x)$ and $m_A(x)$ be its chracteristic polynomial and minial polynomial respectively.
+     \begin{enumerate}
+        \item For any $f\in\mathbb{C}[x]$ satisfying $f(A)=\mathbf{O}$, then $f(x)$ is divisible by $m_A(x)$/ $m_A(x)$ divides $f(x)$.
+        \item $p_A(x)$ is divisible by $m_A(x)$/ $m_A(x)$ divides $p_A(x)$.
+        \item Each eigenvalue $\lambda$ of $A$ is a root of $m_A(x)$/ $m_A(\lambda)=0$.
+     \end{enumerate}
+     \label{thm_6.9}
+\end{theorem}
+
+\begin{pf}
+    \begin{enumerate}
+        \item Conduct division of $f(x)$ by $m_A(x)$. Aim to argue the remainder $r(x)$ must be zero polynomial. Suppose not, then $r(x)$ is a samller degree polynomial satisfying $r(A)=0$, which yields a contradiction.
+        \item By Cayley-Hamilton and the property (1).
+        \item Use \eqref{thm_6.10}, we have: $m_A(A)\mathbf{v}=m_A(\lambda)\mathbf{v}$. This forces $m_A(\lambda)=0.$
+    \end{enumerate}
+\end{pf}
+
+\begin{theorem}
+    Let $f$ be a non-constant polynomial. If $\lambda$ is an eigenvalue of $A$,
+    then $f(\lambda)$ is an eigenvalue of $f(A)$.
+    \label{thm_6.10}
+\end{theorem}
+
+\begin{pf}
+    Key observation: $A^k\mathbf{v} =\lambda^k\mathbf{v}$ for any $k\in\mathbb{N}$.
+\end{pf}
+
+\begin{lemma}
+    Every matrix $A\in M_n(\mathbb{C})$ has a unique minimal polynomial.
+\end{lemma}
+\begin{pf}
+    Use the property (1).
+\end{pf}
+
+\begin{lemma}[Candidate of minial polynomial]
+     Let $A\in M_n(\mathbb{C})$ and $\lambda_1, \lambda_2, \cdots\lambda_k$ be all distinct eigenvalues of $A$.
+     If $p_A(x)=(-1)^n\cdot(x-\lambda_1)^{r_1}(x-\lambda_2)^{r_2}\cdots(x-\lambda_k)^{r_k}$.
+     Then $m_A(x)=(x-\lambda_1)^{s_1}(x-\lambda_2)^{s_2}\cdots(x-\lambda_k)^{s_k}$,
+     where $1\le s_i \le r_i$ for each $i=1,2,\cdots,k$.
+\end{lemma}
+
+\begin{pf}
+    Property (2) and (3) imply this lemma.
+\end{pf}
+
+
+
+
+
+\begin{theorem}[Diagonalizability Criterion III: Minimal Polynomial]
+Let $A\in M_n(\mathbb{C})$. TFAE:
+\begin{enumerate}
+    \item $A$ is diagonalizable.
+    \item $\exists$ a basis ${\mathbf{v}_1,\mathbf{v}_2\cdots\mathbf{v}_n}$ in $\mathbb{C}^n$ s.t. each $v_i$ is an eigenvector of $A$ w.r.t. some eigenvalue $\lambda_i$.
+    \item For each $\lambda$ of $A$, we have $g(\lambda)=a(\lambda)$.
+    \item The minial polynoimal $m_A(x)$ has no repeated factor.
+\end{enumerate}
+\end{theorem}
+
+
+\begin{pf}
+\begin{enumerate}
+    \item (2) implies (4): Suppose (2) is true. Let $p_A(x)=(-1)^n\cdot(x-\lambda_1)^{r_1}(x-\lambda_2)^{r_2}\cdots(x-\lambda_k)^{r_k}$ and $q(x)=(x-\lambda_1)(x-\lambda_2)\cdots (x-\lambda_k)$, where $\lambda_i\neq \lambda_j \forall i\ne j$.
+    Aim to show $q(x)=m_A(x)$. By property (3) in \eqref{thm_6.9}, we have $q(x)\mid m_A(x)$.
+    Let $S = \{\mathbf{v}_1, \mathbf{v}_2, \cdots \mathbf{v}_n\}$ be a basis of $\mathbb{C}^n$ and eigenvectors of $A$.
+    For each $\mathbf{v}\in S$, $A\mathbf{v}=\lambda\mathbf{v}$ for some $\lambda=\lambda_i$.
+    By \eqref{thm_6.10}, $q(A)\mathbf{v}=q(\lambda)\mathbf{v}$ and $q(\lambda)=0$.
+    Note that $S\subseteq ker(q(A)) \rightarrow |S|\le nullity(q(A)) \leftrightarrow rank(q(A))=0 \leftrightarrow q(A)=\mathbf{O}$.
+    So by property (1) in \eqref{thm_6.9}, $m_A(x)\mid q(A).$ 
+
+    \item Suppose $m_A(x)=(x-\lambda_1)(x-\lambda_2)\cdots (x-\lambda_k)$, where $\lambda_i\neq \lambda_j\, \forall i\ne j$.
+    By definition, $m_A(A)=\mathbf{O}.$ Use \eqref{prop_nullity_ineq}, we have:
+    \[nullity(\prod_{i=1}^{k}(A-\lambda_i))\leq \sum_{i=1}^{k}nullity(A-\lambda_i I)\le \sum_{i=1}^{k}g(\lambda_i)=n.\]
+    However, $nullity(m_A(A))=nullity(\mathbf{O})=n$. This forces the equality.
+\end{enumerate}
+\end{pf}
+
+\begin{proposition}
+    Let $B,C\in M_n(F)$, then $nullity(BC)\le nullity(B)+nullity(C)$.
+    \label{prop_nullity_ineq}
+\end{proposition}
+
+\begin{pf}
+    First, show that $ker(C)\subseteq ker(BC)$. Extend a basis of $ker(C),\,\{\mathbf{v}_1, \mathbf{v}_2, \cdots \mathbf{v}_n\}$ into a basis of $ker(BC), \{\mathbf{v}_1, \mathbf{v}_2, \cdots \mathbf{v}_n, \mathbf{w}_1,\mathbf{w}_2,\cdots, \mathbf{w}_p\}$.\\
+    Next, show $\{C\mathbf{w}_1,C\mathbf{w}_2,\cdots, C\mathbf{w}_p\}\subseteq ker(B)$.
+    In particular,  $\{C\mathbf{w}_1,C\mathbf{w}_2,\cdots, C\mathbf{w}_p\}$ is linearly independent. (Show the linear combination lies in $ker(C)$, and use the linear independence of the basis in $ker(BC)$).
+\end{pf}
+
+\begin{theorem}[Schur Triangulation]
+    Every square matrix $A\in M_n(\mathbb{C})$ is similar to an upper triangular matrix.
+\end{theorem}
+
+\begin{pf}
+    Prove by induction. Left as an exercise.
+\end{pf}
+
+
+\begin{definition}[Spectrum]
+    The spectrum of a linear operator $T$ is the multi-set contains the all eigenvalues of $T$,
+    denoted by $spec(T)=\{\lambda_1,\lambda_2,\cdots\lambda_n\}$. Note that these elements might repeat.
+\end{definition}
+
+\begin{theorem}[Spectral mapping theorem]
+    Let $A\in M_n(\mathbb{C})$ and $f\in\mathbb{C}[x]$ be a non-constant polynomial. 
+    \begin{enumerate}
+        \item If $\lambda$ is an eigenvalue of $A$, then $f(\lambda)$ is an eigenvalue of $f(A)$.
+        \item If $\mu$ is an eigenvalue of $f(A)$, then $\exists$ an eigenvalue $\lambda$ of $A$ s.t. $\mu=f(\lambda)$.
+    \end{enumerate}
+   That is, if  $spec(A)=\{\lambda_1,\lambda_2,\cdots\lambda_n\}$, then
+    $spec(f(A))=\{f(\lambda_1),f(\lambda_2),\cdots f(\lambda_n)\}$.
+    So spectrum mapping is a bijection between multi-sets. 
+\end{theorem}
+
+\begin{pf}
+    Key result is that diagonal entries of upper triangular matrix is eigenvalues. Use Schur triangulation to deduce the spectrum mapping.
+\end{pf}
+
+
+\subsection{Application of Diagonalization}
+\begin{definition}[T-invariant subspace]
+    Let $T:V\rightarrow V$ be a linear operator. A subspace $W\subseteq V$ is said to be a \emph{T-invariant subspace} if $T(W)\subseteq W$.
+    Moreover, the restriction of $T$ on $W$ is defined by $T|_{W}:W\rightarrow W$, where $T|_{W}(\mathbf{w})=T(\mathbf{w})\,\forall \mathbf{w}\in W$.
+\end{definition}
+
+
+\begin{theorem}
+    Let $W\subseteq V$ be an T-invariant subspace and let $T|_{W}:W\rightarrow W$ be the restriction. Then $m_{T|_{W}}(x)$ divdides $m_T(x)$.
+\end{theorem}
+
+\begin{pf}
+   Key observation: $m_{T}(T)=\mathbf{0}$ implies $m_{T}(T|_{W})=\mathbf{0}$. Use the property (1) in \eqref{thm_6.9}. 
+\end{pf}
+
+\begin{exercise}
+    Verify $ker(T|_{W})=ker(T)\cap W$.
+\end{exercise}
+
+\begin{theorem}[Simultaneous Eigenvector]
+    Let $T_1,\,T_2: V\rightarrow V$ be two commutable linear operators of a \textcolor{teal}{complex} finite-dimensional $V$, then there exists $\mathbf{v}$ s.t. $\mathbf{v}$ is simultaneously an eigenvector of both $T_1$ and $T_2$.
+\end{theorem}
+
+\begin{pf}
+    Let $E_\lambda(T_1)$ be an eigenspace of $T_1$.
+    \begin{enumerate}
+        \item Claim that $E_\lambda(T_1)$ is $T_2$ invariant.
+        \item Consider the restriction $T_2|_{E_\lambda(T_1)}:E_\lambda(T_1)\rightarrow E_\lambda(T_1)$. Take an eigenvector $\mathbf{v}$ of $T_2|_{E_\lambda(T_1)}$ w.r.t. some eigenvalue $\lambda^\prime$. This vector is simultaneously an eigenvector of $E_\lambda(T_1)$.
+    \end{enumerate}
+\end{pf}
+
+
+\begin{theorem}[Simultaneous Diagonalizability]
+    Let $T_1,\,T_2: V\rightarrow V$ be two commutable and diagonalizable linear operators of a \textcolor{teal}{complex} finite-dimensional $V$, 
+    then there exists a simultaneous eigen-basis $S$ s.t. $[T_1]^{S}_{S}$ and $[T_2]^{S}_{S}$ are both diagonal and hence simultaneously diagonalizable.
+\end{theorem}
+
+\begin{pf}
+    This is just an stronger verison of the previous theorem.
+\end{pf}
+
+
+
+\begin{definition}[Exponential of Matrix]
+    Let $A\in M_n(\mathbb{C})$. The exponential of $A$ is defined by:
+    \[e^{A}=\sum_{k=0}^{\infty}\frac{A^k}{k!}.\]
+\end{definition}
+
+\begin{theorem}
+    If $D=\begin{pmatrix}
+        d_1 & 0 & \cdots & 0\\
+        0 & d_2 & \cdots & 0\\
+        \vdots & \vdots & \ddots & \vdots\\
+        0 & 0 & \cdots & d_n \end{pmatrix}$ is a diagonal matrix,
+    then $e^D=\begin{pmatrix}
+        e^{d_1} & 0 & \cdots & 0\\
+        0 & e^{d_2} & \cdots & 0\\
+        \vdots & \vdots & \ddots & \vdots\\
+        0 & 0 & \cdots & e^{d_n} \end{pmatrix}$
+\end{theorem}
+
+
+\begin{theorem}
+    Let $A,B\in M_n(\mathbb{C})$, then:
+    \begin{enumerate}
+        \item $e^A$ converges absolutely.
+        \item If $AB=BA$, then $e^{A+B}=e^Ae^B$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{pf}
+    The above theorems are stated without proof, as they may require knowledge of normed spaces, which is beyond the current scope.
+\end{pf}
+
+\begin{theorem}
+    Let $A\in M_n(\mathbb{C})$.
+    \begin{enumerate}
+        \item If $A~B$, then $e^A ~ e^B$.
+        \item Consider a function $f:\mathbb{C}\rightarrow M_n(\mathbb{C})$ defined by $f(t)=e^{At}$, then
+        \[f'(t)=\frac{d}{dt}e^{At}=Ae^{At}.\]
+    \end{enumerate}
+\end{theorem}
+
+\begin{corollary}
+    Give a system of differential equations:
+    \[\frac{d}{dt}\mathbf{v}(t)=A\mathbf{v}(t),\]
+    where $A\in M_n(\mathbb{C})$, then the solution is given by:
+    \[\mathbf{v}(t)=e^{At}\mathbf{v}(0).\]
+\end{corollary}
+
+\begin{remark}
+    To compute $e^{At}$, we need to adress higher powers of $A$, 
+    then diagonalization or Cayley-Hamilton is useful here.
+\end{remark}
+
+\begin{exercise}
+    Give a system of difference equations:
+    \[ \mathbf{v}_n=A \mathbf{v}_{n-1},\]
+    where $A\in M_n(\mathbb{C})$, then the solution is given by:
+    \[\mathbf{v}_n=A^n \mathbf{v}_{0}.\]
+\end{exercise}
+
+
+\newpage
+\section{Linear Duality}
+\input{linear-duality.tex}
+
+
+
+\end{document}
+

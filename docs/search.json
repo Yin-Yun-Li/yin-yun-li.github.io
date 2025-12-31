@@ -1,23 +1,16 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "About",
-    "section": "",
-    "text": "I am an undergraduate student at Department of Economics, National Taiwan University.\nYou can contact me at b10302331@ntu.edu.tw."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "Undergraduate student at Department of Economics, NTU\nHere is my CV"
-  },
-  {
     "objectID": "notes.html",
     "href": "notes.html",
     "title": "Notes",
     "section": "",
     "text": "Here is a collection of my course notes and study materials.\n\n\n\nTopic\nDate\nLink\n\n\n\n\nIntroduction to Linear Algebra  Based on the course by Prof. Kwok-Wing Tsoi (NTU Math).\nDec 2025\n View PDF"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "About",
+    "section": "",
+    "text": "I am an undergraduate student at Department of Economics, National Taiwan University.\nYou can contact me at b10302331@ntu.edu.tw."
   }
 ]

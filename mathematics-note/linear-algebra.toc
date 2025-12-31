@@ -1,0 +1,12 @@
+\contentsline {section}{\numberline {1}Fields and Vector Space}{3}{section.1}%
+\contentsline {section}{\numberline {2}Basis and Dimension}{6}{section.2}%
+\contentsline {section}{\numberline {3}Linear Transformation}{11}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Linear function}{11}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Matrix Operations}{14}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Change of coordinate \& Linear Operator}{18}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Determinants}{20}{section.4}%
+\contentsline {section}{\numberline {5}Diagonalization}{25}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Similarity}{25}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Diagonalizability}{27}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Application of Diagonalization}{32}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Linear Duality}{35}{section.6}%

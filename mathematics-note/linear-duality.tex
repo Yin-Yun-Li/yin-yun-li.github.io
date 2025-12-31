@@ -1,0 +1,190 @@
+Let $V$ and $W$ be two finite-dimensional vector spaces over a field $\mathcal{F}$ s.t.
+$dim(V)=n$ and $dim(W)=m$. Recall our \emph{dream diagram}:
+
+\begin{center}
+    \begin{tikzcd}[row sep=huge, column sep=huge, ampersand replacement=\&]
+        V \arrow[r, "{\mathcal{L}(V,W)}"] \arrow[d, "\phi_S"'] 
+        \& W \arrow[d, "\phi_{S'}"] \\
+        \mathcal{F}^n \arrow[r, "\mathcal{M}_{m \times n}(\mathcal{F})"'] 
+        \& \mathcal{F}^m
+    \end{tikzcd}
+\end{center}
+
+Fix $S$ as a basis of $V$, the coordinate mapping $\phi: V\rightarrow F^n$ defined by 
+$\mathbf{v} \mapsto [\mathbf{v}]_S$ is an isomorphism. So does the coordinate mapping $\phi_{S'}$.
+
+Now consider the vector space of all linear functions from $V$ to $W$, denoted by $\mathcal{L}(V,W)=\{f:V\rightarrow W: f \text{ is linear}\}$, then we have:
+\begin{theorem}
+    Fix bases $S$ and $S'$ of $V$ and $W$ respectively, then there exists an isomorphism of vector spaces:
+    \[\Phi^{S'}_{S}:\mathcal{L}(V,W)\rightarrow \mathcal{M}_{m\times n}(\mathcal{F}),\]
+    defined by $f\mapsto [f]^{S'}_{S}$.
+\end{theorem}
+
+\begin{corollary}
+    If both $V, W$ are finite dimensional over $\mathcal{F}$, then
+    \[dim_\mathcal{F}(\mathcal{L}(V,W))=dim_\mathcal{F}(V)dim_\mathcal{F}(W).\]
+\end{corollary}
+
+Next, we apply the above result to the special case when $W=\mathcal{F}$.
+
+\begin{definition}[Dual Space]
+    Let $V$ be a vector space over a field $\mathcal{F}$. The dual space of $V$, denoted by $V^*$, is defined by:
+    \[V^* = \mathcal{L}(V,\mathcal{F})=\{f:V\rightarrow \mathcal{F}: f \text{ is linear}\}.\]
+    Take any element $f\in V^*$, we call $f:V\to \mathcal{F}$ is linear functional on $V$.
+\end{definition}
+
+
+\begin{theorem}
+    Fix a basis $S$ of $V$ and $B=\{1\}$ be a standard basis of $\mathcal{F}$, then there exists an isomorphism of vector spaces:
+    \[\Phi^{B}_{S}:\mathcal{L}(V,\mathcal{F})\rightarrow \mathcal{M}_{1\times n}(\mathcal{F}),\]
+    defined by $f\mapsto [f]^{B}_{S}$.
+\end{theorem}
+
+\begin{corollary}
+    If both $V$ is finite dimensional over $\mathcal{F}$, then
+    \[dim_\mathcal{F}(V^*)=dim_\mathcal{F}(V).\]
+\end{corollary}
+
+\begin{definition}[Dual Basis]
+Let $S=\{\mathbf{v}_1, \mathbf{v}_2,\cdots\mathbf{v}_n\}$ be a basis of $V$.
+$S^*=\{\mathbf{v}^*_1, \mathbf{v}^*_2,\cdots\mathbf{v}^*_n\}$ is said to be the dual basis of $S$ in $V^*$ if
+\(\phi^{B}_{S}(\mathbf{v}^*_k)=e_k\) for each $k=1,2,\cdots n$.
+\end{definition}
+
+\begin{lemma}
+    Fix any basis $S=\{\mathbf{v}_1, \mathbf{v}_2,\cdots\mathbf{v}_n\}$ be a basis of $V$, then its dual basis
+    $S^*=\{\mathbf{v}^*_1, \mathbf{v}^*_2,\cdots\mathbf{v}^*_n\}$ satisfies, for each $i$:
+    \[
+    \begin{cases}
+        \mathbf{v}^*_i(\mathbf{v}_j) = 1, \text{ if } i=j,\\
+        \mathbf{v}^*_i(\mathbf{v}_j) = 0, \text{ if } i\neq j.
+    \end{cases}
+    \]
+\end{lemma}
+
+\begin{pf}
+    For $i=1$, consider $\mathbf{v}^*_1:V\to\mathcal{F}$.
+    By definition, $\Phi^{B}_{S}(\mathbf{v}^*_1)=e_1$, i.e., \([v^*_1]^{B}_{S}=(1,0,\cdots,0)\).
+    This implies that $\mathbf{v}^*_1(\mathbf{v}_1)=1\cdot 1$ and $\mathbf{v}^*_1(\mathbf{v}_j)=0\cdot 1$ for $j\ne 1$.
+    Now repeat the above argument for $i=2,3,\cdots n$.
+\end{pf}
+
+
+\begin{definition}[Dual linear maps]
+    Let $T:V\rightarrow W$ be a linear map btw two vector spaces $V$ and $W$.
+    The dual of $T$ is a linear map btw the dual spaces of $V$ and $W$:
+    \[T^*:W^*\to V^* \text{ given by } w^*\mapsto w^*\circ T.\]
+\end{definition}
+
+\begin{theorem}
+    Let $T:V\rightarrow W$ be a linear map btw two finite-dimensional vector spaces $V$ and $W$.
+    Fix bases $S$ and $S'$ of $V$ and $W$ respectively, then
+    \[[T^*]^{S^*}_{S'^*} = ([T]^{S'}_{S})^T.\]
+\end{theorem}
+
+\begin{pf}
+Let $S=\{\mathbf{v}_1,\mathbf{v}_2\cdots\mathbf{v}_n\}$ be a basis of $V$.
+Let $S'=\{\mathbf{w}_1,\mathbf{w}_2\cdots\mathbf{w}_m\}$ be a basis of $W$.
+Suppose $[T]^{S'}_{S}=A=\begin{pmatrix}
+    a_{11}&a_{12} &\cdots & a_{1n}\\
+    a_{21}&a_{22} &\cdots & a_{2n}\\
+    \vdots & \vdots & \ddots & \vdots\\
+    a_{m1} & a_{m2} & \cdots &a_{mn} 
+\end{pmatrix}$, we want to show $[T^*]^{S^*}_{S'^*}=A^\top$.
+
+Let $\mathbf{v} = \sum_{k=1}^{n}c_k\mathbf{v}_k$. Consider $T^*(\mathbf{w}^*_1)(\mathbf{v})=\mathbf{w}^*_1\circ T(\mathbf{v}) = \mathbf{w}^*_1 (\sum_{k=1}^{n}c_k T(\mathbf{v}_k))=
+\mathbf{w}^*_1 (\sum_{k=1}^{n}c_k \sum_{j=1}^{m}a_{jk}\mathbf{w}_j)=\sum_{k=1}^{n}c_k a_{1k}\cdot 1.$
+Note that $c_k = v^*_k(\mathbf{v})$, so we get $T^*(\mathbf{w}^*_1)=b^*_1\circ T(\mathbf{v})=\sum_{k=1}^{n}a_{1k}v^*_k(\mathbf{v}).$
+\label{thm6.3}
+\end{pf}
+
+
+\begin{definition}[Annihilator]
+    Let $V$ be a vector space and $U\subseteq V$ be a subspace. The annihilator of $U$ is a subspace of $V^*$ defined by:
+    \[U^0=\{f\in V^*:f(\mathbf{u})=0\;\forall\mathbf{u}\in U\}.\]
+\end{definition}
+
+\begin{theorem}[Linear Duality Theorem (I)]
+    Let $V$ be a finite dimensional vector space and $U\subseteq V$, then:
+    \[dim(V)=dim(U)+dim(U^0).\]
+    \label{ld1}
+\end{theorem}
+
+\begin{pf}
+    Let $\{\mathbf{u}_1,\mathbf{u}_2,\cdots \mathbf{u}_k\}$ be a basis of $U$.
+    By basis extension theorem, we can extend it into $\{\mathbf{u}_1,\mathbf{u}_2,\cdots \mathbf{u}_k,\mathbf{u}_{k+1},\cdots\mathbf{u}_n\}$.
+    So $\{\mathbf{u}^*_1,\mathbf{u}^*_2,\cdots \mathbf{u}^*_k,\mathbf{u}^*_{k+1},\cdots\mathbf{u}^*_n\}$ is the dual basis in $V^*$.
+    Next, we want to show $\{\mathbf{u}^*_{k+1},\cdots\mathbf{u}^*_n\}$ forms a basis of $U^0.$
+    \begin{enumerate}
+        \item For each $k+1\le j\le n$, $\mathbf{u}^*_j(\mathbf{u}_i)=0$ for $1\le i\le k.$ So $\mathbf{u}^*_j\in U^0.$
+        \item Let $\theta\in U^0\subseteq V^*$, so $\theta=\sum_{i=1}^{n}a_i\mathbf{u}^*_i,$ and we wish $a_1=a_2=\cdots a_k = 0$.
+        Let $\mathbf{u}\in U$, so $\mathbf{u}=\sum_{i=1}^{k}\mathbf{u}_i$. By definition, $\theta(\mathbf{u_j})=0$ forces $\sum_{i=1}^{k}a_i\mathbf{u}^*_i(\mathbf{u}_j)=0$ for $1\le j\le k$.
+        \item Linear independence is trivial.
+    \end{enumerate}
+    By the claim, we have $dim(U^0)=n-k=dim(V)-dim(U).$
+\end{pf}
+
+
+\begin{theorem}[Linear Duality Theorem (II)]
+    Let $T:V\to W$ be a linear map btw finite dimensional vector spaces.
+    Then we have:
+    \begin{enumerate}
+        \item $ker(T^*)=(im(T))^0$.
+        \item $rank(T)=rank(T^*)$.
+        \item $im(T^*)=(ker(T))^0$.
+    \end{enumerate}
+    \label{ld2}
+\end{theorem}
+
+\begin{pf}
+    Left as an exercise.
+\end{pf}
+
+\begin{corollary}
+\eqref{ld2} implies that
+\begin{enumerate}
+    \item $T^*$ is injective iff $T$ is surjective.
+    \item $rank(A)=rank(A^\top)$.
+    \item $T^*$ is surjective iff $T$ is injective.
+\end{enumerate}
+\end{corollary}
+
+\begin{pf}
+\begin{enumerate}
+    \item $im(T)=W \leftrightarrow dim((im(T)^0))=0=dim(ker(T^*))$.
+    \item Recall theorem \eqref{thm6.3}.
+    \item $ker(T)=\{\mathbf{0}\}\leftrightarrow dim((ker(T))^0)= dim(im(T^*)) = dim(V)=dim(V^*)$
+\end{enumerate}
+\end{pf}
+
+
+\begin{definition}[Double Dual]
+The dual of a dual space is defined by:
+\[(V^*)^*=\{g:V^*\to F: g \text{ is linear}\}.\]
+\end{definition}
+
+\begin{theorem}[Linear Duality Theorem (III)]
+    Let $\text{ev}: V\to (V^*)^*$ defined by $\mathbf{v}\mapsto\text{ev}(\mathbf{v})$.
+    That is, for each $\mathbf{v}\in V$, $\text{ev}(\mathbf{v}):V^*\to \mathcal{F}$ is a linear functional on $V^*$.
+    So the ev function satisfies that for $f\in V^*$, ev$(\mathbf{v})(f)=f(\mathbf{v}).$
+    Under this setting, we have:
+    \begin{enumerate}
+        \item ev is an injective linear map.
+        \item If $V$ is finite dimensional, then ev is an isomorphism btw $V$ and $(V^*)^*$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{pf}
+\begin{enumerate}
+    \item Take $\mathbf{v}\in ker(\text{\emph{ev}})$, we have \emph{ev}$(\mathbf{v})=\mathbf{0}.$
+    That is, \emph{ev}$(\mathbf{v})(f)=f(\mathbf{v})=0$ for $f\in V^*$.
+    Since $f$ is aribitrary in the dual space $V^*$, this forces $\mathbf{v}=\mathbf{0}$ and $ker(\text{\emph{ev}})=\{\mathbf{0}\}.$
+    This proves the injectiveness.
+    \item Note that $dim(V)=dim(V^*)=dim((V^*)^*)$, \emph{ev}:$V\to (V^*)^*$ is injective linear map from 1,
+    by \eqref{TFAE_ver1}, \emph{ev} is also a surjective map and hence an isomorphism.  
+\end{enumerate}
+\end{pf}
+
+\begin{remark}
+    If $V$ is infinite dimensional, then \emph{ev} might not be surjective in general, which is beyond the current scope.
+\end{remark}

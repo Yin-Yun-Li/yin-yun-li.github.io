@@ -421,5 +421,11 @@ FodyWeavers.xsd
 *.DS_Store
 .Rproj.user
 *.Rproj
+*.Rhistory
+
+
+
+
+
 /.quarto/
 **/*.quarto_ipynb

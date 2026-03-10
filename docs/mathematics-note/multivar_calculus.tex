@@ -1,0 +1,519 @@
+\documentclass[12pt]{article}
+\RequirePackage{style_for_analysis}
+
+\begin{document}
+
+
+\title{Notes on Multivariable Calculus}
+\author{}
+\date{}
+\maketitle
+
+\section{Multivariable Differential Calculus}
+
+\subsection*{Motivation}
+Let $f: \mathbb{R}^n \to \mathbb{R}^m$ be defined by $f(\mathbf{x})=(f_1(\mathbf{x}), f_2(\mathbf{x}), \dots, f_m(\mathbf{x}))$, where each component $f_i: \mathbb{R}^n \to \mathbb{R}$ is a real-valued function. 
+
+Regardless of whether $f$ is linear or non-linear, a natural question arises: can it be locally approximated by a linear function? And if so, how accurate is this approximation?
+
+Ultimately, given a point $\mathbf{x}_0 \in \mathbb{R}^n$, our goal is to approximate $f$ near $\mathbf{x}_0$ using its linearization:
+$$f(\mathbf{x}) \approx f(\mathbf{x}_0) + Df(\mathbf{x}_0) (\mathbf{x} - \mathbf{x}_0)$$
+
+
+\begin{definition}[Differentiability]
+Let $E \subseteq \mathbb{R}^n$, $f: E \to \mathbb{R}^m$ be a function, and $\mathbf{x}_0$ be an interior point of $E$. Let $L: \mathbb{R}^n \to \mathbb{R}^m$ be a linear transformation. We say $f$ is differentiable at $\mathbf{x}_0$ with derivative $L$ if 
+$$\lim_{\mathbf{x} \to \mathbf{x}_0} \frac{\|f(\mathbf{x}) - f(\mathbf{x}_0) - L(\mathbf{x}-\mathbf{x}_0)\|}{\|\mathbf{x}-\mathbf{x}_0\|} = 0.$$
+Equivalently,
+$$\lim_{\mathbf{h}\to\mathbf{0}}\frac{\| f(\mathbf{x}_0+\mathbf{h})-f(\mathbf{0})-L(\mathbf{h}) \|}{\|\mathbf{h}\|}=0.$$
+\label{differentiablity}
+\end{definition}
+
+Therefore, multivariable differentiability is defined such that the relative error between the function and its linear approximation vanishes as the distance approaches zero.
+
+\begin{theorem}
+Let $E \subseteq \mathbb{R}$, $f: E \to \mathbb{R}$ be a function, $L \in \mathbb{R}$, and $x_0$ be an interior point of $E$. TFAE:
+\begin{enumerate}
+    \item $f$ is differentiable at $x_0$ and $f'(x_0) = L$.
+    \item $\lim_{x \to x_0} \frac{|f(x) - f(x_0) - L(x - x_0)|}{|x - x_0|} = 0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{dbox}
+\begin{pf}
+For $x\neq x_0$, write
+\[\frac{f(x) - f(x_0) }{x - x_0}= L + \frac{f(x) - f(x_0) - L(x - x_0)}{x - x_0}.\]
+Rearrange $L$ to the left, take the absolute value and limit $x\to x_0$, and we can show the limit on the both sides imply each other.
+The second expression is exactly the special case of definition \eqref{differentiablity}.
+\end{pf}
+\end{dbox}
+
+
+
+\begin{theorem}[Uniqueness of derivatives]
+Let $\mathbf{x}_0 \in E$ be an interior point of $E$. 
+Suppose $L_1, L_2: \mathbb{R}^n \to \mathbb{R}^m$ are linear transformations such that $f$ is differentiable at $\mathbf{x}_0$ with derivative $L_1$ and also differentiable at $\mathbf{x}_0$ with derivative $L_2$. 
+Then $L_1 = L_2$.
+\end{theorem}
+
+
+\begin{dbox}
+\begin{pf}
+For $\mathbf{h}\ne \mathbf{0}$,
+\[\frac{\| L_1(\mathbf{h}) - L_2(\mathbf{h}) \|}{\|\mathbf{h}\|}\le
+\frac{\| f(\mathbf{x}_0+\mathbf{h})-f(\mathbf{0})-L_1(\mathbf{h}) \|}{\|\mathbf{h}\|} +
+\frac{\| f(\mathbf{x}_0+\mathbf{h})-f(\mathbf{0})-L_2(\mathbf{h}) \|}{\|\mathbf{h}\|}.
+\]
+
+By sandwich, $\lim_{\mathbf{h}\to\mathbf{0}}\frac{\| L_1(\mathbf{h}) - L_2(\mathbf{h}) \|}{\|\mathbf{h}\|}=0.$
+
+Let $\mathbf{h}=t\mathbf{v}, t\ne 0$, we have
+\begin{align*}
+\lim_{\mathbf{\mathbf{v}}\to\mathbf{0}}\frac{\| L_1(t\mathbf{v}) - L_2(t\mathbf{v}) \|}{\| t\mathbf{v}\|} = 
+\lim_{\mathbf{\mathbf{v}}\to\mathbf{0}}\frac{|t| \|L_1(\mathbf{v}) - L_2(t\mathbf{v})\|}{|t| \|\mathbf{v}\|} \quad (\text{$L_1$ and $L_2$ are linear.})
+\end{align*}
+
+Hence, for $\mathbf{v}\ne\mathbf{0}$, $L_1(\mathbf{v})=L_2(\mathbf{v})$, which is also true when $\mathbf{v}=\mathbf{0}.$
+\end{pf}
+\end{dbox}
+
+We may prove by contradiction that $f$ is not differnetiable by the above theorem.
+
+\begin{theorem}
+If $f$ is differentiable at $\mathbf{x}_0$, then $f$ is continuous at $\mathbf{x}_0$.
+\end{theorem}
+
+\begin{dbox}
+\begin{pf}
+For $\mathbf{x}\neq \mathbf{x}_0$, write
+\[\|f(\mathbf{x}) - f(\mathbf{x}_0)-L(\mathbf{x} - \mathbf{x}_0)\| = \underbrace{\frac{\|f(\mathbf{x}) - f(\mathbf{x}_0) - L(\mathbf{x} - \mathbf{x}_0)\|}{\|\mathbf{x} - \mathbf{x}_0\|}}_{\to 0 \text{ by assumption}} \underbrace{\|\mathbf{x} - \mathbf{x}_0\|}_{\to 0 \text{ as } \mathbf{x}\to\mathbf{x}_0}.\]
+Next, use
+\[\|f(\mathbf{x}) - f(\mathbf{x}_0)\|\le \underbrace{\|f(\mathbf{x}) - f(\mathbf{x}_0)-L(\mathbf{x} - \mathbf{x}_0)\|}_{\to 0 \text{ from the previous equality}} + \underbrace{\|L(\mathbf{x} - \mathbf{x}_0)\|}_{\to 0 \text{ as } \mathbf{x}\to\mathbf{x}_0}.\]
+By Sandwich, $\lim_{\mathbf{x}\to\mathbf{x}_0}f(\mathbf{x})=f(\mathbf{x}_0).$
+\end{pf}
+\end{dbox}
+
+
+\begin{definition}[Directional Derivative]
+Let $E \subseteq \mathbb{R}^n$, $f: E \to \mathbb{R}^m$ be a function, and $\mathbf{x}_0$ be an interior point of $E$.
+Fix $\mathbf{v}\in\mathbb{R}^n$, if the limit
+$$D_\mathbf{v} f(\mathbf{x}_0) = \lim_{t \to 0} \frac{f(\mathbf{x}_0 + t\mathbf{v}) - f(\mathbf{x}_0)}{t}$$
+exists, we call this limit the directional derivative of $f$ at $\mathbf{x}_0$ in the direction $\mathbf{v}.$
+\end{definition}
+
+
+\begin{definition}[Partial Derivative]
+Let $E \subseteq \mathbb{R}^n$, $f: E \to \mathbb{R}^m$ be a function, and $\mathbf{x}_0$ be an interior point of $E$.
+Let $1\le j\le n$, if the limit
+$$\frac{\partial f}{\partial x_j}(\mathbf{x}_0) = \lim_{t \to 0} \frac{f(\mathbf{x}_0 + t\mathbf{e}_j) - f(\mathbf{x}_0)}{t}$$
+exists, we call this limit the partial derivative of $f$ with respect to the variable $x_j$.
+\end{definition}
+
+So partial derivative is just a special case of directional derivative.
+
+\begin{theorem}
+If $f$ is differentiable at $\mathbf{x}_0$, then $f$ is differentiable in the direction $\mathbf{v}$ at $\mathbf{x}_0$, and:
+$$D_\mathbf{v} f(\mathbf{x}_0) = f'(\mathbf{x}_0)\cdot\mathbf{v}.$$
+\end{theorem}
+
+\begin{dbox}
+\begin{pf}
+For $\mathbf{h}\ne 0,$ let $\mathbf{h}=t\mathbf{v},\, t\ne 0,$ write
+\[
+\frac{f(\mathbf{x}_0 + t\mathbf{v})-f(\mathbf{x}_0)}{t} 
+= \frac{f(\mathbf{x}_0 + t\mathbf{v})-f(\mathbf{x}_0)-L(t\mathbf{v})}{t}
++ \frac{L(t\mathbf{v})}{t}.
+\]
+Rearrange $L(\mathbf{v})$ to the left, and take the Euclidean norm and $t\to 0$, the RHS converge to 0 by differentiablity ($\|\mathbf{v}\|\ne 0$). So we have
+\[
+\lim_{t\to 0}\frac{f(\mathbf{x}_0 + t\mathbf{v})-f(\mathbf{x}_0)}{t} = L(\mathbf{v}) = f^\prime(\mathbf{x}_0)\cdot\mathbf{v}.
+\]
+\end{pf}
+\end{dbox}
+
+
+
+We may also disprove the differentiability of $f$ provided its directional derivative exists.
+The next question is: how to write the linear map $f'(\mathbf{x}_0)$ explicitly?
+
+\begin{theorem}
+Let $E \subseteq \mathbb{R}^n$, $f: E \to \mathbb{R}^m$ be a function, and $\mathbf{x}_0$ be an interior point of $E$.
+If all the partial derivatives of $f$ exist on $E$ and are continuous at $\mathbf{x}_0$, then $f$ is differentiable at $\mathbf{x}_0$, and
+$$f'(\mathbf{x}_0)\cdot\mathbf{v} = \sum_{j=1}^n v_j \frac{\partial f}{\partial x_j}(\mathbf{x}_0).$$
+\end{theorem}
+
+
+\begin{dbox}
+\begin{pf}
+\noindent \textbf{Step 1: Setup}\\
+Let $L(\mathbf{v}) = \sum_{j=1}^n v_j \frac{\partial f}{\partial x_j}(\mathbf{x}_0)$ be our candidate for the derivative.
+Since $\mathbf{x}_0$ is an interior point of $E$, there exists $r > 0$ such that the ball $B(\mathbf{x}_0, r) \subseteq E$.
+
+For $\epsilon > 0$, since each partial derivative $\frac{\partial f_i}{\partial x_j}$ is continuous at $\mathbf{x}_0$, there exists $\delta_{i,j} > 0$ such that $\|\mathbf{x} - \mathbf{x}_0\| < \delta_{i,j}$ implies
+$$\left| \frac{\partial f_i}{\partial x_j}(\mathbf{x}) - \frac{\partial f_i}{\partial x_j}(\mathbf{x}_0) \right| < \frac{\epsilon}{mn}$$
+for all $1 \le i \le m$ and $1 \le j \le n$.
+
+Let $\delta = \min\{r, \delta_{i,j} \mid 1 \le i \le m, 1\le j \le n\}$.
+Now, fix $\mathbf{x} \in E$ such that $\|\mathbf{x} - \mathbf{x}_0\| < \delta$. Let $\mathbf{v} = \mathbf{x} - \mathbf{x}_0 = \sum_{j=1}^n v_j \mathbf{e}_j$. Note that $|v_j| \le \|\mathbf{x} - \mathbf{x}_0\| < \delta$.
+We construct a path from $\mathbf{x}_0$ to $\mathbf{x}$ along the coordinate axes. Define the sequence of points:
+\begin{align*}
+\mathbf{x}^{(0)} &= \mathbf{x}_0 \\
+\mathbf{x}^{(1)} &= \mathbf{x}_0 + v_1 \mathbf{e}_1 \\
+\mathbf{x}^{(2)} &= \mathbf{x}_0 + v_1 \mathbf{e}_1 + v_2 \mathbf{e}_2 \\
+&\vdots \\
+\mathbf{x}^{(j)} &= \mathbf{x}^{(j-1)} + v_j \mathbf{e}_j \\
+&\vdots \\
+\mathbf{x}^{(n)} &= \mathbf{x}_0 + \sum_{j=1}^n v_j \mathbf{e}_j = \mathbf{x}
+\end{align*}
+
+We can express the difference $f(\mathbf{x}) - f(\mathbf{x}_0)$ as a telescoping sum:
+$$f(\mathbf{x}) - f(\mathbf{x}_0) = \sum_{j=1}^n \left( f(\mathbf{x}^{(j)}) - f(\mathbf{x}^{(j-1)}) \right)$$
+
+For each component $i$, consider $f_i(\mathbf{x}^{(j)}) - f_i(\mathbf{x}^{(j-1)})$. 
+Let $\varphi_i^j(t) = f_i(\mathbf{x}^{(j-1)} + t v_j \mathbf{e}_j)$, then $f_i(\mathbf{x}^{(j)}) - f_i(\mathbf{x}^{(j-1)}) = \varphi^j_i(1)-\varphi^j_i(0)$.
+By the Mean Value Theorem, $\exists t_j\in (0,1)$ such that $\varphi^j_i(1)-\varphi^j_i(0) = (\varphi^j_i)'(t_j)$. 
+
+\vspace{0.8em}
+\noindent \textbf{Step 2: Continuity of $f_i$ along the coordinate $\mathbf{x}_j$}\\
+Applying Lemma \eqref{coordinate chain rule}: 
+$$
+f_i(\mathbf{x}^{(j)}) - f_i(\mathbf{x}^{(j-1)}) = (\varphi^j_i)'(t_j) = \frac{\partial f_i}{\partial x_j}(\boldsymbol{\xi}_j) v_j,
+$$ 
+where $\boldsymbol{\xi}_j = \mathbf{x}^{(j-1)} + t_j v_j \mathbf{e}_j$. 
+
+Note that
+\begin{align*}
+\|\mathbf{x}^{(j-1)} + t_j v_j \mathbf{e}_j - \mathbf{x}_0\| &= \|v_1 \mathbf{e}_1 + v_2 \mathbf{e}_2 + \dots + v_{j-1} \mathbf{e}_{j-1} + t_j v_j \mathbf{e}_j\| \\
+&\le \left\| \sum_{i=1}^n v_i \mathbf{e}_i \right\| \quad (\because |t_j| < 1) \\
+&= \|\mathbf{x} - \mathbf{x}_0\| \le \delta,
+\end{align*}
+which implies
+\begin{align*}
+\left| f_i(\mathbf{x}^{(j)}) - f_i(\mathbf{x}^{(j-1)}) - \frac{\partial f_i}{\partial x_j}(\mathbf{x}_0) v_j \right| 
+&= \left| \frac{\partial f_i}{\partial x_j}(\mathbf{x}^{(j-1)} + t_j v_j \mathbf{e}_j) - \frac{\partial f_i}{\partial x_j}(\mathbf{x}_0) \right| |v_j| \\
+&< \frac{\epsilon}{mn} |v_j|.
+\end{align*}
+
+\vspace{0.8em}
+\noindent \textbf{Step 3: Bound the error for each component $f_i$}\\
+\begin{align*}
+\left| f_i(\mathbf{x}) - f_i(\mathbf{x}_0) - \sum_{j=1}^n \frac{\partial f_i}{\partial x_j}(\mathbf{x}_0) v_j \right| &= \left| \sum_{j=1}^n \left( f_i(\mathbf{x}^{(j)}) - f_i(\mathbf{x}^{(j-1)}) - \frac{\partial f_i}{\partial x_j}(\mathbf{x}_0) v_j \right) \right| \\
+&\le \sum_{j=1}^n \left| \frac{\partial f_i}{\partial x_j}(\boldsymbol{\xi}_j) - \frac{\partial f_i}{\partial x_j}(\mathbf{x}_0) \right| |v_j| \\
+&< \sum_{j=1}^n \frac{\epsilon}{mn} |v_j| \\
+&\le \sum_{j=1}^n \frac{\epsilon}{mn} \|\mathbf{x} - \mathbf{x}_0\| = \frac{\epsilon}{m} \|\mathbf{x} - \mathbf{x}_0\|
+\end{align*}
+
+\vspace{0.8em}
+\noindent \textbf{Step 4: Extend this to the vector-valued function $f$}\\
+\begin{align*}
+\|f(\mathbf{x}) - f(\mathbf{x}_0) - L(\mathbf{x} - \mathbf{x}_0)\| &\le \sum_{i=1}^m \left| f_i(\mathbf{x}) - f_i(\mathbf{x}_0) - \sum_{j=1}^n \frac{\partial f_i}{\partial x_j}(\mathbf{x}_0) v_j \right| \\
+&< \sum_{i=1}^m \frac{\epsilon}{m} \|\mathbf{x} - \mathbf{x}_0\| = \epsilon \|\mathbf{x} - \mathbf{x}_0\|
+\end{align*}
+
+Dividing both sides by $\|\mathbf{x} - \mathbf{x}_0\|$, we get:
+$$\frac{\|f(\mathbf{x}) - f(\mathbf{x}_0) - L(\mathbf{x} - \mathbf{x}_0)\|}{\|\mathbf{x} - \mathbf{x}_0\|} < \epsilon$$
+Since this holds for any $\epsilon > 0$ when $\|\mathbf{x} - \mathbf{x}_0\|$ is sufficiently small, we conclude:
+$$\lim_{\mathbf{x} \to \mathbf{x}_0} \frac{\|f(\mathbf{x}) - f(\mathbf{x}_0) - L(\mathbf{x} - \mathbf{x}_0)\|}{\|\mathbf{x} - \mathbf{x}_0\|} = 0$$
+This proves that $f$ is differentiable at $\mathbf{x}_0$, and its derivative is given by $L$.
+\end{pf}
+\end{dbox}
+
+\begin{lemma}[Chain rule along a coordinate segment]
+Let $E \subset \mathbb{R}^n$ and $f: E \to \mathbb{R}^m$. Fix $1 \le i \le m$ and $1 \le j \le n$. Define
+$$ \varphi_i^j(t) := f_i(\mathbf{z} + t v \mathbf{e}_j), \quad 0 \le t \le 1, $$
+where $\mathbf{z} \in E$ and $v \in \mathbb{R}$. Assume that for some $t_0 \in (0, 1)$ there exists $\rho > 0$ such that
+$$ \mathbf{z} + (t_0 + h)v \mathbf{e}_j \in E \quad \text{for all } |h| < \rho, $$
+and that the partial derivative $\frac{\partial f_i}{\partial x_j}$ exists at the point $\mathbf{p} := \mathbf{z} + t_0 v \mathbf{e}_j$. Then $\varphi_i^j$ is differentiable at $t_0$ and
+$$ (\varphi_i^j)'(t_0) = \frac{\partial f_i}{\partial x_j}(\mathbf{p}) v. $$
+\label{coordinate chain rule}
+\end{lemma}
+
+
+\begin{dbox}
+\begin{pf}
+Let 
+\begin{align*}
+(\varphi_i^j)'(t_0) = \lim_{h\to 0}\frac{\varphi_i^j(t_0+h)-\varphi_i^j(t_0)}{h}
+&=\lim_{h\to 0}\frac{f_i(\mathbf{z} + (t_0+h) v \mathbf{e}_j)-f_i(\mathbf{z} + t_0 v \mathbf{e}_j)}{t}\\
+&=\lim_{h\to 0}\frac{f_i(\mathbf{p}+hv\mathbf{e}_j)-f_i(\mathbf{p})}{h}.
+\end{align*}
+If $v=0$, $f_i(\mathbf{p}+hv\mathbf{e}_j)-\mathbf{p}=0.$
+Now consider $v\ne 0$. 
+
+For arbitrarily small $h$, $\mathbf{z} + (t_0 + h)v \mathbf{e}_j=\mathbf{p}+hv\mathbf{e}_j\in B(\mathbf{p},\rho)\subseteq E.$ 
+Set $hv=s$, the above quotient becomes:
+\[\lim_{s\to 0}\frac{f_i(\mathbf{p}+s\mathbf{e}_j)-f_i(\mathbf{p})}{s}\cdot v = \frac{\partial f_i}{\partial x_j}(\mathbf{p})v,\]
+which shows that $\varphi_i^j$ is differentiable at $t_0$ and
+$(\varphi_i^j)'(t_0) = \frac{\partial f_i}{\partial x_j}(\mathbf{p}) v.$
+\end{pf}
+\end{dbox}
+
+
+
+\begin{remark}
+Let $E \subseteq \mathbb{R}^n$, $f: E \to \mathbb{R}^m$ be a function, and $\mathbf{x}_0$ be an interior point of $E$.
+If $f$ is differentiable at $\mathbf{x}_0$, by defintion, there exists a linear map such that the relative error converge to zero near $\mathbf{x}_0.$
+Then we call this linear map (total) derivative of $f$ at $\mathbf{x}_0,$ denoted by
+
+\begin{align*}
+Df(\mathbf{x}_0) = f^\prime(\mathbf{x}_0) &=
+\begin{pmatrix}
+- & \nabla f_1(\mathbf{x}_0) & - \\
+- & \nabla f_2(\mathbf{x}_0) & - \\
+  & \vdots & \\
+- & \nabla f_m(\mathbf{x}_0) & - 
+\end{pmatrix}_{m \times n}\\ \\ &= 
+\begin{pmatrix}
+| & | & & | \\
+\frac{\partial f}{\partial x_1}(\mathbf{x}_0) & \frac{\partial f}{\partial x_2}(\mathbf{x}_0) & \cdots & \frac{\partial f}{\partial x_n}(\mathbf{x}_0) \\
+| & | & & |
+\end{pmatrix}_{m \times n}.    
+\end{align*}
+\end{remark}
+
+Hence, we have:
+\begin{enumerate}
+    \item The partial derivative is simply the directional derivative along the standard basis vector $\mathbf{e}_j:$
+    $$ \frac{\partial f}{\partial x_j}(\mathbf{x}_0) = D_{\mathbf{e}_j} f(\mathbf{x}_0) = f'(\mathbf{x}_0) \mathbf{e}_j $$
+    
+    \item If $f$ is differentiable, then for any direction vector $\mathbf{v} = \sum_{j=1}^n v_j \mathbf{e}_j$, the directional derivative can be expanded as:
+    $$ D_{\mathbf{v}} f(\mathbf{x}_0) = f'(\mathbf{x}_0) \mathbf{v} = f'(\mathbf{x}_0) \left( \sum_{j=1}^n v_j \mathbf{e}_j \right) = \sum_{j=1}^n v_j f'(\mathbf{x}_0) \mathbf{e}_j = \sum_{j=1}^n v_j \frac{\partial f}{\partial x_j}(\mathbf{x}_0) $$
+    This can be naturally represented in matrix multiplication form (where the derivative is a $m \times n$ matrix):
+    $$ \begin{pmatrix}
+    | & | & & | \\
+    \frac{\partial f}{\partial x_1}(\mathbf{x}_0) & \frac{\partial f}{\partial x_2}(\mathbf{x}_0) & \cdots & \frac{\partial f}{\partial x_n}(\mathbf{x}_0) \\
+    | & | & & |
+    \end{pmatrix}_{m \times n}
+    \begin{pmatrix}
+    v_1 \\
+    v_2 \\
+    \vdots \\
+    v_n
+    \end{pmatrix}_{n \times 1}. $$
+\end{enumerate}
+
+
+
+\begin{definition}[Frobenius Norm]
+Let $A=(a_{ij})_{i,j}\in M_{m\times n}(\mathbb{R})$. We can regard $A$ as a vector in $\mathbb{R}^{mn}$, and define its
+Frobenius norm by
+$$\|A\|_F = \sqrt{\sum_{i=1}^m \sum_{j=1}^n a_{ij}^2}.$$
+\end{definition}
+
+\begin{remark}
+The Frobenius norm can also be elegantly expressed using the trace of a matrix. 
+For $A \in M_{m \times n}(\mathbb{R})$, consider the matrix product $A A^\top$. By the definition of matrix multiplication, the $i$-th diagonal entry of $A A^\top$ is given by:
+$$(A A^\top)_{ii} = \sum_{j=1}^n a_{ij} (A^\top)_{ji} = \sum_{j=1}^n a_{ij}^2$$
+Since the trace of a matrix is the sum of its diagonal entries, taking the trace of $A A^\top$ yields:
+$$\text{tr}(A A^\top) = \sum_{i=1}^m (A A^\top)_{ii} = \sum_{i=1}^m \sum_{j=1}^n a_{ij}^2$$
+Therefore, the Frobenius norm can be equivalently written as:
+$$\|A\|_F = \sqrt{\text{tr}(A A^\top)}.$$
+\end{remark}
+
+
+\begin{theorem}[Sub-multiplicativity of Frobenius Norm]
+Let $A \in M_{m \times n}(\mathbb{R})$ and $B \in M_{n \times p}(\mathbb{R})$. Then the Frobenius norm satisfies the sub-multiplicative property:
+$$ \|AB\|_F \le \|A\|_F \|B\|_F $$
+In particular, for every column vector $\mathbf{x} \in \mathbb{R}^n$, we have $\|A\mathbf{x}\| \le \|A\|_F \|\mathbf{x}\|$. This implies that the linear map $\mathbf{x} \mapsto A\mathbf{x}$ is continuous on $\mathbb{R}^n$.
+\end{theorem}
+
+\begin{dbox}
+\begin{pf}
+By the definition of matrix multiplication, the $(i, j)$-th entry of the product matrix $AB$ is given by:
+$$(AB)_{ij} = \sum_{k=1}^n a_{ik} b_{kj}$$
+
+Applying the Cauchy-Schwarz inequality to the vectors $(a_{i1}, \dots, a_{in})$ and $(b_{1j}, \dots, b_{nj})$, we obtain an upper bound for the square of this entry:
+$$|(AB)_{ij}|^2 = \left| \sum_{k=1}^n a_{ik} b_{kj} \right|^2 \le \left( \sum_{k=1}^n a_{ik}^2 \right) \left( \sum_{k=1}^n b_{kj}^2 \right)$$
+
+Now, we compute the squared Frobenius norm of the matrix $AB$ by summing over all entries $(1 \le i \le m$ and $1 \le j \le p)$:
+\begin{align*}
+\|AB\|_F^2 &= \sum_{i=1}^m \sum_{j=1}^p (AB)_{ij}^2 \\
+&\le \sum_{i=1}^m \sum_{j=1}^p \left( \sum_{k=1}^n a_{ik}^2 \right) \left( \sum_{k=1}^n b_{kj}^2 \right)
+\end{align*}
+
+Notice that the sum over $i$ only depends on the terms $a_{ik}$, and the sum over $j$ only depends on the terms $b_{kj}$. Therefore, we can separate and factor the summations:
+\begin{align*}
+\|AB\|_F^2 &\le \left( \sum_{i=1}^m \sum_{k=1}^n a_{ik}^2 \right) \left( \sum_{j=1}^p \sum_{k=1}^n b_{kj}^2 \right) \\
+&= \|A\|_F^2 \cdot \|B\|_F^2
+\end{align*}
+
+Finally, taking the square root of both sides, we get:
+$$ \|AB\|_F \le \|A\|_F \|B\|_F $$
+This completes the proof.
+\end{pf}
+\end{dbox}
+
+\clearpage
+
+\begin{theorem}[Chain Rule]
+Let $E \subseteq \mathbb{R}^n,\, F\subseteq\mathbb{R}^m,\, f: E \to F,\, g: F\to\mathbb{R}^p$ and $\mathbb{x}_0\in int(E).$ 
+Suppose $f$ is differentiable at $\mathbf{x}_0$, $f(\mathbf{x}_0)$ lies in the interior of $E$, and $g$ is differentiable at $f(\mathbf{x}_0)$.
+Then $g \circ f$ is differentiable at $\mathbf{x}_0$, and
+$$(g \circ f)'(\mathbf{x}_0) = g'(f(\mathbf{x}_0)) f'(\mathbf{x}_0).$$
+\end{theorem}
+
+\begin{dbox}
+\begin{pf}
+Let $\mathbf{y}_0 = f(\mathbf{x}_0)$ and denote the derivatives by $A = f'(\mathbf{x}_0): \mathbb{R}^n \to \mathbb{R}^m$ and $B = g'(f(\mathbf{x}_0)) = g'(\mathbf{y}_0): \mathbb{R}^m \to \mathbb{R}^p$.
+
+\vspace{0.8em}
+\noindent \textbf{Step 1: Define the error function $\eta$} \\
+Define $\eta: \mathbb{R}^m \to \mathbb{R}^p$ by:
+$$
+\eta(\mathbf{k}) = 
+\begin{cases}
+\frac{g(\mathbf{y}_0+\mathbf{k}) - g(\mathbf{y}_0) - B\mathbf{k}}{\|\mathbf{k}\|} & \text{if } \mathbf{k} \ne \mathbf{0} \\
+\mathbf{0} & \text{if } \mathbf{k} = \mathbf{0}
+\end{cases}
+$$ 
+
+Because $g$ is differentiable at $\mathbf{y}_0$, $\lim_{\mathbf{k} \to \mathbf{0}} \eta(\mathbf{k}) = \mathbf{0}$, which implies $\eta$ is continuous at $\mathbf{0}$.
+Moreover, the relation
+$$g(\mathbf{y}_0+\mathbf{k}) - g(\mathbf{y}_0) - B\mathbf{k} = \eta(\mathbf{k}) \|\mathbf{k}\|$$
+is true for all $\mathbf{k} \in \mathbb{R}^m$.
+
+\vspace{0.8em}
+\noindent \textbf{Step 2: Expand the composition difference} \\
+Take $\mathbf{h}$ such that $\mathbf{x}_0+\mathbf{h} \in E$. Let $\mathbf{k} = f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0)$.
+Consider the difference:
+\begin{align*}
+(g \circ f)(\mathbf{x}_0+\mathbf{h}) - (g \circ f)(\mathbf{x}_0) 
+&= g(f(\mathbf{x}_0+\mathbf{h})) - g(f(\mathbf{x}_0)) \\
+&= g(\mathbf{y}_0+\mathbf{k}) - g(\mathbf{y}_0) \\
+&= B(f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0)) \\
+&\quad + \eta(f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0)) \|f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0)\|
+\end{align*}
+
+Subtracting $BA\mathbf{h}$ from both sides, we get:
+\begin{align*}
+&(g \circ f)(\mathbf{x}_0+\mathbf{h}) - (g \circ f)(\mathbf{x}_0) - BA\mathbf{h} \\
+&= B(f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0) - A\mathbf{h}) + \eta(f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0)) \|f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0)\|
+\end{align*} 
+
+\vspace{0.8em}
+\noindent \textbf{Step 3: Estimate the first term} \\
+Note that:
+$$\frac{\|B(f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0) - A\mathbf{h})\|}{\|\mathbf{h}\|} \le \|B\| \frac{\|f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0) - A\mathbf{h}\|}{\|\mathbf{h}\|}$$ 
+
+By the assumption that $f$ is differentiable at $\mathbf{x}_0$, $\lim_{\mathbf{h} \to \mathbf{0}} \frac{\|f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0) - A\mathbf{h}\|}{\|\mathbf{h}\|} = 0$. By the Squeeze Theorem, the first term converges to zero.
+
+\vspace{0.8em}
+\noindent \textbf{Step 4: Estimate the second term} \\
+Since $f$ is differentiable at $\mathbf{x}_0$, $f$ is continuous at $\mathbf{x}_0$, meaning $\lim_{\mathbf{h} \to \mathbf{0}} (f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0)) = \mathbf{0}$.
+On the other hand, $\eta$ is continuous at $\mathbf{0}$ (and $\lim_{\mathbf{k} \to \mathbf{0}} \eta(\mathbf{k}) = \mathbf{0}$), it follows that $\lim_{\mathbf{h} \to \mathbf{0}} \eta(f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0)) = \mathbf{0}$
+
+Next, consider:
+\begin{align*}
+\frac{\|f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0)\|}{\|\mathbf{h}\|} &= \frac{\|f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0) - A\mathbf{h} + A\mathbf{h}\|}{\|\mathbf{h}\|} \\
+&\le \frac{\|f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0) - A\mathbf{h}\|}{\|\mathbf{h}\|} + \frac{\|A\mathbf{h}\|}{\|\mathbf{h}\|} \\
+&\le \underbrace{\frac{\|f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0) - A\mathbf{h}\|}{\|\mathbf{h}\|}}_{\to 0\text{ by differentiability}} + \underbrace{\|A\|}_{fixed}
+\end{align*} 
+
+By the Squeeze Theorem:
+$$\lim_{\mathbf{h} \to \mathbf{0}} \frac{\|\eta(f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0))\| \|f(\mathbf{x}_0+\mathbf{h}) - f(\mathbf{x}_0)\|}{\|\mathbf{h}\|} = 0$$
+
+Combining Step 3 and Step 4, we conclude:
+$$\lim_{\mathbf{h} \to \mathbf{0}} \frac{\|(g \circ f)(\mathbf{x}_0+\mathbf{h}) - (g \circ f)(\mathbf{x}_0) - BA\mathbf{h}\|}{\|\mathbf{h}\|} = 0$$ 
+This proves that $g \circ f$ is differentiable at $\mathbf{x}_0$ with derivative $BA = g'(f(\mathbf{x}_0)) f'(\mathbf{x}_0)$.
+\end{pf}
+\end{dbox}
+
+\begin{definition}
+    Let $E\subseteq\mathbf{R}^n$ be open and $f:E\to\mathbf{R}^m.$
+    We say $f$ is twice contiuously differentiable on $E$, denoted by $f\in C^2(E)$.
+    \begin{enumerate}
+    \item $f$ is continuously differentiable (its first order partial derivatives exist and are continuous).
+    \item For each $i=1,2,\cdots n,$ the partial derivative $\frac{\partial f}{\partial x_i}: E\to\mathbf{R}^m$ is continously differentiable on $E$ (its second order partial derivatives exist and are continous on $E$).
+\end{enumerate}
+\end{definition}
+
+
+\begin{theorem}[Clairaut]
+Let $E$ be an open set and $f \in C^2(E)$. Then for all $1 \le i, j \le n$ and all $\mathbf{x}_0 \in E$:
+$$\frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{x}_0) = \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{x}_0).$$
+\end{theorem}
+
+\begin{dbox}
+\begin{pf}
+Let $f = (f_1, f_2, \dots, f_m)$ where $f_k: E \to \mathbb{R}$. Without loss of generality, we can assume $f: E \to \mathbb{R}$ and the point of interest is $\mathbf{x}_0 = \mathbf{0}$. (By some shifting, $F(\mathbf{x}) = f(\mathbf{x} + \mathbf{x}_0) \Rightarrow F(\mathbf{0}) = f(\mathbf{x}_0)$). We also assume $i \neq j$.
+
+Since $f \in C^2(E)$ and $\mathbf{0} \in E$, given any $\epsilon > 0$, there exists $\delta_0 > 0$ such that:
+$$ \left| \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{x}) - \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{0}) \right| \le \frac{\epsilon}{2} \quad \text{and} \quad \left| \frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{x}) - \frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{0}) \right| \le \frac{\epsilon}{2} $$
+if $\|\mathbf{x}\| < 2\delta_0$.
+
+\vspace{0.8em}
+\noindent \textbf{Step 1: The Second-Order Difference (DiD Approximation)}\\
+Fix $\delta < \delta_0$, and consider the rectangle. Define the second-order difference $X$:
+$$ X = f(\delta \mathbf{e}_i + \delta \mathbf{e}_j) - f(\delta \mathbf{e}_i) - f(\delta \mathbf{e}_j) + f(\mathbf{0}) $$
+We can group the terms in two different ways:
+\begin{align}
+X &= \left( f(\delta \mathbf{e}_i + \delta \mathbf{e}_j) - f(\delta \mathbf{e}_i) \right) - \left( f(\delta \mathbf{e}_j) - f(\mathbf{0}) \right) \tag{1} \\
+X &= \left( f(\delta \mathbf{e}_i + \delta \mathbf{e}_j) - f(\delta \mathbf{e}_j) \right) - \left( f(\delta \mathbf{e}_i) - f(\mathbf{0}) \right) \tag{2}
+\end{align}
+
+\vspace{0.8em}
+\noindent \textbf{Step 2: Apply Mean Value Theorem for Grouping (1)}\\
+Let $\phi(t) = f(t \mathbf{e}_i + \delta \mathbf{e}_j) - f(t \mathbf{e}_i)$. Then from (1), we have:
+$$ X = \phi(\delta) - \phi(0) $$
+By the MVT, $X = \delta \phi'(c_i)$ for some $c_i \in (0, \delta)$ \quad (*).
+
+Note that $\phi'(t) = \frac{\partial f}{\partial x_i}(t \mathbf{e}_i + \delta \mathbf{e}_j) - \frac{\partial f}{\partial x_i}(t \mathbf{e}_i)$.
+So, $\phi'(c_i) = \frac{\partial f}{\partial x_i}(c_i \mathbf{e}_i + \delta \mathbf{e}_j) - \frac{\partial f}{\partial x_i}(c_i \mathbf{e}_i)$.
+
+Now, let $g(s) = \frac{\partial f}{\partial x_i}(c_i \mathbf{e}_i + s \mathbf{e}_j)$. Then $g'(s) = \frac{\partial^2 f}{\partial x_j \partial x_i}(c_i \mathbf{e}_i + s \mathbf{e}_j)$.
+We can rewrite (*) as:
+$$ \phi'(c_i) = g(\delta) - g(0) $$
+By applying MVT again to $g(s)$, there exists $c_j \in (0, \delta)$ such that $g(\delta) - g(0) = \delta g'(c_j)$.
+Thus, $\phi'(c_i) = \delta \frac{\partial^2 f}{\partial x_j \partial x_i}(c_i \mathbf{e}_i + c_j \mathbf{e}_j)$ \quad (**).
+
+From (*) and (**), we obtain:
+$$ X = \delta^2 \frac{\partial^2 f}{\partial x_j \partial x_i}(c_i \mathbf{e}_i + c_j \mathbf{e}_j) \quad \text{where } 0 < c_i < \delta, \ 0 < c_j < \delta. $$
+
+\vspace{0.8em}
+\noindent \textbf{Step 3: Symmetric Argument for Grouping (2)}\\
+Similarly, starting from (2) and taking derivatives first with respect to $x_j$ and then $x_i$, MVT gives us:
+$$ X = \delta^2 \frac{\partial^2 f}{\partial x_i \partial x_j}(d_i \mathbf{e}_i + d_j \mathbf{e}_j) \quad \text{where } 0 < d_i < \delta, \ 0 < d_j < \delta. $$
+
+\vspace{0.8em}
+\noindent \textbf{Step 4: Bounding the Error using Continuity}\\
+Notice that the norm of the points we found is strictly bounded:
+$$ \|c_i \mathbf{e}_i + c_j \mathbf{e}_j\| = \sqrt{c_i^2 + c_j^2} < \sqrt{\delta^2 + \delta^2} = \sqrt{2}\delta < \sqrt{2}\delta_0 < 2\delta_0 $$
+Because these points fall within the $2\delta_0$ radius, our initial continuity conditions apply:
+$$ \left| \frac{\partial^2 f}{\partial x_j \partial x_i}(c_i \mathbf{e}_i + c_j \mathbf{e}_j) - \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{0}) \right| \le \epsilon \implies \left| \frac{X}{\delta^2} - \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{0}) \right| \le  \frac{\epsilon}{2} $$
+Similarly,
+$$ \left| \frac{X}{\delta^2} - \frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{0}) \right| \le  \frac{\epsilon}{2} $$
+
+By the triangle inequality:
+$$ \left| \frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{0}) - \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{0}) \right| \le \epsilon \quad \forall \epsilon > 0 $$
+Hence, we conclude that:
+$$ \frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{0}) = \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{0}). $$
+\end{pf}
+\end{dbox}
+
+\begin{rmk}[Numerical Approximation via Second-Order Difference]
+From the proof above, we know that by the continuity of $\frac{\partial^2 f}{\partial x_j \partial x_i}$ and $\frac{\partial^2 f}{\partial x_i \partial x_j}$,
+$$ \lim_{\delta \to 0} \frac{X}{\delta^2} = \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{0}) \quad \text{and} \quad \lim_{\delta \to 0} \frac{X}{\delta^2} = \frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{0}) $$
+Hence, if $f \in C^2(E)$, for any point $\mathbf{x}_0$, we can use numerical approximation by a second-order finite difference without computing the derivative directly:
+$$ \lim_{\delta \to 0} \frac{f(\mathbf{x}_0 + \delta \mathbf{e}_i + \delta \mathbf{e}_j) - f(\mathbf{x}_0 + \delta \mathbf{e}_i) - f(\mathbf{x}_0 + \delta \mathbf{e}_j) + f(\mathbf{x}_0)}{\delta^2} = \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{x}_0) = \frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{x}_0) $$
+(In economics, this logic is highly analogous to the DiD).
+\end{rmk}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,201 @@
+\begin{definition}[Jordan Block]
+    A Jordan block $J_{\lambda, k}$ of eigenvealue $\lambda$ and index/size $k$ is a $k\times k$ upper triangular matrix such that$\cdots$ 
+\end{definition}
+
+\begin{theorem}
+Let $J=J_{\lambda, k}\in M_k(\mathbb{C}),$ then:
+\begin{enumerate}
+    \item $p_J(x)=(\lambda-x)^k.$
+    \item $a_J(\lambda)=k,$ and $g_J(\lambda)=1.$
+    \item For $1\le i\le k,$ $\rank((J-\lambda I_k)^i)=k-i$ and $\nullity((J-\lambda I_k)^i)= i.$
+    \item $\nullity((J-\lambda I_k)^i)-\nullity((J-\lambda I_k)^{i-1}) =
+\begin{cases}
+1, & \text{if } 1 \leq i \leq k \\
+0, & \text{if } i \geq k+1
+\end{cases}.$
+    \item $m_J(x)=(x-\lambda)^k.$
+\end{enumerate}
+\label{JB_property}
+\end{theorem}
+
+
+\begin{dbox}
+\begin{pf}
+1,2 is trivial by inspection. For 3 and 4, let $N_k=J-\lambda I_k$. The key observation is that the diagonal of $1'$s is shifted by one unit to the right after multiplying $N_k$ itself.
+For 5, since $N_k^i\neq \mathbf{O}$ for $i < k$, the minimal polynomial of $J$ must be the characteristic polynomial of $J$.
+\end{pf}
+\end{dbox}
+
+\begin{remark}
+2 and 5 shows that $J$ is diagonalizable only when $J$ is of size 1.
+\end{remark}
+
+
+\begin{definition}{Direct sum of matrices}
+  Let $A\in M_m(F),\,B\in M_n(F)$, then the direct sum $A\oplus B$ is a block diagonal matrix in $M_{m+n}(F)$ such that
+  \[A\oplus B = \begin{pmatrix}
+    A & \mathbf{O}\\
+    \mathbf{O} & B.
+  \end{pmatrix}\]
+\end{definition}
+
+\begin{exercise}
+    Write down the definition of a direct sum of two subspaces. They are two different concepts.
+\end{exercise}
+
+\begin{theorem}
+     Let $A\in M_m(F),\,B\in M_n(F)$, then:
+     \begin{enumerate}
+        \item $\rank(A\oplus B) = \rank(A)+\rank(B)$
+        \item $\nullity(A\oplus B) = \nullity(A)+\nullity(B)$
+        \item $p_{A\oplus B}(x)=p_A(x)\cdot p_B(x)$
+        \item $a_{A\oplus B}(\lambda)=a_A(\lambda)+a_B(\lambda)$
+        \item $g_{A\oplus B}(\lambda)=g_A(\lambda)+g_B(\lambda)$
+        \item $m_{A\oplus B}(x)=\text{lcm}\{m_A(x), m_B(x)\}$
+     \end{enumerate}
+\end{theorem}
+
+\begin{dbox}
+\begin{pf}
+    1--5 are left as an exercise. 
+    For 6, observe that for any polynomial $f(x)\in F[x]$, one has $f(A\oplus B)=f(A)\oplus f(B)$.
+    Let $m_{A\oplus B}=f(x),\, f(A\oplus B)=\mathbf{0}$ by the definition of minimal polynomial, which forces $f(x)$ is a common multiple of $m_A(x)$ and $m_B(x).$ 
+    For the "least" part, we provide two methods. Suppose $g(x)$ is another common multiple, we want to show $f$ divides $g$.
+    Since $m_A(x)\mid g(x)$ and $m_B(x)\mid g(x),\, g(A\oplus B) = \mathbf{0}$ impies $f\mid g.$ \\
+
+    Alternatively, conduct the division $g(x)=f(x)\cdot q(x)+r(x).$ It suffices to show $r(x)\equiv 0.$
+    Suppose, by contradiction, $deg(r)<deg(f).$ However,$r(A)=r(B)=\mathbf{0}$ violates the minimality.
+\end{pf}
+\end{dbox}
+
+
+
+\begin{definition}[JCF]
+    A matrix $J$ is in its Jordan Canonical Form if it is a direct sum of Jordan blocks:
+    \[J=J_{\lambda_1,k_1}\oplus J_{\lambda_2,k_2}\oplus\cdots\oplus J_{\lambda_n,k_n}.\]
+\end{definition}
+
+\begin{corollary}
+    \begin{enumerate}
+        \item Any diagonal matrix is exactly in its JCF$\cdots$
+        \item Write down the $p_J(x)$ and $m_J(x)$ in terms of $p_{J_{\lambda_i, k_i}}(x)$ and $m_{J_{\lambda_i, k_i}}(x)$.
+    \end{enumerate}
+\end{corollary}
+
+
+\begin{theorem}
+    Let $J$ in its JCF and fix $\lambda\in Spec(J),$ then:
+    \begin{enumerate}
+        \item \# of Jordan blocks of eigenvalue $\lambda = g_J(\lambda).$
+        \item \# of Jordan blocks of eigenvalue $\lambda$ of index(size) at least $i = \nullity((J-\lambda I_k)^i) - \nullity((J-\lambda I_k)^{i-1}).$
+    \end{enumerate}
+\end{theorem}
+
+\begin{dbox}
+\begin{pf}
+    Let $J=J_{\lambda_1,k_1}\oplus J_{\lambda_2,k_2}\oplus\cdots\oplus J_{\lambda_n,k_n}.$ Suppose $\lambda_1=\lambda_2=\cdots\lambda_l=\lambda,\, l\le n,\, \lambda\notin\{\lambda_{l+1},\lambda_{l+2},\cdots\lambda_{n}\}.$
+    Let $N_k=J-\lambda I_k,$ recall (3) and (4) in theorem~\eqref{JB_property},
+    \begin{enumerate}
+        \item $g_J(\lambda)=\sum_{i=1}^{n}\nullity(N_{\lambda_i, k_i}) = \underbrace{1+1+\cdots+1}_{l \text{ times}} + \underbrace{0+0+\cdots+0}_{\lambda\ne\lambda_i,\, i\ge l}=l$,
+        which equals \# of Jordan blocks of eigenvalue $\lambda.$
+        \item Because $N_k=N_{k_1}\oplus N_{k_2}\oplus\cdots\oplus N_{k_l}\oplus T,$ where $T$ is some direct sum of Jordan blocks of eigenvalue that is not $\lambda.$
+        Fix $i,\,\nullity(N^i_k)-\nullity(N^{i-1}_k)=\sum_{j=1}^{l}\left(\nullity(N^i_{k_j})-\nullity(N^{i-1}_{k_j})\right)=\textcolor{darkred}{\#\{1\le j\le l:i\le k_j\}}$, which equals
+        \# of Jordan blocks of eigenvalue $\lambda$ of index(size) at least $i$.
+    \end{enumerate}
+\label{determine_JCF_block_size}
+\end{pf}
+\end{dbox}
+
+Combine the definition of JCF and the theroem~\eqref{determine_JCF_block_size}, we can define the JCF of a general matrix $A\in M_n(\mathbb{C}).$
+
+\begin{definition}[JCF of a general matrix]
+    Let $A\in M_n(\mathbb{C}),$ the JCF of $A$ is a matrix of $J_A$ s.t.
+    \begin{enumerate}
+        \item $J_A$ is a direct sum of Jordan blocks.
+        \item \# of Jordan blocks of eigenvalue $\lambda = g_A(\lambda).$
+        \item \# of Jordan blocks of eigenvalue $\lambda$ of index(size) at least $i = \nullity\left((A -\lambda I_k)^i\right) - \nullity(\left(A -\lambda I_k)^{i-1}\right).$
+    \end{enumerate}
+\end{definition}
+
+\begin{gbox}
+\begin{remark}
+How to find the JCF of $A ?$
+\begin{enumerate}
+    \item Find spectrum of $A$ via $p_A(x).$
+    \item Find $g_A(\lambda)$ to determine \# of Jordan blocks.
+    \item Find $r_i=\nullity\left((A -\lambda I_k)^i\right) - \nullity(\left(A -\lambda I_k)^{i-1}\right)$ to determine individual size of a Jordan block.
+\end{enumerate}
+\end{remark}
+\end{gbox}
+
+
+
+
+Let $T:V\to V$ be a linear operator over a finite-dimensional complex vector space $V$.
+In the context of diagonalization, we aim to find an eigenbasis $\eta$ such that $[T]^\eta_\eta$ is a diagonal matrix.
+Likewise, our goal now is to find a basis $\gamma$ such that $[T]^\gamma_\gamma$ is in its JCF.
+We first look at a part of matrix corresponding to an eigenvalue $\lambda$. Suppose there exists such a part of basis $\beta=\{\mathbf{v}_1, \mathbf{v}_2,\cdots\mathbf{v}_k\}$, and we put each elements by columns to form a matrix $P$, then we have:
+\begin{align*}
+[T]^B_B P &= P [T]^\beta_\beta \\
+T([\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_k]) &= [\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_k] 
+\begin{pmatrix} 
+\lambda & 1 & 0 & \cdots & 0 \\ 
+0 & \lambda & 1 & \cdots & 0 \\ 
+\vdots & \vdots & \ddots & \ddots & \vdots \\ 
+0 & 0 & \cdots & \lambda & 1 \\ 
+0 & 0 & \cdots & 0 & \lambda 
+\end{pmatrix},
+\end{align*}
+
+where $B$ is the standard basis. Comparing the columns on both sides yields the following system of equations:
+
+$$
+\begin{aligned}
+T(\mathbf{v}_1) &= \lambda \mathbf{v}_1 \\
+T(\mathbf{v}_2) &= \mathbf{v}_1 + \lambda \mathbf{v}_2 \\
+T(\mathbf{v}_3) &= \mathbf{v}_2 + \lambda \mathbf{v}_3 \\
+&\ \ \vdots \\
+T(\mathbf{v}_k) &= \mathbf{v}_{k-1} + \lambda \mathbf{v}_k
+\end{aligned}
+\quad
+\Longleftrightarrow
+\quad
+\begin{aligned}
+(T - \lambda \operatorname{id})(\mathbf{v}_1) &= \mathbf{0} \\
+(T - \lambda \operatorname{id})(\mathbf{v}_2) &= \mathbf{v}_1 \\
+(T - \lambda \operatorname{id})(\mathbf{v}_3) &= \mathbf{v}_2 \\
+&\ \ \vdots \\
+(T - \lambda \operatorname{id})(\mathbf{v}_k) &= \mathbf{v}_{k-1}
+\end{aligned}
+$$
+
+Observe that:
+\begin{enumerate}
+    \item $\mathbf{v}_1$ is the only eigenvector among $\beta.$
+    \item Given $\mathbf{v}_k,$ we can generate a chain of $\beta$ by setting $\Big\{\mathbf{v}_k, (T-\lambda \operatorname{id})(\mathbf{v}_k), (T-\lambda \operatorname{id})(\mathbf{v}_{k-1}),\cdots(T-\lambda \operatorname{id})(\mathbf{v}_2)\Big\},$
+    or eqivalently, $\Big\{\mathbf{v}_k, (T-\lambda \operatorname{id})(\mathbf{v}_k), (T-\lambda \operatorname{id})^2(\mathbf{v}_{k}),\cdots,(T-\lambda \operatorname{id})^{k-1}(\mathbf{v}_{k})\Big\}.$
+    \item $(T-\lambda \operatorname{id})^{k}(\mathbf{v}_{k})=(T-\lambda \operatorname{id})(\mathbf{v}_{1})=\mathbf{0},$ so $\mathbf{v}_k\in \ker(T-\lambda\operatorname{id})^k\setminus\ker(T-\lambda\operatorname{id})^{k-1} (\because \mathbf{v}_1\ne\mathbf{0}).$
+\end{enumerate}
+
+These motivates the definition of Jordan chain:
+\begin{definition}[Jordan Chain]
+    Let $T:V\to V$ be a linear operator and $\lambda\in Spec(T).$
+    We say a set of non-zero vectors $\beta=\{\mathbf{v}_1, \mathbf{v}_2,\cdots\mathbf{v}_k\}$ is a Jordan chain of $T$ corresponding to the eigenvalue $\lambda$ of length $k$ if $\dots$,
+    where $\mathbf{v}_k$ is the end vector and $\mathbf{v}_1$ is the initial vector.
+\end{definition}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

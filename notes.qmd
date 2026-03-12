@@ -5,7 +5,7 @@ title: "Notes"
 Here is a collection of my course notes and study materials.
 
 * **Mathematics**
-    * [Linear Algebra (I)](mathematics-note/linear-algebra.pdf){target="_blank"}
-    * [Multivariable Calculus](mathematics-note/multivar_calculus.pdf){target="_blank"}
+    * [Linear Algebra](mathematics-note/LinearAlgebra/linear-algebra.pdf){target="_blank"}
+    * [Introduction to Real Analysis](mathematics-note/Analysis/multivar_calculus.pdf){target="_blank"}
 
  

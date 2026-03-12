@@ -1,7 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{style}
 
-
 % Geometry settings for A4 paper with 3cm margins
 \usepackage[a4paper,margin=3cm]{geometry}
 
@@ -96,9 +95,11 @@
 % For theorem environment setting
 \usepackage{amsthm}
 \renewcommand\qedsymbol{\rule{2mm}{2mm}}
+
 % Theorems, definitions, exercises, and other environments defined
-\newtheoremstyle{scstyle}{.5em}{.5em}{\itshape}{}{\bfseries\scshape}{.}{\newline}{\thmname{#1} \thmnumber{#2} \normalfont\textbf{\thmnote{(#3)}}}
-\theoremstyle{scstyle}
+% 這裡將標題字體改為單純的 \bfseries，就會呈現首字母大寫的 Palatino 粗體
+\newtheoremstyle{palatinostyle}{.5em}{.5em}{\itshape}{}{\bfseries}{.}{\newline}{\thmname{#1} \thmnumber{#2} \normalfont\textbf{\thmnote{(#3)}}}
+\theoremstyle{palatinostyle}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{definition}{Definition}[section]
 \newtheorem{assumption}{Assumption}[section]

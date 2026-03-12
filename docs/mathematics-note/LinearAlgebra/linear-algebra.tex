@@ -1,5 +1,5 @@
 \documentclass[12pt]{article}
-\RequirePackage{style}
+\RequirePackage{style_for_LA}
 \title{Linear Algebra Notes}
 \author{Yin-Yun Li\thanks{Undergraduate student, Department of Economics, National Taiwan University. Please feel free to contact me at \texttt{b10302331@ntu.edu.tw} with any comments or corrections.}}
 \date{Fall 2025}
@@ -740,7 +740,7 @@ then the general solution of $(A\mid\mathbf{b})$ is
     \end{enumerate}
 \end{corollary}
 
-\begin{theorem}[TFAE Version 1]
+\begin{theorem}[TFAE]
 Let $T:V\rightarrow W$ be a linear transformation such that $dim(V)=dim(W)$.
 Having fixed bases, $T$ can be represened by a square matrix $A$.
 TFAE:
@@ -1074,7 +1074,8 @@ Let $\textbf{A}$ and $\textbf{B}$ be square matrices of the same size, prove
         \item $nullity(A)=nullity(B)$.
         \item $det(A)=det(B)$.
         \item $tr(A)=tr(B)$.
-        \item $p_A(x)=p_B(x)$: the same chracteristic polynoimal.
+        \item $p_A(x)=p_B(x):$ the same chracteristic polynoimal.
+        \item $m_A(x)=m_B(x):$ the same minimal polynomial.
     \end{enumerate}
 
     If we further assume that $F$ is algebratically closed (e.g. $\mathbb{C}$), then they have the same:
@@ -1094,6 +1095,7 @@ Let $\textbf{A}$ and $\textbf{B}$ be square matrices of the same size, prove
     \item Easy proof.
     \item First prove $tr(AB)=tr(BA)$, where $A\in M_{m\times n}(F)$ and $B\in M_{n\times m}(F)$.
     \item Derive $det(A-xI)=det(B-xI)$.
+    \item First prove the polynomial set satisfied by $A$ and the one satisfied by $B$ are equal. Then the monic polynomial of minimal degree satisfied by the corresponding matrix (i.e. minimal polynomial) is the same.
 \end{enumerate}
 
 If we assume $A,B\in M_n(\mathbb{C})$, by the fundamental theorem of algebra,
@@ -1492,7 +1494,9 @@ Let $A\in M_n(\mathbb{C})$. TFAE:
 \section{Linear Duality}
 \input{linear-duality.tex}
 
-
+\newpage
+\section{Jordan Canonical Form}
+\input{JCF.tex}
 
 \end{document}
 

@@ -1,17 +1,5 @@
-\documentclass[12pt]{article}
-\RequirePackage{style_for_analysis}
+\subsection{Linear Approximation}
 
-\begin{document}
-
-
-\title{Notes on Multivariable Calculus}
-\author{}
-\date{}
-\maketitle
-
-\section{Multivariable Differential Calculus}
-
-\subsection*{Motivation}
 Let $f: \mathbb{R}^n \to \mathbb{R}^m$ be defined by $f(\mathbf{x})=(f_1(\mathbf{x}), f_2(\mathbf{x}), \dots, f_m(\mathbf{x}))$, where each component $f_i: \mathbb{R}^n \to \mathbb{R}$ is a real-valued function. 
 
 Regardless of whether $f$ is linear or non-linear, a natural question arises: can it be locally approximated by a linear function? And if so, how accurate is this approximation?
@@ -478,7 +466,7 @@ $$ X = \delta^2 \frac{\partial^2 f}{\partial x_i \partial x_j}(d_i \mathbf{e}_i 
 Notice that the norm of the points we found is strictly bounded:
 $$ \|c_i \mathbf{e}_i + c_j \mathbf{e}_j\| = \sqrt{c_i^2 + c_j^2} < \sqrt{\delta^2 + \delta^2} = \sqrt{2}\delta < \sqrt{2}\delta_0 < 2\delta_0 $$
 Because these points fall within the $2\delta_0$ radius, our initial continuity conditions apply:
-$$ \left| \frac{\partial^2 f}{\partial x_j \partial x_i}(c_i \mathbf{e}_i + c_j \mathbf{e}_j) - \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{0}) \right| \le \epsilon \implies \left| \frac{X}{\delta^2} - \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{0}) \right| \le  \frac{\epsilon}{2} $$
+$$ \left| \frac{\partial^2 f}{\partial x_j \partial x_i}(c_i \mathbf{e}_i + c_j \mathbf{e}_j) - \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{0}) \right| \le \frac{\epsilon}{2} \implies \left| \frac{X}{\delta^2} - \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{0}) \right| \le  \frac{\epsilon}{2} $$
 Similarly,
 $$ \left| \frac{X}{\delta^2} - \frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{0}) \right| \le  \frac{\epsilon}{2} $$
 
@@ -494,26 +482,197 @@ From the proof above, we know that by the continuity of $\frac{\partial^2 f}{\pa
 $$ \lim_{\delta \to 0} \frac{X}{\delta^2} = \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{0}) \quad \text{and} \quad \lim_{\delta \to 0} \frac{X}{\delta^2} = \frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{0}) $$
 Hence, if $f \in C^2(E)$, for any point $\mathbf{x}_0$, we can use numerical approximation by a second-order finite difference without computing the derivative directly:
 $$ \lim_{\delta \to 0} \frac{f(\mathbf{x}_0 + \delta \mathbf{e}_i + \delta \mathbf{e}_j) - f(\mathbf{x}_0 + \delta \mathbf{e}_i) - f(\mathbf{x}_0 + \delta \mathbf{e}_j) + f(\mathbf{x}_0)}{\delta^2} = \frac{\partial^2 f}{\partial x_j \partial x_i}(\mathbf{x}_0) = \frac{\partial^2 f}{\partial x_i \partial x_j}(\mathbf{x}_0) $$
-(In economics, this logic is highly analogous to the DiD).
 \end{rmk}
 
 
+\subsection{Inverse Function Theorem}
+
+\begin{definition}[Metric Space]
+The pair $(X,d)$ is called a metric space if a set $X$ endowed with the function $d:X\times X\to\mathbb{R}$ such that $\dots$
+\end{definition}
+
+\begin{definition}[Convergence]
+Given a sequence $\{x_n\}_{n=1}^\infty$ in $X$. We say the sequence converges to $x$ if $\forall \varepsilon > 0\,\exists N \in \mathbb{N}$ s.t. for $n \ge N$, $d(x_n, x) < \varepsilon$.
+\end{definition}
+
+\begin{definition}[Cauchy Sequence]
+A sequence $\{x_n\}_{n=1}^\infty$ is said to be Cauchy if $\forall \varepsilon > 0$, $\exists N \in \mathbb{N}$ s.t. for $m,n \ge N$, $d(x_n, x_m) < \varepsilon$.
+\end{definition}
+
+\begin{definition}[Completeness]
+$(X,d)$ is complete if every Cauchy sequence in $X$ converges to a limit in $X$.
+\end{definition}
+
+\begin{theorem}
+Let $E$ be a closed subset in $X$, and $(X,d)$ is a complete metric space. Then $(E,d)$ is also complete.
+\end{theorem}
+
+\begin{dbox}
+\begin{pf}
+    Take any Cauchy sequence in $E$, which is also a Cauchy in $X$. By completeness of $X$, the sequence converges to some point in $X$. Since a closed set contains all limit point, the Cauchy sequence converges to a limit in $E$.
+\end{pf}
+\end{dbox}
+
+\begin{definition}[Contraction]
+Let $(X,d)$ be a metric space and $T: X \to X$ be a map.
+\begin{enumerate}
+    \item We say $T$ is a contraction if $d(T(x), T(y)) \le d(x,y)$ $\forall x, y \in X$.
+    \item $T$ is a strict contraction if there exists a constant $0<c<1$ s.t. $d(T(x), T(y)) \le cd(x,y)$.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+Under the standard setting, the term \textbf{contraction} simply refers to a \textbf{strict contraction}. Terence Tao use ``contraction'' for maps where $d(T(x), T(y)) \le d(x,y)$ and explicitly write ``strict contraction'' when the constant is strictly less than $1$.
+\end{remark}
+
+\begin{definition}[Fixed Point]
+Let $T: X \to X$ be a map and $x^* \in X$. We say $x^*$ is a fixed point of $T$ if $T(x^*) = x^*$.
+\end{definition}
+
+\begin{remark}
+Suppose $X$ is a subset of $\mathbb{R}$. The existence of a fixed point means that the graph of $y=f(x)$ intersect with $y=x$.
+\end{remark}
+
+
+\begin{theorem}[Contraction Mapping Theorem]
+Let $(X,d)$ be a metric space and $T: X \to X$ be a (strict) contraction. Then $T$ has at most one fixed point. Moreover, if we assume $X$ is non-empty and complete, then $T$ has exactly one fixed point.
+\end{theorem}
+
+\begin{dbox}
+\begin{pf}
+Suppose $x,y$ are distinct fixed point of $T$,
+consider $d(x,y)=d(T(x),T(y))\le cd(x,y)$ for some $c\in (0,1).$ 
+The inequality $(1-c)d(x,y)\le 0$ forces $x=y.$\\
+Now we further assume $X$ is complete. Take any point $x_0$, construct the sequence $\{x_n\}^\infty_{n=0},\, x_{n+1}=T(x_n)\,\forall n\in\mathbb{N}.$
+Observe that $d(x_{n+1}, x_n)\le c^n d(x_1,x_0)$ for $n\ge 1$.
+Suppose $n > m \ge 1$,
+\begin{align*}
+    d(x_n, x_m) &\le d(x_n, x_{n-1}) + d(x_{n-1}, x_{n-2}) + \cdots + d(x_{m+1}, x_m)\\
+    &\le c^{n-1} d(x_1, x_0) + c^{n-2} d(x_1, x_0) + \cdots + c^m d(x_1, x_0) \\
+    &\le \frac{c^m}{1-c}d(x_1, x_0).
+\end{align*}
+Take $m \to \infty$, $c^m \to 0$, which shows $\{x_n\}_{n=1}^\infty$ is a Cauchy in $X$. Since $X$ is complete, $\lim_{n \to \infty} x_n$ exists and converges to $x^*$.
+Finally,
+\begin{align*}
+    d(x^*, T(x^*)) &\le d(x^*, x_{n+1}) + d(x_{n+1}, T(x^*)) \\
+    &\le  d(x^*, x_{n+1}) + d(T(x_n), T(x^*))\\
+    &\le d(x^*, x_{n+1}) + cd(x_n, x^*). 
+\end{align*}
+This shows $x^*=T(x^*).$
+\end{pf}
+\end{dbox}
+
+
+\begin{exercise}
+Show that the contraction $T:X\to X$ be a continuous function.
+\end{exercise}
+
+
+\begin{lemma}
+Let $B(\mathbf{0},r)$ be an open ball in $\mathbb{R}^n$ and $g: B(\mathbf{0},r) \to \mathbb{R}^n$ be a map with $g(\mathbf{0}) = \mathbf{0}$. 
+If $\|g(\mathbf{x}) - g(\mathbf{y})\| \le \frac{1}{2}\|\mathbf{x} - \mathbf{y}\|$ for $\mathbf{x}, \mathbf{y} \in B(\mathbf{0},r)$, then the function $f: B(\mathbf{0},r) \to \mathbb{R}^n$ defined by $f(\mathbf{x}) = \mathbf{x} + g(\mathbf{x})$ is one-to-one, and the image of $f(B(\mathbf{0},r))$ contains $B(\mathbf{0}, \frac{r}{2})$.
+\label{lemma_for_inverse_funct_thm}
+\end{lemma}
+
+\begin{dbox}
+\begin{pf}
+We first show injection. Suppose $f(\mathbf{x}) = f(\mathbf{y}),$ by construction, we have $\|\mathbf{x} - \mathbf{y}\| = \|g(\mathbf{x}) - g(\mathbf{y})\| \le \frac{1}{2}\|\mathbf{x} - \mathbf{y}\|.$
+The inequality $\frac{1}{2}\|\mathbf{x} - \mathbf{y}\| \le 0$ forces $\|\mathbf{x} - \mathbf{y}\| = 0$. So $f$ is one-to-one.\\
+Next, we want to show $B(\mathbf{0}, \frac{r}{2}) \subseteq f(B(\mathbf{0},r))$. It suffices to show $\forall\,\mathbf{y} \in B(\mathbf{0}, \frac{r}{2})$, $\exists\,\mathbf{x} \in B(\mathbf{0},r)$ s.t.
+$f(\mathbf{x}) = \mathbf{y}.$ Define $F(\mathbf{x}) = \mathbf{y} - g(\mathbf{x})$. If we can find the fixed point of $F$, then we equivalently find $\mathbf{y} = f(\mathbf{x})$.
+Fix $\mathbf{y} \in B(\mathbf{0}, \frac{r}{2})$. $\|\mathbf{y}\| < \frac{r}{2}$. $\exists\,\varepsilon > 0$ s.t. $\|\mathbf{y}\| \le \frac{r-\varepsilon}{2}$.
+Consider the map $F: \overline{B(\mathbf{0}, r-\varepsilon)} \to \overline{B(\mathbf{0}, r-\varepsilon)}.$ Take $\mathbf{x} \in \overline{B(\mathbf{0}, r-\varepsilon)}, \,\|\mathbf{x}\| \le r - \varepsilon$. 
+Then we have $\|F(\mathbf{x})\| \le \|\mathbf{y}\| + \|g(\mathbf{x})\| \le \frac{r-\varepsilon}{2} + \|g(\mathbf{x})\| \le \frac{r-\varepsilon}{2} + \frac{r-\varepsilon}{2} = r-\varepsilon,$
+where $\|g(\mathbf{x})\| = \|g(\mathbf{x}) - g(\mathbf{0})\| \le \frac{1}{2}\|\mathbf{x}\| \le \frac{1}{2}(r-\varepsilon)$. So $F(\mathbf{x}) \in \overline{B(\mathbf{0}, r-\varepsilon)}$.
+Given a fixed $\mathbf{y}$,
+$\|F(\mathbf{x}_1) - F(\mathbf{x}_2)\| = \|\mathbf{y} - g(\mathbf{x}_1) - (\mathbf{y} - g(\mathbf{x}_2))\| \le \|g(\mathbf{x}_2) - g(\mathbf{x}_1)\| \le \frac{1}{2}\|\mathbf{x}_2 - \mathbf{x}_1\|.$ Hence, $F: \overline{B(\mathbf{0}, r-\varepsilon)} \to \overline{B(\mathbf{0}, r-\varepsilon)}$ is a contraction $\forall\,\mathbf{y} \in B(0, \frac{r}{2})$. 
+Since $\overline{B(\mathbf{0}, r-\varepsilon)}$ is complete, $\exists\,\mathbf{x}^* \in \overline{B(\mathbf{0}, r-\varepsilon)}$ s.t. $\mathbf{x}^* = F(\mathbf{x}^*)$
+This shows $F(\mathbf{x}^*) = \mathbf{y} - g(\mathbf{x}^*) = \mathbf{x}^*$, and hence $\mathbf{x}^* + g(\mathbf{x}^*) = \mathbf{y}.$
+\end{pf}
+\end{dbox}
 
 
 
+\begin{theorem}[Inverse Function Theorem]
+Let $E$ be open in $\mathbb{R}^n$ and $f:E\to\mathbb{R}^n\in C^1(E).$ Suppose the linear transformation $f'(\mathbf{x}_0):\mathbb{R}^n\to\mathbb{R}^n$ is invertible, then there exists an open set $U\subseteq E$ containing $\mathbf{x}_0$ and an open set $V\subseteq\mathbb{R}^n$ containing $f(\mathbf{x}_0)$ such that $f:U\to V$ is a bijection.
+Moreover, the inverse map $f^{-1}:V\to U$ is also continuously differentiable, and 
+$$(f^{-1})'(f(\mathbf{x_0}))=(f'(\mathbf{x}_0))^{-1}.$$
+\end{theorem}
 
 
+\begin{dbox}
+\begin{pf}
+Let $A=f'(\mathbf{x}_0)$. Firstly, $f$ is differentiable at $\mathbf{x}_0$, so:
+$$ \lim_{\mathbf{x}\to \mathbf{0}}\frac{\|f(\mathbf{x}_0+\mathbf{x})-f(\mathbf{x}_0)-A\mathbf{x}\|}{\|\mathbf{x}\|} = 0. $$
+Given $A$ is invertible, as $\mathbf{x}\to\mathbf{0}$, we have:
+$$ \frac{\|A^{-1}\big(f(\mathbf{x}_0+\mathbf{x})-f(\mathbf{x}_0)-A\mathbf{x}\big)\|}{\|\mathbf{x}\|} \le \|A^{-1}\|\frac{\|f(\mathbf{x}_0+\mathbf{x})-f(\mathbf{x}_0)-A\mathbf{x}\|}{\|\mathbf{x}\|} \to 0. $$
 
+\vspace{0.8em}
+\noindent \textbf{Step 1: Construct the auxiliary function $g$ and show it is a contraction}\\
+Let $g(\mathbf{x})=A^{-1}\big(f(\mathbf{x}_0+\mathbf{x})-f(\mathbf{x}_0)\big)-\mathbf{x}$. It is clear that $g(\mathbf{0})=\mathbf{0}$.
+Substituting this into our limit condition yields $\lim_{\mathbf{x}\to\mathbf{0}}\frac{\|g(\mathbf{x})\|}{\|\mathbf{x}\|}=0$. 
+Rewrite the limit condition as:
+$$ \lim_{\mathbf{x}\to\mathbf{0}}\frac{\|g(\mathbf{x})-g(\mathbf{0})-g'(\mathbf{0})\mathbf{x}\|}{\|\mathbf{x}\|} = 0, $$
+which shows that $g$ is differentiable at $\mathbf{0}$ with $g'(\mathbf{0})=\mathbf{0}$.
 
+Since both $f$ and $A$ are $C^1$, $g$ is also $C^1$. By definition, there exists an $r>0$ such that for all $\mathbf{x}\in B(\mathbf{0},r)$:
+$$ \left\|\frac{\partial g}{\partial x_j}(\mathbf{x})-\frac{\partial g}{\partial x_j}(\mathbf{0})\right\| = \left\|\frac{\partial g}{\partial x_j}(\mathbf{x})\right\| \le \frac{1}{2n^2}. $$
+For $\mathbf{x}\in B(\mathbf{0},r)$ and $\mathbf{v}\in \mathbb{R}^n$,
+$$ \|D_{\mathbf{v}}g(\mathbf{x})\| = \left\|\sum_{j=1}^{n}v_j\frac{\partial g}{\partial x_j}(\mathbf{x})\right\| \le \sum_{j=1}^{n}|v_j|\left\|\frac{\partial g}{\partial x_j}(\mathbf{x})\right\| \le \sum_{j=1}^{n}\|\mathbf{v}\|\frac{1}{2n^2} = \frac{1}{2n}\|\mathbf{v}\| \le \frac{1}{2}\|\mathbf{v}\|. $$
+For $\mathbf{x},\mathbf{y}\in B(\mathbf{0},r)$, consider:
+\begin{align*}
+g(\mathbf{y})-g(\mathbf{x}) &= \int_{0}^{1}\frac{d}{dt}g(\mathbf{x}+t(\mathbf{y}-\mathbf{x}))dt \quad \text{(FTC(1))} \\
+&= \int_{0}^{1}Dg(\mathbf{x}+t(\mathbf{y}-\mathbf{x}))(\mathbf{y}-\mathbf{x})dt \quad \text{(Chain rule)} \\
+&= \int_{0}^{1}D_{\mathbf{y}-\mathbf{x}}g(\mathbf{x}+t(\mathbf{y}-\mathbf{x}))dt \quad \text{(Since $g$ is $C^1$)}
+\end{align*}
+Therefore,
+$$ \|g(\mathbf{y})-g(\mathbf{x})\| = \left\|\int_{0}^{1}D_{\mathbf{y}-\mathbf{x}}g(\mathbf{x}+t(\mathbf{y}-\mathbf{x}))dt\right\| \le \int_{0}^{1}\frac{1}{2}\|\mathbf{y}-\mathbf{x}\|dt \le \frac{1}{2}\|\mathbf{y}-\mathbf{x}\|, $$
+which means $g$ is a contraction.
 
+\vspace{0.8em}
+\noindent \textbf{Step 2: Define $\Phi$, establish local bijection, and show $\Phi^{-1}$ is continuous}\\
+Define $\Phi(\mathbf{x}) = g(\mathbf{x})+\mathbf{x} = A^{-1}\big(f(\mathbf{x}_0+\mathbf{x})-f(\mathbf{x}_0)\big)$, where $g(\mathbf{0})=\mathbf{0}$ and $g$ is a contraction.
+Apply the lemma for the Inverse Function Theorem, $\Phi$ is one-to-one on $B(\mathbf{0},r)$ and $B(\mathbf{0},\frac{r}{2})\subseteq\Phi(B(\mathbf{0},r))$.
+Set $W=\Phi^{-1}(B(\mathbf{0},\frac{r}{2}))$, then $\Phi|_W:W\to B(\mathbf{0},\frac{r}{2})$ is a bijection.
 
+Clearly, $\Phi$ is continuous. We claim that $\Phi^{-1}$ is also continuous. For $\mathbf{x},\mathbf{y}\in B(\mathbf{0},r)$:
+$$ \|\Phi(\mathbf{x})-\Phi(\mathbf{y})\| = \|(\mathbf{x}-\mathbf{y})+(g(\mathbf{x})-g(\mathbf{y}))\| \ge \|\mathbf{x}-\mathbf{y}\|-\|g(\mathbf{x})-g(\mathbf{y})\| \ge \frac{1}{2}\|\mathbf{x}-\mathbf{y}\|. $$
+Let $\mathbf{x}=\Phi^{-1}(\mathbf{u})$ and $\mathbf{y}=\Phi^{-1}(\mathbf{v})$, with $\mathbf{u},\mathbf{v}\in B(\mathbf{0},\frac{r}{2})\subseteq \Phi(B(\mathbf{0},r))$, then:
+\begin{align*}
+\|\Phi(\Phi^{-1}(\mathbf{u}))-\Phi(\Phi^{-1}(\mathbf{v}))\| &\ge \frac{1}{2}\|\Phi^{-1}(\mathbf{u})-\Phi^{-1}(\mathbf{v})\| \\
+\|\Phi^{-1}(\mathbf{u})-\Phi^{-1}(\mathbf{v})\| &\le 2\|\mathbf{u}-\mathbf{v}\|.
+\end{align*}
+This shows that $\Phi^{-1}$ is Lipschitz continuous and hence continuous.
 
+\vspace{0.8em}
+\noindent \textbf{Step 3: Prove $\Phi^{-1}$ is differentiable at $\mathbf{0}$}\\
+We claim that the derivative of $\Phi^{-1}$ at $\mathbf{0}$ is the identity map $\text{id}$.
+Let $\mathbf{z}\in B(\mathbf{0},\frac{r}{2})\setminus\{\mathbf{0}\}$. Since $\Phi|_W$ is bijective, let $\mathbf{z}=\Phi(\mathbf{x})=\mathbf{x}+g(\mathbf{x})$, which means $\mathbf{x}=\Phi^{-1}(\mathbf{z})$ and $\mathbf{x}\neq\mathbf{0}$.
+We want to show:
+$$ \lim_{\mathbf{z}\to\mathbf{0}}\frac{\|\Phi^{-1}(\mathbf{z})-\Phi^{-1}(\mathbf{0})-\text{id}(\mathbf{z})\|}{\|\mathbf{z}\|} = 0. $$
+Since $\Phi^{-1}(\mathbf{0})=\mathbf{0}$, the expression inside the limit simplifies to:
+$$ \frac{\|\Phi^{-1}(\mathbf{z})-\mathbf{z}\|}{\|\mathbf{z}\|} = \frac{\|\mathbf{x}-(\mathbf{x}+g(\mathbf{x}))\|}{\|\mathbf{z}\|} = \frac{\|-g(\mathbf{x})\|}{\|\mathbf{z}\|} = \frac{\|g(\mathbf{x})\|}{\|\mathbf{x}\|}\cdot\frac{\|\mathbf{x}\|}{\|\mathbf{z}\|}. $$
+From the Lipschitz continuity in Step 2, taking $\mathbf{v}=\mathbf{0}$, we have $\|\Phi^{-1}(\mathbf{z})\| \le 2\|\mathbf{z}\|$, which implies $\frac{\|\mathbf{x}\|}{\|\mathbf{z}\|} \le 2$.
+Furthermore, as $\mathbf{z}\to\mathbf{0}$, sequential continuity dictates that $\mathbf{x}=\Phi^{-1}(\mathbf{z})\to\mathbf{0}$.
+Using the Squeeze Theorem:
+$$ \lim_{\mathbf{z}\to\mathbf{0}}\frac{\|\Phi^{-1}(\mathbf{z})-\mathbf{z}\|}{\|\mathbf{z}\|} = \lim_{\mathbf{x}\to\mathbf{0}}\left(\frac{\|g(\mathbf{x})\|}{\|\mathbf{x}\|}\cdot\frac{\|\mathbf{x}\|}{\|\mathbf{z}\|}\right) \le \lim_{\mathbf{x}\to\mathbf{0}}\left(\frac{\|g(\mathbf{x})\|}{\|\mathbf{x}\|}\cdot 2\right) = 0 \cdot 2 = 0. $$
+This proves that $\Phi^{-1}$ is differentiable at $\mathbf{0}$ with $(\Phi^{-1})'(\mathbf{0})=\text{id}$.
 
+\vspace{0.8em}
+\noindent \textbf{Step 4: Prove $f^{-1}$ is differentiable at $f(\mathbf{x}_0)$}\\
+Recall the definition $\Phi(\mathbf{x}) = A^{-1}\big(f(\mathbf{x}_0+\mathbf{x})-f(\mathbf{x}_0)\big)$. Multiplying by $A$ and rearranging yields:
+$$ f(\mathbf{x}+\mathbf{x}_0) = A\Phi(\mathbf{x}) + f(\mathbf{x}_0). $$
+Since $\Phi$ is a local bijection, $f$ is also one-to-one and onto near $\mathbf{x}_0$. 
+Let $\mathbf{y} = f(\mathbf{x}+\mathbf{x}_0)$, then $\mathbf{y} = A\Phi(\mathbf{x}) + f(\mathbf{x}_0)$. We can express $\mathbf{x}$ as:
+$$ \mathbf{x} = \Phi^{-1}\big(A^{-1}(\mathbf{y}-f(\mathbf{x}_0))\big). $$
+Thus, the inverse function $f^{-1}$ is given by:
+$$ f^{-1}(\mathbf{y}) = \mathbf{x} + \mathbf{x}_0 = \Phi^{-1}\big(A^{-1}(\mathbf{y}-f(\mathbf{x}_0))\big) + \mathbf{x}_0. $$
+We apply the Chain Rule to differentiate $f^{-1}$ at $f(\mathbf{x}_0)$:
+\begin{align*}
+(f^{-1})'(f(\mathbf{x}_0)) &= (\Phi^{-1})'\big(A^{-1}(f(\mathbf{x}_0)-f(\mathbf{x}_0))\big) \circ (A^{-1})'(f(\mathbf{x}_0)-f(\mathbf{x}_0)) \\
+&= (\Phi^{-1})'(\mathbf{0}) \circ A^{-1}(\mathbf{0}) \\
+&= \text{id} \circ A^{-1} = A^{-1} = (f'(\mathbf{x}_0))^{-1}.
+\end{align*}
+\end{pf}
+\end{dbox}
 
-
-
-
-
-
-
-\end{document}

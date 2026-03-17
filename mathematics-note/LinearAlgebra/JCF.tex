@@ -19,12 +19,12 @@ Let $J=J_{\lambda, k}\in M_k(\mathbb{C}),$ then:
 \end{theorem}
 
 
-\begin{dbox}
-\begin{pf}
+
+\begin{pfbox}
 1,2 is trivial by inspection. For 3 and 4, let $N_k=J-\lambda I_k$. The key observation is that the diagonal of $1'$s is shifted by one unit to the right after multiplying $N_k$ itself.
 For 5, since $N_k^i\neq \mathbf{O}$ for $i < k$, the minimal polynomial of $J$ must be the characteristic polynomial of $J$.
-\end{pf}
-\end{dbox}
+\end{pfbox}
+
 
 \begin{remark}
 2 and 5 shows that $J$ is diagonalizable only when $J$ is of size 1.
@@ -55,8 +55,8 @@ For 5, since $N_k^i\neq \mathbf{O}$ for $i < k$, the minimal polynomial of $J$ m
      \end{enumerate}
 \end{theorem}
 
-\begin{dbox}
-\begin{pf}
+
+\begin{pfbox}
     1--5 are left as an exercise. 
     For 6, observe that for any polynomial $f(x)\in F[x]$, one has $f(A\oplus B)=f(A)\oplus f(B)$.
     Let $m_{A\oplus B}=f(x),\, f(A\oplus B)=\mathbf{0}$ by the definition of minimal polynomial, which forces $f(x)$ is a common multiple of $m_A(x)$ and $m_B(x).$ 
@@ -65,8 +65,8 @@ For 5, since $N_k^i\neq \mathbf{O}$ for $i < k$, the minimal polynomial of $J$ m
 
     Alternatively, conduct the division $g(x)=f(x)\cdot q(x)+r(x).$ It suffices to show $r(x)\equiv 0.$
     Suppose, by contradiction, $deg(r)<deg(f).$ However,$r(A)=r(B)=\mathbf{0}$ violates the minimality.
-\end{pf}
-\end{dbox}
+\end{pfbox}
+
 
 
 
@@ -91,8 +91,8 @@ For 5, since $N_k^i\neq \mathbf{O}$ for $i < k$, the minimal polynomial of $J$ m
     \end{enumerate}
 \end{theorem}
 
-\begin{dbox}
-\begin{pf}
+
+\begin{pfbox}
     Let $J=J_{\lambda_1,k_1}\oplus J_{\lambda_2,k_2}\oplus\cdots\oplus J_{\lambda_n,k_n}.$ Suppose $\lambda_1=\lambda_2=\cdots\lambda_l=\lambda,\, l\le n,\, \lambda\notin\{\lambda_{l+1},\lambda_{l+2},\cdots\lambda_{n}\}.$
     Let $N_k=J-\lambda I_k,$ recall (3) and (4) in theorem~\eqref{JB_property},
     \begin{enumerate}
@@ -103,8 +103,8 @@ For 5, since $N_k^i\neq \mathbf{O}$ for $i < k$, the minimal polynomial of $J$ m
         \# of Jordan blocks of eigenvalue $\lambda$ of index(size) at least $i$.
     \end{enumerate}
 \label{determine_JCF_block_size}
-\end{pf}
-\end{dbox}
+\end{pfbox}
+
 
 Combine the definition of JCF and the theroem~\eqref{determine_JCF_block_size}, we can define the JCF of a general matrix $A\in M_n(\mathbb{C}).$
 
@@ -173,7 +173,8 @@ Observe that:
 \begin{enumerate}
     \item $\mathbf{v}_1$ is the only eigenvector among $\beta.$
     \item Given $\mathbf{v}_k,$ we can generate a chain of $\beta$ by setting $\Big\{\mathbf{v}_k, (T-\lambda \operatorname{id})(\mathbf{v}_k), (T-\lambda \operatorname{id})(\mathbf{v}_{k-1}),\cdots(T-\lambda \operatorname{id})(\mathbf{v}_2)\Big\},$
-    or eqivalently, $\Big\{\mathbf{v}_k, (T-\lambda \operatorname{id})(\mathbf{v}_k), (T-\lambda \operatorname{id})^2(\mathbf{v}_{k}),\cdots,(T-\lambda \operatorname{id})^{k-1}(\mathbf{v}_{k})\Big\}.$
+    or equivalently,\\
+     $\Big\{\mathbf{v}_k, (T-\lambda \operatorname{id})(\mathbf{v}_k), (T-\lambda \operatorname{id})^2(\mathbf{v}_{k}),\cdots,(T-\lambda \operatorname{id})^{k-1}(\mathbf{v}_{k})\Big\}.$
     \item $(T-\lambda \operatorname{id})^{k}(\mathbf{v}_{k})=(T-\lambda \operatorname{id})(\mathbf{v}_{1})=\mathbf{0},$ so $\mathbf{v}_k\in \ker(T-\lambda\operatorname{id})^k\setminus\ker(T-\lambda\operatorname{id})^{k-1} (\because \mathbf{v}_1\ne\mathbf{0}).$
 \end{enumerate}
 
@@ -185,17 +186,133 @@ These motivates the definition of Jordan chain:
 \end{definition}
 
 
+\begin{definition}[Generalized eigenspace]
+    Let $T:V\to V$ be a linear operator and $\lambda$ be an eigenvalue of $T$.
+    Define 
+    \[K_\lambda\equiv\bigcup_{i\ge 1}\ker(T-\lambda)^i\]
+    to be the generalized eigenspace of $T$ w.r.t eigenvalue $\lambda$. Any non-zero vector in $K_\lambda$ is called a generalized eigenvector.
+\end{definition}
+
+\begin{theorem}
+    Suppose $m$ is the smallest positive integer such that $\ker(T-\lambda I)^m=\ker(T-\lambda I)^{m+1}.$
+    Then 
+    \begin{enumerate}
+    \item we have a strict inclusions of subspaces:
+    \[\{\mathbf{0}\}\subset\ker(T-\lambda I)\subset\ker(T-\lambda I)^2\subset\cdots\subset\ker(T-\lambda I)^m.\]
+    \item $K_\lambda=\ker(T-\lambda I)^m.$
+    \item Let $p\le m$ and $\mathbf{v}\in\ker(T-\lambda I)^p\setminus\ker(T-\lambda I)^{p-1}.$\\
+    The set $\{\mathbf{v},(T-\lambda I)(\mathbf{v}),\cdots,(T-\lambda I)^{p-1}(\mathbf{v})\}$ forms a Jordan chain of $T$ w.r.t eigenvalue $\lambda$ of length $p.$
+    \end{enumerate}
+    \label{thm 7.4}
+\end{theorem}
 
 
+\begin{theorem}
+    Let $\lambda$ be an eigenvalue of $T.$ If $\beta_1,\beta_2,\cdots\beta_q$ are Jordan chains of $\lambda$ such that their initial vectors are linearly independent, then 
+    $\gamma_\lambda = \beta_1\cup\beta_2\cup\cdots\cup\beta_q$ is linearly independent.
+\end{theorem}
+
+\begin{pfbox}
+Let $|\gamma_\lambda|=n,$ we aim to do induction on the size of union of Jordan chains, which are linearly independent.
+If $n=1,$ there are nothing to prove. Suppose $n<k$ is true, then for $n=k,$ let $W = span(\gamma_\lambda),$ we want to show $dim(W)=k.$
+Consider a restrction map $T-\lambda I|_W:W\to W$ and a set $\gamma'_\lambda=\beta'_1\cup\beta'_2\cup\cdots\beta'_q$ obtained by removing the end vector of each Jordan chain.
+By induction hypothesis, $\gamma'_\lambda$ is linearly independent. Note that $\gamma_\lambda$ spans $W,\,(T-\lambda I)(\gamma_\lambda)=\gamma'_\lambda$ spans $(T-\lambda)(W),$ i.e. $im(T-\lambda|_W).$
+So $\gamma'_\lambda$ forms a basis of $im(T-\lambda I_W)$ and $\rank(T-\lambda I)=k-q.$ Hence 
+$$\underbrace{k}_{|\gamma_\lambda|}\ge dim(W)=\rank(T-\lambda|_W)+\nullity(T-\lambda I)\ge k-q + q = k,$$
+where $\ker(T-\lambda I|_W)=\ker(T-\lambda I)\cap W$ has at least $q$ linearly independent eigenvector (initial vectors).
+This forces $dim(W)=k.$
+\end{pfbox}
 
 
+\begin{theorem}
+    There exists a basis $\gamma_\lambda$ of generalized eigenspace $K_\lambda$ such that $\gamma_\lambda$ is formed by a union of Jordan chains of the eigenvalue $\lambda$.
+    \label{thm 7.6}
+\end{theorem}
+
+\begin{pfbox}
+    We prove by the induction on the dimension of $K_\lambda.$ Let $n=dim(K_\lambda),\,n=1,$ there are nothing to prove.
+    Now suppose $n<k$ such that $K_\lambda$ admits a basis formed by a union of Jordan chains, then for $n=k,$ consider a restriction $T-\lambda I|_{K_\lambda}: K_\lambda\to K_\lambda.$
+    The proof strategy goes as following:
+    \begin{enumerate}
+        \item $ker(T-\lambda I)\supset\{\mathbf{0}\},$ by rank-nullity, $im(T-\lambda I|_{K_\lambda})\subset K_\lambda.$
+        \item Claim: Let $u=im(T-\lambda I|_{K_\lambda}),\, u$ is the generalized eigenspace of $T|_u$ w.r.t eigenvalue $\lambda$. From this claim and induction hypothesis, there exist Jordan chains $\beta_1,\beta_2,\cdots,\beta_q$ such that their union, $\gamma$, forms a basis of $u.$ So $dim(u)=\rank(T-\lambda I|_{K_\lambda})=|\gamma|.$
+        \item For each $i$, take the initial vector $w_i$ from $\beta_i.$ By basis extension theorem, the set $\{w_1,w_2,\cdots,w_q,u_1,u_2,\cdots,u_s\}$ forms a basis in $\ker(T-\lambda I).$
+        Since $dim(K_\lambda)=\nullity(T-\lambda I|_{K_\lambda})+\rank(T-\lambda I|_{K_\lambda})=\nullity(T-\lambda I)+dim(u)=q+s+|\gamma|.$
+        \item On the other hand, $\beta_i\subseteq im(T-\lambda I|_{K_\lambda})\subseteq im(T-\lambda I),$ for each $i,$ there exists a pre-image $v_i$ of the end vector of $\beta_i$. Let $\tilde{\beta}_i = \beta_i\cup\{v_i\}$ and the set $\tilde{\gamma} = \tilde{\beta_1}\cup\tilde{\beta_2}\cup\cdots\cup\tilde{\beta_q}\cup\{u_1\}\cup\{u_2\}\cup\cdots\cup\{u_s\}.$
+        The initial vectors are linearly independent, so $\tilde{\gamma}$ is linearly independent, and $|\tilde{\gamma}|=|\gamma|+q+s.$ Hence, $\tilde{\gamma}$ forms a maximal linearly independent set in $K_\lambda$ and hence a basis.
+    \end{enumerate}
+\end{pfbox}
 
 
+\begin{theorem}
+    Let $\lambda$ and $\mu$ be distinct eigenvalues of $T:V\to V.$
+    \begin{enumerate}
+        \item $K_\lambda$ is a $T-$invariant subspace.
+        \item The restriction of $T-\mu I$ to $K_\lambda$ is invertible.
+    \end{enumerate}
+\label{thm 7.7}
+\end{theorem}
+
+\begin{pfbox}
+    For 1, use $T$ and $I$ can commute. Given that $T-\mu I|_{K_\lambda}$ is well-defined by 1, we want to show this restriction is bijective.
+    By TFAE, taking any vector $\mathbf{v}\in \Ker(T-\mu I)\cap K_\lambda$, we hope $\mathbf{v}=\mathbf{0}.$ Suppose it does not. Since $\mathbf{v}\in K_\lambda$, there exists a smallest integer $p$ s.t. $(T-\lambda I)^p\mathbf{v}=\mathbf{0}.$ Let $\mathbf{y}=(T-\lambda I)^{p-1}\mathbf{v}$ such that $T\mathbf{y}=\lambda\mathbf{y}$.
+    On the other hand, $\mathbf{v}\in \Ker(T-\mu I),$ we can show that $\mathbf{y}\in\Ker(T-\mu I),$ using commutativity btw $T$ and $I$. Then $T\mathbf{y}=\mu\mathbf{y},$ which yields a contradiction. 
+\end{pfbox}
+
+\begin{theorem}
+    Let $a$ be a algebraic multiplicity of the eigenvalue $\lambda$ of $T$, then we have $K_\lambda=\Ker(T-\lambda I)^a.$
+    \label{thm 7.8}
+\end{theorem}
+
+\begin{pfbox}
+    $(\supseteq)$ is clear, for $(\subseteq)$, take $\mathbf{v}\in K_\lambda,$ write $p_T(x)=(x-\lambda)^a(x-\mu_1)^{b_1}(x-\mu_2)^{b_2}\cdots(x-\mu_k)^{b_k},$ where $\{\lambda, \mu_1, \mu_2, \cdots, \mu_k\}$ are distinct.
+    By Cayley-Hamilton, one has: $p_T(T)(\mathbf{v})=(T-\lambda I)^a(T-\mu_1 I)^{b_1}(T-\mu_2 I)^{b_2}\cdots(T-\mu_k I)^{b_k}(\mathbf{v}) = \mathbf{O}(\mathbf{v})=\mathbf{0}.$
+    Consider the map $(T-\mu_1 I)^{b_1}(T-\mu_2 I)^{b_2}\cdots(T-\mu_k I)^{b_k}$ restricted to $K_\lambda$, which is invertible by theorem~\eqref{thm 7.7}, then $(T-\lambda I)^a(\mathbf{v})=\mathbf{0}.$ This completes the proof. 
+\end{pfbox}
+
+\begin{remark}
+    Recall theorem~\eqref{thm 7.4}, the above theorem asserts that $m\le a$.
+\end{remark}
+
+\begin{theorem}
+    Let $\lambda$ and $\mu$ be distinct eigenvalues of $T$, then $K_\lambda\cap K_\mu=\{\mathbf{0}\}.$
+\end{theorem}
+\begin{pfbox}
+    Take $\mathbf{v}\in K_\lambda\cap K_\mu$ and $p_T(x)=(x-\lambda)^a(x-\mu)^bq(x).$ Since $gcd\{(x-\lambda)^a, (x-\mu)^b\}=1,$ by Euclidean algorithm, there exists $f,g$ s.t. $f(x)(x-\lambda)^a+g(x)(x-\mu)^b=1$.
+    Plug $x=T$ and apply the equation to $\mathbf{v},$ we must have $\mathbf{v}=\mathbf{0}$ by theorem~\eqref{thm 7.8} 
+\end{pfbox}
 
 
+\begin{theorem}[Primary Decomposition Theorem]
+    Let $V$ be a finite-dimensional vector space over $\mathbb{C}$ and $T:V\to V$ be a linear operator. Let $\lambda_1,\lambda_2\cdots,\lambda_k$ be distinct eigenvalues of $T$, then:
+    $$V=K_{\lambda_1}\oplus K_{\lambda_2}\oplus\cdots K_{\lambda_k}.$$
+    \label{thm 7.10}
+\end{theorem}
 
+\begin{pfbox}
+    Let $U=K_{\lambda_1}\oplus K_{\lambda_2}\oplus\cdots K_{\lambda_k}.$ We hope $dim(U)=dim(V).$
+    (Direct) sum of space is a subspace, $U\subseteq V$ implies $dim(U)<dim(V).$
+    Next, $dim(U)=\sum_{i=1}^{k}dim(K_{\lambda_i})\ge \sum_{i=1}^{k}\nullity(T-\lambda_i I)^{a_i}\ge\nullity(\prod_{i=1}^{k}(T-\lambda_i I)^{a_i})=\nullity(\mathbf{0})=k.$
+    Combine $U\subseteq V$ and $dim(U)=dim(V),$ we conclude $U=V.$
+\end{pfbox}
 
+\begin{theorem}[JCF Theorem I]
+    Let $V$ be a finite dimensional vector space over complex field, $T:V\to V$ be any linear operator, and the corresponding matrix representing $T$ w.r.t standard basis, $[T]^B_B$, 
+    then there exists a basis $\gamma$ of $V$ formed by a union of Jordan chains, which is called a Jordan basis. Moreover, $[T]^B_B$ similar to its JCF, $[T]^\gamma_\gamma$.  
+\end{theorem}
 
+\begin{pfbox}
+    By primary decomposition theorem~\eqref{thm 7.10} and theorem~\eqref{thm 7.6}, there exists such union of Jordan chains and forms a maximal linearly independent set and hence a basis.
+\end{pfbox}
 
+\begin{theorem}[JCF Theorem II \& III]
+Let $A,B\in M_n(\mathbf{C})$, and up to a permutation of Jordan blocks, then:
+    \begin{enumerate}
+    \item $J_A$ is uniquely determined by $A.$
+    \item $A\sim B$ if and only if $J_A=J_B.$
+\end{enumerate}
+\end{theorem}
 
-\end{document}
+\begin{pfbox}
+    1 is trivial by definition. For 2, we focus on $(\Rightarrow)$. By similarity, $Spec(A)=Spec(B)$ and $(A-\lambda I)^i \sim (B-\lambda I)^i,$ which implies $\nullity(A-\lambda I)^i = \nullity(B-\lambda I)^i$ for each integer $i$. Hence, they have the same JCF. 
+\end{pfbox}

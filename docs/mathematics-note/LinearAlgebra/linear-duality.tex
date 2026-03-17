@@ -62,12 +62,12 @@ $S^*=\{\mathbf{v}^*_1, \mathbf{v}^*_2,\cdots\mathbf{v}^*_n\}$ is said to be the 
     \]
 \end{lemma}
 
-\begin{pf}
+\begin{pfbox}
     For $i=1$, consider $\mathbf{v}^*_1:V\to\mathcal{F}$.
     By definition, $\Phi^{B}_{S}(\mathbf{v}^*_1)=e_1$, i.e., \([v^*_1]^{B}_{S}=(1,0,\cdots,0)\).
     This implies that $\mathbf{v}^*_1(\mathbf{v}_1)=1\cdot 1$ and $\mathbf{v}^*_1(\mathbf{v}_j)=0\cdot 1$ for $j\ne 1$.
     Now repeat the above argument for $i=2,3,\cdots n$.
-\end{pf}
+\end{pfbox}
 
 
 \begin{definition}[Dual linear maps]
@@ -82,7 +82,7 @@ $S^*=\{\mathbf{v}^*_1, \mathbf{v}^*_2,\cdots\mathbf{v}^*_n\}$ is said to be the 
     \[[T^*]^{S^*}_{S'^*} = ([T]^{S'}_{S})^T.\]
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
 Let $S=\{\mathbf{v}_1,\mathbf{v}_2\cdots\mathbf{v}_n\}$ be a basis of $V$.
 Let $S'=\{\mathbf{w}_1,\mathbf{w}_2\cdots\mathbf{w}_m\}$ be a basis of $W$.
 Suppose $[T]^{S'}_{S}=A=\begin{pmatrix}
@@ -96,7 +96,7 @@ Let $\mathbf{v} = \sum_{k=1}^{n}c_k\mathbf{v}_k$. Consider $T^*(\mathbf{w}^*_1)(
 \mathbf{w}^*_1 (\sum_{k=1}^{n}c_k \sum_{j=1}^{m}a_{jk}\mathbf{w}_j)=\sum_{k=1}^{n}c_k a_{1k}\cdot 1.$
 Note that $c_k = v^*_k(\mathbf{v})$, so we get $T^*(\mathbf{w}^*_1)=b^*_1\circ T(\mathbf{v})=\sum_{k=1}^{n}a_{1k}v^*_k(\mathbf{v}).$
 \label{thm6.3}
-\end{pf}
+\end{pfbox}
 
 
 \begin{definition}[Annihilator]
@@ -110,7 +110,7 @@ Note that $c_k = v^*_k(\mathbf{v})$, so we get $T^*(\mathbf{w}^*_1)=b^*_1\circ T
     \label{ld1}
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     Let $\{\mathbf{u}_1,\mathbf{u}_2,\cdots \mathbf{u}_k\}$ be a basis of $U$.
     By basis extension theorem, we can extend it into $\{\mathbf{u}_1,\mathbf{u}_2,\cdots \mathbf{u}_k,\mathbf{u}_{k+1},\cdots\mathbf{u}_n\}$.
     So $\{\mathbf{u}^*_1,\mathbf{u}^*_2,\cdots \mathbf{u}^*_k,\mathbf{u}^*_{k+1},\cdots\mathbf{u}^*_n\}$ is the dual basis in $V^*$.
@@ -122,7 +122,7 @@ Note that $c_k = v^*_k(\mathbf{v})$, so we get $T^*(\mathbf{w}^*_1)=b^*_1\circ T
         \item Linear independence is trivial.
     \end{enumerate}
     By the claim, we have $dim(U^0)=n-k=dim(V)-dim(U).$
-\end{pf}
+\end{pfbox}
 
 
 \begin{theorem}[Linear Duality Theorem (II)]
@@ -136,9 +136,9 @@ Note that $c_k = v^*_k(\mathbf{v})$, so we get $T^*(\mathbf{w}^*_1)=b^*_1\circ T
     \label{ld2}
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     Left as an exercise.
-\end{pf}
+\end{pfbox}
 
 \begin{corollary}
 \eqref{ld2} implies that
@@ -149,13 +149,13 @@ Note that $c_k = v^*_k(\mathbf{v})$, so we get $T^*(\mathbf{w}^*_1)=b^*_1\circ T
 \end{enumerate}
 \end{corollary}
 
-\begin{pf}
+\begin{pfbox}
 \begin{enumerate}
     \item $im(T)=W \leftrightarrow dim((im(T)^0))=0=dim(ker(T^*))$.
     \item Recall theorem \eqref{thm6.3}.
     \item $ker(T)=\{\mathbf{0}\}\leftrightarrow dim((ker(T))^0)= dim(im(T^*)) = dim(V)=dim(V^*)$
 \end{enumerate}
-\end{pf}
+\end{pfbox}
 
 
 \begin{definition}[Double Dual]
@@ -174,7 +174,7 @@ The dual of a dual space is defined by:
     \end{enumerate}
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
 \begin{enumerate}
     \item Take $\mathbf{v}\in ker(\text{\emph{ev}})$, we have \emph{ev}$(\mathbf{v})=\mathbf{0}.$
     That is, \emph{ev}$(\mathbf{v})(f)=f(\mathbf{v})=0$ for $f\in V^*$.
@@ -183,7 +183,7 @@ The dual of a dual space is defined by:
     \item Note that $dim(V)=dim(V^*)=dim((V^*)^*)$, \emph{ev}:$V\to (V^*)^*$ is injective linear map from 1,
     by \eqref{TFAE_ver1}, \emph{ev} is also a surjective map and hence an isomorphism.  
 \end{enumerate}
-\end{pf}
+\end{pfbox}
 
 \begin{remark}
     If $V$ is infinite dimensional, then \emph{ev} might not be surjective in general, which is beyond the current scope.

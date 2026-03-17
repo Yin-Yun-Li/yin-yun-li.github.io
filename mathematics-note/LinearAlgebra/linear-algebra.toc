@@ -10,4 +10,4 @@
 \contentsline {subsection}{\numberline {5.2}Diagonalizability}{27}{subsection.5.2}%
 \contentsline {subsection}{\numberline {5.3}Application of Diagonalization}{32}{subsection.5.3}%
 \contentsline {section}{\numberline {6}Linear Duality}{35}{section.6}%
-\contentsline {section}{\numberline {7}Jordan Canonical Form}{39}{section.7}%
+\contentsline {section}{\numberline {7}Jordan Canonical Form}{40}{section.7}%

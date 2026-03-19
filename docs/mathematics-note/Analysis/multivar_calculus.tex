@@ -760,3 +760,180 @@ We apply the Chain Rule to differentiate $f^{-1}$ at $f(\mathbf{x}_0)$:
 
 \end{pfbox}
 
+\subsection{Implicit Function Theorem}
+
+\begin{definition}[Graph]
+Given a function $f: U\subseteq X \to Y$, the graph of $f$ is defined as the following subset of Cartesian product space:
+$$\mathcal{G}(f) = \{(x,f(x)):x\in X\}.$$
+\end{definition}
+
+\begin{example}
+Let $f: U \subseteq \mathbb{R}^{n-1} \to \mathbb{R}$ be a function. Define the graph of $f$ as a $(n-1)-$dimension subset in $\mathbb{R}^n$: 
+$$\{ (x_1, \ldots, x_{n-1}, f(x_1, \ldots, x_{n-1})) \in \mathbb{R}^n \mid (x_1, \ldots, x_{n-1}) \in U \}.$$
+\end{example}
+
+
+\begin{definition}[Level Set]
+Let $U \subseteq \mathbb{R}^n$ be an open set and $f: U \to \mathbb{R}$ be a real-valued function. For a given constant $c \in \mathbb{R}$, the set of all points $\mathbf{x} \in U$ that satisfy the equation $f(\mathbf{x}) = c$ forms a subset of $U$. This subset is formally called the \textbf{level set} of $f$ at level $c$, denoted by:
+$$L_c = \{ \mathbf{x} \in U \mid f(\mathbf{x}) = c \}.$$
+\end{definition}
+
+
+\begin{example}
+\begin{enumerate}
+    \item \textbf{Level Curve ($n=2$):} A 1D level set in a 2D space is defined by a 2-variable equation $f(x,y)=c$. We call this a \textbf{level curve}/\textbf{contour line}/\textbf{isoline} of $f$ at level $c$.
+    \item \textbf{Level Surface ($n=3$):} A 2D level set in a 3D space is defined by a 3-variable equation $f(x,y,z)=c$. We call this a \textbf{level surface}/\textbf{isosurface} of $f$ at level $c$.
+    \item \textbf{Level Hypersurface ($n>3$):} An $(n-1)$-dimensional level set in an $n$-dimensional space is defined by $f(x_1, \dots, x_n)=c$. We simply call this a \textbf{level hypersurface}.
+\end{enumerate}
+\end{example}
+
+\begin{remark}
+    Let $U\subseteq\mathbb{R}^3$ and a three-variable function $f:U\to\mathbb{R}$ defined by $w=f(x,y,z)$.
+    \begin{enumerate}
+        \item The graph of $f$ is defined as $\{(x,y,z,f(x,y,z)):(x,y,z)\in U\},$ which is a 3-dimensional subset in $\mathbb{R}^4.$
+        \item Set $w=c$. Given this constant $c$, we have a level surface of $f$ at level $c$, which is a 2-dimensional subset $S=\{(x,y,z)\in U: f(x,y,z)=c\}$ in $\mathbb{R}^3.$ 
+        \item Locally, $S$ can be expressed as the graph of a 2-variable function, $S'=\{(x,y,z(x,y)):(x,y)\in\mathbb{R}^2\}$, which is a 2-dimensional subset in $\mathbb{R}^3,$ where $S'\subseteq S.$ 
+    \end{enumerate}
+\end{remark}
+
+\begin{remark}
+    A related but distinct concept is the intersection of two surfaces. For example, suppose we have a double cone and a cutting plane, both of which are level surfaces defined by 3-variable equations. 
+    Their intersection forms a conic section (a quadratic curve). Intuitively, a system of 3 variables restricted by 2 independent equations reduces the degrees of freedom to 1 ($3 - 2 = 1$), resulting in a 1-dimensional curve. 
+    However, this is not the same concept as a "level curve." A standard level curve is defined by a single equation in a 2D space (e.g., $f(x,y)=c$), whereas this intersection is a 1D curve living in a 3D space, defined by a system of two equations.
+\end{remark}
+
+
+\begin{theorem}[Implicit Function Theorem]
+Let $E$ be an open set in $\mathbb{R}^n$, and $f:E\to\mathbb{R}$ is $C^1$. Suppose $y\in E$ such that $f(y)=0$ and $f_{x_n}=\frac{\partial f}{\partial x_n}\neq 0,$ then:
+\begin{enumerate}
+    \item There exists an open subset $U\subseteq\mathbb{R}^{n-1}$ containing $(y_1,y_2,\cdots,y_{n-1})$, and a map $g:U\to\mathbb{R}$ such that $g(y_1,y_2,\cdots,y_{n-1})=y_n.$
+    \item The level set $\{x\in V: f(x)=0\}$ is a graph of a function of $g$ over $U$, i.e. $\{x\in V: f(x)=0\}=\{(x_1,x_2,\cdots,x_{n-1},g(x_1,x_2,\cdots,x_{n-1})):(x_1,x_2,\cdots,x_{n-1})\in U\}.$
+    \item For $j=1,2,\cdots,n-1$,
+    $$\frac{\partial g}{\partial x_j}(y_1, y_2,\cdots,y_{n-1})=-\frac{\frac{\partial f}{\partial x_j}(y)}{\frac{\partial f}{\partial x_n}(y)}.$$ 
+\end{enumerate}
+
+\end{theorem}
+
+
+\begin{pfbox}
+\vspace{0.8em}
+\noindent \textbf{Step 1: Define a new function $F$ and check its Jacobian}\\
+Define $F: E \to \mathbb{R}^n$ by $(x_1, x_2, \ldots, x_n) \mapsto (x_1, x_2, \ldots, x_{n-1}, f(x_1, x_2, \ldots, x_n))$.
+
+Since $f \in C^1(E)$, it follows that $F \in C^1(E)$. The Jacobian matrix of $F$ at $x$ is:
+$$ DF(x) = \begin{pmatrix} 
+- & \nabla x_1 & - \\ 
+- & \nabla x_2 & - \\ 
+  & \vdots     &   \\ 
+- & \nabla f   & - 
+\end{pmatrix} 
+= \begin{pmatrix} 
+1 & 0 & \cdots & 0 \\ 
+0 & 1 & \cdots & 0 \\ 
+\vdots & \vdots & \ddots & \vdots \\ 
+\frac{\partial f}{\partial x_1}(x) & \frac{\partial f}{\partial x_2}(x) & \cdots & \frac{\partial f}{\partial x_n}(x) 
+\end{pmatrix} $$
+We are given that $\frac{\partial f}{\partial x_n}(y) \neq 0$. Therefore, the determinant evaluated at $y$ is:
+$$ \det(DF(y)) = \frac{\partial f}{\partial x_n}(y) \neq 0, $$
+which means $DF(y)$ is invertible.
+
+\vspace{0.8em}
+\noindent \textbf{Step 2: Apply the Inverse Function Theorem to construct local inverse}\\
+By the Inverse Function Theorem, there exists an open set $V \subseteq E$ and $W \subseteq \mathbb{R}^n$ such that $y \in V$, $F(y) \in W$, and $F: V \to W$ is a $C^1$ diffeomorphism. 
+Write the inverse in coordinates as $F^{-1}(u) = (h_1(u), h_2(u), \ldots, h_n(u))$ for $u = (u_1, u_2, \ldots, u_n) \in W$.
+By construction, $F(F^{-1}(u)) = u$, which implies:
+$$ F(h_1(u), h_2(u), \ldots, h_n(u)) = (u_1, u_2, \ldots, u_n). $$
+Using the definition of $F$, the left-hand side expands to:
+$$ (h_1(u), h_2(u), \ldots, h_{n-1}(u), f(h_1(u), \ldots, h_n(u))). $$
+Equating the components element by element, we obtain:
+$$ h_1(u) = u_1, \quad h_2(u) = u_2, \quad \ldots, \quad h_{n-1}(u) = u_{n-1}, $$
+$$ f(h_1(u), h_2(u), \ldots, h_n(u)) = u_n \implies f(u_1, u_2, \ldots, u_{n-1}, h_n(u)) = u_n\quad (*).$$
+Thus, the inverse function takes the form:
+$$ F^{-1}(u_1, u_2, \ldots, u_n) = (u_1, u_2, \ldots, u_{n-1}, h_n(u_1, u_2, \ldots, u_n)). $$
+
+\vspace{0.8em}
+\noindent \textbf{Step 3: Restrict to $u_n = 0$ and define the implicit function $g$}\\
+If we restrict the domain to $u_n = 0$, by $(*),$ we have:
+$$
+f(u_1, \ldots, u_{n-1}, h_n(u_1, \ldots, u_{n-1}, 0)) = 0.
+$$
+
+Set an open set $U = \{ x' = (x_1, x_2, \ldots, x_{n-1}) \in \mathbb{R}^{n-1} \mid (x', 0) \in W \}$.
+Since $F(y_1, \ldots, y_n) = (y_1, \ldots, y_{n-1}, f(y_1, \ldots, y_n)) = (y_1, \ldots, y_{n-1}, 0) \in W$, $U$ is an open set containing $(y_1, y_2, \ldots, y_{n-1}) = y'$.
+
+Define $g: U \to \mathbb{R}$ by $g(x') = g(x_1, \ldots, x_{n-1}) = h_n(x_1, \ldots, x_{n-1}, 0)$.
+Note that
+$$y=\underbrace{(y',y_n)}_{\in V} = F^{-1}F(y)=F^{-1}(y',0)=(y',h_n(y',0))=(y',g(y)).$$
+So $y_n = g(y').$
+
+
+\vspace{0.8em}
+\noindent \textbf{Step 4: Show the zero set is locally the graph of $g$}\\
+\textbf{Claim:} $\{ x \in V : f(x) = 0 \} = \{ (x', g(x')) : x' \in U \}$.
+Namely, we want to show the solution set of the equation $f(x)=0\,(A)$ is exactly the graph of the function $g(x')\,(B)$.
+Recall $U=\{x'\in\mathbb{R}^{n-1}: (x',0)\in W\}.$
+\begin{itemize}
+    \item[$(\subseteq)$] Take $x = (x', x_n) \in A$, where $x\in V$ and $f(x) = 0$.\\
+    Apply $F$ first, $F(x)=(x',f(x))=(x',0),$ where $F(x)\in W$, so $x'\in U.$\\
+    Apply $F^{-1}$ sequentially,
+    $\underbrace{F^{-1}F(x)}_{x}=F^{-1}(x',0)=(x',h_n(x',0))=(x',g(x')).$
+    So $x\in B.$
+    \item[$(\supseteq)$] Take $x = (x', x_n) \in B$, where $x'\in U$ and $x = (x',g(x'))$.\\
+    Since $x'\in U$, $(x',0)\in W$. Apply $F^{-1}$ first, $F^{-1}(x',0)=(x',h_n(x',0))=(x',g(x'))=x,$ where $x\in V$.\\
+    Apply $F$ sequentially,
+    $\underbrace{FF^{-1}(x',0)}_{(x',0)}=F(x)=(x',f(x)).$
+    So $x\in A.$
+\end{itemize}
+
+\vspace{0.8em}
+\noindent \textbf{Step 5: Obtain IFT formula}\\
+Now we have $(x_1, \dots, x_{n-1}) \in U \subseteq \mathbb{R}^{n-1}$ (where $U$ is open), $f(x', g(x')) = 0$, and $y_n = g(y')$.
+
+Since $U$ is open, there exists $\delta > 0$ such that if $|t| < \delta$, then $y' + t e_j \in U$, which implies:
+$$ f(y' + t e_j, g(y' + t e_j)) = 0 $$
+Let $\phi(t) = f(y' + t e_j, g(y' + t e_j))$. Thus, $\phi(t) = 0$ when $|t| < \delta$.
+Therefore, $\phi'(t) = 0$ for $|t| < \delta$.
+
+Differentiating with respect to $t$ on both sides by the chain rule:
+$$ \phi'(t) = \frac{\partial f}{\partial x_j}(y) \frac{dx_j}{dt}(t) + \frac{\partial f}{\partial x_n}(y) \cdot \frac{\partial g}{\partial x_j}(y') \frac{dx_j}{dt}(t).$$
+Since $\frac{dx_j}{dt} = 1$, we evaluate at $t=0$:
+$$ 0 = \frac{\partial f}{\partial x_j}(y) + \underbrace{\frac{\partial f}{\partial x_n}(y)}_{\neq 0} \frac{\partial g}{\partial x_j}(y') $$
+$$ \therefore \frac{\partial g}{\partial x_j}(y') = - \frac{\frac{\partial f}{\partial x_j}(y)}{\frac{\partial f}{\partial x_n}(y)} $$
+
+
+\end{pfbox}
+
+
+
+\begin{definition}[Manifold]
+A subset $M \subseteq \mathbb{R}^n$ is called a $k$-dimensional manifold if, for every point $p \in M$, there exists a neighborhood $V$ of $p$ in $M$ that is \textbf{diffeomorphic} to an open set $U$ in $\mathbb{R}^k$.
+\end{definition}
+
+\begin{remark}
+In advanced calculus (e.g., Spivak's \textit{Calculus on Manifolds}), being a manifold is often established through equivalent conditions. For a subset $M \subseteq \mathbb{R}^n$ to be a $k$-dimensional manifold locally around a point $p$, the following three perspectives are mathematically equivalent:
+
+\begin{enumerate}
+    \item \textbf{The Geometric View (Diffeomorphism):} Locally, $M$ is diffeomorphic to an open set in $\mathbb{R}^k$.
+    \item \textbf{The Analytical View (Graph of a Function):} Locally, $M$ can be written as the \textbf{graph} of a $C^1$ function (by expressing $n-k$ variables in terms of the other $k$ variables).
+    \item \textbf{The Algebraic View (Level Set / Zero Set):} Locally, $M$ is the solution set of $n-k$ equations where the Jacobian matrix has full rank.
+\end{enumerate}
+\end{remark}
+
+\subsubsection*{Applications in Economics}
+\begin{enumerate}
+\item Indifference Curves and Utility Functions\\
+Let $U(x, y)$ be a utility function representing a consumer's preferences over two goods. An \textbf{indifference curve} is fundamentally a 1D \textbf{level curve} defined by the equation $U(x, y) = c$, where $c$ is a constant utility level. 
+By the IFT, provided the marginal utility $\frac{\partial U}{\partial y} \neq 0$, we can locally express $y$ as a smooth function of $x$ (i.e., $y = g(x)$). Most importantly, the theorem gives us the exact slope of this curve, which economists call the \textbf{Marginal Rate of Substitution (MRS)}:
+$$ \frac{dy}{dx} = -\frac{\frac{\partial U}{\partial x}}{\frac{\partial U}{\partial y}} = -\frac{MU_x}{MU_y} $$
+The IFT guarantees we can compute this trade-off without ever needing to explicitly isolate $y$.
+
+\item Isoquant Curves and Production Functions\\
+Similarly, in producer theory, a production function is given by $Q = F(K, L)$, where $K$ is capital and $L$ is labor. An \textbf{isoquant} is the level curve $F(K, L) = c$. 
+Applying the IFT, we can find the slope of the isoquant, known as the \textbf{Marginal Rate of Technical Substitution (MRTS)}:
+$$ \frac{dK}{dL} = -\frac{\frac{\partial F}{\partial L}}{\frac{\partial F}{\partial K}} = -\frac{MP_L}{MP_K} $$
+This tells the firm exactly how much capital can be replaced by one unit of labor while maintaining the same output level $c$.
+
+\item Comparative Statics\\
+Beyond 2D level curves, the generalized $n$-dimensional IFT is the foundation of \textbf{Comparative Statics} in macroeconomics and general equilibrium theory. 
+Suppose an economic equilibrium is defined by a complex system of equations $F(\mathbf{y}, \mathbf{x}) = \mathbf{0}$, where $\mathbf{y}$ are endogenous variables (e.g., prices, GDP) and $\mathbf{x}$ are exogenous policy parameters (e.g., tax rates, money supply). Even if the system is too complex to explicitly solve for the equilibrium state $\mathbf{y}^* = g(\mathbf{x})$, the IFT guarantees that this relationship exists locally, provided the Jacobian matrix $D_{\mathbf{y}}F$ is invertible. Furthermore, it allows economists to calculate $\frac{\partial \mathbf{y}^*}{\partial \mathbf{x}}$, precisely predicting how a shift in government policy will ripple through the equilibrium variables.
+\end{enumerate}

@@ -1,0 +1,426 @@
+
+\subsection{Outer Measure}
+\begin{definition}[Open box]
+    An open box $B\subseteq\mathbb{R}^n$ is any of the form 
+    $$B=\prod_{i=1}^{n}(a_i, b_i)=\{(x_1,x_2,\cdots,x_n)\in\mathbb{R}^n:a_i<x_i<b_i, i=1,2,\cdots,n\}.$$
+    We define the volume of $B$ to be 
+    $$Vol(B)=\prod_{i=1}^{n}(b_i-a_i).$$
+\end{definition}
+
+\begin{definition}
+    Let $\Omega\in\mathbb{R}^n$. We say a collection $(B_j)_{j\in\mathcal{J}}$ of boxes covering $\Omega$ if $\Omega\subseteq\bigcup_{j\in\mathcal{J}}B_j.$
+\end{definition}
+
+\begin{definition}[Outer Measure]
+    If $\Omega\in\mathbb{R}^n,$ we define the outer measure of $\Omega$ to be the quantity
+    \[m^*(\Omega)=\inf\left\{\sum_{j\in\mathcal{J}}Vol(B_j): (B_j)_{j\in\mathcal{J}} \text{ is a countable collection of boxes covering } \Omega\right\}.\]
+\end{definition}
+
+\begin{remark}
+    $0\le m^*(\Omega)\le\infty.$
+\end{remark}
+
+\begin{theorem}\ \vspace{-2em}
+    \begin{enumerate}
+        \item (Empty set) $m^*(\varnothing)=0.$
+        \item (Monotonicity) If $A\subseteq B\subseteq\mathbb{R}^n$, then $m^*(A)\le m^*(B).$
+        \item (Countable sub-additivity) For a countable collection $(A_j)_{j\in\mathcal{J}}$ in $\mathbb{R}^n$, we have $m^*(\cup_{j\in\mathcal{J}}A_j)<\sum_{j\in\mathcal{J}}m^*(A_j).$ 
+        \item (Translation Invariance) For $\Omega\subseteq\mathbb{R}^n$ and $x\in\mathbb{R}^n$, we have $m^*(\Omega+x)=m^*(\Omega).$
+    \end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+    For 1, given any $\epsilon>0,$ $(0,\epsilon^{\frac{1}{n}})^{n}$ is an open boxes covering $\varnothing$.
+    By definition, $0\le m^*(\varnothing)\le Vol((0,\epsilon^{\frac{1}{n}})^{n})=\epsilon.$ So $m^*(\Omega)=0.$\\
+
+    For 2, if $m^*(B)=\infty,$ there is nothing to prove. Now assume $m^*(B)<\epsilon,$ given any $\epsilon>0$,
+    there exists a countable collection of open boxes $(B_j)_{j\in\mathcal{J}}$ of $B$ s.t. $\sum_{j\in\mathcal{J}}Vol(B_j)\le m^*(B)+\epsilon$.
+    Since $A\subseteq B\subseteq \cup_{j\in\mathcal{J}}B_j$, $m^*(A)\le \sum_{j\in\mathcal{J}}Vol(B_j)\le m^*(B)+\epsilon.$ Take $\epsilon\to 0,$ we have $m^*(A)\le m^*(B).$\\
+
+    For 3, if $m^*(A_j)=\infty$ for some $j\in\mathcal{J},$ then we are done. Now assume $m^*(A_j)<\infty\,\forall j\in\mathcal{J}.$ Given any $\epsilon>0,$ there exist a countable collection of open boxes $\{B_{j,k}\}_{k\in\mathbb{N}}$ of $B_j$ s.t. $\sum_{k=1}^{\infty}Vol(B_j,k)\le m^*(A_j)+\frac{\epsilon}{2^j}$.
+    Since $$\bigcup_{j\in\mathbb{N}} A_j\subseteq \bigcup_{j\in\mathbb{N}}\bigcup_{k\in\mathbb{N}} B_{j,k},\quad m^*(\bigcup_{j\in\mathbb{N}}A_j)\le\sum_{{j\in\mathbb{N}}}\sum_{{k\in\mathbb{N}}} Vol(B_{j,k})\le \sum_{j\in\mathbb{N}}m^*(A_j)+\epsilon.$$
+    Take $\epsilon\to 0,$ then we have 
+    $$m^*(\bigcup_{j\in\mathcal{J}}A_j)<\sum_{j\in\mathcal{J}}m^*(A_j).$$\\
+
+    For 4, since $\sum_{j\in\mathbb{N}}Vol(B_j) = \sum_{j\in\mathbb{N}}Vol(B_j+x),$ by the definition of outer measure, we have $m^*(x+\Omega)=m^*(\Omega).$
+\end{pfbox}
+
+
+
+\begin{proposition}
+    Let $B=\prod_{i=1}^{n}[a_i, b_i]=\left\{ (x_1,x_2,\cdots,x_n)\in\mathbb{R}^n:a_i\le x_i\le b_i, i=1,2,\cdots,n\right\},$ we have $m^*(B)=\prod_{i=1}^{n}(b_i-a_i).$
+\end{proposition}
+
+\begin{pfbox}
+    $(\le)$ Let an open box $U_\epsilon = \prod_{i=1}^{n}(a_i+\epsilon, b_i-\epsilon)$ covering $B$. By definition, $m^*(B)\le Vol(U_\epsilon)=\prod_{i=1}^{n}(b_i-a_i+2\epsilon).$ Take $\epsilon\to 0$, then we have $m^*(B)\le \prod_{i=1}^{n}(b_i-a_i).$\\
+    
+    $(\ge)$ Let $Vol(B)=\prod_{i=1}^{n}(b_i-a_i)$ and any countable collection of open boxes $\{B_j\}_{j\in\mathcal{J}}$ covering B. If we can show $Vol(B)\le\sum_{j\in\mathcal{J}}Vol(B_j),$ then $\prod_{i=1}^{n}(b_i-a_i)\le m^*(B).$
+    Since $B$ is compact, there exists an finite subcover of open boxes of $\{B_j\}_{j\in\mathcal{J}}$, denoted by $\{U_j\}_{j=1}^{k}$ s.t.
+    $B\subseteq\cup_{j=1}^{k}U_j$ and $\sum_{j=1}^{k}Vol(U_j)\le\sum_{j=1}^{\infty}Vol(B_j)$.
+    Choose a closed box $Q$ containing $B$ and $U_j$ for $j=1,2,\cdots,k.$
+    Define a function $f$ on $Q$ s.t.
+    \[\begin{aligned}
+        f(x)=\begin{cases}
+            1 \text{ if } x\in B\\
+            0 \text{ if } x\in Q\setminus B,
+        \end{cases}\qquad
+        f_j(x)=\begin{cases}
+            1 \text{ if } x\in U_j\\
+            0 \text{ if } x\in Q\setminus U_j,
+        \end{cases}
+    \end{aligned}\]
+
+    where $Vol(B)=\int_Q f(x)dx$ and $Vol(U_j)=\int_Qf_j(x)dx$.
+    If $x\in B,\, f(x)=1,$ and there exists an integer $\mathscr{l}$ s.t. $f_\mathscr{l}(x)=1.$
+    If $x\in Q\setminus B,\,f(x)=0.$ 
+    So we have $f(x)\le\sum_{j=1}^{k}f_j(x).$ By the comparison property of Riemann integral,
+    $\int_Qf(x)dx\le\int_Q\sum_{j=1}^{k}f_j(x)dx = \sum_{j=1}^{k}\int_Q f_j(x)dx,$ which means
+    $Vol(B)\le \sum_{j=1}^{k}Vol(B_j)\le \sum_{j=1}^{\infty}Vol(B_j)$.
+    Hence $Vol(B)= \prod_{i=1}^{n}(b_i-a_i)\le m^*(B).$
+\end{pfbox}
+
+\begin{example}
+Consider the $m^*_1$ measure on $\mathbb{R}$.
+\begin{enumerate}
+    \item $m^*(\mathbb{R})=\infty.$
+    \item $m^*(\mathbb{Q})=0.$\\
+    We know $\mathbb{Q}$ is countable. Let $\mathbb{Q}=\cup_{q\in\mathbb{Q}}\{q\},\,m^*(\mathbb{Q})\le\sum_{q\in\mathbb{Q}}m^*(\{q\})=0.$
+    \item $m^*(\mathbb{R}\setminus\mathbb{Q})=\infty.$\\
+    Observe that $\mathbb{R}=(\mathbb{R}\setminus\mathbb{Q})\bigcup(\mathbb{Q})$,
+    so $m^*(\mathbb{R})\le m^*(\mathbb{R}\setminus\mathbb{Q})+m^*(\mathbb{Q})$, by 1 and 2, we have $m^*(\mathbb{R}\mathbb{Q})=\infty.$ 
+    This shows that $\mathbb{R}\setminus\mathbb{Q}$ is uncountable, since the set of irrational numbers has measure nonzero.
+\end{enumerate}
+\end{example}
+
+\begin{remark}
+    Every countable set has measure zero.
+\end{remark}
+
+
+\begin{lemma}[Two Properties of Cosets]
+    For any $x, y \in \mathbb{R}$, let $x+\mathbb{Q} = \{x+q : q \in \mathbb{Q}\}$ be a coset of $\mathbb{Q}$ in $\mathbb{R}$. The following two properties hold:
+    \begin{enumerate}
+        \item If $(x+\mathbb{Q}) \cap (y+\mathbb{Q}) \neq \varnothing$, then $x+\mathbb{Q} = y+\mathbb{Q}$.
+        \item Every coset meets the interval $[0,1]$, i.e., $(x+\mathbb{Q}) \cap [0,1] \neq \varnothing$.
+    \end{enumerate}
+\end{lemma}
+
+\begin{pfbox}
+    \textbf{Proof of 1 (Disjoint or Identical):}
+    Suppose $(x+\mathbb{Q}) \cap (y+\mathbb{Q}) \neq \varnothing$. Let $z$ be an element in this intersection. 
+    Then $z = x+q_1$ and $z = y+q_2$ for some $q_1, q_2 \in \mathbb{Q}$. 
+    This implies $x - y = q_2 - q_1$. Since the rationals are closed under subtraction, $x - y \in \mathbb{Q}$.
+    Now, for any element $a \in x+\mathbb{Q}$, we can write $a = x+r$ for some $r \in \mathbb{Q}$. 
+    Substituting $x = y + (q_2 - q_1)$, we have:
+    $$ a = y + (q_2 - q_1) + r = y + (q_2 - q_1 + r). $$
+    Since $q_2 - q_1 + r \in \mathbb{Q}$, we get $a \in y+\mathbb{Q}$. This shows $x+\mathbb{Q} \subseteq y+\mathbb{Q}$. 
+    By symmetry, $y+\mathbb{Q} \subseteq x+\mathbb{Q}$, so the two cosets are exactly equal.
+
+    \textbf{Proof of 2 (Intersection with $[0,1]$):}
+    Let $x+\mathbb{Q}$ be any coset. We want to find a rational number $q$ such that $x+q \in [0,1]$.
+    This is equivalent to requiring $0 \le x+q \le 1$, or simply:
+    $$ -x \le q \le 1-x. $$
+    Because the set of rational numbers $\mathbb{Q}$ is dense in $\mathbb{R}$, any interval with positive length contains a rational number. 
+    Since the interval $[-x, 1-x]$ has length $1 > 0$, it must contain at least one rational number $q$. 
+    For such $q$, we have $x+q \in [0,1]$. Therefore, $(x+\mathbb{Q}) \cap [0,1] \neq \varnothing$.
+\end{pfbox}
+
+\begin{remark}
+    The properties of these cosets stem directly from the fact that they are equivalence classes. 
+    Define a relation $\sim$ on $\mathbb{R}$ by:
+    $$ x \sim y \iff x-y \in \mathbb{Q}. $$
+    This is an equivalence relation because it satisfies:
+    \begin{itemize}
+        \item \textbf{Reflexivity:} $x-x = 0 \in \mathbb{Q} \implies x \sim x$.
+        \item \textbf{Symmetry:} $x \sim y \implies x-y \in \mathbb{Q} \implies -(x-y) = y-x \in \mathbb{Q} \implies y \sim x$.
+        \item \textbf{Transitivity:} $x \sim y$ and $y \sim z \implies x-y \in \mathbb{Q}$ and $y-z \in \mathbb{Q} \implies (x-y)+(y-z) = x-z \in \mathbb{Q} \implies x \sim z$.
+    \end{itemize}
+    The equivalence class of an element $x \in \mathbb{R}$ under this relation is exactly its coset:
+    $$ [x] = \{y \in \mathbb{R} : y \sim x\} = \{y \in \mathbb{R} : y-x \in \mathbb{Q}\} = \{x+q : q \in \mathbb{Q}\} = x+\mathbb{Q}. $$
+    A fundamental theorem of equivalence relations states that equivalence classes form a \textbf{partition} of the underlying set ($\mathbb{R}$). This means that any two equivalence classes (cosets) are either completely disjoint or exactly identical, which is precisely the underlying mechanism of \textbf{Property 1}.
+\end{remark}
+
+
+
+\begin{proposition}[Failure of Countable Additivity]
+    There exists a countable collection $(A_j)_{j \in J}$ of disjoint subsets of $\mathbb{R}$ such that
+    \[ m^*\left(\bigcup_{j \in J}A_j\right) \neq \sum_{j \in J}m^*(A_j). \]
+\end{proposition}
+
+\begin{pfbox}
+    We construct such a family from the cosets of $\mathbb{Q}$ in $\mathbb{R}$.
+    
+    \textbf{Step 1 (Choose one representative):} Let $\mathbb{R}/\mathbb{Q}$ denote the collection of all cosets. By Property 2 of our previous Lemma, we know that $A \cap [0,1] \neq \emptyset$ for every coset $A$. Thus, by the Axiom of Choice, we can choose exactly one representative $x_A \in A \cap [0,1]$ for each coset $A \in \mathbb{R}/\mathbb{Q}$. 
+    Define $E = \{x_A : A \in \mathbb{R}/\mathbb{Q}\}$. By construction, $E \subseteq [0,1]$.
+    
+    \textbf{Step 2 (Rational translates of $E$):} Consider the set $X = \bigcup_{q \in \mathbb{Q} \cap [-1,1]} (q+E)$.
+    \textit{Claim:} $[0,1] \subseteq X \subseteq [-1,2]$.
+    Let $y \in [0,1]$. There exists a coset $A$ such that $y \in A$. Since $x_A \in A$ is the representative of the same coset, we have $y - x_A = q$ for some $q \in \mathbb{Q}$. 
+    Since $y \in [0,1]$ and $x_A \in [0,1]$, we get $q = y - x_A \in [-1,1]$. 
+    Thus, $y = q + x_A \in q+E \subseteq X$. So $[0,1] \subseteq X$.
+    Also, since $E \subseteq [0,1]$ and $q \in [-1,1]$, $q+E \subseteq [-1,2]$. Thus $X \subseteq [-1,2]$.
+    
+    \textbf{Step 3 (Disjointness):} The collection $\{q+E : q \in \mathbb{Q} \cap [-1,1]\}$ is pairwise disjoint.
+    Suppose by contradiction that $(q+E) \cap (q'+E) \neq \emptyset$ for $q \neq q'$. Then $q+x_A = q'+x_{A'}$ for some $x_A, x_{A'} \in E$. 
+    This implies $x_A - x_{A'} = q' - q \in \mathbb{Q}$. By Property 1 of our Lemma, since their difference is rational, $x_A$ and $x_{A'}$ belong to the same coset. 
+    However, our construction in Step 1 chose exactly one representative per coset, so we must have $x_A = x_{A'}$. This forces $q = q'$, which is a contradiction.
+    
+    \textbf{Step 4 (Measure contradiction):} By Step 2, $m^*([0,1]) \le m^*(X) \le m^*([-1,2])$, which implies $1 \le m^*(X) \le 3$.
+    Assume countable additivity holds. Since $m^*$ is translation-invariant, $m^*(q+E) = m^*(E)$. Thus,
+    \[ m^*(X) = m^*\left(\bigcup_{q \in \mathbb{Q} \cap [-1,1]} q+E\right) = \sum_{q \in \mathbb{Q} \cap [-1,1]} m^*(E). \]
+    If $m^*(E) = 0$, then $\sum m^*(E) = 0$. If $m^*(E) > 0$, then $\sum m^*(E) = \infty$. 
+    Both cases contradict $1 \le m^*(X) \le 3$. Hence, countable additivity fails for outer measure $m^*$.
+\end{pfbox}
+
+
+
+\begin{proposition}[Failure of Finite Additivity]
+    There exists a finite collection of disjoint subsets of $\mathbb{R}$ such that the outer measure of their union is not equal to the sum of their outer measures.
+\end{proposition}
+
+\begin{pfbox}
+    We use the same Vitali set $E$ constructed previously. We know $m^*(E) > 0$ because if $m^*(E) = 0$, countable subadditivity would force 
+    $$ m^*(X) \le \sum_{q \in \mathbb{Q} \cap [-1,1]} m^*(q+E) = 0, $$ 
+    which contradicts $m^*(X) \ge 1$.
+    
+    Since $m^*(E) > 0$, by the Archimedean property, there exists an integer $n \ge 1$ such that $m^*(E) > \frac{1}{n}$.
+    Let $I$ be a finite subset of $\mathbb{Q} \cap [-1,1]$ consisting of exactly $3n$ distinct rational numbers.
+    Consider the finite disjoint union $\bigcup_{q \in I} (q+E)$.
+    Because this union is a subset of $X$, and we already established $X \subseteq [-1,2]$, we must have:
+    $$ m^*\left(\bigcup_{q \in I} (q+E)\right) \le m^*([-1,2]) = 3. $$
+    
+    Assume for the sake of contradiction that finite additivity holds for outer measure. Then the measure of the union equals the sum of the measures:
+    $$ m^*\left(\bigcup_{q \in I} (q+E)\right) = \sum_{q \in I} m^*(q+E) = \sum_{q \in I} m^*(E) = 3n \cdot m^*(E). $$
+    Substituting our bound $m^*(E) > \frac{1}{n}$ into the equation, we get:
+    $$ 3n \cdot m^*(E) > 3n \left(\frac{1}{n}\right) = 3. $$
+    This implies $3 < 3$, which is a blatant contradiction. 
+    Thus, finite additivity fails for the Lebesgue outer measure $m^*$.
+\end{pfbox}
+
+
+\subsection{Lebesgue Measure}
+
+\begin{definition}[Lebesgue Measurability]
+    Let $E$ be a subset of $\mathbb{R}^n$. We say that $E$ is (Lebesgue) measurable if we have the identity:
+    \[ m^*(A) = m^*(A \cap E) + m^*(A \setminus E) \quad \text{for all } A \subseteq \mathbb{R}^n. \]
+    In this case, we define the Lebesgue measure of $E$ as $m^*(E)=m(E).$
+\end{definition}
+
+\begin{remark}\ \vspace{-1em}
+    \begin{enumerate}
+        \item This definition is proposed by Constantin Carath\'eodory.
+        \item Recall $A = (A \cap E) \cup (A \setminus E)$. By subadditivity, we always have $m^*(A) \le m^*(A \cap E) + m^*(A \setminus E)$. 
+            So, $E$ is measurable if and only if $m^*(A) \ge m^*(A \cap E) + m^*(A \setminus E)$.
+    \end{enumerate}
+\end{remark}
+
+\begin{example}
+    $\mathbb{R}^n$ and $\varnothing$ are measurable (Easy exercise).
+\end{example}
+
+\begin{proposition}
+    The half-space $H = \{\mathbf{x} = (x_1, x_2, \dots, x_n) \in \mathbb{R}^n : x_n \ge 0\}$ is Lebesgue measurable.
+\end{proposition}
+
+\begin{pfbox}
+    Let $E = H$. For any test set $A \subseteq \mathbb{R}^n$, it suffices to show that $m^*(A) \ge m^*(A \cap E) + m^*(A \setminus E)$.
+    
+    If $m^*(A) = \infty$, the inequality holds trivially, so there is nothing to prove.
+    Next, we assume $m^*(A) < \infty$. Given any $\epsilon > 0$, by the definition of outer measure, there exists a countable collection of open boxes $\{B_k\}_{k=1}^\infty$ such that $A \subseteq \bigcup_{k=1}^\infty B_k$ and
+    $$ \sum_{k=1}^\infty \mathrm{Vol}(B_k) \le m^*(A) + \epsilon. $$
+    
+    For each open box $B_k$, the hyperplane $x_n = 0$ splits it into two pieces: $B_k \cap E$ and $B_k \setminus E$. Since these two pieces are essentially boxes (or empty) and their volumes naturally add up to the volume of the original box $B_k$, we have:
+    $$ m^*(B_k) = m^*(B_k \cap E) + m^*(B_k \setminus E). $$
+    (Recall that the outer measure of a box is exactly its volume).
+    
+    Summing this over all $k$, we get:
+    $$ \sum_{k=1}^\infty \mathrm{Vol}(B_k) = \sum_{k=1}^\infty m^*(B_k \cap E) + \sum_{k=1}^\infty m^*(B_k \setminus E). $$
+    
+    By the countable subadditivity of the outer measure, we know:
+    $$ \sum_{k=1}^\infty m^*(B_k \cap E) \ge m^*\left( \bigcup_{k=1}^\infty (B_k \cap E) \right) = m^*\left( \left(\bigcup_{k=1}^\infty B_k\right) \cap E \right). $$
+    Since $A \subseteq \bigcup B_k$, by monotonicity we have $\left(\bigcup B_k\right) \cap E \supseteq A \cap E$. Therefore:
+    $$ m^*\left( \left(\bigcup_{k=1}^\infty B_k\right) \cap E \right) \ge m^*(A \cap E). $$
+    Similarly, for the outside part:
+    $$ \sum_{k=1}^\infty m^*(B_k \setminus E) \ge m^*(A \setminus E). $$
+    
+    Substituting these lower bounds back into our volume sum, we obtain:
+    $$ m^*(A) + \epsilon \ge \sum_{k=1}^\infty \mathrm{Vol}(B_k) \ge m^*(A \cap E) + m^*(A \setminus E). $$
+    Since $\epsilon > 0$ is arbitrary, we let $\epsilon \to 0$ to conclude:
+    $$ m^*(A) \ge m^*(A \cap E) + m^*(A \setminus E). $$
+    Hence, the half-space $H$ is measurable.
+\end{pfbox}
+
+\begin{remark}
+    A similar argument can apply to any half-space of the form $\{\mathbf{x} \in \mathbb{R}^n : x_j \ge a\}$ or $\{\mathbf{x} \in \mathbb{R}^n : x_j \le a\}$ for any coordinate $1 \le j \le n$ and any constant $a \in \mathbb{R}$.
+\end{remark}
+
+\begin{theorem}[Properties of Measurable Sets]\ \vspace{-1em}
+    \begin{enumerate}
+        \item[(a)] If $E$ is measurable, then $\mathbb{R}^n \setminus E$ is also measurable.
+        \item[(b)] If $E$ is measurable and $x \in \mathbb{R}^n$, then $x+E$ is also measurable.
+        \item[(c)] If $E_1$ and $E_2$ are measurable, then $E_1 \cap E_2$ and $E_1 \cup E_2$ are measurable.
+        \item[(d)] If $E_1, E_2, \dots, E_N$ are measurable, then $\bigcup_{i=1}^N E_i$ and $\bigcap_{i=1}^N E_i$ are measurable.
+        \item[(e)] Every open box and closed box is measurable.
+        \item[(f)] Any set $E$ of outer measure zero is measurable.
+    \end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+    \textbf{Proof of (a):} Since $A \setminus (\mathbb{R}^n \setminus E) = A \cap E$ and $A \cap (\mathbb{R}^n \setminus E) = A \setminus E$, the definition of measurability is symmetric with respect to $E$ and $E^c$.
+
+    \textbf{Proof of (b):} Since $E$ is measurable, to show $x+E$ is measurable, we need to show that for any $A \subseteq \mathbb{R}^n$,
+    \[ m^*(A) = m^*(A \cap (x+E)) + m^*(A \setminus (x+E)). \]
+    First, observe the following set identities when shifted by $-x$:
+    \begin{align*}
+        (A \cap (x+E)) - x &= (A - x) \cap E \\
+        (A \setminus (x+E)) - x &= (A - x) \setminus E
+    \end{align*}
+    By the translation invariance of the outer measure $m^*$, we have:
+    \begin{align*}
+        m^*(A \cap (x+E)) &= m^*((A \cap (x+E)) - x) = m^*((A - x) \cap E) \\
+        m^*(A \setminus (x+E)) &= m^*((A \setminus (x+E)) - x) = m^*((A - x) \setminus E)
+    \end{align*}
+    Let $B = A - x$. Since $E$ is measurable, testing with the set $B$ yields:
+    \[ m^*(B) = m^*(B \cap E) + m^*(B \setminus E). \]
+    Substituting back $B = A - x$ and using the translation invariance $m^*(A-x) = m^*(A)$ on the left side, we get:
+    \[ m^*(A) = m^*((A - x) \cap E) + m^*((A - x) \setminus E). \]
+    Replacing the terms on the right side with the equalities we found earlier:
+    \[ m^*(A) = m^*(A \cap (x+E)) + m^*(A \setminus (x+E)). \]
+    This holds for all $A \subseteq \mathbb{R}^n$, thus $x+E$ is measurable.
+
+\textbf{Proof of (c):} 
+
+    \textit{Part 1: Union is measurable.} \\
+    We want to show that $E_1 \cup E_2$ is measurable. For any test set $A \subseteq \mathbb{R}^n$, since $E_1$ is measurable, we can split $A$ using $E_1$:
+    $$m^*(A) = m^*(A \cap E_1) + m^*(A \setminus E_1).$$
+    Next, we apply the measurability of $E_2$ to the test set $A \setminus E_1$:
+    $$m^*(A \setminus E_1) = m^*((A \setminus E_1) \cap E_2) + m^*((A \setminus E_1) \setminus E_2).$$
+    Substitute this back into the first equation:
+    $$m^*(A) = m^*(A \cap E_1) + m^*((A \setminus E_1) \cap E_2) + m^*((A \setminus E_1) \setminus E_2).$$
+    Now, we make two observations from set algebra:
+    \begin{itemize}
+        \item First, the remaining part outside both sets is $(A \setminus E_1) \setminus E_2 = A \cap E_1^c \cap E_2^c = A \cap (E_1 \cup E_2)^c = A \setminus (E_1 \cup E_2)$.
+        \item Second, the parts intersecting the sets combine to $(A \cap E_1) \cup ((A \setminus E_1) \cap E_2) = A \cap (E_1 \cup E_2)$.
+    \end{itemize}
+    By the subadditivity of the outer measure $m^*$, the sum of the measures of the first two terms is bounded below by the measure of their union:
+    $$m^*(A \cap E_1) + m^*((A \setminus E_1) \cap E_2) \ge m^*((A \cap E_1) \cup ((A \setminus E_1) \cap E_2)) = m^*(A \cap (E_1 \cup E_2)).$$
+    Replacing these terms in our expanded equation, we obtain:
+    $$m^*(A) \ge m^*(A \cap (E_1 \cup E_2)) + m^*(A \setminus (E_1 \cup E_2)).$$
+    Since the reverse inequality is always true by subadditivity, $E_1 \cup E_2$ is measurable.
+
+    \textit{Part 2: Intersection is measurable.}
+
+    \textbf{(Method 1: By De Morgan's Laws)} \\
+    By De Morgan's laws, we can express the intersection as $E_1 \cap E_2 = (E_1^c \cup E_2^c)^c$.
+    Since $E_1$ and $E_2$ are measurable, their complements $E_1^c$ and $E_2^c$ are measurable by Property (a).
+    By Part 1 of this proof, the union of two measurable sets is measurable, so $E_1^c \cup E_2^c$ is measurable.
+    Finally, taking the complement once more, we conclude that $(E_1^c \cup E_2^c)^c = E_1 \cap E_2$ is measurable.
+
+    \textbf{(Method 2: Direct Carath\'eodory Approach)} \\
+    Alternatively, we can prove it directly. Since $E_1$ is measurable, split $A$:
+    $$m^*(A) = m^*(A \cap E_1) + m^*(A \setminus E_1).$$
+    Apply the measurability of $E_2$ to the test set $A \cap E_1$:
+    $$m^*(A \cap E_1) = m^*(A \cap E_1 \cap E_2) + m^*((A \cap E_1) \setminus E_2).$$
+    Substitute this into the first equation:
+    $$m^*(A) = m^*(A \cap E_1 \cap E_2) + m^*((A \cap E_1) \setminus E_2) + m^*(A \setminus E_1).$$
+    Observe that the last two terms cover the part of $A$ outside the intersection: $((A \cap E_1) \setminus E_2) \cup (A \setminus E_1) = A \setminus (E_1 \cap E_2)$.
+    By subadditivity, $m^*((A \cap E_1) \setminus E_2) + m^*(A \setminus E_1) \ge m^*(A \setminus (E_1 \cap E_2))$.
+    This yields:
+    $$m^*(A) \ge m^*(A \cap (E_1 \cap E_2)) + m^*(A \setminus (E_1 \cap E_2)),$$
+    which proves $E_1 \cap E_2$ is measurable.
+
+    \textbf{Proof of (d):} Follows from (c) by mathematical induction.
+
+    \textbf{Proof of (e):} \\
+    Let $B = \{\mathbf{x} \in \mathbb{R}^n : a_i < x_i < b_i \text{ for } i=1,2,\dots,n\}$ be an open box. 
+    We can express $B$ as the intersection of $2n$ half-spaces:
+    $$ B = \bigcap_{i=1}^n P_i $$
+    where each $P_i = \{\mathbf{x} \in \mathbb{R}^n : x_i > a_i\} \cap \{\mathbf{x} \in \mathbb{R}^n : x_i < b_i\}$.
+    From the previous proposition and remark, every such half-space is Lebesgue measurable.
+    By Property (d) proved above, any finite intersection of measurable sets is also measurable. 
+    Since the open box $B$ is a finite intersection of measurable half-spaces, $B$ is measurable. 
+    For any closed box, we can apply the same argument in proof of (c) via De Morgan's Laws, and this is left as an exercise.
+
+    \textbf{Proof of (f):} Suppose $m^*(E) = 0$. For any $A$, $A \cap E \subseteq E \implies m^*(A \cap E) = 0$.
+    Also $A \setminus E \subseteq A \implies m^*(A \setminus E) \le m^*(A)$.
+    Thus, $m^*(A \cap E) + m^*(A \setminus E) \le 0 + m^*(A) = m^*(A)$. $E$ is measurable.
+\end{pfbox}
+
+\begin{theorem}[Finite Additivity]
+    If $(E_j)_{j=1}^N$ is a finite collection of disjoint measurable sets, then for any $A \subseteq \mathbb{R}^n$:
+    \[ m^*\left(A \cap \bigcup_{j=1}^N E_j\right) = \sum_{j=1}^N m^*(A \cap E_j). \]
+    Moreover, taking $A = \mathbb{R}^n$, we have $m\left(\bigcup_{j=1}^N E_j\right) = \sum_{j=1}^N m(E_j)$.
+\end{theorem}
+
+\begin{pfbox}
+    We proceed by induction. For $N=2$, let $E, F$ be disjoint measurable sets. Test the set $A \cap (E \cup F)$ with the measurable set $E$:
+    \begin{align*}
+        m^*(A \cap (E \cup F)) &= m^*((A \cap (E \cup F)) \cap E) + m^*((A \cap (E \cup F)) \setminus E) \\
+        &= m^*(A \cap E) + m^*(A \cap F).
+    \end{align*}
+    Suppose it holds for $k$ sets. Let $U_k = \bigcup_{j=1}^k E_j$. Since $U_k \cap E_{k+1} = \varnothing$ and $U_k$ is measurable:
+    \[ m^*(A \cap (U_k \cup E_{k+1})) = m^*(A \cap U_k) + m^*(A \cap E_{k+1}) = \sum_{j=1}^k m^*(A \cap E_j) + m^*(A \cap E_{k+1}). \]
+\end{pfbox}
+
+\begin{corollary}
+    If $A \subseteq B$ are two measurable sets, then $m(B) = m(A) + m(B \setminus A)$.
+\end{corollary}
+
+\begin{pfbox}
+    Observe that $B\setminus A = B\cap(\mathbb{R}^n\setminus A),$ so $B\setminus A$ is measurable.
+    Also, $A$ and $B\setminus A$ are disjoint measurable sets, by finite additivity, we obtain the identity.
+\end{pfbox}
+
+\begin{theorem}[Countable Additivity]
+    If $(E_j)_{j=1}^\infty$ is a countable collection of disjoint measurable sets, then $E = \bigcup_{j=1}^\infty E_j$ is measurable and $m(E) = \sum_{j=1}^\infty m(E_j)$.
+\end{theorem}
+
+\begin{pfbox}
+    Let $F_N = \bigcup_{k=1}^N E_k$. $F_N$ is measurable. For any $A \subseteq \mathbb{R}^n$,
+    \[ m^*(A) = m^*(A \cap F_N) + m^*(A \setminus F_N) \ge \sum_{k=1}^N m^*(A \cap E_k) + m^*(A \setminus E). \]
+    Letting $N \to \infty$, we obtain $m^*(A) \ge \sum_{k=1}^\infty m^*(A \cap E_k) + m^*(A \setminus E)$.
+    By subadditivity, $\sum_{k=1}^\infty m^*(A \cap E_k) \ge m^*(A \cap E)$. 
+    Thus $m^*(A) \ge m^*(A \cap E) + m^*(A \setminus E)$, proving $E$ is measurable.
+    By taking $A = \mathbb{R}^n$, we get $m(F_N) = \sum_{k=1}^N m(E_k) \le m(E)$. Letting $N \to \infty$ gives $\sum_{k=1}^\infty m(E_k) \le m(E)$. The reverse inequality holds by countable subadditivity.
+\end{pfbox}
+
+\begin{theorem}[$\sigma$-algebra]
+    If $(\Omega_j)_{j=1}^\infty$ is any countable collection of measurable sets, then $\bigcup_{j=1}^\infty \Omega_j$ and $\bigcap_{j=1}^\infty \Omega_j$ are also measurable.
+\end{theorem}
+
+\begin{pfbox}
+    We can disjointify the union. Let $E_1 = \Omega_1$, and for $N \ge 2$, define
+    \[ E_N = \Omega_N \setminus \left(\bigcup_{k=1}^{N-1} \Omega_k\right). \]
+    Since finite unions and complements of measurable sets are measurable, each $E_N$ is measurable. 
+    The sets $(E_N)$ are pairwise disjoint, and $\bigcup_{j=1}^\infty \Omega_j = \bigcup_{N=1}^\infty E_N$. 
+    By the previous theorem, the countable union of disjoint measurable sets is measurable. 
+    The intersection is measurable by De Morgan's laws: $\bigcap \Omega_j = \left(\bigcup \Omega_j^c\right)^c$.
+\end{pfbox}
+
+\begin{remark}
+Every $\sigma$-algebra is a Boolean algebra (finite unions and complements), but the converse is not true.
+\end{remark}
+
+\begin{theorem}
+    Every open set can be written as a countable union of rational open boxes.
+\end{theorem}
+
+\begin{pfbox}
+    We say an open box is rational if $B = \prod_{i=1}^n (a_i, b_i)$ where $a_i, b_i \in \mathbb{Q}$. The set of all rational boxes is countable.
+    First, we show that for any open ball $B(x,r)$, there exists a rational box $B$ such that $x \in B \subseteq B(x,r)$. 
+    Let $a_i, b_i$ be rational numbers such that $x_i - \frac{r}{n} < a_i < x_i < b_i < x_i + \frac{r}{n}$.
+    Then $x \in B = \prod (a_i, b_i)$. For any $y \in B$, $|y_i - x_i| < \frac{r}{n}$, which implies $\|y - x\| \le \sum |y_i - x_i| < r$, so $B \subseteq B(x,r)$.
+    
+    Let $E$ be an open set in $\mathbb{R}^n$. For every $x \in E$, there exists $r_x > 0$ such that $B(x, r_x) \subseteq E$. 
+    By the above claim, there is a rational box $B_x$ such that $x \in B_x \subseteq B(x, r_x) \subseteq E$.
+    Thus $E = \bigcup_{x \in E} B_x$. Since there are only countably many rational boxes, this union is countable.
+\end{pfbox}
+
+\begin{theorem}[Borel property]
+    Any open set and closed set is Lebesgue measurable.
+\end{theorem}
+
+\begin{pfbox}
+    Any open set is the countable union of rational open boxes. Since boxes are measurable and countable unions of measurable sets are measurable, every open set is measurable.
+    A closed set is the complement of an open set, hence it is also measurable.
+\end{pfbox}

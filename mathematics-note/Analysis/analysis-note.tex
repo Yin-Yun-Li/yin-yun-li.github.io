@@ -1,5 +1,5 @@
 \documentclass[12pt]{article}
-\RequirePackage{style}
+\RequirePackage{style_for_analysis}
 
 \title{Introduction to Analysis Notes}
 
@@ -44,12 +44,12 @@ Similarly, we can define $ext(E),\, \partial E,\, \overline{E}$.
         \item There exists a sequence $\{x_n\}^\infty_{n=1}$ in $E$ that converges $x_0$.
     \end{enumerate}
 \end{theorem}
-\begin{pf}
+\begin{pfbox}
 \begin{itemize}
 \item ($\Rightarrow$) Consider $B(x_0,\frac{1}{n})\cap E \neq \emptyset$.
 \item ($\Leftarrow$) For every $r>0$, by definition of limits, $d(x_0,x_n)<r \,\, \forall n\geq N\in \mathbb{N} \Leftrightarrow x_n \in B(x_0,r)\cap E$.
 \end{itemize}
-\end{pf}
+\end{pfbox}
 
 
 \begin{definition}[Open, Closed]
@@ -85,14 +85,14 @@ That is, every neighborhood of $x$ contains infinitely many terms of the sequenc
 
 
 
-\begin{pf}
+\begin{pfbox}
 With the concept of limit points, we can prove $E$ is open iff $X\setminus E$ is closed.
 \begin{itemize}
 \item ($\Rightarrow$) Suppose $E$ is open. Let $x$ be any limit point of $X\setminus E$. Our goal is to show $x \in X\setminus E$ (containing all limit points).
 \item ($\Leftarrow$) Given $X\setminus E$ is closed. Suppose, by contradiction, $E$ is not open, i.e. \textcolor{red}{$x\in E, x\notin int(E), B(x,r)\cap(X\setminus E)\neq \emptyset$}.
 So $x$ is a limit point of $X\setminus E$ but $x\notin X\setminus E$, contradicting the assumption that $X\setminus E$ is closed (containing all its limit points).
 \end{itemize}
-\end{pf}
+\end{pfbox}
 
 
 
@@ -150,13 +150,13 @@ Let $B(x_0, r)$ be an open ball and $\overline{B}(x_0,r)=\{x\in X: d(x,x_0)\leq 
     \]
 then $d_1, d_2$ are topologically equivalent.
 \end{theorem}
-\begin{pf}
+\begin{pfbox}
 Let $u$ be $d_1$-open and take any $x \in u,\ \exists\ r>0$ s.t. $B_{d_1}(x, r)\subseteq u.$ Consider $B_{d_2}(x,cr)$, we want to show $B_{d_2}(x,cr)\subseteq B_{d_1}(x, r).$
 
 Let $z \in B_{d_2}(x,cr),$ that is $d_2(x,z)<rc$. Given $d_1(x,z)\leq \frac{1}{c}d_2(x,z)<\frac{1}{c}rc=r,$ we have $z \in  B_{d_1}(x, r).$ Thus, $B_{d_2}(x,cr)\subseteq B_{d_1}(x, r)\subseteq u,$ where $u$ is also $d_2$-open.
 
 The converse argument can be proved by the right side of the inequality, which left as an exercise. 
-\end{pf}
+\end{pfbox}
 
 
 \begin{theorem}
@@ -187,23 +187,23 @@ The converse argument can be proved by the right side of the inequality, which l
     \end{enumerate}
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
 \begin{itemize}
     \item Verify $V=\cup_{x\in E}B_X(x,r_x)\cap Y=E.$
 \end{itemize}
-\end{pf}
+\end{pfbox}
 
 \begin{theorem}
     Let $A\subseteq S\subseteq T$ in a metric space $(X,d)$.
     Then $\overline{A}^S\subseteq \overline{A}^T$.
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     \begin{enumerate}
         \item Consider $B_S(x_0,\epsilon)=B_T(x_0,\epsilon)$ is a relative open ball in $S$.
         \item $V\subseteq W$, if $V\neq\emptyset$ then $W\neq\emptyset$, equivalently, if $W=\emptyset$ then $V=\emptyset$.
     \end{enumerate}
-\end{pf}
+\end{pfbox}
 
 
 \section{Completeness}
@@ -259,7 +259,7 @@ Let $(X,d)$ be a metric space. Let $Y\subseteq X$.
     A compact metric space is both complete and bounded.
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
 \begin{enumerate}
     \item Completeness is relatively easier. Think.
     \item Boundedness: Suppose not.
@@ -273,7 +273,7 @@ Let $(X,d)$ be a metric space. Let $Y\subseteq X$.
 
     Alternatively, consider $\cup_{n\geq 1}B(x,n)$ forms a open cover of X w/o finite subcover.
 \end{enumerate}
-\end{pf}
+\end{pfbox}
 
 
 
@@ -285,7 +285,7 @@ Let $(X,d)$ be a metric space. Let $Y\subseteq X$.
     $(X,d)$ is complete and totally bounded iff it is compact.
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
 $(\Leftarrow)$
 \begin{enumerate}
     \item Suppose $(X,d)$ is not totally bounded. $\exists\,\epsilon>0$ and for any finite set of points $\{x_i\}^n_{i=1}$, there exists $y\in X$ s.t. $d(y,x_i)\geq \epsilon$ for any $i=1,2,\cdots,n$.
@@ -299,7 +299,7 @@ $(\Rightarrow)$
     \item For some $i=1,2,\cdots,m(2)$, $B(x^{(2)}_i, \frac{1}{2})$ contains infinitely many terms of $(x^{(1)}_{n_k})^\infty_{k=1}$, denoted by $(x^{(2)}_{n_k})^\infty_{k=1}$.
     \item Check the nested condition, and shows that the diagnol subsequence $(x^{(k)}_{n_k})$.
 \end{enumerate}
-\end{pf}
+\end{pfbox}
 
 This is a stronger version of the previous theorem since totally bounded implies bounded (exercise).
 
@@ -311,12 +311,12 @@ This is a stronger version of the previous theorem since totally bounded implies
     \label{cpt is closed and bd}
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
 \begin{itemize}
     \item $Y$ is bounded in $Y$, $Y$ is also bounded in $X$. (Use relative topology)
     \item Goal: $\overline{Y}\subseteq Y$. Take an adherent point and construct a sequence. This sequence has a convergent subsequence. Use the uniqueness of limit. Then we show the inclusion.
 \end{itemize}    
-\end{pf}
+\end{pfbox}
 
 
 \begin{theorem}[Heine-Borel Theorem]
@@ -324,9 +324,9 @@ This is a stronger version of the previous theorem since totally bounded implies
     $E$ is compact iff $E$ is closed and bounded.
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     $(\Rightarrow)$ is true any metric space. $(\Leftarrow)$ Use Bolzano-Weierstrass Theorem to verify sequential compact.
-\end{pf}
+\end{pfbox}
 
 \begin{pbox}
 \begin{remark}
@@ -340,7 +340,7 @@ Take $\mathbb{N}$ endowed with discrete metric. The sequence of natural numbers 
 \end{theorem}
 
 
-\begin{pf}
+\begin{pfbox}
 $(\Leftarrow)$ Suppose $Y$ has no finite subcover. Let $\cup_{\alpha\in A}V_\alpha$ forms an open cover of $Y$.
 \begin{itemize}
 \item Fix $y\in Y$, we know $y$ lies in some open set. Now define 
@@ -360,7 +360,7 @@ $(\Leftarrow)$ Suppose $Y$ has no finite subcover. Let $\cup_{\alpha\in A}V_\alp
       Verify the sequence is not a Cauchy, so it has no convergent subsequence. Contradicts with compactness.
 \item If $r_0=\infty$, the argument is similar to case 2. The only difference is replace $r_0/2$ with a constant, say 1.
 \end{itemize}
-\end{pf}
+\end{pfbox}
 
 
 \begin{corollary}
@@ -368,13 +368,13 @@ $(\Leftarrow)$ Suppose $Y$ has no finite subcover. Let $\cup_{\alpha\in A}V_\alp
     \(K_1\supseteq K_2\supseteq K_3\supseteq\cdots\). Then $\bigcap^{\infty}_{i=1} K_i\neq\emptyset.$
 \end{corollary}
 
-\begin{pf}
+\begin{pfbox}
     \begin{itemize}
         \item Suppose $\bigcap^{\infty}_{i=1} K_i=\emptyset$, then we have $K_1=K_1\setminus\bigcap^{\infty}_{i=1} K_i=\bigcup^{\infty}_1 (K_1\setminus K_i).$
         \item $V_i \equiv K_1\setminus K_i = K_1\cup(X\setminus K_i)\rightarrow V_i$ is open in $K_1$. $\bigcup^{\infty}_1 (K_1\setminus K_i) =\bigcup^{\infty}_1 V_i$ forms a open cover of $K_1$.
         \item $K_1$ is compact so it admits a finite subcover, the intersection of finite $K_i$ family forces $K_i$ to be empty, contradiction.
     \end{itemize}
-\end{pf}
+\end{pfbox}
 
 
 \begin{exercise}
@@ -397,32 +397,32 @@ The proof can be shown via the definition of open cover. With the above theorem,
     Every finite subset of $X$ is compact.
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     Consider a (sequential) compact singleton $\{x_i\}$, and the finite union forms a finite subset which is compact.
-\end{pf}
+\end{pfbox}
 
 \begin{theorem}
     If $Y$ is compact and $H\subseteq Y$ is closed, then $H$ is compact.
     Note that if $H$ is compact, then $H$ is closed and bounded (Recall \eqref{cpt is closed and bd}).
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     Construct an open cover of $H$, denoted by $\cup_i V_i$. $\cup_i V_i\cup (X\setminus H)$ forms a open cover of $Y$.
     $Y$ is compact, there exists a finite subcover covering $Y$ as well as $H$.
-\end{pf}
+\end{pfbox}
 
 
 \begin{theorem}
     Let $H_1,H_2,\cdots$ be a infinite collection of compact sets in $(X,d)$, then $\bigcap^{\infty}_{i=1}H_i$ is compact.
 \end{theorem}
  
-\begin{pf}
+\begin{pfbox}
     \begin{itemize}
         \item  Every compact subset is closed.
         \item  Infinte intersection of closed sets remains closed.
         \item  $\bigcap^{\infty}_{i=1}H_i\subseteq H_1$, where $H_1$ is compact.
     \end{itemize}
-\end{pf}
+\end{pfbox}
 
 \begin{theorem}[Compactness as topologically invariant]
     Let $(X,d_X)$ and $(Y,d_Y)$ be metric spaces and $f:X\rightarrow Y$ be a continuous mapping.
@@ -435,13 +435,13 @@ The proof can be shown via the definition of open cover. With the above theorem,
     If $X$ and $Y$ are compact, then $f^{-1}$ is continuous. (i.e. $f$ is a homeomorphism).
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     \begin{itemize}
         \item Take any open set $u$ in $X$, $X\setminus u\subseteq X$ is compact.
         \item $f(X\setminus u)$ is compact by continuity. (Every compact set is $\cdots$ ?)
         \item The preimage of $f^{-1}(u)$: $(f^{-1})^{-1}(u)=f(u) = Y\setminus f(X\setminus u)$ is open.
     \end{itemize}
-\end{pf}
+\end{pfbox}
 
 
 \begin{bbox}
@@ -474,7 +474,7 @@ The proof can be shown via the definition of open cover. With the above theorem,
     If $f$ is compact, then $f$ is continuous iff $f$ is uniformly continous.
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     \begin{enumerate}
         \item Uniform continuity implies continuity is trivial.
         \item Given $f$ is continuous. Suppose $f$ is not uniformly continous. Consider a paritcular $\delta=\frac{1}{n}$, $\exists p^n, q^n\in X$ s.t. $d_X(p_n, q_n)<\frac{1}{n}$,
@@ -482,17 +482,17 @@ The proof can be shown via the definition of open cover. With the above theorem,
         \item Since $X$ is compact, $d_X(p_{n_k}, q_{n_k})\rightarrow 0$.
         \item Since $f$ is continuous, $d_Y(f(p_{n_k}),f(q_{n_k}))\rightarrow 0$, contradiction.
     \end{enumerate}
-\end{pf}
+\end{pfbox}
 
 
 \begin{theorem}[Exetreme Value Theorem]
     Let $(X,\mathcal{F})$ be a compact topological space and $f:X\rightarrow\mathbb{R}$ be a continous function. Then $f$ is bounded and attains its maximum and minimum on $X$.
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     $f(X)$ is compact in $\mathbb{R}$ (standard topology). This proves boundedness.
     By axiom of completeness, $f(X)$ has a supremum and an infimum. By closedness, $\sup f(X), \inf f(X)\in f(X)$ (attainable).
-\end{pf}
+\end{pfbox}
 
 
 \section{Connectedness}
@@ -582,9 +582,9 @@ Negatate the statement you will get the definition of convergence.
     Suppose $(X,\mathcal{F})$ is a Hausdorff space. Then every convergent sequence in $X$ converges to a unique limit.
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     Suppose $\exists x\neq y$ s.t. $x_n\rightarrow x$ and $x_n\rightarrow y$. Use the defintion of Hausdorff space and find the contradiction (non-empty intersection).
-\end{pf}
+\end{pfbox}
 
 
 
@@ -604,14 +604,14 @@ We say $f_n\rightarrow f$ uniformly if $\exists\, N$ s.t. $d_Y(f_n(x), f(x))<\ep
     Suppose $f_n$ is continous at $x_0$. If $f_n\rightarrow f$ uniformly, then $f$ is continous at $x_0$.
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     \begin{enumerate}
         \item $f_n\rightarrow f$ uniformly, write down the defintion with $\frac{\epsilon}{3}$.
         \item Fix $N_1\geq N$, $f_{N_1}$ is continuous at $x_0$, write down the defintion with $\frac{\epsilon}{3}$.
         \item By triangle inequality, we have $d_Y(f(x), f(x_0))<\epsilon$ for $d_X(x,x_0)<\delta$.
         \item Given $x_0\in X$ is arbitrary, we can further prove $f$ is continuous in $X$.
     \end{enumerate}
-\end{pf}
+\end{pfbox}
 
 
 \begin{theorem}
@@ -753,9 +753,9 @@ Given a power series $f(x)= \sum_{n=0}^{\infty}c_n(x-a)^n$ and radius of converg
 \end{enumerate}
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     For (4),  $\sum_{n=1}^{N}f_n$ is uniformly convergent as $N\rightarrow\infty$ since $|x-a|<r$; $\sum_{n=1}^{N}f'_N$ converges uniformly by ratio test, comparison test and Weierstrass M-test.
-\end{pf}
+\end{pfbox}
 
 \begin{theorem}
 Let $(b_n)_n$ be a sequence such that $b_n>0\,\forall n\in\mathbb{N}$.
@@ -837,7 +837,7 @@ For general series, convergence at the boundary does not imply continuity.
 \end{property}
 
 
-\begin{pf}
+\begin{pfbox}
     \begin{enumerate}
         \item Use ratio test.
         \item Real analytic function is smooth, differentiate the power series term by term.
@@ -846,7 +846,7 @@ For general series, convergence at the boundary does not imply continuity.
         \item For the third part, use (4).
         \item Apply $\exp(x)$ on $x-y>0$, and use (5). 
     \end{enumerate}
-\end{pf}
+\end{pfbox}
 
 
 \begin{definition}[Euler Number]
@@ -857,13 +857,13 @@ For general series, convergence at the boundary does not imply continuity.
     For every real number $x$, $\exp(x)=e^x$.
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     \begin{enumerate}
         \item For $x\in\mathbb{Z}$, use the property (4) and (5).
         \item For $x\in\mathbb{Q},$ let $x=\frac{p}{q}$, consider $(\exp(\frac{p}{q}))^q.$
         \item For $x\in\mathbb{R}\setminus\mathbb{Q},$ use sequential continuity.
     \end{enumerate}
-\end{pf}
+\end{pfbox}
 
 
 
@@ -890,7 +890,7 @@ For general series, convergence at the boundary does not imply continuity.
     \end{enumerate}
 \end{property}
 
-\begin{pf}
+\begin{pfbox}
     \begin{enumerate}
         \item Let $y=\ln(x)$, then $x=\exp(y)$. Derive $\frac{dx}{dx}=\frac{d\exp(y)}{dx}=\exp(y)\frac{dy}{dx}.$
         \item Exercise (FTC).
@@ -903,7 +903,7 @@ For general series, convergence at the boundary does not imply continuity.
         \item Change of variable $z=1-x$.
         \item Change of variable $y=x-a$.
     \end{enumerate}
-\end{pf}
+\end{pfbox}
 
 
 \subsection*{Trigonometric Function}
@@ -930,9 +930,9 @@ For general series, convergence at the boundary does not imply continuity.
     \]
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     Derive from the above definition.
-\end{pf}
+\end{pfbox}
 
 \begin{theorem}[Power Series of Cosine and Sine]
     \begin{equation*}
@@ -945,10 +945,10 @@ For general series, convergence at the boundary does not imply continuity.
 \label{tri_power_series}
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     Extend power series of exponential function to complex plane.
     Derive the power series of $e^{iz}$, by Euler's formula, compare the real part and imaginary part.
-\end{pf}
+\end{pfbox}
 
 In particular, if $z\in\mathbb{R}$, we can obtain the similar results from above.
 
@@ -964,14 +964,14 @@ Let $x,y\in\mathbb{R}$, we have:
 \end{enumerate}
 \end{property}
 
-\begin{pf}
+\begin{pfbox}
     \begin{enumerate}
         \item For (1) and (2), compute directly using definition \eqref{tri_exp_def}.
         \item For (3), use \eqref{tri_power_series}. This shows that sine is an odd function and cosine is an even function.
         \item For (4), consider $e^{i(x+y)} = e^{ix}e^{iy}= \cos(x+y) + i\sin(x+y).$ 
         \item For (5), use \eqref{tri_power_series}.        
     \end{enumerate}
-\end{pf}
+\end{pfbox}
 
 \begin{exercise}
     Basic trigonometric identities
@@ -988,9 +988,10 @@ Let $x,y\in\mathbb{R}$, we have:
 
 \section{Fourier Series}
 
+
 \begin{definition}[Periodic Function]
     Let $L$ be a positive real number.
-    A function $f:\mathbb{R}\rightarrow\mathbb{C}$ is said to be $L-$ periodic, 
+    A function $f:\mathbb{R}\rightarrow\mathbb{C}$ is said to be $L$-periodic, 
     if for every $x\in\mathbb{R},\, f(x+L)=f(x).$
 \end{definition}
 
@@ -999,9 +1000,8 @@ Let $x,y\in\mathbb{R}$, we have:
     $e^{2\pi inx}$ is 1-periodic, and so are $\cos(2\pi nx), \sin(2\pi nx)$.
 \end{example}
 
-
 \begin{remark}
-    $1-$periodic functions is also called $\mathbb{Z}-$periodic functions.
+    1-periodic functions is also called $\mathbb{Z}$-periodic functions.
 \end{remark}
 
 \begin{definition}[Quotient Space $\mathbb{R}/\mathbb{Z}$]
@@ -1011,6 +1011,147 @@ Let $x,y\in\mathbb{R}$, we have:
     $[x]=\{y:x-y\in\mathbb{Z}\}$.
     So the quotient space $\mathbb{R}/\mathbb{Z} \cong [0,1)$.
 \end{definition}
+
+\begin{theorem}
+    Let $V=C(\mathbb{R}/\mathbb{Z};\mathbb{C})$ be a complex-valued, $1$-periodic, continuous function space over $\mathbb{C}$. 
+    $V$ over $\mathbb{C}$ is a vector space. 
+\end{theorem}
+
+\begin{pfbox}
+Verify 10 axioms.
+\end{pfbox}
+
+\begin{theorem}
+Let $f,g\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$, 
+we define $\langle \cdot, \cdot \rangle: C(\mathbb{R}/\mathbb{Z}; \mathbb{C})\times C(\mathbb{R}/\mathbb{Z}; \mathbb{C}) \rightarrow \mathbb{C}$ by:
+\[
+\langle f, g \rangle = \int_0^1 f(x) \, \overline{g(x)} \, dx.
+\]
+
+Then $(V,\langle-,-\rangle)$ is an inner product space.
+\end{theorem}
+
+\begin{pfbox}
+    Take $f,g,h\in V$ and $\alpha,\beta\in\mathbb{C}$.
+    
+    (1) Linear in 1st component:
+    \begin{align*}
+        \langle\alpha f+\beta g,h\rangle &= \int_{0}^{1}(\alpha f(x)+\beta g(x))\overline{h(x)}dx  \\
+        &= \alpha\int_{0}^{1}f(x)\overline{h(x)}dx + \beta\int_{0}^{1}g(x)\overline{h(x)}dx  \\
+        &= \alpha\langle f,h\rangle+\beta\langle g,h\rangle.
+    \end{align*}
+
+    (2) Conjugate Symmetry:
+    \begin{align*}
+        \langle f,g\rangle &= \int_{0}^{1}f(x)\overline{g(x)}dx \\
+        &= \overline{\int_{0}^{1}g(x)\overline{f(x)}dx} = \overline{\langle g,f\rangle}.
+    \end{align*}
+
+    (3) Non-Negativity:
+    $$ \langle f,f\rangle=\int_{0}^{1}f(x)\overline{f(x)}dx=\int_{0}^{1}|f(x)|^{2}dx\ge0.$$
+
+    (4) Non-Degeneracy:
+    Suppose $\langle f,f\rangle=0$. By (3), $|f(x)|^{2}\ge0$ and $\int_{0}^{1}|f(x)|^{2}dx=0$. 
+    This forces $|f(x)|^{2}=0 \Rightarrow Re(f(x))=0, Im(f(x))=0 \Rightarrow f(x)\equiv0$.
+\end{pfbox}
+
+\begin{theorem}
+    Let $(V,\langle-,-\rangle)$ be a complex inner product space, for $f,g,h\in V$ and $\alpha,\beta\in\mathbb{C}$.
+    \begin{enumerate}
+        \item Almost linear in 2nd comp: $\langle f,\alpha g+\beta h\rangle=\overline{\alpha}\langle f,g\rangle+\overline{\beta}\langle f,h\rangle$.
+        \item $||\alpha f||=|\alpha|||f||$.
+        \item $\langle f,g\rangle=0$ for any $g\in V \Leftrightarrow f\equiv0$.
+        \item $\langle f,h\rangle=\langle g,h\rangle$ for any $h\in V \Leftrightarrow f=g$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+    Once we prove the general verison, the above theorem is a direct result.
+\end{pfbox}
+
+\begin{theorem}
+    Let $(V,\langle-,-\rangle)$ be a complex inner product space, for $f,g\in V$.
+    \begin{itemize}
+        \item Cauchy-Schwarz: $|\langle f,g\rangle| \le ||f||\cdot||g||$.
+        \item Triangle: $||f+g||\le||f||+||g||$.
+    \end{itemize}
+\end{theorem}
+
+\begin{pfbox}
+    We provide an alternative proof which is specific to this inner product space.
+    
+    \textbf{Proof of Cauchy-Schwarz}:
+    Let $u,v\in C(\mathbb{R}/\mathbb{Z};\mathbb{R})$. We first prove the real-valued function case.
+    For any $\lambda\in\mathbb{R}$, consider $z(x)=u(x)-\lambda v(x)$.
+    If $v(x)\equiv0$, then it is trivial. 
+    Now suppose $v(x)\not\equiv0$.
+    By non-negativity, $|z(x)|^{2}\ge0 \Rightarrow \langle z(x),z(x)\rangle=\int_{0}^{1}(u(x)-\lambda v(x))^{2}dx\ge0$.
+    $$\Rightarrow \int_{0}^{1}u^{2}(x)dx-2\lambda\int_{0}^{1}u(x)v(x)dx+\lambda^{2}\int_{0}^{1}v^{2}(x)dx\ge0.$$
+    Set $f(\lambda)=A\lambda^{2}-2B\lambda+C$, where $A=\int_{0}^{1}v^{2}(x)dx$, $B=\int_{0}^{1}u(x)v(x)dx$, $C=\int_{0}^{1}u^{2}(x)dx$.
+    To find the minimum, set $f'(\lambda)=0$, which gives $\lambda^{*}=\frac{B}{A}=\frac{\int_{0}^{1}u(x)v(x)dx}{\int_{0}^{1}v^{2}(x)dx}$.
+    Since $f(\lambda)\ge0$ for all $\lambda$, we have $f\left(\frac{B}{A}\right)=\frac{-B^{2}+AC}{A}\ge0$.
+    $$\Rightarrow B^{2}\le AC \Rightarrow B\le A^{\frac{1}{2}}C^{\frac{1}{2}}.$$
+    $$\Rightarrow \int_{0}^{1}u(x)v(x)dx\le\left(\int_{0}^{1}u^{2}(x)dx\right)^{\frac{1}{2}}\left(\int_{0}^{1}v^{2}(x)dx\right)^{\frac{1}{2}}.$$
+    
+    \textbf{Proposition}: $\left|\int_{0}^{1}f(x)dx\right|\le\int_{0}^{1}|f(x)|dx$ for all $f\in C(\mathbb{R}/\mathbb{Z};\mathbb{C})$.
+    Let $I=\int_{0}^{1}f(x)dx$. If $I=0$ it is trivial. Suppose $I\ne0, I\in\mathbb{C}$.
+    Consider $c=\frac{\overline{I}}{|I|}$, so $|c|=1$.
+    Note that $cf(x)=Re(cf(x))+i Im(cf(x))$ and $|cf(x)|=\sqrt{Re(cf(x))^{2}+Im(cf(x))^{2}}\ge Re(cf(x))$.
+    Then $cI=c\int_{0}^{1}f(x)dx=\int_{0}^{1}Re(cf(x))dx+i\int_{0}^{1}Im(cf(x))dx=|I|$.
+    Since $|I|$ is real, the imaginary part is $0$, thus:
+    $$|I|=\left|\int_{0}^{1}f(x)dx\right|=\int_{0}^{1}Re(cf(x))dx\le\int_{0}^{1}|cf(x)|dx=\int_{0}^{1}|c||f(x)|dx=\int_{0}^{1}|f(x)|dx.$$
+    
+    Now, for complex-valued functions $f,g$:
+    $$|\langle f,g\rangle|=\left|\int_{0}^{1}f(x)\overline{g(x)}dx\right|\le\int_{0}^{1}\left|f(x)\overline{g(x)}\right|dx=\int_{0}^{1}|f(x)||g(x)|dx.$$
+    Using the real-valued Cauchy-Schwarz inequality on $|f(x)|$ and $|g(x)|$:
+    $$\le\left(\int_{0}^{1}|f(x)|^{2}dx\right)^{\frac{1}{2}}\left(\int_{0}^{1}|g(x)|^{2}dx\right)^{\frac{1}{2}}=||f||\cdot||g||.$$
+
+    \textbf{Proof of Triangle Inequality}:
+    \begin{align*}
+        ||f+g||^{2} &= \langle f+g,f+g\rangle = \langle f,f\rangle+\langle f,g\rangle+\langle g,f\rangle+\langle g,g\rangle \\
+        &= \langle f,f\rangle+2Re(\langle f,g\rangle)+\langle g,g\rangle \\
+        &\le ||f||^{2}+2|\langle f,g\rangle|+||g||^{2} \\
+        &\le ||f||^{2}+2||f||||g||+||g||^{2} = (||f||+||g||)^{2}.
+    \end{align*}
+    Hence $||f+g||\le||f||+||g||$.
+\end{pfbox}
+
+
+\begin{theorem}
+    Let $f,g\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$:
+    \begin{enumerate}
+        \item (Parallelogram identity) $\|f+g\|_{2} + \|f-g\|_{2} = 2(\|f\|_{2} + \|g\|_{2}).$
+        \item (Pythagora's theorem) If $\langle\ f,g \rangle = 0$, then $\|f+g\|_{2}^2 = \|f\|_{2}^2 + \|g\|_{2}^2$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+    Exercise.
+\end{pfbox}
+
+\begin{definition}[$L^2$ Norm]
+    For $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$, we define
+    \[
+    \|f\|_{2} \coloneq \sqrt{\langle f,f\rangle}= \left(\int_0^1 f(x) \, \overline{f(x)} \, dx \right)^{1/2} = \left(\int_0^1 |f(x)|^2 \, dx\right)^{1/2}.
+    \]
+\end{definition}
+
+\begin{remark}
+    Endowed with $L^2$ norm, two functions are orthogonal if $\langle f,g\rangle=0$.
+\end{remark}
+
+\begin{definition}[$L^2$ metric]
+    Let $f,g\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$
+    We define
+    \[d_{L^2}(f,g):
+    \|f-g\|_{2} = (\int_{0}^{1}|f(x)-g(x)|^2 dx)^{1/2}
+    \]
+\end{definition}
+
+\begin{exercise}
+    Show that $(C(\mathbb{R}/\mathbb{Z}; \mathbb{C}), d_{L^2})$ is not complete by a counterexample.
+\end{exercise}
+
 
 \begin{definition}[Supremum Metric on $C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$]
  The set of continous complex-valued, $1-$periodic functions on $\mathbb{R}/\mathbb{Z}$ is denoted by $C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$.
@@ -1028,11 +1169,11 @@ Let $x,y\in\mathbb{R}$, we have:
     If $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$, then $f$ is bounded.
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
      Take $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$, $f(x)=f^1(x)+if^2(x).$
      For each $i=1,2$, there exists $M_i>0$ s.t. $|f^i(x)|\le M_i$ by EVT.
      So $|f(x)|=\sqrt{(f^1(x))^2 + (f^2(x))^2}\le \sqrt{M^2_1 + M^2_2}$
-\end{pf}
+\end{pfbox}
 
 
 \begin{theorem}
@@ -1040,99 +1181,18 @@ Let $x,y\in\mathbb{R}$, we have:
 \end{theorem}
 
 \begin{theorem}
-Basic properties of $C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$:
-    \begin{enumerate}
-        \item $C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$ over $\mathbb{C}$ is a vector space.
-        \item $(C(\mathbb{R}/\mathbb{Z}; \mathbb{C}), d_\infty)$ is a complete metric space.
-    \end{enumerate}
+ $(C(\mathbb{R}/\mathbb{Z}; \mathbb{C}), d_\infty)$ is a complete metric space.
 \end{theorem}
 
-\begin{pf}
-    \begin{enumerate}
-        \item Verify the basic 10 axioms from linear algebra.
-        \item The plan goes as following:
+\begin{pfbox}
         \begin{enumerate}
             \item Take any Cauchy $(f_n)^{\infty}_{n=1}$ in $C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$ and deduce the Cauchy sequence of $(f^i_n)^{\infty}_{n=1}$ in $C(\mathbb{R}/\mathbb{Z}; \mathbb{R}),\, i=1,2$.
             \item Use the completeness of $(C(\mathbb{R}/\mathbb{Z}; \mathbb{R}) ,d_\infty)$ to show $f^n\rightarrow f$ uniformly.
             \item Show $f$ is continuous, we need to fix a sufficient large $N$ and arbitrary $x_0\in [0,1]$.
             \item Show $f$ is $1-$periodic by $|f(x+1)-f(x)|\le |f_n(x+1)-f(x)| + |f_n(x+1)-f_n(x)| + |f_n(x)-f(x)|.$
         \end{enumerate}
-    \end{enumerate}
-\end{pf}
+\end{pfbox}
 
-\begin{definition}[Inner Product]
-Let $f,g\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$, 
-we define $\langle \cdot, \cdot \rangle: C(\mathbb{R}/\mathbb{Z}; \mathbb{C})\times C(\mathbb{R}/\mathbb{Z}; \mathbb{C}) \rightarrow \mathbb{C}$ by:
-\[
-\langle f, g \rangle = \int_0^1 f(x) \, \overline{g(x)} \, dx.
-\]
-\end{definition}
-
-\begin{property}
-Let $f,g,h\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$:
-\begin{enumerate}
-    \item (Hermitian property) $\langle g,f \rangle = \langle \overline{f,g} \rangle$
-    \item (Positivity) $\langle f,f \rangle \geq 0$. In particular, $\langle f,f \rangle = 0 \leftrightarrow f=0$.
-    \item (Linearity in 1st component) $\langle f+g, h \rangle = \langle f,h \rangle + \langle g,f \rangle, \quad \langle cf,g \rangle = c\langle f,g \rangle$.
-    \item (Anti-linearity in 2nd component) $\langle f, g+h \rangle = \langle f,g \rangle + \langle f,h \rangle, \quad \langle f,cg \rangle = \overline{c}\langle f,g \rangle$.
-\end{enumerate}
-\end{property}
-
-
-\begin{definition}[$L^2$ Norm]
-    For $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$, we define
-    \[
-    \|f\|_{2} \coloneq \sqrt{\langle f,f\rangle}= \left(\int_0^1 f(x) \, \overline{f(x)} \, dx \right)^{1/2} = \left(\int_0^1 |f(x)|^2 \, dx\right)^{1/2}.
-    \]
-\end{definition}
-
-
-\begin{theorem}
-    Let $f,g\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$:
-    \begin{enumerate}
-        \item (Non-degeneracy) $\|f\|_{2} = 0 \leftrightarrow \langle f,f \rangle = 0 \leftrightarrow f=0$.
-        \item (Cauchy-Schwarz inequality) $|\langle f,g\rangle|\leq \|f\|_{2} \|g\|_{2}.$
-        \item (Triangle inequality) $\|f+g\|_{2}\le \|f\|_{2} + \|g\|_{2}.$
-        \item (Pythagora's theorem) If $\langle\ f,g \rangle = 0$, then $\|f+g\|_{2}^2 = \|f\|_{2}^2 + \|g\|_{2}^2$.
-        \item For any $c\in\mathbb{C}, \|cf\|_{2} = |c|\|f\|_{2}.$
-    \end{enumerate}
-\end{theorem}
-
-\begin{pf}
-Property (1),(5) can be derived through direct compuation.
-For Cachy-Schwarz inequality, we prove the real case first.
-\begin{enumerate}
-    \item For any $\lambda\in\mathbb{R}$, consider $g(\lambda) = \int_{0}^{1}(u(x)-\lambda v(x))^2 dx>0\,\forall u,v\in C(\mathbb{R}/\mathbb{Z}; \mathbb{R}).$ 
-    \item Note $g>0$ and with positive leading coefficient, then we can derive the Cauchy inequality for real case.
-    \item Next, show $|\int_{0}^{1}f(x)dx|\leq \int_{0}^{1}|f(x)|dx\,\forall f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C}).$
-     Let $I = \int_{0}^{1}f(x)dx$ and $c=\frac{\overline{I}}{|I|}$, $cI=|I|\in\mathbb{R}$.
-     Since $cI=\int_{0}^{1}\operatorname{Re}(cf(x))dx + \int_{0}^{1}\operatorname{Im}(cf(x))dx,$ which implies $Im(cf(x))=0.$
-     $|cI| = |\operatorname{Re}(cf)|\leq|cf(x)| =(\operatorname{Re}(cf)^2 + \operatorname{Im}(cf)^2 )^{1/2}$.
-     So $|I| = |cI| = |\int_{0}^{1}\operatorname{Re}(cf(x))dx|\le \int_{0}^{1}|\operatorname{Re}(cf(x))|dx\le \int_{0}^{1}|cf(x)|dx = \int_{0}^{1}|c||f(x)|dx,$ where $|c|=1$.
-    \item Now consider $|\int_{0}^{1}f\bar{g}dx|\le \int_{0}^{1}|f||g|dx = \left|\int_{0}^{1}|f||g|dx\right|<(\int_{0}^{1}f^2 dx)^{1/2} + (\int_{0}^{1}g^2 dx)^{1/2}.$  
-     This completes the proof of complex version.
-\end{enumerate}
-For triangle inequality, we prove property (3) and (4) is just a special case:
-\begin{enumerate}
-    \item Calculate $\|f+g\|_{2}^2$ and obtain $\langle f,g\rangle + \langle g, f\rangle$.
-    \item Consider $\langle f,g\rangle + \langle g, f\rangle = 2|\operatorname(Re)(\langle f,g\rangle)|\le 2|\langle f,g\rangle|\le 2\|f\|_{2}\|g\|_{2}$.
-    \item Note that $\|f+g\|_{2}^2=\|f\|_{2}^2+\|g\|_{2}^2+\langle f,g\rangle + \langle g, f\rangle \leq \|f\|_{2}^2+\|g\|_{2}^2 + 2\|f\|_{2}\|g\|_{2} = (\|f\|_{2}^2+\|g\|_{2}^2)^2$.
-\end{enumerate}
-\end{pf}
-
-
-
-\begin{definition}[$L^2$ metric]
-    Let $f,g\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$
-    We define
-    \[d_{L^2}(f,g):
-    \|f-g\|_{2} = (\int_{0}^{1}|f(x)-g(x)|^2 dx)^{1/2}
-    \]
-\end{definition}
-
-\begin{exercise}
-    Show that $(C(\mathbb{R}/\mathbb{Z}; \mathbb{C}), d_{L^2})$ is not complete by a counterexample.
-\end{exercise}
 
 
 
@@ -1146,15 +1206,20 @@ A function $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$ is called trigonometric p
 \end{definition}
 
 \begin{theorem}
-    For any integers $n,m$, we have
-    \[\langle e_n(x), e_m(x)\rangle=
-    \begin{cases}
-        1, \text{ if } i=j,\\
-        0, \text{ if } i\neq j.
-    \end{cases}
-    \]
-    This shows that charcters form an orthonormal basis for Fourier series.
+    The set $\{e_{n}\}_{n\in\mathbb{Z}}$ is orthonormal.
 \end{theorem}
+
+\begin{pfbox}
+    By direct integration,
+    $$ \langle e_{n},e_{m}\rangle=\int_{0}^{1}e^{2\pi i(n-m)x}dx = \delta_{n,m} = \begin{cases} 1 & \text{if } n=m \\ 0 & \text{if } n\ne m \end{cases}.$$
+\end{pfbox}
+
+\begin{remark}
+    We cannot answer if the set is exactly an ONB right now.
+\end{remark}
+
+
+
 
 \begin{definition}[Fourier Transformation]
 Let $f\in  C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$.
@@ -1203,8 +1268,8 @@ So the infinite sum is equivalent to finite sum.
 \begin{remark}
  The definition of Trigonometric polynomial and truncated Fourier series are equivalent.
  We can fix a integer $N$, express $e^{2\pi inx}=\cos(2\pi nx)+i\sin(2\pi nx)$ and $e^{2\pi i(-n)x} = \cos{2\pi nx}-i\sin(2\pi nx)$.
- Additionally, we can use the change of variable to express Fourier series for $2\pi-$ periodic.
- Let $t=2\pi x$, $G(t)=F(\frac{t}{2\pi})$ and $g$ is $2-\pi$ periodic, we have:
+ Additionally, we can use the change of variable to express Fourier series for $2\pi$-periodic.
+ Let $t=2\pi x$, $G(t)=F(\frac{t}{2\pi})$ and $g$ is $2\pi$-periodic, we have:
  \[
   G(t)=\frac{1}{2}A_0 + \sum_{n=1}^{N} \left(A_n \cos(nt)+B_n \sin(nt)\right),
  \] 
@@ -1233,23 +1298,23 @@ Define the periodic convolution $f*g:\mathbb{R}\rightarrow\mathbb{C}$ by
 \]
 \end{definition}
 
-\begin{exercise}
-    Show that periodic convolution is a linear transformation.
-\end{exercise}
-
-
 \begin{property}
 Let $f,g,h\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$:
 \begin{enumerate}
     \item (Closure under convolution) $f*g\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C}).$
     \item (Commutativity) $f*g = g*f$
-    \item (Bilinearity) Fix $h, \,(f+g)*h = f*h + g*h$; fix $f, \, f*(g+h)=f*g + f*h$; $c(f*g)=(cf)*g=f*(cg).$
+    \item (Bilinearity) 
+    \begin{enumerate}
+        \item Fix $h, \,(f+g)*h = f*h + g*h$
+        \item Fix $f, \, f*(g+h)=f*g + f*h$
+        \item $c(f*g)=(cf)*g=f*(cg).$
+    \end{enumerate}
 \end{enumerate}    
 \end{property}
 
-\begin{pf}
+\begin{pfbox}
 Hint: To show $f*g$ is continous, we need to use $f$ is bounded and $g$ is uniform continous.
-\end{pf}
+\end{pfbox}
 
 
 \begin{theorem}
@@ -1319,7 +1384,7 @@ where $m=k-l$.
     There exists a trigonometric polynomial $P$ which is a periodic $(\epsilon, \delta)$ approximation to identity.
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     Consider the Fejer kernal. Want to show Fejer kernal is indeed a approximation to identity.
 \begin{enumerate}
     \item Compute 
@@ -1342,7 +1407,7 @@ where $m=k-l$.
     \]
     we can choose sufficient large $N$ to satisfy the inequality.
 \end{enumerate}
-\end{pf}
+\end{pfbox}
 
 \begin{theorem}[Weierstrass Approximation for Trigonometric Polynomial]
     Let $f\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$. $\forall\epsilon>0,\,\exists$ a trigonometric polynomial $P\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$
@@ -1354,7 +1419,7 @@ where $m=k-l$.
 \end{remark}
 
 
-\begin{pf}
+\begin{pfbox}
 Fix $\epsilon>0$.
 \begin{enumerate}
     \item $f$ is bounded (Why?), there exists $M>0$ s.t. $|f(x)|\leq M$.
@@ -1371,7 +1436,7 @@ Fix $\epsilon>0$.
     &\le \frac{\epsilon}{4} + 2M\frac{\epsilon}{4M} + \frac{\epsilon}{4} =\epsilon.
     \end{align*}
 \end{enumerate}
-\end{pf}
+\end{pfbox}
 
 \begin{theorem}[Fourier Theorem]
     For any $f \in C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$, the series $\sum_{n\in\mathbb{Z}}\hat{f}(n)e_n$ converges to $f$ in $L^2$ metric,
@@ -1379,27 +1444,27 @@ Fix $\epsilon>0$.
     \[\lim_{N\rightarrow\infty}\left\|f-\sum_{n=-N}^{N}\hat{f}(n)e^{2\pi inx}\right\|_{L^2}<\epsilon.\]
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
     \begin{enumerate}
         \item By Weierstrass approximation, there exists a trig polynomial $P$ s.t. $\| f-p \|_{\infty}<\epsilon$, which implies $\| f-p \|_{L^2}<\epsilon$.
         \item Show that $\langle f-F_N, e_k\rangle = 0$ for each integer $k$, i.e. $f-F_N\perp \{e_k\}^{N}_{k=-N}$.
         \item For $N\ge N_0$, $P$ and $F_N$ lie in the subspace spanned by $\{e_k\}^{N}_{k=-N}$. Show that $\langle f-F_N, P-F_N\rangle = 0.$
         \item By Pythagoras theorem, $\left\|f-F_N\right\|^2_{L^2} = \left\|f-P\right\|^2_{L^2} + \left\|P-F_N\right\|^2_{L^2} \Rightarrow \left\|f-F_N\right\|_{L^2} \le \left\|f-P\right\|_{L^2} \le \left\|f-P\right\|_{\infty}<\epsilon.$
     \end{enumerate}
-\end{pf}
+\end{pfbox}
 
 \begin{theorem}
     If $f\in  C(\mathbb{R}/\mathbb{Z}; \mathbb{C})$ and the Fourier coefficients of $f$ s.t.
     $\sum_{n=-\infty}^{\infty}\left|\hat{f}(n)\right|<\infty$, then the Fourier series $F_N = \sum_{n=-N}^{N}\hat{f}(n)e_n$ converges to $f$ uniformly.
 \end{theorem}
 
-\begin{pf}
+\begin{pfbox}
 \begin{enumerate}
     \item $\sum_{n=-N}^{N}\left|\hat{f}(n)e_n\right| = \sum_{n=-N}^{N}\left|\hat{f}(n)\right|$. (Why?)
     \item By assumption $\sum_{n=-N}^{N}\left|\hat{f}(n)e_n\right|<\infty$. Then by Weierstrass M-test, $F_n\rightarrow F$ uniformly for some $F\in C(\mathbb{R}/\mathbb{Z}; \mathbb{C}),$ which implies $F_n\in F$ in $L^2$ metric.
     \item By Fourier's theorem $F_N\rightarrow f$ in $L^2$ metric.    
     \item By uniqueness of limit or triangle inequality, $F=f$.
 \end{enumerate}    
-\end{pf}
+\end{pfbox}
 
 \end{document}

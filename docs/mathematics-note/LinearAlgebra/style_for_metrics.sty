@@ -1,0 +1,238 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{style}
+
+% ==========================================
+% 基本頁面與版面設定 (Geometry & Spacing)
+% ==========================================
+% Geometry settings for A4 paper with 3cm margins
+\usepackage[a4paper,margin=3cm]{geometry}
+
+% Set line spacing
+\linespread{1.25}
+
+% Set spacing between paragraphs
+\setlength{\parskip}{0ex plus0.5ex minus0.2ex}
+
+% ==========================================
+% 數學與字體套件 (Math & Fonts)
+% ==========================================
+\usepackage{amsmath}
+\usepackage{amsfonts} 
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{diffcoeff}
+\usepackage{amsthm}
+
+% 主要字體設定 (ScholaX + NewTX Math)
+\usepackage[scaled = 0.9]{scholax}
+% 數學字體務必放在 amsmath 之後載入
+\usepackage[scaled = 0.95,varbb]{newtxmath}
+
+% ==========================================
+% 實用套件 (Utilities & Formatting)
+% ==========================================
+\usepackage{diagbox} 
+\usepackage{longtable}
+\usepackage{adjustbox}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{titlesec}
+\usepackage{threeparttable}
+\usepackage{caption}
+\usepackage[font=normalsize]{subcaption}
+\captionsetup{format=plain, font=footnotesize, labelfont={sc,color=greenblue}, width=1\textwidth}
+
+% ==========================================
+% 顏色設定 (Colors)
+% ==========================================
+\usepackage{xcolor}
+\definecolor{greenblue}{RGB}{35, 100, 170}
+\definecolor{jordyblue}{RGB}{145, 196, 242}
+\definecolor{pictonblue}{RGB}{61, 165, 217}
+\definecolor{mountbattenpink}{RGB}{166, 128, 140}
+\definecolor{darkred}{RGB}{170, 38, 35}
+\definecolor{asparagus}{RGB}{107, 170, 117}
+\definecolor{gray75}{gray}{0.75}
+
+% ==========================================
+% 超連結設定 (Hyperref)
+% ==========================================
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    urlcolor=blue,%
+    linkcolor=[rgb]{0.5,0.0,0.0},%
+    citecolor=[rgb]{0,0.2,0.445},%
+    filecolor=[rgb]{0,0,0.4},
+    anchorcolor=[rgb]={0.0,0.1,0.2}%
+}
+
+% ==========================================
+% 定理與環境設定 (Theorem Environments)
+% ==========================================
+% 自訂 QED 符號為實心正方形
+\renewcommand\qedsymbol{\rule{2mm}{2mm}}
+
+% 宣告 break 風格：純粗體、無句號、直接換行
+\newtheoremstyle{break}
+  {\topsep}{\topsep}%
+  {\itshape}{}% 內文斜體
+  {\bfseries}{}% 標題純粗體 (拿掉 \scshape)
+  {\newline}{}% 標題後換行
+  {}% 
+
+% 套用 break 風格
+\theoremstyle{break}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{exercise}{Exercise}[section]
+\newtheorem{property}{Property}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{proposition}{Proposition}
+\newtheorem{ans}{Answer}
+\newtheorem{exer}{Exercise}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{lemma}{Lemma}
+
+% 套用 remark 風格 (標題粗/斜體，內文正體)
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{question}{Question}
+\newtheorem*{answer}{Answer}
+\newtheorem*{summary}{Summary}
+
+\setcounter{tocdepth}{2}
+
+% 整合 Solution 環境 (基於 proof 環境，自動帶出 QED 符號)
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+\newenvironment{rmk}[1][remark]{%
+  \begin{remark}[{#1}]$ $\par\nobreak\ignorespaces
+}{%
+  \end{remark}
+}
+
+\newenvironment{pf}[1][\proofname]{%
+  \begin{proof}[#1]$ $\par\nobreak\ignorespaces
+}{%
+  \end{proof}
+}
+
+% ==========================================
+% 自訂數學指令 (Custom Math Commands)
+% ==========================================
+\newcommand{\E}{\operatorname{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\Ker}{\operatorname{Ker}}
+\newcommand{\Ima}{\operatorname{Im}}
+\newcommand{\spn}{\operatorname{span}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\nullity}{\operatorname{nullity}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\ind}{\perp\!\!\!\perp}
+\newcommand{\iid}{\overset{\text{iid}}{\sim}}
+\newcommand{\cp}{\xrightarrow{p}}
+\newcommand{\cas}{\xrightarrow{a.s.}}
+\newcommand{\cd}{\xrightarrow{d}}
+\newcommand{\clp}{\xrightarrow{L^p}}
+\newcommand{\plim}{\operatorname*{plim}}
+\newcommand{\argmax}{\operatorname*{argmax}}
+\newcommand{\argmin}{\operatorname*{argmin}}
+
+% Brackets
+\newcommand{\bc}[1]{\left\lbrace #1 \right\rbrace} 
+\newcommand{\bp}[1]{\left( #1 \right)} 
+\newcommand{\bs}[1]{\left[ #1 \right]} 
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\of}[1]{{\left( #1 \right)}}
+\newcommand{\innerproduct}[2]{\left\langle #1, #2 \right\rangle}
+
+% Allowing display-style math breaks
+\allowdisplaybreaks
+
+% ==========================================
+% 程式碼與繪圖 (Code Listing & Tikz)
+% ==========================================
+\usepackage{minted}
+\setminted{
+fontsize=\footnotesize, 
+escapeinside=||,
+mathescape=true,
+numbersep=5pt,
+linenos=true,
+autogobble,
+framesep=3mm}
+
+\usepackage{tikz}
+\usepackage{tikz-cd} 
+\usetikzlibrary{shapes,decorations,arrows,calc,arrows.meta,fit,positioning,matrix}
+
+% ==========================================
+% 彩色方框設計 (Tcolorbox)
+% ==========================================
+\usepackage[many]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\fancyhf{}
+
+\tcbset{
+    sharp corners,
+    colback = white,
+    before skip = 1em,    % add extra space before the box
+    after skip = 1em      % add extra space after the box
+}
+
+\newtcolorbox{mybox}{
+  enhanced,
+  breakable,
+  boxrule=0pt,frame hidden,
+  colback=greenblue!10!white,
+  sharp corners
+}
+
+\newtcolorbox{bbox}{
+  enhanced,
+  breakable,
+  boxrule=0pt,frame hidden,
+  borderline west={3pt}{0pt}{greenblue},
+  colback=greenblue!10!white,
+  sharp corners
+}
+
+\newtcolorbox{gbox}{
+  enhanced,
+  breakable,
+  boxrule=0pt,frame hidden,
+  borderline west={3pt}{0pt}{asparagus},
+  colback=asparagus!10!white,
+  sharp corners
+}
+
+\newtcolorbox{pbox}{
+  enhanced,
+  breakable,
+  boxrule=0pt,frame hidden,
+  borderline west={3pt}{0pt}{mountbattenpink},
+  colback=mountbattenpink!10!white,
+  sharp corners
+}
+
+\newtcolorbox{dbox}{
+  enhanced,
+  breakable,
+  boxrule=0pt,frame hidden,
+  borderline west={3pt}{0pt}{darkgray},
+  colback=darkgray!10!white,
+  sharp corners
+}
+
+% 將自訂方框與定理環境結合
+\newenvironment{defbox}{\begin{bbox}\begin{definition}}{\end{definition}\end{bbox}}
+\newenvironment{thmbox}{\begin{gbox}\begin{theorem}}{\end{theorem}\end{gbox}}
+\newenvironment{quebox}{\begin{pbox}\begin{question}}{\end{question}\end{pbox}}
+\newenvironment{asnbox}{\begin{pbox}\begin{assumption}}{\end{assumption}\end{pbox}}
+\newenvironment{pfbox}{\begin{dbox}\begin{pf}}{\end{pf}\end{dbox}}

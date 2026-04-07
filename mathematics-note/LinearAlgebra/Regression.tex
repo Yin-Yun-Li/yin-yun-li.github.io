@@ -1,0 +1,328 @@
+\documentclass[12pt]{article}
+\RequirePackage{style_for_metrics}
+
+\title{Regression}
+
+\begin{document}
+\maketitle
+
+\begin{theorem}[Gram-Schmidt Process]
+    Let $(V,\langle-,-\rangle)$ be an inner product space. Given a linearly independent set $S=\{\mathbf{v}_1,\mathbf{v}_2,\cdots,\mathbf{v}_l\}$ in $V$, if
+    \begin{enumerate}
+        \item $\mathbf{w}_1=\mathbf{v}_1$,
+        \item $\mathbf{w}_k=\mathbf{v}_k-\sum_{j=1}^{k-1}\frac{\langle \mathbf{v}_k, \mathbf{w}_j\rangle}{\norm{\mathbf{w}_j}^2}\mathbf{w}_j\,$ for $\,2\le k\le l.$
+    \end{enumerate} 
+    Then:
+    \begin{enumerate}
+        \item $S'=\{\mathbf{w}_1,\mathbf{w}_2,\cdots,\mathbf{w}_k\}$ is an orthogonal set of non-zero vectors.
+        \item $\mathrm{Span}(S)=\mathrm{Span}(S').$
+    \end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+    We shall prove by induction on $l=|S|.$
+    For $l=1,$ there is nothing to prove. Suppose the claim is true for $l=k-1,$ then for $l=k,$
+    we need to check:
+    \begin{enumerate}
+        \item $\mathbf{w}_k\neq \mathbf{0}.$
+        \item $\langle \mathbf{w}_k, \mathbf{w}_i\rangle=0$ for $1\le i\le l$.
+        \item Take 
+        $$\mathbf{w}_k\in\mathrm{Span}(\{\mathbf{w}_1,\mathbf{w}_2,\cdots,\mathbf{w}_{k-1},\mathbf{v}_{k}\})=\mathrm{Span}(\{\mathbf{v}_1,\mathbf{v}_2,\cdots,\mathbf{v}_{k-1},\mathbf{v}_{k}\}),$$ 
+        so $\mathrm{Span}(S')\subseteq\mathrm{Span}(S).$
+        Note that $\mathrm{Span}(S)$ is given to be linearly independent and $\mathrm{Span}(S')$ is linearly independent by orthogonality of non-zero vectors, so both sets have the same dimension. Hence $\mathrm{Span}(S')=\mathrm{Span}(S).$
+    \end{enumerate}
+\end{pfbox}
+
+Inspired by the construction of orthogonal set via Gram-Schmidt, we can extend this idea to define the projection operator.
+
+\begin{definition}[Orthogonal Projection]
+    Let $(V,\langle-,-\rangle)$ be a finite-dimensional inner product space and $E$ be a subspace of $V$.
+    Let $S=\{\mathbf{u}_1,\mathbf{u}_2,\cdots,\mathbf{u}_k\}$ be an ONB of $E$. The projection operator onto $E$ is defined as:
+    \[P_E(\mathbf{v})=\sum_{j=1}^{k}\langle \mathbf{v}, \mathbf{u}_j\rangle \mathbf{u}_j.\] 
+\end{definition}
+
+\begin{remark}\
+    \begin{enumerate}
+        \item The projection operator $P_E:V\to E\subseteq V$ is a linear operator.
+        \item $P_E$ is an idempotent operator, i.e. $P^2_E \mathbf{v} = P_E \mathbf{v}\quad\forall \mathbf{v}\in V$.
+    \end{enumerate}
+\end{remark}
+
+\begin{theorem}
+    Let $(V,\langle-,-\rangle)$ be a finite-dimensional inner product space and $P_E:E\to V$ be the projection onto a subspace $E$.
+    Then:
+    \begin{enumerate}
+        \item $P_E(\mathbf{v})\in E$.
+        \item $\mathbf{v}-P_E(\mathbf{v})$ is orthogonal to every vector in $E$.
+    \end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+    For 1, it is clear by definition.\\
+    For 2, it suffices to check $\langle \mathbf{v}-P_E(\mathbf{v}), \mathbf{u}_j\rangle=0\quad \forall j=1,2,\cdots,k.$
+\end{pfbox}
+
+\begin{theorem}[Minimal Distance Property]
+ Let $(V,\langle-,-\rangle)$ be a finite-dimensional inner product space and $E$ be a subspace of $V$.
+ Fix any $\mathbf{v}\in V$, then:
+ \begin{enumerate}
+    \item Among all vectors in $E$,
+    $$\norm{P_E(\mathbf{v})-\mathbf{v}}\le\norm{\mathbf{z}-\mathbf{v}}\quad \forall \mathbf{z}\in E.$$
+    \item If the equality holds, then $\mathbf{z}=P_E(\mathbf{v}).$
+ \end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+    For 1, observe that $\langle \mathbf{z}-P_E(\mathbf{v}), \mathbf{v}-P_E(\mathbf{v})\rangle=0,$ then we can use Pythagorean theorem.\\
+    For 2, the equality holds means $\norm{\mathbf{z}-P_E(\mathbf{v})}=0.$ By non-degeneracy, $\mathbf{z}=P_E(\mathbf{v}).$
+\end{pfbox}
+
+\begin{definition}[Orthogonal Complement]
+    Let $(V,\langle-,-\rangle)$ be an inner product space and $E$ be a subset of $V$.
+    The orthogonal complement of $E$ is defined as:
+    \[E^\perp=\{\mathbf{v}\in V: \langle \mathbf{v},\mathbf{u}\rangle=0\quad\forall \mathbf{u}\in E\}.\]
+\end{definition}
+
+\begin{remark}\
+    \begin{enumerate}
+        \item $E$ is not necessarily a subspace.
+        \item $E^\perp$ is a subspace of $V$.
+    \end{enumerate}
+\end{remark}
+
+\begin{theorem}
+ Let $(V,\langle-,-\rangle)$ be a finite-dimensional inner product space and $E$ be a subspace of $V$.
+ \begin{enumerate}
+    \item $\mathbf{v}-P_E(\mathbf{v})\in E^\perp.$
+    \item $\Ker(P_E)=E^\perp.$
+\end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+    For 1, it is followed by $\mathbf{v}-P_E(\mathbf{v})$ is orthogonal to any vector in $E$.\\
+    For 2, take $\mathbf{v}\in \Ker(P_E),$ then $\mathbf{v}-P_E(\mathbf{v})=\mathbf{v}\in E^\perp.$
+    Conversely, take $\mathbf{v}\in E^\perp,$ then $P_E(\mathbf{v})=\underbrace{\mathbf{v}-P_E(\mathbf{v})}_{\in E^\perp}+\mathbf{v}=P_E(\mathbf{v})\in E^\perp.$\\
+    By non-degeneracy, $P_E(\mathbf{v})=\mathbf{0}.$
+\end{pfbox}
+
+\begin{theorem}[Orthogonal Decomposition]
+ Let $(V,\langle-,-\rangle)$ be a finite-dimensional inner product space and $E$ be a subspace of $V$.
+ \begin{enumerate}
+    \item $V=E\oplus E^\perp$
+    \item $\dim(V)=\dim(E)+\dim(E^\perp).$
+\end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+    For 1, observe that $\mathbf{v}=P_E(\mathbf{v})+(\mathbf{v}-P_E(\mathbf{v}))$ for any $\mathbf{v}\in V.$ To show $E$ and $E^\perp$ has trivial intersection, we take $\mathbf{v}\in E\cap E^\perp,$ then $\langle \mathbf{v},\mathbf{v}\rangle=0.$ By non-degeneracy, $\mathbf{v}=\mathbf{0}.$\\
+    For 2, it follows from 1 directly.
+\end{pfbox}
+
+\begin{theorem} 
+    Let $A\in M_{m\times n}(\mathbb{R}),\,\mathbf{x}\in\mathbb{R}^n,\,\mathbf{y}\in\mathbb{R}^m.$
+    \begin{enumerate}
+        \item $\langle A\mathbf{x}, \mathbf{y}\rangle_{\mathrm{dot}} = \langle \mathbf{x}, A^\top \mathbf{y}\rangle_{\mathrm{dot}}.$
+        \item $\rank(A^\top A)=\rank(A).$
+        \item If $\rank(A)=n$, then $A^\top A$ is invertible.
+    \end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+    For 1 and 3, it is an easy exercise.\\
+    For 2, we first show $\Ker(A^\top A)=\Ker(A).$\\
+    For any $\mathbf{v}\in\Ker(A^\top A),\,\langle A^\top A\mathbf{v}, \mathbf{v}\rangle=0.$ By 1, $\langle A\mathbf{v}, A\mathbf{v}\rangle=0$, so $A\mathbf{v}=\mathbf{0}$ by non-degeneracy. The converse is trivial.
+    In addition, both $A$ and $A^\top A$ shares the same dimension of domain (The matrices have the same number of columns). By rank-nullity, $\rank(A^\top A)=\rank(A).$
+\end{pfbox}
+
+\begin{definition}
+    Let $(A\mid \mathbf{b})$ be the augmented matrix associated with a system of linear equations $A\mathbf{x}=\mathbf{b}$.
+    We say the system is homogeneous if $\mathbf{b}=\mathbf{0}$ and inhomogeneous otherwise.
+\end{definition}
+
+\begin{theorem}
+    Let $(A\mid\mathbf{b})$ be a general system of equations.
+    The system is consistent (has at least one solution) iff $\rank(A)=\rank(A\mid \mathbf{b})$.
+\end{theorem}
+
+\begin{pfbox}
+    Let $A=(\mathbf{c}_1,\mathbf{c}_2,\cdots,\mathbf{c}_n)$ (formed by $n$ columns).\\
+    Suppose $\mathbf{x}=(x_1,x_2,\cdots,x_n)^\top$ is a solution to the system. Write $\mathbf{b}=x_1\mathbf{c}_1+x_2\mathbf{c}_2+\cdots +x_n\mathbf{c}_n,$ so $\mathbf{b}\in\Ima(A).$
+    This means $\mathrm{Span}(\{\mathbf{c}_1,\mathbf{c}_2,\cdots,\mathbf{c}_n\})=\mathrm{Span}(\{\mathbf{c}_1,\mathbf{c}_2,\cdots,\mathbf{c}_n,\mathbf{b}\})\Rightarrow \rank(A)=\rank(A\mid \mathbf{b}).$\\
+    The argument is reversible, so this completes the proof.
+\end{pfbox}
+
+\begin{theorem}[Principle of linearity]
+Suppose $\mathbf{v}$ is a solution to the system of equation $(A\mid \mathbf{b})$,
+then the general solution of $(A\mid \mathbf{b})$ is
+\[\mathbf{v}+\Ker(A)=\{\mathbf{v}+\mathbf{w}:\mathbf{w}\in \Ker(A)\}.\]
+\end{theorem}
+
+\begin{pfbox}
+Let $\mathbf{v}$ be a solution to the system and $\mathbf{u}$ be another solution to $(A\mid \mathbf{b}).$
+If we can show $\mathbf{u}-\mathbf{v}\in\Ker(A),$ then the general solution is given by $\mathbf{u}=\mathbf{v}+\underbrace{(\mathbf{u}-\mathbf{v})}_{\in\Ker(A)}.$
+\end{pfbox}
+
+\begin{corollary}
+    The system $(A\mid\mathbf{b})$ has a unique solution iff
+    \begin{enumerate}
+        \item $\rank(A)=\rank(A\mid\mathbf{b})$.
+        \item $\Ker(A)=\{\mathbf{0}\}$.
+    \end{enumerate}
+\end{corollary}
+
+\begin{gbox}
+\begin{question}[Best Solution Problem]
+    Given a system of equations $X\boldsymbol{\beta}=\mathbf{y}$ to be inconsistent, where $X\in M_{m\times n}(\mathbb{R}),\, \mathbf{y}\in \mathbb{R}^m$. Find $\boldsymbol{\beta}_0\in\mathbb{R}^n$ that minimizes $\norm{X\boldsymbol{\beta}-\mathbf{y}},$ i.e.
+    $$\norm{X\boldsymbol{\beta}_0-\mathbf{y}}\le\norm{X\boldsymbol{\beta}-\mathbf{y}}$$ 
+    for any $\boldsymbol{\beta}\in\mathbb{R}^n.$
+\end{question}
+\end{gbox}
+
+
+\begin{remark}
+    The norm is induced by the usual dot product on real vector space.
+\end{remark}
+
+To solve the best solution problem, we employ the following method:
+\begin{theorem}[Least Square Methods]
+    Let $X\in M_{m\times n}(\mathbb{R}),\, \mathbf{y}\in\mathbb{R}^m.$ Suppose $\boldsymbol{\beta}=\boldsymbol{\beta}_0\in\mathbb{R}^n$ is a minimizer of $\norm{\mathbf{y}-X\boldsymbol{\beta}},$ then:
+    \begin{enumerate}
+        \item $\boldsymbol{\beta}_0$ satisfies $X^\top X\boldsymbol{\beta}=X^\top \mathbf{y};$
+        \item If $\rank(X)=n$, then $\boldsymbol{\beta}_0=(X^\top X)^{-1}X^\top \mathbf{y}.$
+    \end{enumerate}
+\label{least square}
+\end{theorem}
+
+\begin{pfbox}
+    For 1, let $W=\Ima(X)=\{X\boldsymbol{\beta}:\boldsymbol{\beta}\in\mathbb{R}^n\}.$
+    By the minimal distance property, 
+    \begin{align*}
+                &\norm{P_W(\mathbf{y})-\mathbf{y}}\le\norm{\mathbf{w}-\mathbf{y}}\quad\forall \mathbf{w}\in W\\
+     \Rightarrow &\norm{P_W(\mathbf{y})-\mathbf{y}}\le\norm{X\boldsymbol{\beta}-\mathbf{y}}\quad\forall \boldsymbol{\beta}\in\mathbb{R}^n.
+    \end{align*}
+    So it suffices to find $\boldsymbol{\beta}_0$ such that $P_W(\mathbf{y})=X\boldsymbol{\beta}_0.$
+    This is possible since $P_W(\mathbf{y})\in W.$
+    Let $P_W(\mathbf{y})=X\boldsymbol{\beta}_0$ for some $\boldsymbol{\beta}_0\in\mathbb{R}^n.$
+    Note that $$\langle P_W(\mathbf{y})-\mathbf{y}, \mathbf{w}\rangle = \langle X\boldsymbol{\beta}_0-\mathbf{y}, X\boldsymbol{\beta}\rangle = \langle X^\top (X\boldsymbol{\beta}_0-\mathbf{y}), \boldsymbol{\beta}\rangle=0\quad\forall \boldsymbol{\beta}\in\mathbb{R}^n,$$
+    then we have $X^\top (X\boldsymbol{\beta}_0-\mathbf{y})=\mathbf{0}.$\\
+
+    For 2, it is an easy exercise.
+\end{pfbox}
+
+The least square method can help us find the best linear predictor of $\mathbf{Y}$ given $X$.
+Suppose we have a set of data points $(y_i,\mathbf{x}_i)\in\mathbb{R}\times\mathbb{R}^n$ and the system is given to be $\mathbf{Y}=X\boldsymbol{\beta}+\boldsymbol{\varepsilon}$.
+Let 
+\begin{align*}
+    \mathrm{SSE}(\beta) &= \sum_{i=1}^m (y_i - \mathbf{x}_i^\top\beta)^2 \\
+    &= \left\| \begin{bmatrix} y_1 - \mathbf{x}_1^\top\beta \\ y_2 - \mathbf{x}_2^\top\beta \\ \vdots \\ y_m - \mathbf{x}_m^\top\beta \end{bmatrix} \right\|^2 
+    = \norm{\mathbf{Y} - \mathbf{X}\beta}^2
+    = (\mathbf{Y} - \mathbf{X}\beta)^\top (\mathbf{Y} - \mathbf{X}\beta).
+\end{align*}
+
+Using the theorem~\eqref{least square}, we can find the projection coefficients explicitly.
+Alternatively, we can derive the coefficients by calculus. We first show some results about matrix calculus.
+
+\begin{definition}[Gradient]
+Let $f: \mathbb{R}^n \to \mathbb{R}$ be a differentiable function. The gradient of $f$ is defined as:
+$$ \nabla f = \frac{\partial f}{\partial \mathbf{x}} = \left( \frac{\partial f}{\partial x_1}, \frac{\partial f}{\partial x_2}, \dots, \frac{\partial f}{\partial x_n} \right)^\top.$$
+\end{definition} 
+
+\begin{theorem}
+Let $A \in M_n(\mathbb{R})$ and $\mathbf{a}, \mathbf{x} \in \mathbb{R}^n$.
+\begin{enumerate}
+    \item $\frac{\partial}{\partial \mathbf{x}} (\mathbf{a}^\top \mathbf{x}) = \frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^\top \mathbf{a}) = \mathbf{a}$
+    \item $\frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^\top A) = \frac{\partial}{\partial \mathbf{x}^\top} (A\mathbf{x}) = A$
+    \item $\frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^\top A \mathbf{x}) = (A + A^\top)\mathbf{x}$
+    \item $\frac{\partial^2}{\partial \mathbf{x} \partial \mathbf{x}^\top} (\mathbf{x}^\top A \mathbf{x}) = A + A^\top$
+\end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+For (1),
+Let $\mathbf{a} = (a_1, a_2, \dots, a_n)^\top$ and $\mathbf{x} = (x_1, x_2, \dots, x_n)^\top$. We have
+$$ \langle \mathbf{a}, \mathbf{x} \rangle = \mathbf{a}^\top \mathbf{x} = \mathbf{x}^\top \mathbf{a} = \sum_{i=1}^n a_i x_i. $$
+Taking the derivative with respect to $\mathbf{x}$ yields:
+$$ \frac{\partial}{\partial \mathbf{x}} \langle \mathbf{a}, \mathbf{x} \rangle = (a_1, a_2, \dots, a_n)^\top = \mathbf{a}. $$
+
+For (2),
+Let $A = (\mathbf{c}_1, \mathbf{c}_2, \dots, \mathbf{c}_n)$ where $\mathbf{c}_i$ are column vectors. Then,
+$$ \frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^\top A) = \frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^\top \mathbf{c}_1, \mathbf{x}^\top \mathbf{c}_2, \dots, \mathbf{x}^\top \mathbf{c}_n) \stackrel{(1)}{=} (\mathbf{c}_1, \mathbf{c}_2, \dots, \mathbf{c}_n) = A. $$
+Similarly, $\frac{\partial}{\partial \mathbf{x}^\top} (A\mathbf{x}) = (\mathbf{c}_1, \mathbf{c}_2, \dots, \mathbf{c}_n) = A$.
+
+For (3),
+Let $f: \mathbb{R}^n \to \mathbb{R}$ be defined by $f(\mathbf{x}) = \mathbf{x}^\top A \mathbf{x}$. 
+The function $f$ is differentiable if and only if there exists a linear map $f'(\mathbf{x})$ such that
+$$ \lim_{\mathbf{h} \to \mathbf{0}} \frac{\|f(\mathbf{x} + \mathbf{h}) - f(\mathbf{x}) - f'(\mathbf{x})\mathbf{h}\|}{\|\mathbf{h}\|} = 0. $$
+Expanding $f(\mathbf{x} + \mathbf{h})$, we obtain:
+\begin{align*}
+    f(\mathbf{x} + \mathbf{h}) &= (\mathbf{x} + \mathbf{h})^\top A (\mathbf{x} + \mathbf{h}) \\
+    &= \mathbf{x}^\top A \mathbf{x} + \mathbf{x}^\top A \mathbf{h} + \mathbf{h}^\top A \mathbf{x} + \mathbf{h}^\top A \mathbf{h}.
+\end{align*}
+Since $\mathbf{h}^\top A \mathbf{x}$ is a scalar, it is equal to its transpose $\mathbf{x}^\top A^\top \mathbf{h}$. Thus,
+$$ f(\mathbf{x} + \mathbf{h}) - f(\mathbf{x}) = \underbrace{\mathbf{x}^\top(A + A^\top)\mathbf{h}}_{\text{linear in } \mathbf{h}} + \mathbf{h}^\top A \mathbf{h}. $$
+Let our candidate derivative be $f'(\mathbf{x}) = \mathbf{x}^\top(A + A^\top)$. We now bound the remainder:
+$$ \frac{\|f(\mathbf{x} + \mathbf{h}) - f(\mathbf{x}) - f'(\mathbf{x})\mathbf{h}\|}{\|\mathbf{h}\|} = \frac{\|\mathbf{h}^\top A \mathbf{h}\|}{\|\mathbf{h}\|} \le \frac{\|\mathbf{h}\| \|A\| \|\mathbf{h}\|}{\|\mathbf{h}\|} = \underbrace{\|A\|}_{\text{fixed}} \underbrace{\|\mathbf{h}\|}_{\to 0 \text{ as } \mathbf{h} \to \mathbf{0}}. $$
+By the Sandwich Theorem, $\lim_{\mathbf{h} \to \mathbf{0}} \frac{\|\mathbf{h}^\top A \mathbf{h}\|}{\|\mathbf{h}\|} = 0$. 
+By the uniqueness of the derivative, $f'(\mathbf{x}) = \mathbf{x}^\top(A + A^\top)$. Taking the transpose yields the gradient $\nabla f(\mathbf{x}) = (A + A^\top)\mathbf{x}$.\\
+
+Alternatively, define mappings $\phi$ and $\psi$ such that $f(\mathbf{x}) = (\psi \circ \phi)(\mathbf{x})$:
+\begin{align*}
+    \phi &: \mathbb{R}^n \to \mathbb{R}^n \times \mathbb{R}^n, \quad \phi(\mathbf{x}) = (\mathbf{x}, \mathbf{x}) \\
+    \psi &: \mathbb{R}^n \times \mathbb{R}^n \to \mathbb{R}, \quad \psi(\mathbf{y}, \mathbf{z}) = \mathbf{y}^\top A \mathbf{z}
+\end{align*}
+First, compute the derivative of the linear mapping $\phi$. Since $\phi(\mathbf{x} + \mathbf{h}) = \phi(\mathbf{x}) + \phi(\mathbf{h})$, the limit definition trivializes to:
+$$ \phi'(\mathbf{x})\mathbf{h} = \phi(\mathbf{h}) = (\mathbf{h}, \mathbf{h}). $$
+Next, compute the derivative of $\psi$:
+\begin{align*}
+    \psi(\mathbf{y} + \mathbf{k}, \mathbf{z} + \mathbf{l}) - \psi(\mathbf{y}, \mathbf{z}) &= (\mathbf{y} + \mathbf{k})^\top A (\mathbf{z} + \mathbf{l}) - \mathbf{y}^\top A \mathbf{z} \\
+    &= \mathbf{y}^\top A \mathbf{l} + \mathbf{k}^\top A \mathbf{z} + \mathbf{k}^\top A \mathbf{l}.
+\end{align*}
+Let the linear portion be $\psi'(\mathbf{y}, \mathbf{z})(\mathbf{k}, \mathbf{l}) = \mathbf{y}^\top A \mathbf{l} + \mathbf{k}^\top A \mathbf{z}$. We check the remainder $\mathbf{k}^\top A \mathbf{l}$:
+$$ \frac{\|\mathbf{k}^\top A \mathbf{l}\|}{\|(\mathbf{k}, \mathbf{l})\|} = \frac{\|\mathbf{k}^\top A \mathbf{l}\|}{\sqrt{\|\mathbf{k}\|^2 + \|\mathbf{l}\|^2}} \le \frac{\|A\| \|\mathbf{k}\| \|\mathbf{l}\|}{\sqrt{\|\mathbf{k}\|^2 + \|\mathbf{l}\|^2}}. $$
+Using the fact that $\sqrt{\|\mathbf{k}\|^2 + \|\mathbf{l}\|^2} \ge \frac{1}{\sqrt{2}}(\|\mathbf{k}\| + \|\mathbf{l}\|)$, we have:
+$$ \le \|A\|\sqrt{2} \frac{\|\mathbf{k}\| \|\mathbf{l}\|}{\|\mathbf{k}\| + \|\mathbf{l}\|} \le \sqrt{2}\|A\| \underbrace{\|\mathbf{k}\|}_{\to 0 \text{ as } (\mathbf{k},\mathbf{l}) \to \mathbf{0}}. $$
+Since the remainder vanishes, the derivative $\psi'$ is confirmed.
+Finally, applying the Chain Rule $f'(\mathbf{x}) = \psi'(\phi(\mathbf{x})) \circ \phi'(\mathbf{x})$:
+\begin{align*}
+    f'(\mathbf{x})\mathbf{h} &= \psi'(\phi(\mathbf{x}))\big(\phi'(\mathbf{x})\mathbf{h}\big) \\
+    &= \psi'(\mathbf{x}, \mathbf{x})(\mathbf{h}, \mathbf{h}) \\
+    &= \mathbf{x}^\top A \mathbf{h} + \mathbf{h}^\top A \mathbf{x} \\
+    &= \mathbf{x}^\top A \mathbf{h} + \mathbf{x}^\top A^\top \mathbf{h} \\
+    &= \mathbf{x}^\top(A + A^\top)\mathbf{h}.
+\end{align*}
+Thus, $f'(\mathbf{x}) = \mathbf{x}^\top(A + A^\top)$, yielding the gradient $\nabla f(\mathbf{x}) = (A + A^\top)\mathbf{x}$.\\
+
+For (4), by Clairaut's Theorem, the mixed partial derivatives of a smooth polynomial are continuous, so the order of differentiation commutes. Therefore, we can compute the Hessian matrix by taking the Jacobian of the gradient. Applying Part (3) and then Part (2), we obtain:
+$$ \frac{\partial^2}{\partial \mathbf{x} \partial \mathbf{x}^\top} (\mathbf{x}^\top A \mathbf{x}) = \frac{\partial}{\partial \mathbf{x}^\top} \left( \frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^\top A \mathbf{x}) \right) \stackrel{\text{(3)}}{=} \frac{\partial}{\partial \mathbf{x}^\top} \Big( (A + A^\top)\mathbf{x} \Big) \stackrel{\text{(2)}}{=} A + A^\top. $$
+\end{pfbox}
+
+Recall our goal is to minimize the $\mathrm{SSE}(\beta)$.
+Expand it to have:
+\begin{align*}
+    \mathrm{SSE}(\beta) &= \mathbf{Y}^\top \mathbf{Y} - \mathbf{Y}^\top \mathbf{X}\beta - \beta^\top \mathbf{X}^\top \mathbf{Y} + \beta^\top \mathbf{X}^\top \mathbf{X}\beta \\
+             &= \mathbf{Y}^\top \mathbf{Y} - 2\beta^\top \mathbf{X}^\top \mathbf{Y} + \beta^\top \mathbf{X}^\top \mathbf{X}\beta,
+\end{align*}
+where $\beta^\top \mathbf{X}^\top \mathbf{Y} = \mathbf{Y}^\top \mathbf{X}\beta$ since it is a scalar.  
+
+Take the derivative of $\mathrm{SSE}(\beta)$ with respect to $\beta$ and set it to zero, we obtain the FOC:
+\begin{align*}
+    \frac{\partial}{\partial \beta}\mathrm{SSE}(\beta) &= -2\mathbf{X}^\top \mathbf{Y} + 2\mathbf{X}^\top \mathbf{X}\beta\mid_{\beta=\hat\beta} \, \,= \mathbf{0}. \quad{ (\mathbf{X}^\top \mathbf{X}\text{ is symmetric })}
+\end{align*}
+
+Assuming $(\mathbf{X}^\top \mathbf{X})$ is invertible, we can solve for the OLS estimator $\hat{\beta}$:
+\begin{align*}
+    2\mathbf{X}^\top \mathbf{X}\hat{\beta} &= 2\mathbf{X}^\top \mathbf{Y} \\
+    \mathbf{X}^\top \mathbf{X}\hat{\beta} &= \mathbf{X}^\top \mathbf{Y} \\
+    (\mathbf{X}^\top \mathbf{X})^{-1}(\mathbf{X}^\top \mathbf{X})\hat{\beta} &= (\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top \mathbf{Y} \\
+    \hat{\beta} &= (\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top \mathbf{Y}.
+\end{align*}
+
+
+\end{document}
+
+
+
+
+
+
+

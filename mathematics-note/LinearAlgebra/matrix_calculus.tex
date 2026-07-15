@@ -1,0 +1,2820 @@
+% !TeX root = linear-algebra.tex
+
+\subsection{Differentiation}
+\begin{definition}
+For $A,B\in M_{m\times n}(\mathbb{R})$, the Frobenius inner product is
+\[
+    \innerproduct{A}{B}_F
+    =
+    \tr(A^{\top} B).
+\]
+The associated Frobenius norm is
+$\norm{A}_F=\sqrt{\tr(A^{\top} A)}$.
+\end{definition}
+
+\begin{remark}\ \vspace{-2em}
+\begin{enumerate}
+    \item When $n=1$, the matrices $A,B$ are column vectors, and the Frobenius inner product reduces to the usual dot product.
+    \item If $A=(A_{ij})$ and $B=(B_{ij})$, then
+    \[
+        \tr(A^{\top} B)
+        =
+        \sum_{j=1}^n\sum_{i=1}^m A_{ij}B_{ij}.
+    \]
+    In words, the Frobenius inner product is the ordinary dot product after writing the matrix entries as one long vector.
+\end{enumerate}
+\end{remark}
+
+
+\begin{definition}[Derivative]
+Let $f:M_{m\times n}(\mathbb{R})\to\mathbb{R}$ be differentiable. The derivative of $f$ at $X$ is the linear map
+\[
+    df_X:M_{m\times n}(\mathbb{R})\to\mathbb{R}
+\]
+characterized by
+\[
+    f(X+H)-f(X)=df_X(H)+r_X(H),
+\]
+Here $df_X(H)$ captures the terms which are linear in $H$.
+The remainder $r_X(H)$ is of size $o(\norm{H}_F)$, i.e.
+\[
+    \frac{|r_X(H)|}{\norm{H}_F}\to 0
+    \text{ as }H\to 0.
+\]
+\end{definition}
+
+\begin{remark}
+This is the matrix version of the definition of differentiability in multivariable calculus: near $X$, the function $f$ should be well approximated by a linear map, with relative error tending to zero.
+In symbols, this means
+\[
+    \lim_{H\to 0}
+    \frac{|f(X+H)-f(X)-df_X(H)|}{\norm{H}_F}
+    =0.
+\]
+\end{remark}
+
+\begin{example}
+Consider $f:\mathbb{R}^2\to\mathbb{R}$ defined by $f(x_1,x_2)=x_1^2x_2$.
+Writing $\mathbf{x}=(x_1,x_2)^{\top}$ and $\mathbf{h}=(h_1,h_2)^{\top}$, we have
+\[
+\begin{aligned}
+    f(\mathbf{x}+\mathbf{h})-f(\mathbf{x})
+    &=
+    (x_1+h_1)^2(x_2+h_2)-x_1^2x_2 \\
+    &=
+    2x_1x_2h_1+x_1^2h_2
+    +2x_1h_1h_2+x_2h_1^2+h_1^2h_2.
+\end{aligned}
+\]
+The linear part in $\mathbf{h}$ is $2x_1x_2h_1+x_1^2h_2$, while the remaining terms are higher order. Hence
+\[
+    df_{\mathbf{x}}(\mathbf{h})
+    =
+    2x_1x_2h_1+x_1^2h_2
+    =
+    \left\langle
+    \begin{pmatrix}
+        2x_1x_2\\
+        x_1^2
+    \end{pmatrix},
+    \begin{pmatrix}
+        h_1\\
+        h_2
+    \end{pmatrix}
+    \right\rangle.
+\]
+Therefore, $\nabla_{\mathbf{x}} f = (2x_1x_2, x_1^2)^{\top}$.
+\end{example}
+
+\begin{definition}
+Let $R(H)$ be a scalar-valued function of a matrix variable
+$H\in M_{m\times n}(\mathbb{R})$.
+
+We write $R(H)=O(\norm{H}_F)$ as $H\to \mathbf O$ if there exist constants
+$C>0$ and $\delta>0$ such that
+\[
+    |R(H)|
+    \le
+    C\norm{H}_F
+    \qquad
+    \text{whenever }0<\norm{H}_F<\delta.
+\]
+In words, $R(H)=O(\norm{H}_F)$ means that $R(H)$ is at most of first order in
+the size of $H$.
+
+We write $R(H)=o(\norm{H}_F)$ as $H\to \mathbf O$ if
+\[
+    \frac{|R(H)|}{\norm{H}_F}
+    \to
+    0
+    \qquad
+    \text{as }H\to \mathbf O.
+\]
+In words, $R(H)=o(\norm{H}_F)$ means that $R(H)$ is negligible compared with
+the size of $H$.
+\end{definition}
+
+\begin{remark}
+The same notation is often used for a one-dimensional perturbation $t\in
+\mathbb{R}$. Since $t$ may be regarded as a $1\times1$ matrix, its Frobenius
+norm is $\norm{t}_F=|t|$. Thus $R(t)=O(t)$ means $|R(t)|\le C|t|$ for all
+sufficiently small nonzero $t$, and $R(t)=o(t)$ means
+\[
+    \frac{|R(t)|}{|t|}\to0
+    \qquad
+    \text{as }t\to0.
+\]
+This is the notation used when we restrict a matrix problem to a line such as
+$X+tH$.
+\end{remark}
+
+\begin{example}
+We have $\norm{H}_F^2=o(\norm{H}_F)$ because
+\[
+    \frac{\norm{H}_F^2}{\norm{H}_F}
+    =
+    \norm{H}_F
+    \to
+    0
+    \qquad
+    \text{as }H\to \mathbf O.
+\]
+On the other hand, $7\norm{H}_F=O(\norm{H}_F)$ because
+$7\norm{H}_F\le 7\norm{H}_F$, but $7\norm{H}_F\neq o(\norm{H}_F)$ since
+\[
+    \frac{7\norm{H}_F}{\norm{H}_F}
+    =
+    7
+    \not\to
+    0.
+\]
+\end{example}
+
+\begin{definition}[Gradient]
+Let $f:M_{m\times n}(\mathbb{R})\to\mathbb{R}$ be differentiable. 
+The unique matrix $G\in M_{m\times n}(\mathbb{R})$ such that
+\[
+    df_X(H)=\innerproduct{G}{H}_F=\tr(G^{\top} H)
+    \quad\text{for all }H\in M_{m\times n}(\mathbb{R}).
+\]
+
+is called the gradient of $f$ at $X$, and is denoted by $\nabla_X f$.
+\label{grad_def}
+\end{definition}
+
+Since $df_X$ is a linear functional on the inner product space $M_{m\times n}(\mathbb{R})$, the Riesz representation theorem gives a unique matrix $G\in M_{m\times n}(\mathbb{R})$ such that the definition~\eqref{grad_def} is valid.
+Thus the gradient is characterized by
+\[
+    df_X(H)=\tr\bigl((\nabla_X f)^{\top} H\bigr).
+\]
+
+
+Informally, one may think of $dX$ as representing a small change $H$ in the matrix $X$. With this convention, the identity above is written as
+\[
+    df=\tr\bigl((\nabla_X f)^{\top} dX\bigr).
+\]
+The above ''equality'' gives the differential notation.
+
+\begin{remark}\ \vspace{-2em}
+\begin{enumerate}
+    \item For $f:\mathbb{R}^n\to\mathbb{R}$, the gradient is the column vector collecting all partial derivatives:
+    \[
+        \nabla_{\mathbf{x}}f
+        =
+        \left(
+            \frac{\partial f}{\partial x_1},\ldots,
+            \frac{\partial f}{\partial x_n}
+        \right)^{\top},
+        \qquad
+        df_{\mathbf{x}}(\mathbf{h})
+        =
+        (\nabla_{\mathbf{x}}f)^{\top}\mathbf{h}.
+    \]
+    Along a differentiable curve $\mathbf{x}(t)$, the chain rule gives
+    \[
+        \frac{d}{dt}f(\mathbf{x}(t))
+        =
+        df_{\mathbf{x}(t)}(\mathbf{x}'(t))
+        =
+        \sum_{i=1}^n
+        \frac{\partial f}{\partial x_i}\frac{dx_i}{dt}.
+    \]
+    Writing $df=\frac{d}{dt}f\,dt$ and $dx_i=\frac{dx_i}{dt}\,dt$ yields
+    \[
+        df=(\nabla_{\mathbf{x}}f)^{\top}d\mathbf{x}
+        =\sum_{i=1}^n\frac{\partial f}{\partial x_i}\,dx_i.
+    \]
+    Thus the differential formula is precisely the chain rule written without the parameter $t$.
+
+    \item The derivative $df_X$ is a linear map. When $f$ is scalar-valued, it is a linear functional and the gradient is its Frobenius inner-product representative. Derivatives and differentials apply to scalar-, vector-, and matrix-valued functions, whereas a gradient is reserved for scalar-valued functions.
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}[Interior Extrema]
+Let $U\subseteq M_{m\times n}(\mathbb{R})$ be open, and let $f:U\to\mathbb{R}$ be differentiable.
+If $X_0\in U$ is a local maximum or a local minimum of $f$, then
+\[
+    \nabla_X f(X_0)=0.
+\]
+\end{theorem}
+
+\begin{pfbox}
+Fix any direction $H\in M_{m\times n}(\mathbb{R})$. Define a one-variable function
+$\varphi(t)=f(X_0+tH)$ for $t$ near $0$.
+Since $X_0$ is an interior local maximum or local minimum of $f$, the point $t=0$ is a local maximum or local minimum of $\varphi$. By Calculus 1, $\varphi'(0)=0$.
+
+By the definition of the derivative,
+\[
+    \varphi'(0)=df_{X_0}(H).
+\]
+Thus $df_{X_0}(H)=0$ for every direction $H$.
+Since
+\[
+    df_{X_0}(H)=\tr\bigl((\nabla_X f(X_0))^{\top}H\bigr),
+\]
+we have
+\[
+    \tr\bigl((\nabla_X f(X_0))^{\top}H\bigr)=0
+    \qquad\text{for all }H.
+\]
+Taking $H=\nabla_X f(X_0)$ gives
+\[
+    \norm{\nabla_X f(X_0)}_F^2=0.
+\]
+Hence $\nabla_X f(X_0)=0$.
+\end{pfbox}
+
+
+Let $A=(A_{ij})$ be an $m\times n$ matrix whose entries are scalar-valued differentiable functions. We call $A$ a matrix-valued function.
+
+\begin{definition}[Matrix Differential]
+Let $A=(A_{ij})$ be an $m\times n$ matrix-valued function. Its differential is the $m\times n$ matrix
+\[
+    dA
+    \overset{\mathrm{def}}{=}
+    (dA_{ij})_{i,j}
+    =
+    \begin{pmatrix}
+        dA_{11} & dA_{12} & \cdots & dA_{1n}\\
+        dA_{21} & dA_{22} & \cdots & dA_{2n}\\
+        \vdots & \vdots & \ddots & \vdots\\
+        dA_{m1} & dA_{m2} & \cdots & dA_{mn}
+    \end{pmatrix}.
+\]
+\end{definition}
+
+\begin{example}
+Let
+\[
+    A(x,y)
+    =
+    \begin{pmatrix}
+        x^2y & e^x+y\\
+        \sin x & x-y^2
+    \end{pmatrix}.
+\]
+Then
+\[
+    dA
+    =
+    \begin{pmatrix}
+        2xy\,dx+x^2\,dy & e^x\,dx+dy\\
+        \cos x\,dx & dx-2y\,dy
+    \end{pmatrix}.
+\]
+\end{example}
+
+
+\begin{theorem}[Basic Differential Rules]
+Let $A$ and $B$ be matrices of functions with compatible sizes, and let $\alpha\in\mathbb{R}$ be a constant scalar. Whenever the expressions are defined,
+\begin{enumerate}
+    \item $d(A+B)=dA+dB$;
+    \item $d(\alpha A)=\alpha\,dA$;
+    \item $d(AB)=(dA)B+A(dB)$;
+    \item $d(A^{\top})=(dA)^{\top}$;
+    \item $d\tr(A)=\tr(dA)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+The first two rules follow entry by entry from the linearity of ordinary differentials.
+For the product rule, the $(i,j)$-entry of $AB$ is
+\[
+    (AB)_{ij}=\sum_k A_{ik}B_{kj}.
+\]
+Taking the differential entry by entry,
+\[
+    d(AB)_{ij}
+    =
+    \sum_k dA_{ik}\,B_{kj}+
+    \sum_k A_{ik}\,dB_{kj}.
+\]
+This is exactly the $(i,j)$-entry of $(dA)B+A(dB)$.
+
+For transpose, the $(i,j)$-entry of $d(A^{\top})$ is $d(A^{\top}_{ij})=d(A_{ji})$, which is the $(i,j)$-entry of $(dA)^{\top}$.
+Finally,
+\[
+    d\tr(A)
+    =d\left(\sum_i A_{ii}\right)
+    =\sum_i dA_{ii}
+    =\tr(dA).
+\]
+\end{pfbox}
+
+Recall for a scalar-valued function $f$, the gradient is characterized by
+\[
+    df=\tr\bigl((\nabla_X f)^{\top} dX\bigr).
+\]
+This gives a concrete strategy for computing matrix gradients:
+\begin{pbox}
+ \begin{enumerate}
+    \item Express the scalar function using traces whenever convenient.
+    \item Take the differential using the rules above.
+    \item Move terms cyclically inside traces until the result has the form $\tr(G^{\top} dX)$.
+    \item Conclude that $\nabla_X f=G$.
+\end{enumerate}   
+\end{pbox}
+
+The most frequently used trace identities are
+\[
+    \tr(PQ)=\tr(QP),
+    \quad
+    \tr(PQR)=\tr(QRP)=\tr(RPQ),
+    \quad
+    \tr(P)=\tr(P^{\top}).
+\]
+Only cyclic permutations are valid in general; the order of factors may not be
+arbitrarily rearranged.
+
+\begin{example}
+Let $f(X)=\norm{X}_F^2$. Since $\norm{X}_F^2=\tr(X^{\top}X)$,
+\[
+\begin{aligned}
+    df
+    &=
+    d\tr(X^{\top}X)
+    =
+    \tr(d(X^{\top}X))\\
+    &=
+    \tr((dX)^{\top}X)+\tr(X^{\top} dX).
+\end{aligned}
+\]
+Using $\tr((dX)^{\top}X)=\tr(((dX)^{\top}X)^{\top})=\tr(X^{\top}dX)$, we get
+\[
+    df=2\tr(X^{\top}dX)=\tr((2X)^{\top}dX).
+\]
+Therefore
+\[
+    \nabla_X f=2X.
+\]
+\end{example}
+
+\begin{example}
+Let $f:M_n(\mathbb{R})\to\mathbb{R}$ be defined by $f(X)=\tr(X^2)$. Then
+\[
+\begin{aligned}
+    df
+    &=
+    d\tr(X^2)
+    =
+    \tr(d(X\cdot X))\\
+    &=
+    \tr((dX)X)+\tr(X(dX))\\
+    &=
+    \tr(XdX)+\tr(XdX)\\
+    &=
+    \tr(2X\,dX).
+\end{aligned}
+\]
+Since $df=\tr(G^{\top} dX)$, we have $G^{\top}=2X$. Therefore
+\[
+    \nabla_X f=2X^{\top}.
+\]
+\end{example}
+
+\begin{remark}
+Consider $F:M_n(\mathbb{R})\to M_n(\mathbb{R})$ defined by $F(X)=X^2$. Its differential is
+\[
+    dF=d(X^2)=d(X\cdot X)=(dX)X+X(dX).
+\]
+Thus the derivative at $X$ is the linear map
+\[
+    dF_X(H)=HX+XH.
+\]
+Since $F$ is not scalar-valued, the notion of gradient does not apply here. But its derivative and differential are still well-defined.
+\end{remark}
+
+\begin{theorem}[Chain Rule]
+\label{thm:matrix-chain-rule}
+Let $f:\mathcal{X}\to\mathcal{Y}$ and $g:\mathcal{Y}\to\mathcal{Z}$ be
+differentiable maps between finite-dimensional matrix spaces. Then
+\[
+    d(g\circ f)_X
+    =
+    dg_{f(X)}\circ df_X.
+\]
+Equivalently, for every direction $H\in\mathcal{X}$,
+\[
+    d(g\circ f)_X(H)
+    =
+    dg_{f(X)}\bigl(df_X(H)\bigr).
+\]
+\end{theorem}
+
+There is a particularly useful gradient form of this rule. If
+$L:\mathcal{X}\to\mathcal{Y}$ is linear, its adjoint
+$L^*:\mathcal{Y}\to\mathcal{X}$ is characterized by
+\[
+    \innerproduct{L(H)}{K}_{\mathcal{Y}}
+    =
+    \innerproduct{H}{L^*(K)}_{\mathcal{X}}
+    \qquad
+    \text{for all }H\in\mathcal{X},\ K\in\mathcal{Y}.
+\]
+Here $H$ is an arbitrary input direction, while $K$ is an arbitrary test
+direction in the output space.
+The two inner products are dictated by the spaces in which the vectors live:
+$L(H)$ and $K$ belong to $\mathcal{Y}$, whereas $H$ and $L^*(K)$ belong to
+$\mathcal{X}$. Thus $L^*$ depends on the chosen inner products on both
+$\mathcal{X}$ and $\mathcal{Y}$; under the usual Euclidean or Frobenius inner
+products, its matrix representation is the transpose of the matrix representing
+$L$.
+
+\begin{theorem}
+Let $f:\mathcal{X}\to\mathcal{Y}$ and $g:\mathcal{Y}\to\mathbb{R}$ be
+differentiable. Then
+\[
+    \nabla_X(g\circ f)
+    =
+    df_X^*\bigl(\nabla_Y g(f(X))\bigr),
+\]
+where $df_X^*$ is the adjoint of the linear map $df_X$.
+\end{theorem}
+
+\begin{pfbox}
+For every input direction $H\in\mathcal{X}$, the ordinary chain rule gives
+\[
+    d(g\circ f)_X(H)
+    =
+    dg_{f(X)}\bigl(df_X(H)\bigr).
+\]
+Now $df_X(H)\in\mathcal{Y}$ is a direction at $f(X)$. Since
+$g:\mathcal{Y}\to\mathbb{R}$ is scalar-valued, the definition of its gradient
+states that, for every $Y,K\in\mathcal{Y}$,
+\[
+    dg_Y(K)
+    =\innerproduct{\nabla_Yg(Y)}{K}_{\mathcal{Y}}
+    =\innerproduct{K}{\nabla_Yg(Y)}_{\mathcal{Y}},
+\]
+where the second equality uses symmetry of the real Frobenius inner product.
+Taking $Y=f(X)$ and $K=df_X(H)$ therefore gives
+\[
+    d(g\circ f)_X(H)
+    =
+    \innerproduct{df_X(H)}{\nabla_Yg(f(X))}_{\mathcal{Y}}.
+\]
+Both entries lie in $\mathcal{Y}$. To identify the gradient with respect to
+$X$, however, the differential must have the form
+$\innerproduct{H}{G}_{\mathcal{X}}$ for some $G\in\mathcal{X}$. The adjoint is
+defined precisely to move $df_X$ across the inner product:
+\[
+    \innerproduct{df_X(H)}{\nabla_Y g(f(X))}_{\mathcal{Y}}
+    =
+    \innerproduct{H}{df_X^*(\nabla_Y g(f(X)))}_{\mathcal{X}}.
+\]
+Hence $G=df_X^*(\nabla_Y g(f(X)))$, which proves the result. In this sense, the
+adjoint pulls the output gradient in $\mathcal{Y}$ back to an input gradient in
+$\mathcal{X}$.
+\end{pfbox}
+
+\begin{remark}[Jacobian form]
+Let $f:\mathbb{R}^n\to\mathbb{R}^m$ and
+$g:\mathbb{R}^m\to\mathbb{R}$. Writing
+$f=(f_1,\ldots,f_m)^{\top}$, the Jacobian of $f$ is
+\[
+    J_f(\mathbf{x})
+    =
+    \left(
+        \frac{\partial f_i}{\partial x_j}(\mathbf{x})
+    \right)_{i,j}
+    \in M_{m\times n}(\mathbb{R}),
+\]
+and it represents the derivative:
+\[
+    df_{\mathbf{x}}(\mathbf{h})=J_f(\mathbf{x})\mathbf{h}.
+\]
+With the usual inner products, the adjoint of this derivative is represented
+by the transpose Jacobian, since
+\[
+    \innerproduct{J_f(\mathbf{x})\mathbf{h}}{\mathbf{k}}
+    =
+    \innerproduct{\mathbf{h}}{J_f(\mathbf{x})^{\top}\mathbf{k}}.
+\]
+Therefore the gradient chain rule becomes
+\[
+    \nabla_{\mathbf{x}}(g\circ f)(\mathbf{x})
+    =
+    J_f(\mathbf{x})^{\top}
+    \nabla_{\mathbf{y}}g(f(\mathbf{x})).
+\]
+Thus the adjoint formula is the coordinate-free version of ``multiply the
+output gradient by the transpose Jacobian.''
+\end{remark}
+
+\begin{example}
+Let $f:\mathbb{R}^2\to\mathbb{R}^2$ and
+$g:\mathbb{R}^2\to\mathbb{R}$ be defined by
+\[
+    f(\mathbf{x})
+    =
+    \begin{pmatrix}
+        x_1^2+x_2\\
+        x_1x_2
+    \end{pmatrix},
+    \qquad
+    g(\mathbf{y})=\frac{1}{2}(y_1^2+y_2^2).
+\]
+Then
+\[
+    J_f(\mathbf{x})
+    =
+    \begin{pmatrix}
+        2x_1 & 1\\
+        x_2 & x_1
+    \end{pmatrix},
+    \qquad
+    \nabla_{\mathbf{y}}g(\mathbf{y})=\mathbf{y}.
+\]
+Hence
+\[
+\begin{aligned}
+    \nabla_{\mathbf{x}}(g\circ f)(\mathbf{x})
+    &=
+    J_f(\mathbf{x})^{\top}f(\mathbf{x})\\
+    &=
+    \begin{pmatrix}
+        2x_1(x_1^2+x_2)+x_1x_2^2\\
+        x_1^2+x_2+x_1^2x_2
+    \end{pmatrix}.
+\end{aligned}
+\]
+This agrees with direct differentiation of
+\[
+    (g\circ f)(\mathbf{x})
+    =
+    \frac{1}{2}\left((x_1^2+x_2)^2+(x_1x_2)^2\right).
+\]
+\end{example}
+
+\begin{proposition}[Affine Matrix Least Squares]
+Let
+\[
+    A\in M_{m\times p}(\mathbb{R}),
+    \qquad
+    X\in M_{p\times q}(\mathbb{R}),
+    \qquad
+    B\in M_{q\times n}(\mathbb{R}),
+    \qquad
+    C\in M_{m\times n}(\mathbb{R}).
+\]
+Define
+\[
+    F(X)
+    =
+    \frac{1}{2}\norm{AXB-C}_F^2.
+\]
+Then
+\[
+    \nabla_X F
+    =
+    A^\top(AXB-C)B^\top.
+\]
+\label{affine least square}
+\end{proposition}
+
+\begin{pfbox}
+Let $Y=AXB-C$.
+
+Then
+\[
+    F(X)
+    =
+    \frac{1}{2}\norm{Y}_F^2
+    =
+    \frac{1}{2}\tr(Y^\top Y).
+\]
+Taking differential, we get
+\[
+    dY
+    =
+    d(AXB-C)
+    =
+    A(dX)B.
+\]
+Since $d\left(\frac{1}{2}\norm{Y}_F^2\right)=\innerproduct{Y}{dY}_F$, we have
+\[
+\begin{aligned}
+    dF
+    &=
+    \innerproduct{Y}{dY}_F                                      \\[2mm]
+    &=
+    \innerproduct{AXB-C}{A(dX)B}_F                                \\[2mm]
+    &=
+    \tr\left((AXB-C)^\top A(dX)B\right).
+\end{aligned}
+\]
+Now move the matrices cyclically inside the trace:
+\[
+\begin{aligned}
+    dF
+    &=
+    \tr\left(B(AXB-C)^\top A(dX)\right)                           \\[2mm]
+    &=
+    \tr\left(\bigl(A^\top(AXB-C)B^\top\bigr)^\top dX\right).
+\end{aligned}
+\]
+By the definition of the gradient,
+\[
+    dF
+    =
+    \tr\left((\nabla_X F)^\top dX\right).
+\]
+Hence
+\[
+    \nabla_X F
+    =
+    A^\top(AXB-C)B^\top.
+\]
+\end{pfbox}
+
+\begin{remark}[Least-squares interpretations]
+The rule $\nabla_X\frac12\norm{AXB-C}_F^2
+=A^\top(AXB-C)B^\top$ reflects the two adjoints: left multiplication by $A$
+contributes $A^\top$, while right multiplication by $B$ contributes $B^\top$.
+For $B=I$, it reduces to the usual matrix least-squares gradient
+$\nabla_X\frac12\norm{AX-C}_F^2=A^\top(AX-C)$.
+
+For the linear model $y=X_{\mathrm{data}}\beta+\varepsilon$, take
+$A=X_{\mathrm{data}}$, $X=\beta$, $B=I$, and $C=y$. Then
+\[
+    \nabla_\beta\frac12\norm{X_{\mathrm{data}}\beta-y}^2
+    =X_{\mathrm{data}}^\top(X_{\mathrm{data}}\beta-y),
+\]
+so the first-order condition is
+$X_{\mathrm{data}}^\top X_{\mathrm{data}}\hat\beta
+=X_{\mathrm{data}}^\top y$. 
+
+If
+$X_{\mathrm{data}}^\top X_{\mathrm{data}}$ is invertible, equivalently if
+$X_{\mathrm{data}}$ has full column rank, then
+\[
+    \hat\beta
+    =(X_{\mathrm{data}}^\top X_{\mathrm{data}})^{-1}
+      X_{\mathrm{data}}^\top y.
+\]
+For multiple outcomes $Y=X_{\mathrm{data}}\Gamma+E$, the same rule gives
+$\nabla_\Gamma\frac12\norm{X_{\mathrm{data}}\Gamma-Y}_F^2
+=X_{\mathrm{data}}^\top(X_{\mathrm{data}}\Gamma-Y)$; thus matrix least
+squares is OLS applied to all outcome columns at once.
+
+The factor $B$ allows a transformation on the right of a coefficient matrix.
+For example, in
+\[
+    Y=X_{\mathrm{data}}\Theta R+E,
+\]
+$\Theta$ is the free coefficient matrix to be estimated, whereas $R$ is a
+known, fixed matrix that specifies how the columns of $\Theta$ are combined.
+The objective $\frac12\norm{X_{\mathrm{data}}\Theta R-Y}_F^2$ is the full
+form with $A=X_{\mathrm{data}}$, $X=\Theta$, $B=R$, and $C=Y$.
+
+For an ordinary coefficient restriction such as $\beta_1=\beta_2$, it is more
+natural to parameterize the coefficient vector as $\beta=R\theta$. For example,
+if $\beta\in\mathbb{R}^3$, set
+\[
+    R=
+    \begin{bmatrix}
+        1&0\\
+        1&0\\
+        0&1
+    \end{bmatrix},
+    \qquad
+    \theta=
+    \begin{bmatrix}
+        \theta_1\\
+        \theta_2
+    \end{bmatrix}.
+\]
+Then
+\[
+    \beta=R\theta
+    =
+    \begin{bmatrix}
+        \theta_1\\
+        \theta_1\\
+        \theta_2
+    \end{bmatrix},
+\]
+so $\beta_1=\beta_2$ holds automatically, while $\theta_1,\theta_2$ remain
+unrestricted. The restricted least-squares problem becomes
+$\frac12\norm{X_{\mathrm{data}}R\theta-y}^2$, which has the same form with
+$A=X_{\mathrm{data}}R$, $X=\theta$, $B=I$, and $C=y$.
+
+Weighted least squares and GLS enter through a transformation on the left.
+Suppose
+\[
+    y=X_{\mathrm{data}}\beta+\varepsilon,
+    \qquad
+    \mathbb{E}(\varepsilon)=0,
+    \qquad
+    \operatorname{Cov}(\varepsilon)=\Omega\succ0.
+\]
+GLS weights the residual by its inverse covariance and minimizes
+\[
+\begin{aligned}
+    Q_{\mathrm{GLS}}(\beta)
+    &=
+    \frac12(X_{\mathrm{data}}\beta-y)^\top
+    \Omega^{-1}(X_{\mathrm{data}}\beta-y)\\
+    &=
+    \frac12\norm{\Omega^{-1/2}(X_{\mathrm{data}}\beta-y)}^2.
+\end{aligned}
+\]
+Thus GLS is ordinary least squares applied to the whitened data
+$\widetilde X=\Omega^{-1/2}X_{\mathrm{data}}$ and
+$\widetilde y=\Omega^{-1/2}y$. In the notation of $F(X)$, this corresponds to
+$X=\beta$, $A=\Omega^{-1/2}X_{\mathrm{data}}$, $B=I$, and
+$C=\Omega^{-1/2}y$. Therefore
+\[
+    \nabla_\beta Q_{\mathrm{GLS}}(\beta)
+    =
+    X_{\mathrm{data}}^\top\Omega^{-1}
+    (X_{\mathrm{data}}\beta-y),
+\]
+and the first-order condition is the GLS normal equation
+\[
+    X_{\mathrm{data}}^\top\Omega^{-1}X_{\mathrm{data}}
+    \hat\beta_{\mathrm{GLS}}
+    =
+    X_{\mathrm{data}}^\top\Omega^{-1}y.
+\]
+If $X_{\mathrm{data}}^\top\Omega^{-1}X_{\mathrm{data}}$ is invertible, then
+\[
+    \hat\beta_{\mathrm{GLS}}
+    =
+    (X_{\mathrm{data}}^\top\Omega^{-1}X_{\mathrm{data}})^{-1}
+    X_{\mathrm{data}}^\top\Omega^{-1}y.
+\]
+Weighted least squares is the special case in which $\Omega$ is diagonal;
+general GLS also permits correlated errors through the off-diagonal entries of
+$\Omega$.
+\end{remark}
+
+
+
+\begin{proposition}[Derivative of Affine Mapping]
+Let $A\in M_{m\times n}(\mathbb{R})$ and $\mathbf{b}\in\mathbb{R}^m$. Define
+\[
+    F:\mathbb{R}^n\to\mathbb{R}^m,
+    \qquad
+    F(\mathbf{x})=A\mathbf{x}+\mathbf{b}.
+\]
+Then $F$ is differentiable at every $\mathbf{x}\in\mathbb{R}^n$, and
+\[
+    dF_{\mathbf{x}}(\mathbf{h})=A\mathbf{h}.
+\]
+Thus the matrix representing the derivative $dF_{\mathbf{x}}$ is $A$.
+\end{proposition}
+
+\begin{pfbox}
+Consider the candidate linear map $L:\mathbb{R}^n\to\mathbb{R}^m$ defined by
+$L(\mathbf{h})=A\mathbf{h}$. For every nonzero $\mathbf{h}$,
+\[
+\begin{aligned}
+    &\frac{\norm{F(\mathbf{x}+\mathbf{h})-F(\mathbf{x})-L(\mathbf{h})}}
+    {\norm{\mathbf{h}}}\\
+    =& \frac{\norm{A(\mathbf{x}+\mathbf{h})+\mathbf{b}
+    -(A\mathbf{x}+\mathbf{b})-A\mathbf{h}}}{\norm{\mathbf{h}}}
+    =0.
+\end{aligned}
+\]
+The quotient is identically zero, so its limit as $\mathbf{h}\to\mathbf{0}$ is
+zero. By the definition of the Fr\'echet derivative,
+$dF_{\mathbf{x}}=L$, whose matrix is $A$.
+\end{pfbox}
+
+\begin{remark}
+Because $F$ is vector-valued, $A$ is its derivative (or Jacobian), not its
+gradient. Componentwise, the rows of $A$ are
+$(\nabla_{\mathbf{x}}F_i)^{\top}$.
+\end{remark}
+
+
+\begin{theorem}
+Let $A\in M_n(\mathbb{R})$ and define $f:\mathbb{R}^n\to\mathbb{R}$ by
+$f(\mathbf{x})=\mathbf{x}^{\top} A\mathbf{x}$. Then
+\[
+    \nabla_{\mathbf{x}} f=(A+A^{\top})\mathbf{x}.
+\]
+In particular, if $A$ is symmetric, then $\nabla_{\mathbf{x}} f=2A\mathbf{x}$.
+\end{theorem}
+
+\begin{pfbox}
+The matrix $A$ is not assumed to be symmetric. Since $\mathbf{x}^{\top} A\mathbf{x}$ is a scalar,
+\[
+    f(\mathbf{x})=\tr(\mathbf{x}^{\top} A\mathbf{x}).
+\]
+Taking the differential,
+\[
+\begin{aligned}
+    df
+    &=
+    \tr(d(\mathbf{x}^{\top} A\mathbf{x}))\\
+    &=
+    \tr((d\mathbf{x})^{\top} A\mathbf{x})+\tr(\mathbf{x}^{\top} A\,d\mathbf{x}).
+\end{aligned}
+\]
+For the first term,
+\[
+    \tr((d\mathbf{x})^{\top} A\mathbf{x})
+    =
+    \tr(((d\mathbf{x})^{\top} A\mathbf{x})^{\top})
+    =
+    \tr(\mathbf{x}^{\top} A^{\top} d\mathbf{x}).
+\]
+Hence
+\[
+\begin{aligned}
+    df
+    &=
+    \tr(\mathbf{x}^{\top} A^{\top} d\mathbf{x})+\tr(\mathbf{x}^{\top} A\,d\mathbf{x})\\
+    &=
+    \tr\bigl(\mathbf{x}^{\top}(A^{\top}+A)d\mathbf{x}\bigr).
+\end{aligned}
+\]
+Comparing this with $df=\tr((\nabla_{\mathbf{x}} f)^{\top} d\mathbf{x})$ gives
+\[
+    (\nabla_{\mathbf{x}} f)^{\top}=\mathbf{x}^{\top}(A^{\top}+A).
+\]
+Therefore
+\[
+    \nabla_{\mathbf{x}} f=(A+A^{\top})\mathbf{x}.
+\]
+If $A=A^{\top}$, this becomes $\nabla_{\mathbf{x}} f=2A\mathbf{x}$.
+\end{pfbox}
+
+
+
+\begin{theorem}
+In each item below, all matrices and vectors other than the displayed variables
+are constant.
+\begin{enumerate}
+    \item If $\mathbf{x}\in\mathbb{R}^n$,
+    $A\in M_{m\times n}(\mathbb{R})$, and
+    $B\in M_{n\times m}(\mathbb{R})$, then
+    \[
+        \frac{\partial(A\mathbf{x})}{\partial\mathbf{x}^{\top}}=A,
+        \qquad
+        \frac{\partial(\mathbf{x}^{\top}B)}{\partial\mathbf{x}}=B.
+    \]
+
+    \item If $\mathbf{x},\mathbf{a}\in\mathbb{R}^n$, then
+    $\displaystyle
+    \frac{\partial}{\partial\mathbf{x}}(\mathbf{a}^{\top}\mathbf{x})
+    =\frac{\partial}{\partial\mathbf{x}}(\mathbf{x}^{\top}\mathbf{a})
+    =\mathbf{a}$.
+
+    \item If $\mathbf{x}\in\mathbb{R}^m$,
+    $\mathbf{y}\in\mathbb{R}^n$, and
+    $A\in M_{m\times n}(\mathbb{R})$, define
+    $f(\mathbf{x},\mathbf{y})=\mathbf{x}^{\top}A\mathbf{y}\in\mathbb{R}$.
+    Then
+    $\frac{\partial f}{\partial\mathbf{x}}=A\mathbf{y}$
+    and $\frac{\partial f}{\partial\mathbf{y}}=A^{\top}\mathbf{x}$.
+
+    \item If $\mathbf{x}\in\mathbb{R}^n$ and $A\in M_n(\mathbb{R})$, then
+    $\displaystyle
+    \frac{\partial}{\partial\mathbf{x}}(\mathbf{x}^{\top}A\mathbf{x})
+    =(A+A^{\top})\mathbf{x}$ and
+    $\displaystyle
+    \frac{\partial^2}{\partial\mathbf{x}\partial\mathbf{x}^{\top}}
+    (\mathbf{x}^{\top}A\mathbf{x})=A+A^{\top}$.
+
+    \item If $X,A\in M_{m\times n}(\mathbb{R})$, then
+    $\displaystyle \frac{\partial}{\partial X}\tr(A^{\top}X)=A$.
+
+    \item If $X\in M_{m\times n}(\mathbb{R})$, then
+    $\displaystyle
+    \frac{\partial}{\partial X}\left(\frac{1}{2}\norm{X}_F^2\right)=X$.
+
+    \item If $X\in M_{m\times n}(\mathbb{R})$,
+    $A\in M_{p\times m}(\mathbb{R})$,
+    $B\in M_{n\times q}(\mathbb{R})$, and
+    $C\in M_{p\times q}(\mathbb{R})$, then
+    $\displaystyle
+    \frac{\partial}{\partial X}\left(\frac{1}{2}\norm{AXB-C}_F^2\right)
+    =A^{\top}(AXB-C)B^{\top}$.
+
+    % \item If $X\in M_{m\times n}(\mathbb{R})$, $A\in M_m(\mathbb{R})$,
+    % and $B\in M_n(\mathbb{R})$, then
+    % \[
+    %     \frac{\partial}{\partial X}\tr(X^{\top}AXB)
+    %     =AXB+A^{\top}XB^{\top}.
+    % \]
+\end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+For (1), define
+\[
+    F(\mathbf{x})=A\mathbf{x},
+    \qquad
+    G(\mathbf{x})=\mathbf{x}^{\top}B.
+\]
+The preceding proposition gives
+$\partial F/\partial\mathbf{x}^{\top}=A$. Moreover,
+$G^{\top}(\mathbf{x})=B^{\top}\mathbf{x}$, so
+\[
+    \frac{\partial G}{\partial\mathbf{x}}
+    =
+    \left(
+        \frac{\partial G^{\top}}{\partial\mathbf{x}^{\top}}
+    \right)^{\top}
+    =(B^{\top})^{\top}
+    =B.
+\]
+For (2), let
+$f(\mathbf{x})=\mathbf{a}^{\top}\mathbf{x}=\mathbf{x}^{\top}\mathbf{a}$. Then
+\[
+    df=\tr(\mathbf{a}^{\top}d\mathbf{x}),
+\]
+so $\frac{\partial f}{\partial\mathbf{x}}
+=(\mathbf{a}^{\top})^{\top}=\mathbf{a}$.
+
+For (3), the product rule gives
+\[
+    df
+    =
+    (d\mathbf{x})^{\top}A\mathbf{y}
+    +\mathbf{x}^{\top}A\,d\mathbf{y}
+    =
+    (A\mathbf{y})^{\top}d\mathbf{x}
+    +(A^{\top}\mathbf{x})^{\top}d\mathbf{y}.
+\]
+Since $\mathbf{x}$ and $\mathbf{y}$ are both column variables, their total
+differential has the standard form
+\[
+    df
+    =
+    \left(\frac{\partial f}{\partial\mathbf{x}}\right)^{\top}d\mathbf{x}
+    +
+    \left(\frac{\partial f}{\partial\mathbf{y}}\right)^{\top}d\mathbf{y}.
+\]
+Comparing the coefficients of $d\mathbf{x}$ and $d\mathbf{y}$ identifies both
+vector partial derivatives. 
+
+For (5), let $f(X)=\tr(A^{\top}X)$. Then
+\[
+    df=\tr(A^{\top}dX),
+\]
+so $\frac{\partial f}{\partial X}=A$. The equivalent formula follows by
+replacing $A^{\top}$ with $A$.
+
+% For (8), use the product rule and cyclicity of trace:
+% \[
+% \begin{aligned}
+%     d\tr(X^{\top}AXB)
+%     &=\tr((dX)^{\top}AXB)+\tr(X^{\top}A\,dX B)\\
+%     &=\tr\left((AXB+A^{\top}XB^{\top})^{\top}dX\right).
+% \end{aligned}
+% \]
+% Therefore
+% \[
+%     \frac{\partial}{\partial X}\tr(X^{\top}AXB)
+%     =AXB+A^{\top}XB^{\top}.
+% \]
+Parts (4), (6), (7) were proved earlier.
+Note that every function in parts (2)--(7) is scalar-valued. Under our column convention,
+the vector or matrix obtained by collecting its partial derivatives is exactly
+its gradient; that is,
+\[
+    \frac{\partial f}{\partial\mathbf{x}}=\nabla_{\mathbf{x}}f,
+    \qquad
+    \frac{\partial f}{\partial\mathbf{y}}=\nabla_{\mathbf{y}}f,
+    \qquad
+    \frac{\partial f}{\partial X}=\nabla_Xf.
+\]
+\end{pfbox}
+
+% \begin{remark}
+% A simple application of (8) is multivariate linear regression. For observation $i$,
+% let $\mathbf{z}_i\in\mathbb{R}^k$ contain its $k$ regressors and let
+% $\mathbf{y}_i\in\mathbb{R}^q$ contain its $q$ outcomes. The model is
+% \[
+%     \mathbf{y}_i
+%     =
+%     \Gamma^{\top}\mathbf{z}_i+\mathbf{e}_i,
+%     \qquad
+%     \mathbb{E}(\mathbf{e}_i)=0,
+%     \qquad
+%     \operatorname{Cov}(\mathbf{e}_i)=\Sigma\succ0,
+% \]
+% where $\Gamma\in M_{k\times q}(\mathbb{R})$ is the coefficient matrix and
+% $\Sigma\in M_q(\mathbb{R})$ is the covariance matrix of the $q$ errors. Stacking the $n$ observations gives $Y=Z\Gamma+E$.
+
+% Here $Y\in M_{n\times q}(\mathbb{R})$ has row $\mathbf{y}_i^{\top}$,
+% $E\in M_{n\times q}(\mathbb{R})$ has row $\mathbf{e}_i^{\top}$, and the
+% \emph{design matrix} $Z\in M_{n\times k}(\mathbb{R})$ has row
+% $\mathbf{z}_i^{\top}$. Thus each row of $Z$ records the regressors for one
+% observation; its first column is usually all ones when the model has an
+% intercept. Each column of $\Gamma$ contains the coefficients for one outcome.
+
+% To estimate $\Gamma$, we minimize the residual criterion, i.e. the loss function
+% measuring how far the fitted value $Z\Gamma$ is from the observed outcome $Y$:
+% \[
+%     Q(\Gamma)
+%     =
+%     \frac12\tr\left(
+%         (Y-Z\Gamma)^{\top}(Y-Z\Gamma)\Sigma^{-1}
+%     \right).
+% \]
+% Writing it out,
+% \[
+% \begin{aligned}
+%     Q(\Gamma)
+%     &=
+%     \frac12\tr(Y^{\top}Y\Sigma^{-1})
+%     -\frac12\tr(Y^{\top}Z\Gamma\Sigma^{-1})
+%     -\frac12\tr(\Gamma^{\top}Z^{\top}Y\Sigma^{-1}) \\
+%     &\qquad
+%     +\underbrace{
+%         \frac12\tr\left(\Gamma^{\top}(Z^{\top}Z)\Gamma\Sigma^{-1}\right)
+%     }_{\text{the quadratic term in }\Gamma}.
+% \end{aligned}
+% \]
+% Only the last term uses item (8):
+% \[
+% \begin{aligned}
+%     \nabla_{\Gamma}
+%     \frac12\tr\left(\Gamma^{\top}(Z^{\top}Z)\Gamma\Sigma^{-1}\right)
+%     &=
+%     \frac12\left[
+%         (Z^{\top}Z)\Gamma\Sigma^{-1}
+%         +(Z^{\top}Z)^{\top}\Gamma(\Sigma^{-1})^{\top}
+%     \right]  \\
+%     &=
+%     Z^{\top}Z\Gamma\Sigma^{-1},
+% \end{aligned}
+% \]
+% because $Z^{\top}Z$ and $\Sigma^{-1}$ are symmetric. The first term is constant
+% in $\Gamma$, and the two linear terms give $-Z^{\top}Y\Sigma^{-1}$. Hence
+% \[
+%     \nabla_{\Gamma}Q
+%     =
+%     Z^{\top}(Z\Gamma-Y)\Sigma^{-1}.
+% \]
+% Since $\Sigma^{-1}$ is invertible, setting the gradient equal to zero gives
+% $Z^{\top}Z\widehat\Gamma=Z^{\top}Y$. If $Z$ has full column rank, then
+% \[
+%     \widehat\Gamma
+%     =
+%     (Z^{\top}Z)^{-1}Z^{\top}Y.
+% \]
+% Thus this is ordinary OLS applied separately to each outcome column. The
+% covariance $\Sigma$ affects the uncertainty of the estimates, but it cancels
+% from the coefficient formula because every outcome uses the same design matrix
+% $Z$.
+% \end{remark}
+
+
+\begin{remark}[Derivative-layout convention]
+The transpose records the \emph{layout} of the derivative. For a scalar-valued function
+$f:\mathbb{R}^n\to\mathbb{R}$, we use the column-gradient convention
+\[
+    df
+    =
+    \left(\frac{\partial f}{\partial\mathbf{x}}\right)^{\top}d\mathbf{x},
+    \qquad
+    \frac{\partial f}{\partial\mathbf{x}}\in\mathbb{R}^n.
+\]
+For a column-vector-valued function
+$F:\mathbb{R}^n\to\mathbb{R}^m$, its derivative must instead be an
+$m\times n$ matrix that acts on $d\mathbf{x}$:
+\[
+    dF
+    =
+    \underbrace{\frac{\partial F}{\partial\mathbf{x}^{\top}}}_{J_F\in M_{m\times n}(\mathbb{R})}
+    d\mathbf{x}.
+\]
+Thus, $\partial F/\partial\mathbf{x}^{\top}$ is the usual $m\times n$
+Jacobian, whose rows correspond to the components $F_i$ and whose columns
+correspond to the variables $x_j$. For a row-vector-valued function
+$G:\mathbb{R}^n\to\mathbb{R}^{1\times m}$, we instead define
+\[
+    dG
+    =
+    d\mathbf{x}^{\top}
+    \underbrace{\frac{\partial G}{\partial\mathbf{x}}}_{\in M_{n\times m}(\mathbb{R})},
+\]
+so that the output remains a row vector. Consequently,
+\[
+    d(A\mathbf{x})=A\,d\mathbf{x}
+    \quad\Longrightarrow\quad
+    \frac{\partial(A\mathbf{x})}{\partial\mathbf{x}^{\top}}=A,
+    \qquad
+    d(\mathbf{x}^{\top}B)=d\mathbf{x}^{\top}B
+    \quad\Longrightarrow\quad
+    \frac{\partial(\mathbf{x}^{\top}B)}{\partial\mathbf{x}}=B.
+\]
+This is the layout convention used throughout this section. Equivalently, one
+may first transpose the row-valued function and compute the ordinary Jacobian
+of $G^{\top}=B^{\top}\mathbf{x}$, then transpose the result back to the
+row-output layout:
+\[
+    \frac{\partial G}{\partial\mathbf{x}}
+    =
+    \left(
+        \frac{\partial G^{\top}}{\partial\mathbf{x}^{\top}}
+    \right)^{\top}
+    =
+    (B^{\top})^{\top}
+    =B.
+\]
+\end{remark}
+
+\subsubsection*{Invertible matrices}
+
+The following formulas apply to functions whose domain is the set of invertible matrices
+\[
+    GL_n(\mathbb{R})=\{X\in M_n(\mathbb{R}):\det X\ne 0\},
+\]
+called the general linear group over $\mathbb{R}$.
+
+\begin{theorem}[Inversion]
+The inversion map $X\mapsto X^{-1}$ on $GL_n(\mathbb{R})$ satisfies
+\[
+    d(X^{-1})=-X^{-1}(dX)X^{-1}.
+\]
+\end{theorem}
+
+\begin{pfbox}
+Start from the identity $X^{-1}X=I$. Differentiating both sides gives
+$d(X^{-1})\,X+X^{-1}dX=0$, hence $d(X^{-1})\,X=-X^{-1}dX$.
+Multiplying on the right by $X^{-1}$ gives
+\[
+    d(X^{-1})=-X^{-1}(dX)X^{-1}.
+\]
+The inversion map is matrix-valued, not scalar-valued, so we talk about its derivative or differential, not its gradient.
+\end{pfbox}
+
+Set $GL_n^+(\mathbb{R})=\{X\in GL_n(\mathbb{R}):\det X>0\}$.
+
+\begin{theorem}[Log-determinant]
+The function $f:GL_n^+(\mathbb{R})\to\mathbb{R}$ defined by $f(X)=\log\det X$ has gradient
+\[
+    \nabla_X(\log\det X)=(X^{-1})^{\top}.
+\]
+Equivalently,
+\[
+    d(\log\det X)=\tr(X^{-1}dX).
+\]
+\end{theorem}
+
+\begin{pfbox}
+Let $f(X)=\log\det X$. For a small matrix $H$,
+\[
+\begin{aligned}
+    f(X+H)-f(X)
+    &=
+    \log\det(X+H)-\log\det X\\
+    &=
+    \log\det\bigl(X(I+X^{-1}H)\bigr)-\log\det X\\
+    &=
+    \log\det X+
+    \log\det(I+X^{-1}H)-\log\det X\\
+    &=
+    \log\det(I+X^{-1}H).
+\end{aligned}
+\]
+Now put $K=X^{-1}H$. We claim that
+\[
+    \det(I+K)=1+\tr(K)+O(\norm{K}_F^2).
+\]
+Let $\operatorname{Spec}(K)=\{\lambda_1,\ldots,\lambda_n\}$, counted
+with algebraic multiplicity. Then
+\[
+\begin{aligned}
+    \det(I+K)
+    &=
+    \prod_{i=1}^n(1+\lambda_i)                                  \\
+    &=
+    1+\sum_{i=1}^n\lambda_i+\text{higher-order terms}             \\
+    &=
+    1+\tr(K)+O(\norm{K}_F^2).
+\end{aligned}
+\]
+The higher-order terms are sums of products of at least two eigenvalues, hence
+are $O(\norm{K}_F^2)$ since $|\lambda_i|\le\norm{K}_F\le\norm{X^{-1}}\norm{H}_F\to 0$ as $H\to 0$.
+
+Next write $u=\tr(K)+O(\norm{K}_F^2)$. The one-variable Taylor expansion of
+$g(u)=\log(1+u)$ at $u=0$ gives $g(0)=0$ and $g'(0)=1$, so
+$\log(1+u)=u+O(u^2)$ as $u\to0$. Hence
+\[
+\begin{aligned}
+    \log\det(I+K)
+    &=
+    \log\bigl(1+\tr(K)+O(\norm{K}_F^2)\bigr)\\
+    &= 
+    \tr(K)+O(\norm{K}_F^2),
+\end{aligned}
+\]
+where $O(\norm{K}_F^2)=O(\norm{H}_F^2)=o(\norm{H}_F)$. Therefore
+\[
+    f(X+H)-f(X)
+    =
+    \tr(X^{-1}H)+o(\norm{H}_F).
+\]
+In differential notation, $df=\tr(X^{-1}dX)$, so $\nabla_X f=(X^{-1})^{\top}$.
+\end{pfbox}
+
+\begin{corollary}[Determinant]
+On $GL_n^+(\mathbb{R})$,
+$d(\det X)=\det(X)\tr(X^{-1}dX),\quad\nabla_X\det X=\det(X)X^{-\top}$.
+\end{corollary}
+
+\begin{pfbox}
+    Chain Rule.
+\end{pfbox}
+
+\subsubsection*{Hessian}
+
+The Hessian describes how the gradient changes. In one variable, $f'(x)$
+measures slope, while $f''(x)$ measures how the slope changes. In several
+variables, the same idea remains true: the gradient gives the first-order
+change of the function, and the Hessian gives the first-order change of the
+gradient.
+
+\paragraph*{Vector Variable}
+
+Let $U\subseteq\mathbb{R}^n$ be open and let $f:U\to\mathbb{R}$ be
+differentiable. For $\mathbf{x}\in U$, the derivative of $f$ at $\mathbf{x}$ is
+the linear map $df_{\mathbf{x}}:\mathbb{R}^n\to\mathbb{R}$ characterized by
+\[
+    f(\mathbf{x}+\mathbf{h})-f(\mathbf{x})
+    =
+    df_{\mathbf{x}}(\mathbf{h})
+    +
+    o(\norm{\mathbf{h}}).
+\]
+Since $df_{\mathbf{x}}$ is a linear functional, there exists a unique vector
+$\nabla f(\mathbf{x})\in\mathbb{R}^n$ such that
+\[
+    df_{\mathbf{x}}(\mathbf{h})
+    =
+    \innerproduct{\nabla f(\mathbf{x})}{\mathbf{h}}.
+\]
+Thus the first-order approximation of $f$ is
+\[
+    f(\mathbf{x}+\mathbf{h})
+    =
+    f(\mathbf{x})
+    +
+    \innerproduct{\nabla f(\mathbf{x})}{\mathbf{h}}
+    +
+    o(\norm{\mathbf{h}}).
+\]
+
+
+
+Now assume $f$ is $C^2$. Then the gradient $\nabla f:U\to\mathbb{R}^n$ is itself
+a differentiable vector-valued function. Its derivative at $\mathbf{x}$ is the
+Hessian matrix
+\[
+    H_f(\mathbf{x})
+    =
+    \left(
+        \frac{\partial^2 f}{\partial x_i\partial x_j}(\mathbf{x})
+    \right)_{i,j}.
+\]
+This means that if we perturb $\mathbf{x}$ in the direction $\mathbf{h}$ by
+replacing it with $\mathbf{x}+t\mathbf{h}$, then
+\[
+    \nabla f(\mathbf{x}+t\mathbf{h})
+    =
+    \nabla f(\mathbf{x})
+    +
+    tH_f(\mathbf{x})\mathbf{h}
+    +
+    o(t).
+\]
+
+\begin{pfbox}
+Let $G(\mathbf{x})=\nabla f(\mathbf{x})$. Since $G$ is differentiable at
+$\mathbf{x}$, we have
+\[
+    G(\mathbf{x}+\mathbf{k})
+    =
+    G(\mathbf{x})
+    +
+    dG_{\mathbf{x}}(\mathbf{k})
+    +
+    o(\norm{\mathbf{k}}).
+\]
+For $G=\nabla f$, the derivative $dG_{\mathbf{x}}$ is represented by the Hessian
+matrix. Hence $dG_{\mathbf{x}}(\mathbf{k})=H_f(\mathbf{x})\mathbf{k}$, so
+\[
+    \nabla f(\mathbf{x}+\mathbf{k})
+    =
+    \nabla f(\mathbf{x})
+    +
+    H_f(\mathbf{x})\mathbf{k}
+    +
+    o(\norm{\mathbf{k}}).
+\]
+Now set $\mathbf{k}=t\mathbf{h}$. Since
+$\norm{\mathbf{k}}=\norm{t\mathbf{h}}=|t|\norm{\mathbf{h}}$, for fixed
+$\mathbf{h}$ the remainder $o(\norm{t\mathbf{h}})$ can be written as $o(t)$.
+Therefore
+\[
+    \nabla f(\mathbf{x}+t\mathbf{h})
+    =
+    \nabla f(\mathbf{x})
+    +
+    tH_f(\mathbf{x})\mathbf{h}
+    +
+    o(t).
+\]
+\end{pfbox}
+
+\begin{definition}[Vector Hessian]
+Let $f:U\to\mathbb{R}$ be $C^2$. The Hessian of $f$ at $\mathbf{x}$ is the linear
+map $\nabla^2 f(\mathbf{x}):\mathbb{R}^n\to\mathbb{R}^n$ defined by
+\[
+    \nabla^2 f(\mathbf{x})[\mathbf{h}]
+    =
+    H_f(\mathbf{x})\mathbf{h}.
+\]
+In coordinates, this is the usual Hessian matrix
+\[
+    H_f(\mathbf{x})
+    =
+    \left(
+        \frac{\partial^2 f}{\partial x_i\partial x_j}(\mathbf{x})
+    \right)_{i,j}.
+\]
+\end{definition}
+
+To understand the Hessian as curvature, fix a point $\mathbf{x}$ and a direction
+$\mathbf{h}$. Define the one-variable function $\phi(t)=f(\mathbf{x}+t\mathbf{h})$.
+Then $\phi$ records the behavior of $f$ along the line through $\mathbf{x}$ in
+the direction $\mathbf{h}$.
+
+By the chain rule, $\phi'(t)=\innerproduct{\nabla f(\mathbf{x}+t\mathbf{h})}{\mathbf{h}}$.
+Using the first-order approximation of the gradient, write
+\[
+    \nabla f(\mathbf{x}+t\mathbf{h})
+    =
+    \nabla f(\mathbf{x})
+    +
+    tH_f(\mathbf{x})\mathbf{h}
+    +
+    \mathbf{r}(t),
+    \qquad
+    \frac{\norm{\mathbf{r}(t)}}{|t|}\to0.
+\]
+Then
+\[
+\begin{aligned}
+    \phi'(t)
+    &=
+    \innerproduct{
+        \nabla f(\mathbf{x})
+        +
+        tH_f(\mathbf{x})\mathbf{h}
+        +
+        \mathbf{r}(t)
+    }{\mathbf{h}}                                                \\[1mm]
+    &=
+    \innerproduct{\nabla f(\mathbf{x})}{\mathbf{h}}
+    +
+    t\innerproduct{H_f(\mathbf{x})\mathbf{h}}{\mathbf{h}}
+    +
+    \innerproduct{\mathbf{r}(t)}{\mathbf{h}}                     \\[1mm]
+    &=
+    \innerproduct{\nabla f(\mathbf{x})}{\mathbf{h}}
+    +
+    t\innerproduct{H_f(\mathbf{x})\mathbf{h}}{\mathbf{h}}
+    +
+    o(t),
+\end{aligned}
+\]
+Indeed, by Cauchy--Schwarz,
+\[
+    \frac{
+        \left|\innerproduct{\mathbf{r}(t)}{\mathbf{h}}\right|
+    }{|t|}
+    \le
+    \frac{\norm{\mathbf{r}(t)}}{|t|}\norm{\mathbf{h}}.
+\]
+Since $\mathbf{h}$ is fixed and $\norm{\mathbf{r}(t)}/|t|\to0$, we get
+$\innerproduct{\mathbf{r}(t)}{\mathbf{h}}=o(t)$.
+Therefore
+\[
+    \phi''(0)
+    =
+    \innerproduct{H_f(\mathbf{x})\mathbf{h}}{\mathbf{h}}
+    =
+    \mathbf{h}^{\top}H_f(\mathbf{x})\mathbf{h}.
+\]
+This number measures the curvature of $f$ at $\mathbf{x}$ along the direction
+$\mathbf{h}$.
+
+
+
+\begin{remark}
+The scalar
+\[
+    q_{\mathbf{x}}(\mathbf{h})
+    =
+    \mathbf{h}^{\top}H_f(\mathbf{x})\mathbf{h}
+\]
+is the quadratic form associated with the Hessian at $\mathbf{x}$. Its sign is
+the second-order curvature of $f$ along the direction $\mathbf{h}$: positive
+means upward, negative means downward, and zero means flat to second order.
+\end{remark}
+
+\begin{proposition}[Second-Order Approximation]
+Let $f:U\to\mathbb{R}$ be $C^2$. Then for small $\mathbf{h}$,
+\[
+    f(\mathbf{x}+\mathbf{h})
+    =
+    f(\mathbf{x})
+    +
+    \innerproduct{\nabla f(\mathbf{x})}{\mathbf{h}}
+    +
+    \frac12\mathbf{h}^{\top}H_f(\mathbf{x})\mathbf{h}
+    +
+    o(\norm{\mathbf{h}}^2).
+\]
+\end{proposition}
+
+\begin{pfbox}
+Define $\phi(t)=f(\mathbf{x}+t\mathbf{h})$. By the one-variable Taylor expansion
+at $t=0$,
+\[
+    \phi(1)
+    =
+    \phi(0)+\phi'(0)+\frac12\phi''(0)+o(\norm{\mathbf{h}}^2).
+\]
+Now $\phi(0)=f(\mathbf{x})$ and $\phi(1)=f(\mathbf{x}+\mathbf{h})$. Also,
+\[
+    \phi'(0)
+    =
+    \innerproduct{\nabla f(\mathbf{x})}{\mathbf{h}},
+    \qquad
+    \phi''(0)
+    =
+    \mathbf{h}^{\top}H_f(\mathbf{x})\mathbf{h}.
+\]
+Substituting these identities gives
+\[
+    f(\mathbf{x}+\mathbf{h})
+    =
+    f(\mathbf{x})
+    +
+    \innerproduct{\nabla f(\mathbf{x})}{\mathbf{h}}
+    +
+    \frac12\mathbf{h}^{\top}H_f(\mathbf{x})\mathbf{h}
+    +
+    o(\norm{\mathbf{h}}^2).
+\]
+\end{pfbox}
+
+
+\paragraph*{Matrix Variable}
+
+Now let $f:M_{m\times n}(\mathbb{R})\to\mathbb{R}$ be a scalar-valued function
+of a matrix variable $X$. 
+
+For a small perturbation $H\in M_{m\times n}(\mathbb{R})$, differentiability
+means
+\[
+    f(X+H)-f(X)
+    =
+    df_X(H)+o(\norm{H}_F).
+\]
+Since $df_X$ is a linear functional on the matrix space, there exists a unique
+matrix $\nabla_X f(X)$ such that
+\[
+    df_X(H)
+    =
+    \innerproduct{\nabla_X f(X)}{H}_F
+    =
+    \operatorname{tr}\left((\nabla_Xf(X))^\top H\right).
+\]
+Therefore
+\[
+    f(X+H)
+    =
+    f(X)
+    +
+    \innerproduct{\nabla_X f(X)}{H}_F
+    +
+    o(\norm{H}_F).
+\]
+
+Now assume $f$ is twice differentiable. The gradient
+$\nabla_X f:M_{m\times n}(\mathbb{R})\to M_{m\times n}(\mathbb{R})$ is a
+matrix-valued function. Therefore its derivative is a linear map from matrix
+directions to matrix directions.
+
+\begin{definition}[Matrix Hessian]
+The Hessian of $f$ at $X$ is the linear operator
+\[
+    \nabla_X^2 f(X):
+    M_{m\times n}(\mathbb{R})\to M_{m\times n}(\mathbb{R})
+\]
+defined by
+\[
+    \nabla_X^2 f(X)[H]
+    =
+    d(\nabla_X f)_X(H).
+\]
+In words, $\nabla_X^2f(X)[H]$ is the first-order change of the gradient when
+$X$ moves in the direction $H$.
+\end{definition}
+
+Thus, if we replace $X$ by $X+tH$, then
+\[
+    \nabla_X f(X+tH)
+    =
+    \nabla_X f(X)
+    +
+    t\nabla_X^2 f(X)[H]
+    +
+    o(t).
+\]
+
+\begin{pfbox}
+Let $G(X)=\nabla_X f(X)$. Since $G$ is differentiable at $X$, we have
+\[
+    G(X+K)
+    =
+    G(X)
+    +
+    dG_X(K)
+    +
+    R(K),
+\]
+where $\norm{R(K)}_F/\norm{K}_F\to 0$ as $K\to 0$.
+By definition, $dG_X(K)=\nabla_X^2 f(X)[K]$.
+
+Now take $K=tH$. Since $\norm{K}_F=\norm{tH}_F=|t|\norm{H}_F$, for fixed $H$ the
+remainder satisfies $\norm{R(tH)}_F/|t|\to 0$. Hence $R(tH)=o(t)$, and therefore
+\[
+    \nabla_X f(X+tH)
+    =
+    \nabla_X f(X)
+    +
+    t\nabla_X^2 f(X)[H]
+    +
+    o(t).
+\]
+\end{pfbox}
+
+To interpret the matrix Hessian as curvature, fix a matrix direction $H$ and
+define the one-variable function $\phi(t)=f(X+tH)$. Then
+$\phi'(t)=\innerproduct{\nabla_X f(X+tH)}{H}_F$. Using the first-order
+approximation of the gradient,
+\[
+\begin{aligned}
+    \phi'(t)
+    &=
+    \innerproduct{
+        \nabla_X f(X)
+        +
+        t\nabla_X^2f(X)[H]
+        +
+        o(t)
+    }{H}_F                                                       \\[1mm]
+    &=
+    \innerproduct{\nabla_X f(X)}{H}_F
+    +
+    t\innerproduct{\nabla_X^2f(X)[H]}{H}_F
+    +
+    o(t).
+\end{aligned}
+\]
+Therefore
+\[
+    \phi''(0)
+    =
+    \innerproduct{\nabla_X^2f(X)[H]}{H}_F.
+\]
+This is the matrix-variable analogue of
+$\mathbf{h}^\top H_f(\mathbf{x})\mathbf{h}$.
+
+
+
+\begin{proposition}[Second-Order Approximation for Matrix Variables]
+Let $f:M_{m\times n}(\mathbb{R})\to\mathbb{R}$ be twice differentiable. Then
+\[
+    f(X+H)
+    =
+    f(X)
+    +
+    \innerproduct{\nabla_X f(X)}{H}_F
+    +
+    \frac12\innerproduct{\nabla_X^2f(X)[H]}{H}_F
+    +
+    o(\norm{H}_F^2).
+\]
+\end{proposition}
+
+\begin{pfbox}
+Define $\phi(t)=f(X+tH)$. By the one-variable Taylor expansion,
+\[
+    \phi(1)
+    =
+    \phi(0)+\phi'(0)+\frac12\phi''(0)+o(\norm{H}_F^2).
+\]
+Now $\phi(0)=f(X)$ and $\phi(1)=f(X+H)$. Moreover,
+\[
+    \phi'(0)
+    =
+    \innerproduct{\nabla_X f(X)}{H}_F,
+    \qquad
+    \phi''(0)
+    =
+    \innerproduct{\nabla_X^2f(X)[H]}{H}_F.
+\]
+Substituting these into the Taylor expansion gives
+\[
+    f(X+H)
+    =
+    f(X)
+    +
+    \innerproduct{\nabla_X f(X)}{H}_F
+    +
+    \frac12\innerproduct{\nabla_X^2f(X)[H]}{H}_F
+    +
+    o(\norm{H}_F^2).
+\]
+\end{pfbox}
+
+\begin{proposition}[Hessian of Affine Matrix Least Squares]
+Let
+\[
+    f(X)
+    =
+    \frac12\norm{AXB-C}_F^2.
+\]
+Then
+\[
+    \nabla_X f(X)
+    =
+    A^\top(AXB-C)B^\top,
+\]
+and
+\[
+    \nabla_X^2 f(X)[H]
+    =
+    A^\top A H B B^\top.
+\]
+Moreover,
+\[
+    \innerproduct{\nabla_X^2 f(X)[H]}{H}_F
+    =
+    \norm{AHB}_F^2
+    \ge 0.
+\]
+Therefore $f$ is convex in $X$.
+\end{proposition}
+
+\begin{pfbox}
+Let $R(X)=AXB-C$. Then $f(X)=\frac12\norm{R(X)}_F^2$. We already know that
+\[
+    \nabla_X f(X)
+    =
+    A^\top(AXB-C)B^\top.
+\]
+To find the Hessian, we differentiate the gradient.
+
+Replace $X$ by $X+tH$. Then
+\[
+\begin{aligned}
+    \nabla_X f(X+tH)
+    &=
+    A^\top\bigl(A(X+tH)B-C\bigr)B^\top                         \\[1mm]
+    &=
+    A^\top(AXB-C)B^\top
+    +
+    tA^\top AHB B^\top                                          \\[1mm]
+    &=
+    \nabla_X f(X)
+    +
+    tA^\top AHB B^\top.
+\end{aligned}
+\]
+Comparing this with
+\[
+    \nabla_X f(X+tH)
+    =
+    \nabla_X f(X)
+    +
+    t\nabla_X^2 f(X)[H]
+    +
+    o(t),
+\]
+we obtain
+\[
+    \nabla_X^2 f(X)[H]
+    =
+    A^\top AHB B^\top.
+\]
+
+Now compute the curvature in the direction $H$:
+\[
+\begin{aligned}
+    \innerproduct{\nabla_X^2 f(X)[H]}{H}_F
+    &=
+    \innerproduct{A^\top AHB B^\top}{H}_F                       \\[1mm]
+    &=
+    \operatorname{tr}\left((A^\top AHB B^\top)^\top H\right)     \\[1mm]
+    &=
+    \operatorname{tr}\left(BB^\top H^\top A^\top AH\right)       \\[1mm]
+    &=
+    \operatorname{tr}\left(B^\top H^\top A^\top AHB\right)        \\[1mm]
+    &=
+    \operatorname{tr}\left((AHB)^\top(AHB)\right)                \\[1mm]
+    &=
+    \norm{AHB}_F^2
+    \ge 0.
+\end{aligned}
+\]
+Hence the curvature is nonnegative in every direction $H$. Therefore the
+least-squares objective is convex in $X$.
+\end{pfbox}
+
+\begin{remark}
+This proposition is important because it turns a least-squares problem into a
+curvature statement. The Hessian is the linear operator
+\[
+    L(H)=A^\top AHB B^\top.
+\]
+Its quadratic form is
+\[
+    \innerproduct{L(H)}{H}_F=\norm{AHB}_F^2\ge0,
+\]
+so the least-squares objective is convex. Hence solving
+$\nabla_X f(X)=0$ gives a global minimizer, not merely a local candidate. If
+$AHB=\mathbf O$ only when $H=\mathbf O$, then the curvature is positive in
+every nonzero direction, so the minimizer is unique.
+\end{remark}
+
+\begin{gbox}
+The main points of this section are:
+\begin{enumerate}
+    \item The Hessian is the derivative of the gradient. For vectors,
+    \[
+        \nabla f(\mathbf{x}+t\mathbf{h})
+        =
+        \nabla f(\mathbf{x})
+        +
+        tH_f(\mathbf{x})\mathbf{h}
+        +
+        o(t).
+    \]
+    For matrices,
+    \[
+        \nabla_X f(X+tH)
+        =
+        \nabla_X f(X)
+        +
+        t\nabla_X^2f(X)[H]
+        +
+        o(t).
+    \]
+
+    \item Curvature is obtained by pairing the Hessian output with the original
+    direction:
+    \[
+        \mathbf{h}^\top H_f(\mathbf{x})\mathbf{h},
+        \qquad
+        \innerproduct{\nabla_X^2f(X)[H]}{H}_F.
+    \]
+    Nonnegative curvature in every direction is the second-order meaning of
+    convexity.
+
+    \item For $f(X)=\frac12\norm{AXB-C}_F^2$,
+    \[
+        \nabla_X^2f(X)[H]=A^\top AHB B^\top,
+        \qquad
+        \innerproduct{\nabla_X^2f(X)[H]}{H}_F=\norm{AHB}_F^2\ge0.
+    \]
+    Hence least-squares objectives are convex, and solving $\nabla_Xf=0$ gives
+    a global minimizer in the unconstrained case.
+\end{enumerate}
+\end{gbox}
+
+
+
+
+
+
+\subsection{Applications}
+
+\subsubsection*{Deriving Estimators}
+
+Consider the linear regression model written in matrix form
+\[
+    \mathbf{y}=X\boldsymbol{\beta}+\boldsymbol{\varepsilon},
+\]
+where $\mathbf{y}\in\mathbb{R}^n$, $X\in M_{n\times k}(\mathbb{R})$, $\boldsymbol{\beta}\in\mathbb{R}^k$, and $\boldsymbol{\varepsilon}\in\mathbb{R}^n$.
+The sum of squared errors is
+\[
+    SSE(\boldsymbol{\beta})
+    =
+    \sum_{i=1}^n(y_i-\mathbf{x}_i^{\top}\boldsymbol{\beta})^2
+    =
+    \norm{\mathbf{y}-X\boldsymbol{\beta}}^2.
+\]
+Here $\mathbf{x}_i^{\top}$ is the $i$-th row of $X$.
+
+\begin{theorem}[OLS estimator]
+If $\rank(X)=k$, then
+\[
+    \widehat{\boldsymbol{\beta}}_{OLS}=(X^{\top}X)^{-1}X^{\top}\mathbf{y}.
+\]
+\end{theorem}
+
+\begin{remark}
+    This is just a special case of proposition~\eqref{affine least square}.
+\end{remark}
+
+\begin{pfbox}
+Write
+\[
+    SSE(\boldsymbol{\beta})= \norm{X\boldsymbol{\beta}-\mathbf{y}}^2 = \tr((X\boldsymbol{\beta}-\mathbf{y})^{\top}(X\boldsymbol{\beta}-\mathbf{y})).
+\]
+Since $d(X\boldsymbol{\beta})=X\,d\boldsymbol{\beta}$,
+\[
+\begin{aligned}
+    dSSE(\boldsymbol{\beta})
+    &=
+    \tr(d(X\boldsymbol{\beta})^{\top}(X\boldsymbol{\beta}-\mathbf{y}))
+    +
+    \tr((X\boldsymbol{\beta}-\mathbf{y})^{\top}d(X\boldsymbol{\beta}))\\
+    &=
+    \tr((X\,d\boldsymbol{\beta})^{\top}(X\boldsymbol{\beta}-\mathbf{y}))
+    +
+    \tr((X\boldsymbol{\beta}-\mathbf{y})^{\top}X\,d\boldsymbol{\beta})\\
+    &=
+    2\tr((X\boldsymbol{\beta}-\mathbf{y})^{\top}X\,d\boldsymbol{\beta}).
+\end{aligned}
+\]
+Therefore
+\[
+    \nabla_{\boldsymbol{\beta}} SSE
+    =
+    \bigl(2(X\boldsymbol{\beta}-\mathbf{y})^{\top}X\bigr)^{\top}
+    =
+    2X^{\top}(X\boldsymbol{\beta}-\mathbf{y}).
+\]
+At the minimizer,
+\[
+    2X^{\top}(X\widehat{\boldsymbol{\beta}}-\mathbf{y})=0.
+\]
+Thus
+\[
+    X^{\top}X\widehat{\boldsymbol{\beta}}=X^{\top}\mathbf{y}.
+\]
+Since $\rank(X)=k$, the matrix $X^{\top}X$ is invertible. Hence
+\[
+    \widehat{\boldsymbol{\beta}}_{OLS}=(X^{\top}X)^{-1}X^{\top}\mathbf{y}.
+\]
+
+The matrix equation is the same as the summation version. Indeed,
+\[
+    X^{\top}X=\sum_{i=1}^n \mathbf{x}_i\mathbf{x}_i^{\top},
+    \qquad
+    X^{\top}\mathbf{y}=\sum_{i=1}^n \mathbf{x}_i y_i.
+\]
+Therefore,\\
+the normal equation $X^{\top}X\widehat{\boldsymbol{\beta}}=X^{\top}\mathbf{y}$ is exactly $\left(\displaystyle\sum_{i=1}^n \mathbf{x}_i\mathbf{x}_i^{\top}\right)\widehat{\boldsymbol{\beta}}=\displaystyle\sum_{i=1}^n \mathbf{x}_i y_i$.
+\end{pfbox}
+
+\begin{remark}
+The notation $SSE(\boldsymbol{\beta})$ emphasizes the squared-error criterion as
+a function of an arbitrary coefficient vector:
+\[
+    SSE(\boldsymbol{\beta})
+    =
+    \sum_{i=1}^n
+    (y_i-\mathbf{x}_i^{\top}\boldsymbol{\beta})^2.
+\]
+After an estimator $\widehat{\boldsymbol{\beta}}$ is chosen, the same quantity
+is often called the residual sum of squares:
+\[
+    RSS
+    =
+    RSS(\widehat{\boldsymbol{\beta}})
+    =
+    SSE(\widehat{\boldsymbol{\beta}})
+    =
+    \sum_{i=1}^n \widehat e_i^2.
+\]
+Thus $SSE$ emphasizes the objective function, while $RSS$ emphasizes the fitted
+residuals. Many texts use the two names interchangeably.
+\end{remark}
+
+
+
+
+
+\begin{definition}[Likelihood and log-likelihood]
+For fixed data $z_1,\ldots,z_n$ with density or probability mass function
+$f(z;\theta)$, define
+\[
+    L(\theta)=\prod_{i=1}^n f(z_i;\theta),
+    \qquad
+    \mathcal{L}(\theta)=\log L(\theta)
+    =
+    \sum_{i=1}^n \log f(z_i;\theta).
+\]
+Since $\log$ is increasing, maximizing $L(\theta)$ is equivalent to maximizing
+$\mathcal{L}(\theta)$.
+\end{definition}
+
+
+\begin{theorem}[Normal Regression]
+Condition on fixed regressors $\mathbf{x}_1,\ldots,\mathbf{x}_n\in\mathbb{R}^k$.
+Suppose
+\[
+    y_i=\mathbf{x}_i^{\top}\boldsymbol{\beta}+e_i,
+    \qquad
+    e_i\iid N(0,\sigma^2).
+\]
+Equivalently, $y_i\iid\mathbf{x}_i\sim N(\mathbf{x}_i^{\top}\boldsymbol{\beta},\sigma^2)$. If $\sum_{i=1}^n\mathbf{x}_i\mathbf{x}_i^{\top}$ is invertible, then
+\[
+    \widehat{\boldsymbol{\beta}}_{MLE}=\widehat{\boldsymbol{\beta}}_{OLS}
+    =
+    \left(\sum_{i=1}^n \mathbf{x}_i\mathbf{x}_i^{\top}\right)^{-1}
+    \left(\sum_{i=1}^n \mathbf{x}_i y_i\right),
+    \qquad
+    \widehat\sigma^2_{MLE}
+    =
+    \frac{1}{n}\sum_{i=1}^n\widehat e_i^2,
+\]
+where
+\[
+    \widehat e_i=y_i-\mathbf{x}_i^{\top}\widehat{\boldsymbol{\beta}}_{MLE}.
+\]
+\end{theorem}
+
+\begin{pfbox}
+For one observation,
+\[
+    f(y_i\mid\mathbf{x}_i;\boldsymbol{\beta},\sigma^2)
+    =
+    \frac{1}{\sqrt{2\pi\sigma^2}}
+    \exp\left(
+        -\frac{1}{2\sigma^2}
+        (y_i-\mathbf{x}_i^{\top}\boldsymbol{\beta})^2
+    \right).
+\]
+Thus
+\[
+    L(\boldsymbol{\beta},\sigma^2)
+    =
+    \prod_{i=1}^n f(y_i\mid\mathbf{x}_i;\boldsymbol{\beta},\sigma^2),
+\]
+and the log-likelihood is, up to an additive constant $C$,
+\[
+    \mathcal{L}(\boldsymbol{\beta},\sigma^2)
+    =
+    C
+    -
+    \frac{n}{2}\log\sigma^2
+    -
+    \frac{1}{2\sigma^2}
+    \sum_{i=1}^n(y_i-\mathbf{x}_i^{\top}\boldsymbol{\beta})^2.
+\]
+
+For fixed $\sigma^2$, put $r_i=\mathbf{x}_i^{\top}\boldsymbol{\beta}-y_i$.
+Then $(y_i-\mathbf{x}_i^{\top}\boldsymbol{\beta})^2=r_i^2$ and
+$dr_i=\mathbf{x}_i^{\top}d\boldsymbol{\beta}$. Since $r_i$ is a scalar,
+\[
+\begin{aligned}
+    d(r_i^2)
+    &=
+    d\,\tr(r_i^{\top}r_i)                                      \\
+    &=
+    \tr((dr_i)^{\top}r_i)+\tr(r_i^{\top}dr_i)                    \\
+    &=
+    2r_i\mathbf{x}_i^{\top}d\boldsymbol{\beta}.
+\end{aligned}
+\]
+Therefore
+\[
+\begin{aligned}
+    d_{\boldsymbol{\beta}}\mathcal{L}
+    &=
+    -\frac{1}{2\sigma^2}\sum_{i=1}^n
+    2r_i\mathbf{x}_i^{\top}d\boldsymbol{\beta}                  \\
+    &=
+    \tr\left(
+        -\frac{1}{\sigma^2}
+        \sum_{i=1}^n r_i\mathbf{x}_i^{\top}
+        d\boldsymbol{\beta}
+    \right).
+\end{aligned}
+\]
+Comparing with
+$d_{\boldsymbol{\beta}}\mathcal{L}=(\nabla_{\boldsymbol{\beta}}\mathcal{L})^{\top}d\boldsymbol{\beta}$,
+we read off
+\[
+    (\nabla_{\boldsymbol{\beta}}\mathcal{L})^{\top}
+    =
+    -\frac{1}{\sigma^2}
+    \sum_{i=1}^n r_i\mathbf{x}_i^{\top}.
+\]
+Equivalently,
+\[
+    \nabla_{\boldsymbol{\beta}}\mathcal{L}
+    =
+    -\frac{1}{\sigma^2}
+    \sum_{i=1}^n \mathbf{x}_i r_i
+    =
+    -\frac{1}{\sigma^2}
+    \sum_{i=1}^n \mathbf{x}_i
+    (\mathbf{x}_i^{\top}\boldsymbol{\beta}-y_i).
+\]
+Hence the first-order condition is
+\[
+    -\frac{1}{\sigma^2}
+    \sum_{i=1}^n\mathbf{x}_i(\mathbf{x}_i^{\top}\boldsymbol{\beta}-y_i)
+    =
+    0.
+\]
+Equivalently,
+\[
+    \left(
+        \underbrace{
+            \sum_{i=1}^n \mathbf{x}_i\mathbf{x}_i^{\top}
+        }_{X^{\top}X}
+    \right)\boldsymbol{\beta}
+    =
+    \underbrace{
+        \sum_{i=1}^n \mathbf{x}_i y_i
+    }_{X^{\top}\mathbf{y}}.
+\]
+Hence
+\[
+    \widehat{\boldsymbol{\beta}}_{MLE}
+    =
+    \left(\sum_{i=1}^n \mathbf{x}_i\mathbf{x}_i^{\top}\right)^{-1}
+    \left(\sum_{i=1}^n \mathbf{x}_i y_i\right).
+\]
+This is exactly the OLS estimator.
+
+Next fix $\boldsymbol{\beta}$ and put
+\[
+    RSS(\boldsymbol{\beta})=\sum_{i=1}^n(y_i-\mathbf{x}_i^{\top}\boldsymbol{\beta})^2.
+\]
+Ignoring constants,
+\[
+    \mathcal{L}(\boldsymbol{\beta},\sigma^2)
+    =
+    -\frac{n}{2}\log\sigma^2
+    -
+    \frac{1}{2\sigma^2}RSS(\boldsymbol{\beta}).
+\]
+Treating $\sigma^2$ as the scalar variable,
+\[
+    \frac{\partial \mathcal{L}}{\partial \sigma^2}
+    =
+    -\frac{n}{2}\frac{1}{\sigma^2}
+    +
+    \frac{1}{2}\frac{1}{(\sigma^2)^2}RSS(\boldsymbol{\beta}).
+\]
+The first-order condition is
+\[
+    -\frac{n}{2}\frac{1}{\sigma^2}
+    +
+    \frac{1}{2}\frac{1}{(\sigma^2)^2}RSS(\boldsymbol{\beta})
+    =
+    0.
+\]
+Multiplying by $2(\sigma^2)^2$ gives
+\[
+    -n\sigma^2+RSS(\boldsymbol{\beta})=0.
+\]
+Thus, at $\widehat{\boldsymbol{\beta}}_{MLE}$,
+\[
+    \widehat\sigma^2_{MLE}
+    =
+    \frac{1}{n}RSS(\widehat{\boldsymbol{\beta}}_{MLE})
+    =
+    \frac{1}{n}\sum_{i=1}^n\widehat e_i^2.
+\]
+\end{pfbox}
+
+
+
+\begin{theorem}[MLE Estimator]
+Let $\mathbf{x}_1,\ldots,\mathbf{x}_n\iid N(\boldsymbol{\mu},\Sigma)$, where
+$\mathbf{x}_i\in\mathbb{R}^p$, $\boldsymbol{\mu}\in\mathbb{R}^p$, and
+$\Sigma\in M_p(\mathbb{R})$ is symmetric positive definite. Put
+\[
+    \bar{\mathbf{x}}
+    =
+    \frac{1}{n}\sum_{i=1}^n\mathbf{x}_i,
+    \qquad
+    S
+    =
+    \sum_{i=1}^n
+    (\mathbf{x}_i-\bar{\mathbf{x}})
+    (\mathbf{x}_i-\bar{\mathbf{x}})^{\top}.
+\]
+If $S$ is positive definite, then
+\[
+    \widehat{\boldsymbol{\mu}}_{MLE}
+    =
+    \bar{\mathbf{x}},
+    \qquad
+    \widehat\Sigma_{MLE}
+    =
+    \frac{1}{n}S.
+\]
+\end{theorem}
+
+\begin{pfbox}
+For one observation,
+\[
+    p(\mathbf{x}_i;\boldsymbol{\mu},\Sigma)
+    =
+    \frac{1}{(2\pi)^{p/2}(\det\Sigma)^{1/2}}
+    \exp\left(
+        -\frac{1}{2}
+        (\mathbf{x}_i-\boldsymbol{\mu})^{\top}
+        \Sigma^{-1}
+        (\mathbf{x}_i-\boldsymbol{\mu})
+    \right).
+\]
+Hence
+\[
+    L(\boldsymbol{\mu},\Sigma)
+    =
+    \prod_{i=1}^n p(\mathbf{x}_i;\boldsymbol{\mu},\Sigma),
+\]
+and the log-likelihood is
+\[
+    \mathcal{L}(\boldsymbol{\mu},\Sigma)
+    =
+    C
+    -
+    \frac{n}{2}\log\det\Sigma
+    -
+    \frac{1}{2}\sum_{i=1}^n
+    (\mathbf{x}_i-\boldsymbol{\mu})^{\top}
+    \Sigma^{-1}
+    (\mathbf{x}_i-\boldsymbol{\mu}).
+\]
+Here $C$ does not depend on $\boldsymbol{\mu}$ or $\Sigma$.
+
+First fix $\Sigma$. Since $\Sigma^{-1}$ is symmetric,
+\[
+\begin{aligned}
+    d\left[
+        (\mathbf{x}_i-\boldsymbol{\mu})^{\top}
+        \Sigma^{-1}
+        (\mathbf{x}_i-\boldsymbol{\mu})
+    \right]
+    &=
+    -(d\boldsymbol{\mu})^{\top}\Sigma^{-1}(\mathbf{x}_i-\boldsymbol{\mu})
+    -
+    (\mathbf{x}_i-\boldsymbol{\mu})^{\top}\Sigma^{-1}d\boldsymbol{\mu} \\
+    &=
+    -2(\mathbf{x}_i-\boldsymbol{\mu})^{\top}\Sigma^{-1}d\boldsymbol{\mu}.
+\end{aligned}
+\]
+Therefore
+\[
+\begin{aligned}
+    d_{\boldsymbol{\mu}}\mathcal{L}
+    &=
+    \sum_{i=1}^n
+    (\mathbf{x}_i-\boldsymbol{\mu})^{\top}\Sigma^{-1}d\boldsymbol{\mu} \\
+    &=
+    \left(
+        \Sigma^{-1}\sum_{i=1}^n(\mathbf{x}_i-\boldsymbol{\mu})
+    \right)^{\top}d\boldsymbol{\mu}.
+\end{aligned}
+\]
+Comparing with
+$d_{\boldsymbol{\mu}}\mathcal{L}=(\nabla_{\boldsymbol{\mu}}\mathcal{L})^{\top}d\boldsymbol{\mu}$,
+we get
+\[
+    \nabla_{\boldsymbol{\mu}}\mathcal{L}
+    =
+    \Sigma^{-1}\sum_{i=1}^n(\mathbf{x}_i-\boldsymbol{\mu}).
+\]
+Since $\Sigma$ is invertible, the first-order condition gives
+\[
+    \sum_{i=1}^n\mathbf{x}_i-n\boldsymbol{\mu}=0,
+    \qquad
+    \widehat{\boldsymbol{\mu}}_{MLE}
+    =
+    \frac{1}{n}\sum_{i=1}^n \mathbf{x}_i.
+\]
+
+Now plug in $\widehat{\boldsymbol{\mu}}_{MLE}=\bar{\mathbf{x}}$.
+For each $i$,
+\[
+\begin{aligned}
+    &(\mathbf{x}_i-\widehat{\boldsymbol{\mu}}_{MLE})^{\top}
+    \Sigma^{-1}
+    (\mathbf{x}_i-\widehat{\boldsymbol{\mu}}_{MLE})                 \\
+    &\qquad =
+    \tr\left[
+        (\mathbf{x}_i-\widehat{\boldsymbol{\mu}}_{MLE})^{\top}
+        \Sigma^{-1}
+        (\mathbf{x}_i-\widehat{\boldsymbol{\mu}}_{MLE})
+    \right]                                                        \\
+    &\qquad =
+    \tr\left[
+        \Sigma^{-1}
+        (\mathbf{x}_i-\widehat{\boldsymbol{\mu}}_{MLE})
+        (\mathbf{x}_i-\widehat{\boldsymbol{\mu}}_{MLE})^{\top}
+    \right].
+\end{aligned}
+\]
+Hence, with
+\[
+    S
+    =
+    \sum_{i=1}^n
+    (\mathbf{x}_i-\widehat{\boldsymbol{\mu}}_{MLE})
+    (\mathbf{x}_i-\widehat{\boldsymbol{\mu}}_{MLE})^{\top},
+\]
+we have
+\[
+\begin{aligned}
+    \sum_{i=1}^n
+    d\left[
+        (\mathbf{x}_i-\widehat{\boldsymbol{\mu}}_{MLE})^{\top}
+        \Sigma^{-1}
+        (\mathbf{x}_i-\widehat{\boldsymbol{\mu}}_{MLE})
+    \right]
+    &=
+    d\,\tr(\Sigma^{-1}S)                                      \\
+    &=
+    \tr\bigl(d(\Sigma^{-1})S\bigr)                             \\
+    &=
+    \tr\bigl(-\Sigma^{-1}(d\Sigma)\Sigma^{-1}S\bigr)            \\
+    &=
+    -\tr\bigl(\Sigma^{-1}S\Sigma^{-1}d\Sigma\bigr).
+\end{aligned}
+\]
+where we used $d(\Sigma^{-1})=-\Sigma^{-1}(d\Sigma)\Sigma^{-1}$.
+Together with $d(\log\det\Sigma)=\tr(\Sigma^{-1}d\Sigma)$, this gives
+\[
+    d\mathcal{L}
+    =
+    \tr\left[
+        \left(
+            -\frac{n}{2}\Sigma^{-1}
+            +
+            \frac{1}{2}\Sigma^{-1}S\Sigma^{-1}
+        \right)d\Sigma
+    \right].
+\]
+Hence the first-order condition is
+\[
+    -\frac{n}{2}\Sigma^{-1}
+    +
+    \frac{1}{2}\Sigma^{-1}S\Sigma^{-1}=0.
+\]
+Multiplying by $2$, then by $\Sigma$ on the left and by $\Sigma$ on the right,
+gives
+\[
+    -n\Sigma+S=0.
+\]
+Therefore
+\[
+    \widehat\Sigma_{MLE}
+    =
+    \frac{1}{n}S
+    =
+    \frac{1}{n}\sum_{i=1}^n
+    (\mathbf{x}_i-\widehat{\boldsymbol{\mu}}_{MLE})
+    (\mathbf{x}_i-\widehat{\boldsymbol{\mu}}_{MLE})^{\top}.
+\]
+\end{pfbox}
+
+\begin{remark}
+Let $\mathbf{x}_1,\ldots,\mathbf{x}_n\in\mathbb{R}^p$, and let
+\[
+    S
+    =
+    \sum_{i=1}^n
+    (\mathbf{x}_i-\bar{\mathbf{x}})
+    (\mathbf{x}_i-\bar{\mathbf{x}})^\top
+\]
+be the centered scatter matrix. The covariance MLE is
+\[
+    \widehat{\Sigma}
+    =
+    \frac{1}{n}S.
+\]
+If $S$ is singular, then $\widehat{\Sigma}$ is also singular, so it is not
+positive definite. Hence there is no covariance MLE inside the positive
+definite cone.
+
+In particular, since
+\[
+    \sum_{i=1}^n(\mathbf{x}_i-\bar{\mathbf{x}})=0,
+\]
+the centered vectors $\mathbf{x}_i-\bar{\mathbf{x}}$ span a space of dimension
+at most $n-1$. Therefore
+\[
+    \rank(S)\le n-1.
+\]
+If $n\le p$, then $n-1<p$, so $S$ cannot have full rank $p$. Thus $S$ cannot
+be positive definite. Hence a necessary condition for a positive definite
+covariance MLE in $\mathbb{R}^p$ is $n>p$: the sample size must be larger than
+the dimension, i.e. larger than the number of coordinates to be estimated
+together.
+\end{remark}
+
+
+
+
+
+
+
+
+
+\subsubsection*{Low-rank approximation}
+
+\begin{question}
+Let $A\in M_{m\times n}(\mathbb{R})$ and $r\le\rank(A)$. Find $B\in M_{m\times n}(\mathbb{R})$ with $\rank(B)=r$ such that $\norm{A-B}_F$ is minimized.
+\end{question}
+
+A rank-$r$ matrix can be written in the form
+\[
+    B=XZ^{\top},
+    \qquad
+    X\in M_{m\times r}(\mathbb{R}),
+    \qquad
+    Z\in M_{n\times r}(\mathbb{R}).
+\]
+To see the meaning of this factorization, write $Z=(\mathbf{z}_1,\ldots,\mathbf{z}_r)$ with $\mathbf{z}_j\in\mathbb{R}^n$.
+Then
+\[
+    Z^{\top}=
+    \begin{pmatrix}
+        \mathbf{z}_1^{\top}\\
+        \vdots\\
+        \mathbf{z}_r^{\top}
+    \end{pmatrix}.
+\]
+If $X_i$ denotes the $i$-th row of $X$, then the $i$-th row of $B$ is $B_{i\cdot}=X_iZ^{\top}$,
+which is a linear combination of the rows $\mathbf{z}_1^{\top},\ldots,\mathbf{z}_r^{\top}$.
+Therefore, the row space of $B$ is spanned by $\{\mathbf{z}_1^{\top},\ldots,\mathbf{z}_r^{\top}\}$.
+
+There is redundancy in this description. If $Q\in M_r(\mathbb{R})$ is invertible, then
+\[
+    XZ^{\top}=(XQ)(ZQ^{-\top})^{\top}.
+\]
+So $X$ and $Z$ are not uniquely determined by $B$. To remove part of this redundancy, impose the constraint
+\[
+    Z^{\top}Z=I_r.
+\]
+This means the columns $\mathbf{z}_1,\ldots,\mathbf{z}_r$ of $Z$ are orthonormal. Notice that $Z$ itself is not an orthogonal matrix unless $r=n$, because $Z$ is generally not square.
+
+Thus we study the constrained optimization problem
+\[
+    \text{minimize } f(X,Z)=\frac{1}{2}\norm{A-XZ^{\top}}_F^2
+    \qquad\text{subject to }Z^{\top}Z=I_r.
+\]
+The factor $1/2$ is inserted only to simplify derivatives later. 
+
+Writing $Z=(\mathbf{z}_1,\ldots,\mathbf{z}_r)$, the constraint $Z^{\top}Z=I_r$ means
+\[
+    \mathbf{z}_i^{\top}\mathbf{z}_j=\delta_{ij}
+    \qquad
+    \text{for all }1\le i,j\le r.
+\]
+The scalar constraints are the entries of $Z^{\top}Z-I_r$. We organize the
+corresponding Lagrange multipliers into an $r\times r$ matrix
+$\Lambda=(\lambda_{ij})$. The trace term in the Lagrangian is the Frobenius
+inner product form of all multiplier terms at once. Indeed, if
+$C=Z^{\top}Z-I_r$, then $\tr(\Lambda C)=\innerproduct{\Lambda^{\top}}{C}_F$.
+Since $C$ is symmetric, we may choose $\Lambda$ symmetric. Then
+\[
+    \tr\bigl(\Lambda(Z^{\top}Z-I_r)\bigr)
+    =
+    \innerproduct{\Lambda}{Z^{\top}Z-I_r}_F
+    =
+    \sum_{i=1}^r\sum_{j=1}^r
+    \lambda_{ij}
+    (\mathbf{z}_i^{\top}\mathbf{z}_j-\delta_{ij}).
+\]
+Thus $\frac{1}{2}\tr\bigl(\Lambda(Z^{\top}Z-I_r)\bigr)$ packages all scalar
+constraints $\mathbf{z}_i^{\top}\mathbf{z}_j=\delta_{ij}$ and their Lagrange
+multipliers into one matrix expression. Define
+\[
+    \mathcal{L}(X,Z,\Lambda)
+    =
+    \frac{1}{2}\tr(RR^{\top})
+    -
+    \frac{1}{2}\tr\bigl(\Lambda(Z^{\top}Z-I_r)\bigr),
+\]
+where $R=A-XZ^{\top}$.
+
+\paragraph*{Step 1: First order condition in $X$}
+
+\begin{theorem}[First order condition]
+When $\mathcal{L}$ is minimized, one has $X=AZ$.
+\end{theorem}
+
+\begin{pfbox}
+Regard $Z$ and $\Lambda$ as constants. Since the constraint term does not
+depend on $X$ and $R=A-XZ^{\top}$, we have $d_XR=-dX\,Z^{\top}$. By the
+chain rule and the differential of the squared Frobenius norm,
+\[
+\begin{aligned}
+    d_X\mathcal{L}
+    &=
+    \frac12d_X\tr(RR^{\top})\\
+    &=
+    d_X\left(\frac12\norm{R}_F^2\right)\\
+    &=
+    d_R\left(\frac12\norm{R}_F^2\right)[d_XR]\\
+    &=
+    \innerproduct{R}{-dX\,Z^{\top}}_F\\
+    &=
+    \tr\left(R^{\top}(-dX\,Z^{\top})\right)\\
+    &=
+    -\tr(Z^{\top}R^{\top}dX)
+    =
+    -\tr((RZ)^{\top}dX).
+\end{aligned}
+\]
+Hence $\nabla_X\mathcal{L}=-RZ$. At a minimizer,
+$0=RZ=(A-XZ^{\top})Z=AZ-X$, where $Z^{\top}Z=I_r$ is used in the last
+equality. Thus $X=AZ$.
+\end{pfbox}
+
+\paragraph*{Step 2: Reduction to a problem in $Z$}
+
+\begin{theorem}
+When $X=AZ$, the objective function becomes
+\[
+    f(AZ,Z)
+    =
+    \frac{1}{2}\left(\tr(A^{\top}A)-\tr(Z^{\top}A^{\top}AZ)\right).
+\]
+Therefore minimizing $f(AZ,Z)$ subject to $Z^{\top}Z=I_r$ is equivalent to maximizing
+\[
+    \tr(Z^{\top}A^{\top}AZ)
+    \qquad\text{subject to }Z^{\top}Z=I_r.
+\]
+\end{theorem}
+
+\begin{pfbox}
+At a minimizer in $X$, we have $X=AZ$, so
+$XZ^{\top}=AZZ^{\top}$. Put $P=ZZ^{\top}$. Since $Z^{\top}Z=I_r$,
+$P^{\top}=P$ and $P^2=Z(Z^{\top}Z)Z^{\top}=ZZ^{\top}=P$.
+
+Now $f(AZ,Z)=\frac12\norm{A-AZZ^{\top}}_F^2
+=\frac12\norm{A(I-P)}_F^2$. Using $P^{\top}=P$ and $(I-P)^2=I-P$,
+\[
+\begin{aligned}
+    f(AZ,Z)
+    &=
+    \frac{1}{2}\tr\bigl((A(I-P))^{\top}A(I-P)\bigr)\\
+    &=
+    \frac{1}{2}\tr\bigl((I-P)A^{\top}A(I-P)\bigr)\\
+    &=
+    \frac{1}{2}\tr\bigl(A^{\top}A(I-P)^2\bigr)\\
+    &=
+    \frac{1}{2}\tr\bigl(A^{\top}A(I-P)\bigr)\\
+    &=
+    \frac{1}{2}\left(\tr(A^{\top}A)-\tr(A^{\top}AP)\right).
+\end{aligned}
+\]
+Since $P=ZZ^{\top}$, cyclicity of trace gives
+$\tr(A^{\top}AP)=\tr(Z^{\top}A^{\top}AZ)$. Therefore
+\[
+    f(AZ,Z)
+    =
+    \frac{1}{2}\left(\tr(A^{\top}A)-\tr(Z^{\top}A^{\top}AZ)\right).
+\]
+The first term $\tr(A^{\top}A)$ does not depend on $Z$. Hence minimizing $f(AZ,Z)$ is equivalent to maximizing $\tr(Z^{\top}A^{\top}AZ)$ subject to $Z^{\top}Z=I_r$.
+\end{pfbox}
+
+
+
+\begin{theorem}
+Let $P\in M_n(\mathbb{R})$. If $P^\top=P$ and $P^2=P$, then $P$ is the
+orthogonal projection onto $\Ima(P)$.
+\end{theorem}
+
+\begin{pfbox}
+Suppose $P^\top=P$ and $P^2=P$.
+
+First, $P$ acts as the identity on $\Ima(P)$. Indeed, if
+$\mathbf{y}\in\Ima(P)$, then $\mathbf{y}=P\mathbf{x}$ for some $\mathbf{x}$.
+Hence $P\mathbf{y}=P^2\mathbf{x}=P\mathbf{x}=\mathbf{y}$.
+
+Also, $P$ kills every vector in $\Ker(P)$. If $\mathbf{y}\in\Ker(P)$, then
+$P\mathbf{y}=0$ by definition.
+
+It remains to show that these two subspaces are orthogonal. Let
+$\mathbf{u}\in\Ima(P)$ and $\mathbf{v}\in\Ker(P)$. Then
+$\mathbf{u}=P\mathbf{x}$ for some $\mathbf{x}$, so
+\[
+\begin{aligned}
+    \langle \mathbf{u},\mathbf{v}\rangle=\langle P\mathbf{x},\mathbf{v}\rangle=\langle \mathbf{x},P^\top\mathbf{v}\rangle=\langle \mathbf{x},P\mathbf{v}\rangle=0.
+\end{aligned}
+\]
+Thus $\Ima(P)\perp\Ker(P)$.
+
+Since $P^2=P$, every $\mathbf{x}\in\mathbb{R}^n$ can be decomposed as
+$\mathbf{x}=P\mathbf{x}+(\mathbf{x}-P\mathbf{x})$, where
+$P\mathbf{x}\in\Ima(P)$ and
+\[
+    P(\mathbf{x}-P\mathbf{x})
+    =
+    P\mathbf{x}-P^2\mathbf{x}
+    =
+    0.
+\]
+Hence $\mathbf{x}-P\mathbf{x}\in\Ker(P)$, and therefore
+$\mathbb{R}^n=\Ima(P)\oplus\Ker(P)$. By orthogonal decomposition, we have
+$\Ker(P)=\Ima(P)^\perp$.
+
+Therefore $P$ preserves $\Ima(P)$ and kills $\Ima(P)^\perp$. Hence $P$ is the
+orthogonal projection onto $\Ima(P)$.
+\end{pfbox}
+
+\begin{remark}
+Idempotent alone is not enough to guarantee orthogonal projection. For example,
+let
+$$
+P=
+\begin{pmatrix}
+    1 & 1\\
+    0 & 0
+\end{pmatrix}.
+$$
+Then $P^2=P$, so $P$ is idempotent. However, $P^\top\neq P$, so it is not
+symmetric.
+
+Indeed, $\Ima(P)=\operatorname{span}\{(1,0)^t\}$ and
+$\Ker(P)=\operatorname{span}\{(1,-1)^t\}$. These two subspaces are not
+orthogonal, since $\langle (1,0)^t,(1,-1)^t\rangle=1$. Hence $P$ is a
+projection, but not an orthogonal projection.
+\end{remark}
+
+\begin{remark}
+In our case, $P=ZZ^\top$. Since $Z^\top Z=I_r$, we have
+$P^\top=P$ and
+$$
+P^2
+=
+ZZ^\top ZZ^\top
+=
+Z(Z^\top Z)Z^\top
+=
+ZZ^\top
+=
+P.
+$$
+Thus $P$ is symmetric and idempotent. By the theorem above, $P$ is the
+orthogonal projection onto $\Ima(P)$.
+
+Moreover, $\Ima(P)$ is exactly the column space of $Z$. Indeed, from
+$P=ZZ^\top$, it is clear that $\Ima(P)$ is contained in the column space of
+$Z$. Conversely, if $\mathbf{y}$ belongs to the column space of $Z$, then
+$\mathbf{y}=Z\mathbf{a}$ for some $\mathbf{a}$, and
+$$
+P\mathbf{y}
+=
+ZZ^\top Z\mathbf{a}
+=
+Z\mathbf{a}
+=
+\mathbf{y}.
+$$
+Thus $\mathbf{y}\in\Ima(P)$. Therefore $\Ima(P)$ is the column space of $Z$.
+
+So $P=ZZ^\top$ is the orthogonal projection onto the column space of $Z$.
+\end{remark}
+
+
+
+
+
+
+\paragraph*{Step 3: Linear algebra input}
+
+\begin{theorem}[Rayleigh]
+Let $B$ be symmetric and positive semidefinite, with eigenvalues
+$\lambda_1\ge\lambda_2\ge\cdots\ge\lambda_n\ge 0$.
+Then the maximum value of $\tr(Z^{\top}BZ)$ subject to $Z^{\top}Z=I_r$ is $\lambda_1+\cdots+\lambda_r$.
+
+The maximum is attained when the columns of $Z$ are eigenvectors corresponding to the $r$ largest eigenvalues of $B$.
+\end{theorem}
+
+\begin{pfbox}
+By the spectral theorem, there is an orthonormal basis $\mathbf{v}_1,\ldots,\mathbf{v}_n$ of eigenvectors of $B$ such that
+$B\mathbf{v}_i=\lambda_i\mathbf{v}_i$. Write the columns of $Z$ as
+$\mathbf{z}_1,\ldots,\mathbf{z}_r$. Since
+$\mathbf{v}_1,\ldots,\mathbf{v}_n$ is an orthonormal basis, write
+$\mathbf{z}_j=\displaystyle\sum_{i=1}^n\alpha_{ij}\mathbf{v}_i$. Then
+\[
+\begin{aligned}
+    \tr(Z^{\top}BZ)
+    &=
+    \sum_{j=1}^r \mathbf{z}_j^{\top}B\mathbf{z}_j\\
+    &=
+    \sum_{j=1}^r
+    \left\langle
+        B\left(\sum_{i=1}^n\alpha_{ij}\mathbf{v}_i\right),
+        \sum_{k=1}^n\alpha_{kj}\mathbf{v}_k
+    \right\rangle\\
+    &=
+    \sum_{j=1}^r
+    \left\langle
+        \sum_{i=1}^n\lambda_i\alpha_{ij}\mathbf{v}_i,
+        \sum_{k=1}^n\alpha_{kj}\mathbf{v}_k
+    \right\rangle\\
+    &=
+    \sum_{j=1}^r\sum_{i=1}^n\lambda_i\alpha_{ij}^2.
+\end{aligned}
+\]
+Define $\gamma_i=\displaystyle\sum_{j=1}^r\alpha_{ij}^2$. Then
+$\tr(Z^{\top}BZ)=\displaystyle\sum_{i=1}^n\lambda_i\gamma_i$.
+We need two observations about $\gamma_i$.
+\begin{itemize}
+    \item Since the columns of $Z$ are orthonormal,
+    \[
+    \begin{aligned}
+        \sum_{i=1}^n\gamma_i
+        &=
+        \sum_{i=1}^n\sum_{j=1}^r\alpha_{ij}^2
+        =
+        \sum_{j=1}^r\sum_{i=1}^n\alpha_{ij}^2\\
+        &=
+        \sum_{j=1}^r\norm{\mathbf{z}_j}^2
+        =
+        r.
+    \end{aligned}
+    \]
+
+    \item Let
+    $V_r=\spn\{\mathbf{z}_1,\ldots,\mathbf{z}_r\}$. Since
+    $\mathbf{z}_1,\ldots,\mathbf{z}_r$ is an orthonormal basis of $V_r$,
+    \[
+        P_{V_r}(\mathbf{v}_i)
+        =
+        \sum_{j=1}^r
+        \innerproduct{\mathbf{v}_i}{\mathbf{z}_j}\mathbf{z}_j.
+    \]
+    Therefore
+    \[
+    \begin{aligned}
+        \norm{P_{V_r}(\mathbf{v}_i)}^2
+        &=
+        \sum_{j=1}^r
+        \left|
+            \innerproduct{\mathbf{v}_i}{\mathbf{z}_j}
+        \right|^2\\
+        &=
+        \sum_{j=1}^r
+        \left|
+            \innerproduct{\mathbf{z}_j}{\mathbf{v}_i}
+        \right|^2
+        =
+        \sum_{j=1}^r\alpha_{ij}^2
+        =
+        \gamma_i.
+    \end{aligned}
+    \]
+    By the minimal-distance property of orthogonal projection,
+    \[
+        0
+        \le
+        \gamma_i
+        =
+        \norm{P_{V_r}(\mathbf{v}_i)}^2
+        \le
+        \norm{\mathbf{v}_i}^2
+        =
+        1
+        \qquad
+        \text{for every }1\le i\le n.
+    \]
+\end{itemize}
+
+It remains to maximize
+$\displaystyle\sum_{i=1}^n\lambda_i\gamma_i$ subject to
+$0\le\gamma_i\le1$ and $\displaystyle\sum_{i=1}^n\gamma_i=r$.
+Since $\lambda_1\ge\cdots\ge\lambda_n$, the maximum is achieved by placing all available weight on the largest eigenvalues:
+$\gamma_1=\cdots=\gamma_r=1$ and
+$\gamma_{r+1}=\cdots=\gamma_n=0$. Thus the maximum value is
+$\lambda_1+\cdots+\lambda_r$, attained by taking
+$Z=(\mathbf{v}_1,\ldots,\mathbf{v}_r)$.
+\end{pfbox}
+
+\begin{theorem}[Low-rank approximation theorem]
+Let $A=U\Sigma V^{\top}$ be a singular value decomposition of $A$, with singular values
+$\sigma_1\ge\sigma_2\ge\cdots\ge 0$. Then the best rank-$r$ approximation to $A$ in Frobenius norm is the truncated SVD
+\[
+    B_r
+    =
+    \sum_{i=1}^r \sigma_i \mathbf{u}_i\mathbf{v}_i^{\top}.
+\]
+Equivalently, if $U_r=(\mathbf{u}_1,\ldots,\mathbf{u}_r)$, $V_r=(\mathbf{v}_1,\ldots,\mathbf{v}_r)$, and $\Sigma_r=\operatorname{diag}(\sigma_1,\ldots,\sigma_r)$, then
+\[
+    B_r=U_r\Sigma_rV_r^{\top}.
+\]
+\end{theorem}
+
+\begin{pfbox}
+From Step 2, the problem reduces to maximizing
+\[
+    \tr(Z^{\top}A^{\top}AZ)
+    \qquad\text{subject to }Z^{\top}Z=I_r.
+\]
+The matrix $A^{\top}A$ is symmetric and positive semidefinite. Let
+\[
+    A^{\top}A\mathbf{v}_i=\lambda_i \mathbf{v}_i,
+    \qquad
+    \lambda_1\ge\lambda_2\ge\cdots\ge\lambda_n\ge 0,
+\]
+where $\mathbf{v}_1,\ldots,\mathbf{v}_n$ is an orthonormal basis. The eigenvalues of $A^{\top}A$ are the squares of the singular values of $A$, so $\lambda_i=\sigma_i^2$.
+By Rayleigh's theorem, the maximum of $\tr(Z^{\top}A^{\top}AZ)$ is
+\[
+    \lambda_1+\cdots+\lambda_r
+    =
+    \sigma_1^2+\cdots+\sigma_r^2,
+\]
+and it is attained when $Z=(\mathbf{v}_1,\ldots,\mathbf{v}_r)=V_r$.
+From Step 1, the corresponding $X$ is $X=AZ=AV_r$.
+Write $U=(U_r\ U_{\perp})$. Since the columns of $V$ are orthonormal,
+\[
+    V^{\top}V_r
+    =
+    \begin{pmatrix}
+        I_r\\
+        \mathbf O_{(n-r)\times r}
+    \end{pmatrix}.
+\]
+Thus multiplication by $V^{\top}V_r$ selects the first $r$ columns of
+$\Sigma$, and hence
+\[
+    \Sigma V^{\top}V_r
+    =
+    \begin{pmatrix}
+        \Sigma_r\\
+        \mathbf O_{(m-r)\times r}
+    \end{pmatrix}.
+\]
+Therefore
+\[
+\begin{aligned}
+    B
+    &=
+    XZ^{\top}
+    =
+    AV_rV_r^{\top}\\
+    &=
+    U\Sigma V^{\top}V_rV_r^{\top}\\
+    &=
+    (U_r\ U_{\perp})
+    \begin{pmatrix}
+        \Sigma_r\\
+        \mathbf O_{(m-r)\times r}
+    \end{pmatrix}
+    V_r^{\top}\\
+    &=
+    U_r\Sigma_rV_r^{\top}
+    =
+    \sum_{i=1}^r \sigma_i \mathbf{u}_i\mathbf{v}_i^{\top}.
+\end{aligned}
+\]
+Thus the best rank-$r$ approximation is the truncated SVD.
+\end{pfbox}
+
+
+
+
+
+
+
+
+

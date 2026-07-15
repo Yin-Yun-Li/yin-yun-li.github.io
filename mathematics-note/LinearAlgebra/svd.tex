@@ -1,0 +1,1300 @@
+\subsection{SVD}
+
+\begin{proposition}
+Let $A \in M_n(\mathbb{C})$. Consider the Hermitian matrix $A^*A$.
+\begin{enumerate}
+    \item $A^*A$ is PSD.
+    \item There exists a PSD Hermitian matrix $D$ such that $A^*A=D^2$.
+\end{enumerate}
+\end{proposition}
+
+\begin{pfbox}
+\begin{enumerate}
+    \item For any $\mathbf{v}\in \mathbb{C}^n$,
+    \[
+    \innerproduct{A^*A\mathbf{v}}{\mathbf{v}}
+    =
+    \innerproduct{A\mathbf{v}}{A\mathbf{v}}
+    =
+    \norm{A\mathbf{v}}^2
+    \ge 0.
+    \]
+    Thus, all eigenvalues $\lambda\ge 0$, meaning $A^*A$ is PSD.
+
+    \item By the spectral theorem,
+    \[
+    V^*A^*AV
+    =
+    \Lambda
+    =
+    \operatorname{diag}(\lambda_1,\lambda_2,\dots,\lambda_n).
+    \]
+    Write
+    \[
+    \Sigma
+    =
+    \operatorname{diag}(\mu_1,\mu_2,\dots,\mu_n),
+    \qquad
+    \mu_i=\sqrt{\lambda_i}\ge 0.
+    \]
+    Then $\Sigma^2=\Lambda$ and $\Sigma^*=\Sigma$. Therefore,
+    \[
+    A^*A
+    =
+    V\Lambda V^*
+    =
+    V\Sigma^2V^*
+    =
+    (V\Sigma V^*)(V\Sigma V^*)
+    =
+    D^2.
+    \]
+    Let
+    \[
+    D=V\Sigma V^*.
+    \]
+    Then $D$ is Hermitian and PSD.
+\end{enumerate}
+\end{pfbox}
+
+\begin{theorem}[SVD: $\mathbb{C}$omplex version]
+Let $A \in M_{m \times n}(\mathbb{C})$ be a matrix of rank $k$.
+There exist
+\begin{enumerate}
+    \item unitary matrices $U \in U(m)$ and $V \in U(n)$;
+    \item a diagonal matrix
+    \[
+    \Sigma
+    =
+    \begin{pmatrix}
+    \sigma_1 & 0 & \dots & 0 \\
+    0 & \sigma_2 & \dots & 0 \\
+    \vdots & \vdots & \ddots & \vdots \\
+    0 & 0 & \dots & \sigma_k
+    \end{pmatrix}
+    \]
+    with
+    \[
+    \sigma_1 \ge \sigma_2 \ge \dots \ge \sigma_k > 0,
+    \]
+\end{enumerate}
+such that $A$ admits a factorization of the form
+\[
+A
+=
+U
+\underbrace{
+\begin{pmatrix}
+\Sigma & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}}_{\Sigma_0\in M_{m \times n}(\mathbb{R})}
+V^*.
+\]
+\end{theorem}
+
+
+\begin{pfbox}
+The proof is constructive.
+Consider $A\in M_{m\times n}(\mathbb{C})$,
+Then $A^*A\in M_n(\mathbb{C})$ is a square matrix.
+Let $k=\rank(A)=\rank(A^*A)$ (why?), 
+and $\lambda_1\ge \lambda_2\ge \dots\ge \lambda_k>0$
+be the non-zero eigenvalues of $A^*A$.\\
+
+\textbf{Step 1. Diagonalize $A^*A$.}
+As $A^*A$ is Hermitian, and hence normal, by the Spectral Theorem, there exists
+$V\in U(n)$ such that
+\[
+V^*(A^*A)V
+=
+\begin{pmatrix}
+\Sigma^2 & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}.
+\]
+Take $\sigma_i=\sqrt{\lambda_i}$, and write $V=(V_1\mid V_2),$
+where $V_1$ contains the first $k$ columns.\\
+
+\textbf{Step 2. Compare the blocks of $(AV)^*(AV)$.}
+Since
+\[
+AV=(AV_1\mid AV_2),
+\]
+compute:
+\[
+(AV)^*(AV)
+=
+\begin{pmatrix}
+(AV_1)^*(AV_1) & (AV_1)^*(AV_2) \\
+(AV_2)^*(AV_1) & (AV_2)^*(AV_2)
+\end{pmatrix}
+=
+\begin{pmatrix}
+\Sigma^2 & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}.
+\]
+By comparing blocks, we have
+\[(AV_1)^*(AV_1)=\Sigma^2 = \Sigma^*\Sigma\] 
+and
+\[(AV_2)^*(AV_2)=\mathbf{O},\] 
+which implies $AV_2=\mathbf{O}$ since $\ker((AV_2)^*(AV_2))=\ker((AV_2))$.\\
+
+\textbf{Step 3. Construct $U_1$.}
+
+Let
+\[
+U_1=AV_1\Sigma^{-1}\in M_{m\times k}(\mathbb{C}).
+\]
+Note that
+\[
+U_1^*U_1
+=
+\Sigma^{-1}V_1^*A^*AV_1\Sigma^{-1}
+=
+I_k,
+\]
+so the columns of $U_1$ are orthonormal.
+By the Basis Extension Theorem and Gram-Schmidt, we can extend $U_1$ to a unitary
+matrix
+\[
+U=(U_1\mid U_2)\in U(m).
+\]
+
+\textbf{Step 4. Verify the decomposition.}
+
+Now compute:
+\[
+U^*AV
+=
+\begin{pmatrix}
+U_1^*\\
+U_2^*
+\end{pmatrix}
+A(V_1\mid V_2)
+=
+\begin{pmatrix}
+U_1^*AV_1 & U_1^*AV_2 \\
+U_2^*AV_1 & U_2^*AV_2
+\end{pmatrix}.
+\]
+Substitute
+\[
+AV_1=U_1\Sigma,
+\qquad
+AV_2=\mathbf{O}.
+\]
+Then
+\[
+U^*AV
+=
+\begin{pmatrix}
+U_1^*U_1\Sigma & \mathbf{O} \\
+U_2^*U_1\Sigma & \mathbf{O}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\Sigma & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}.
+\]
+Thus
+\[
+A=U\Sigma_0V^*,
+\]
+completing the SVD.
+\end{pfbox}
+
+\begin{remark}[Vector form of SVD]
+Let $\{\mathbf{u}_1,\dots,\mathbf{u}_m\}$
+be the columns of $U$ and
+$\{\mathbf{v}_1,\dots,\mathbf{v}_n\}$
+be the columns of $V$. 
+The vector form of the SVD of $A$ is the sum of rank-one matrices:
+\[
+A=\sum_{i=1}^k \sigma_i\mathbf{u}_i\mathbf{v}_i^*.
+\]
+\end{remark}
+
+
+
+\begin{theorem}[Operator Form of SVD]
+Let
+\[
+T:W_1\rightarrow W_2
+\]
+be a linear map between two finite-dimensional complex inner product spaces.
+There exist
+\begin{enumerate}
+    \item an ONB $\{\mathbf{v}_1,\dots,\mathbf{v}_n\}$ of $W_1$ and an ONB
+    $\{\mathbf{u}_1,\dots,\mathbf{u}_m\}$ of $W_2$;
+    \item positive values
+    \[
+    \sigma_1\ge \sigma_2\ge \dots\ge \sigma_k>0,
+    \]
+\end{enumerate}
+such that, where $k=\rank(T)$,
+\[
+T(\mathbf{v}_i)
+=
+\begin{cases}
+\sigma_i \mathbf{u}_i, & \text{if } i\le k,\\
+\mathbf{0}, & \text{otherwise.}
+\end{cases}
+\]
+\end{theorem}
+
+
+\begin{definition}[Singular values]
+Let $A\in M_{m\times n}(\mathbb{C})$.
+The values
+\[
+\sigma_1\ge \sigma_2\ge \dots\ge \sigma_k>0
+\]
+that occur in the SVD of $A$ are called the singular values of $A$.
+\end{definition}
+
+\begin{theorem}
+If $A$ admits an SVD
+\[
+A=U\Sigma_0V^*,
+\]
+then the diagonal entries of $\Sigma$,
+\[
+\sigma_1\ge \sigma_2\ge \dots\ge \sigma_k>0,
+\]
+are given by the positive square roots of the non-zero eigenvalues of the Hermitian
+matrix $A^*A$.
+In particular, the values $\sigma_i$ are uniquely determined by $A$.
+\end{theorem}
+
+\begin{pfbox}
+Suppose $A$ admits an SVD of the form
+\[
+A=U\Sigma_0V^*.
+\]
+Then we compute $A^*A$:
+\begin{align*}
+A^*A
+&=
+\left(
+U
+\begin{pmatrix}
+\Sigma & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}
+V^*
+\right)^*
+\left(
+U
+\begin{pmatrix}
+\Sigma & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}
+V^*
+\right) \\
+&=
+V
+\begin{pmatrix}
+\Sigma^* & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}
+U^*U
+\begin{pmatrix}
+\Sigma & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}
+V^* \\
+&=
+V
+\begin{pmatrix}
+\Sigma^2 & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}
+V^*.
+\end{align*}
+Since $V$ is unitary, this means $A^*A$ is unitarily similar to a diagonal matrix
+with entries $\sigma_i^2$.
+So $\sigma_i^2$ is an eigenvalue of $A^*A$, and $\sigma_i$ is the positive square
+root of the eigenvalue of $A^*A$.
+\end{pfbox}
+
+
+\begin{theorem}[Polar Decomposition]
+Let $A \in M_n(\mathbb{C})$. Then there exists a unitary matrix $L \in U(n)$ and a positive semi-definite (PSD) Hermitian matrix $P$ such that
+\[
+A=LP.
+\]
+Moreover, if $A$ is invertible, then the factorization is unique.
+\end{theorem}
+
+\begin{pfbox}
+\textbf{Existence.}
+By SVD,
+\[
+A=U\Sigma V^*,
+\]
+where $U,V\in U(n)$ and $\Sigma$ is PSD diagonal. Hence
+\[
+A=(UV^*)(V\Sigma V^*)=LP.
+\]
+Here,
+\[
+L=UV^*,
+\qquad
+P=V\Sigma V^*.
+\]
+Then $L$ is unitary, and $P$ is Hermitian and PSD.
+
+\medskip
+
+\textbf{Uniqueness.}
+Suppose there exist $L_1,L_2$ and $P_1,P_2$ such that
+\[
+A=L_1P_1=L_2P_2.
+\]
+Then
+\[
+A^*A=P_1^*L_1^*L_1P_1=P_1^*P_1=P_1^2
+\]
+and
+\[
+A^*A=P_2^*L_2^*L_2P_2=P_2^*P_2=P_2^2.
+\]
+Since $P_1,P_2$ are Hermitian and PSD (actually PD if $A$ is invertible), if
+$P_1^2=P_2^2$, then $P_1=P_2$ (Exercise), and hence $L_1=L_2$.
+\end{pfbox}
+
+\subsubsection*{Applications: Low-Rank Approximation}
+
+\begin{theorem}[Von Neumann's Trace Inequality]
+Let $A,B\in M_{m\times n}(\mathbb{R})$. Suppose $\rank(A)=k$ and $\rank(B)=k'$,
+and let $\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_k>0$ and $\mu_1\ge\mu_2\ge\cdots\ge\mu_{k'}>0$ be the singular values of $A$ and $B$, respectively. Then:
+\[|\tr(AB^\top)|\le\sum_{i=1}^{\min\{k,k'\}}\sigma_i\mu_i.\]
+\end{theorem}
+
+\begin{pfbox}
+Define $\displaystyle\sum_{i=1}^{\min\{k,k'\}}\sigma_i\mu_i = \sum_{i=1}^{N}\sigma_i\mu_i,$ where $N>k,k'$.\\
+Set $\sigma_i=0$ if $i>k$, and $\mu_i=0$ if $i>k'$.
+By SVD,
+\[
+    A = \sum_{i=1}^{N}\sigma_i\mathbf{u}_i\mathbf{v}_i^\top,\quad
+    B = \sum_{i=1}^{N}\sigma_i\mathbf{x}_i\mathbf{y}_i^\top,
+\]
+
+where $\{\mathbf{u}_i\}^m_{i=1}$ and $\{\mathbf{x}_i\}^m_{i=1}$ are ONBs of $\mathbb{R}^m$, and $\{\mathbf{v}_i\}^n_{i=1}$ and $\{\mathbf{y}_i\}^n_{i=1}$ are ONBs of $\mathbb{R}^n$.
+
+Define, for $\ell,s\le N,\, A_\ell = \displaystyle\sum_{i=1}^{\ell}\mathbf{u}_i\mathbf{v}_i^\top,\,\, B_s = \displaystyle\sum_{j=1}^{s}\mathbf{x}_j\mathbf{y}_j^\top$.\\
+Von Neumann \textcolor{red}{observes} $A=\displaystyle\sum_{\ell=1}^{N}(\sigma_\ell-\sigma_{\ell+1})A_\ell$ and $B = \displaystyle\sum_{s=1}^{N}(\mu_s-\mu_{s+1})B_s$. 
+
+Then $\tr(AB^\top)=\displaystyle\sum_{\ell=1}^{N}\displaystyle\sum_{s=1}^{N}(\sigma_\ell-\sigma_{\ell+1})(\mu_s-\mu_{s+1})\tr(A_\ell B_s^\top).$
+
+Next, we show that $\tr(A_\ell B_s^\top)\le\min\{\ell,s\}$ for any $\ell,s\le N.$
+\begin{align*}
+    |\tr(A_\ell B_s^\top)| &= |\sum_{i=1}^{\ell}\sum_{j=1}^{s}\tr(\mathbf{u}_i\mathbf{v}_i^\top\mathbf{y}_j\mathbf{x}_j^\top)|\\
+    &= |\sum_{i=1}^{\ell}\sum_{j=1}^{s}\tr(\mathbf{v}_i^\top\mathbf{y}_j\mathbf{x}_j^\top \mathbf{u}_i)| = |\sum_{i=1}^{\ell}\sum_{j=1}^{s}\mathbf{v}_i^\top\mathbf{y}_j\mathbf{x}_j^\top \mathbf{u}_i|\\
+    &= |\sum_{i=1}^{\ell}\sum_{j=1}^{s} \langle\mathbf{y}_j\mathbf{x}_j^\top \mathbf{u}_i, \mathbf{v}_i\rangle| =  |\sum_{i=1}^{\ell}\sum_{j=1}^{s} \langle \mathbf{v}_i, \mathbf{y}_j\mathbf{x}_j^\top \mathbf{u}_i\rangle|.
+\end{align*}
+
+Let $\mathbf{w}_i=\displaystyle\sum_{j=1}^{s}\mathbf{y}_j\mathbf{x}_j^\top \mathbf{u}_i=\displaystyle\sum_{j=1}^{s}\langle \mathbf{x}_j, \mathbf{u}_i\rangle \mathbf{y}_j.$
+Claim: $\norm{\mathbf{w}_i} = 1$ for any $i\in\{1,2,\cdots,\ell\}.$
+By Pythagorean theorem,
+\begin{align*}
+\norm{\mathbf{w}_i}&=\sqrt{\sum_{j=1}^{s}\norm{\langle \mathbf{x}_j, \mathbf{u}_i\rangle \mathbf{y}_j}^2}
+\le\sqrt{\sum_{j=1}^{m}\norm{\langle \mathbf{x}_j, \mathbf{u}_i\rangle \mathbf{y}_j}^2}
+=\sqrt{\sum_{j=1}^{m}|\langle \mathbf{x}_j, \mathbf{u}_i\rangle |^2\norm{\mathbf{y}_j}^2}\\
+&=\sqrt{\sum_{j=1}^{m}|\langle \mathbf{x}_j, \mathbf{u}_i\rangle |^2} 
+=\norm{\mathbf{u}_i}=1.  \quad \text{($\{y_j\}$ and $\{x_j\}$ are ONBs)}
+\end{align*}
+
+So
+\begin{align*}
+|\tr(A_\ell B_s^\top)|& = |\sum_{i=1}^{\ell}\sum_{j=1}^{s} \langle \mathbf{v}_i, \mathbf{y}_j\mathbf{x}_j^\top \mathbf{u}_i\rangle|\\
+& = |\sum_{i=1}^{\ell}\langle \mathbf{v}_i, w_i\rangle|\le \sum_{i=1}^{\ell}\norm{\mathbf{v}_i}\norm{\mathbf{w}_i}=\sum_{i=1}^{\ell}1\times 1 = \ell.    
+\end{align*}
+
+By symmetry, we also have $|\tr(A_\ell B_s^\top)|\le s$.
+
+Hence,
+\begin{align*}
+|\tr(AB^\top)|&=|\sum_{\ell=1}^{N}\sum_{s=1}^{N}(\sigma_\ell-\sigma_{\ell+1})(\mu_s-\mu_{s+1})\tr(A_\ell B_s^\top)|\\
+&\le \sum_{\ell=1}^{N}\sum_{s=1}^{N}(\sigma_\ell-\sigma_{\ell+1})(\mu_s-\mu_{s+1})|\tr(A_\ell B^\top_s)|\\
+&\le\sum_{\ell=1}^{N}\sum_{s=1}^{N}(\sigma_\ell-\sigma_{\ell+1})(\mu_s-\mu_{s+1})\min\{\ell,s\}\\
+&\le \sum_{s=1}^{N}(\mu_s-\mu_{s+1})(\sum_{\ell=1}^{s}(\sigma_\ell-\sigma_{\ell+1})\ell + \sum_{\ell=s+1}^{N}(\sigma_\ell-\sigma_{\ell+1})s)\\
+&\le \sum_{s=1}^{N}(\mu_s-\mu_{s+1})(\sum_{\ell=1}^{s}\sigma_\ell - s\sigma_{s+1} + s\sigma_{s+1})\\
+&\le \sum_{s=1}^{N}(\mu_s-\mu_{s+1})\sum_{\ell=1}^{s}\sigma_\ell = \sum_{s=1}^{N}\mu_s\sigma_s = \sum_{i=1}^{\min\{k,k'\}}\sigma_i\mu_i.
+\end{align*}
+This completes the proof.
+\end{pfbox}
+
+
+
+\begin{theorem}[Low-rank approximation]
+Let $A\in M_{m\times n}(\mathbb{R})$ be of rank $k$ with singular values
+\[
+\sigma_1\ge \sigma_2\ge \dots\ge \sigma_k>0.
+\]
+Fix a value $l<k$.
+For any matrix $B\in M_{m\times n}(\mathbb{R})$ of rank $l$, one has
+\[
+\|A-B\|_F
+\ge
+\sqrt{\sigma_{l+1}^2+\sigma_{l+2}^2+\dots+\sigma_k^2}.
+\]
+The equality holds when
+\[
+B=
+\sum_{i=1}^{l}
+\sigma_i\mathbf{u}_i\mathbf{v}_i^t,
+\]
+which is the truncated SVD of $A$.
+\end{theorem}
+
+\begin{pfbox}
+Let $\mu_1\ge\mu_2\ge\cdots\mu_l>0$ be the singular values of $B$.
+\begin{align*}
+    \|A-B\|^2_F &= \tr((A-B)^\top(A-B)) = \tr((A-B)(A-B)^\top)\\
+                &= \tr(AA^\top) + \tr(BB^\top) -\tr(AB^\top)-\tr(BA^\top)\\
+                &= \sum_{i=1}^{k}\sigma_i^2 + \sum_{i=1}^{l}\mu_i^2-2\tr(AB^\top)\\
+                &\ge \sum_{i=1}^{k}\sigma_i^2 + \sum_{i=1}^{l}\mu_i^2-2\sum_{i=1}^{l}\sigma_i\mu_i \quad \text{(Von Neumann's Trace Inequality)}\\
+                &=\sum_{i=1}^{l}\sigma_i^2 + \sum_{i=1}^{l}\mu_i^2-2\sum_{i=1}^{l}\sigma_i\mu_i + \sum_{i=l+1}^{k}\sigma_i^2\\
+                &=\sum_{i=1}^{l}(\sigma_i-\mu_i)^2 + \sum_{i=l+1}^{k}\sigma_i^2\\
+                &\ge \sum_{i=l+1}^{k}\sigma_i^2.
+\end{align*}
+The equality holds if $\sigma_i=\mu_i$ for $i=1,2,\cdots,l.$
+\end{pfbox}
+
+
+
+\subsection{Pseudoinverse}
+
+\begin{definition}[Moore--Penrose inverse]
+Let $T:V\rightarrow W$ be a linear map between two inner product spaces.
+Denote the inverse of
+\[
+T|_{\Ker(T)^\perp}:
+\Ker(T)^\perp
+\rightarrow
+\Ima(T)
+\]
+simply by
+\[
+T^{-1}:
+\Ima(T)
+\rightarrow
+\Ker(T)^\perp.
+\]
+The pseudoinverse, or Moore--Penrose inverse, of $T$ is a linear map 
+$T^\dagger:W\rightarrow V$ defined by
+\[
+T^\dagger(w)
+=
+T^{-1}\bigl(P_{\Ima(T)}(w)\bigr).
+\]
+\end{definition}
+
+\begin{theorem}
+Let $T:V\rightarrow W$ be a linear map between two inner product spaces.
+Then its pseudoinverse $T^\dagger$ satisfies:
+\begin{enumerate}
+    \item $T^\dagger T:V\rightarrow V$ coincides with
+    $P_{\Ker(T)^\perp}$;
+    \item $TT^\dagger:W\rightarrow W$ coincides with
+    $P_{\Ima(T)}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+By orthogonal decomposition, $V=\Ker(T)\oplus \Ker(T)^\perp$.
+
+Let $\mathbf{v}\in V$, $\mathbf{v}=\mathbf{v}_1+\mathbf{v}_2$,
+where $\mathbf{v}_1\in \Ker(T),\,\mathbf{v}_2\in \Ker(T)^\perp$.
+
+Thus
+\begin{align*}
+T^\dagger T(\mathbf{v}) &= T^\dagger(T(\mathbf{v}_2)) \\
+&=T^{-1}\bigl(P_{\Ima(T)}(T(\mathbf{v}_2))\bigr) = T^{-1}(T(\mathbf{v}_2))\\
+&= \mathbf{v}_2 = P_{\Ker(T)^\perp}(\mathbf{v}).
+\end{align*}
+
+Similarly, for $W=\Ima(T)\oplus \Ima(T)^\perp$, 
+let $\mathbf{w}=\mathbf{w}_1+\mathbf{w}_2$.
+Then
+\begin{align*}
+TT^\dagger(\mathbf{w})
+&= T\Bigl(T^{-1}\bigl(P_{\Ima(T)}(\mathbf{w}_1+\mathbf{w}_2)\bigr)\Bigr) \\
+&=T(T^{-1}(\mathbf{w}_1)) = \mathbf{w}_1 = P_{\Ima(T)}(\mathbf{w}).
+\end{align*}
+\end{pfbox}
+
+
+\begin{definition}[Computational definition of pseudoinverse]
+Let $A\in M_{m\times n}(\mathbb{C})$ have an SVD
+\[
+A=
+U
+\begin{pmatrix}
+\Sigma & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}
+V^*.
+\]
+Then we define its pseudo-inverse to be
+\[
+A^\dagger
+\coloneqq
+V
+\begin{pmatrix}
+\Sigma^{-1} & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}
+U^*
+\in
+M_{n\times m}(\mathbb{C}).
+\]
+\end{definition}
+
+\begin{theorem}[Penrose]
+Let $A\in M_{m\times n}(\mathbb{C})$.
+Then its pseudoinverse satisfies the Penrose conditions:
+\begin{enumerate}
+    \item $AA^\dagger A=A$.
+    \item $A^\dagger AA^\dagger=A^\dagger$.
+    \item $(AA^\dagger)^*=AA^\dagger$.
+    \item $(A^\dagger A)^*=A^\dagger A$.
+\end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+Substitute the SVD forms
+\[
+A
+=
+U\Sigma_0V^*,
+\qquad
+A^\dagger
+=
+V\Sigma_0^{-1}U^*,
+\]
+where
+\[
+\Sigma_0
+=
+\begin{pmatrix}
+\Sigma & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix},
+\qquad
+\Sigma_0^{-1}
+=
+\begin{pmatrix}
+\Sigma^{-1} & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix},
+\]
+and
+\[
+\Sigma^{-1}
+=
+\operatorname{diag}
+(\sigma_1^{-1},\ldots,\sigma_k^{-1}).
+\]
+
+\textbf{Condition 1.}
+\begin{align*}
+AA^\dagger A
+&=
+U\Sigma_0V^*
+V\Sigma_0^{-1}U^*
+U\Sigma_0V^* \\
+&=
+U\Sigma_0\Sigma_0^{-1}\Sigma_0V^* \\
+&=
+U\Sigma_0V^* \\
+&=
+A.
+\end{align*}
+
+\textbf{Condition 2.}
+\begin{align*}
+A^\dagger AA^\dagger
+&=
+V\Sigma_0^{-1}U^*
+U\Sigma_0V^*
+V\Sigma_0^{-1}U^* \\
+&=
+V\Sigma_0^{-1}\Sigma_0\Sigma_0^{-1}U^* \\
+&=
+V\Sigma_0^{-1}U^* \\
+&=
+A^\dagger.
+\end{align*}
+
+\textbf{Condition 3.}
+Since
+\begin{align*}
+AA^\dagger
+&=
+U\Sigma_0V^*
+V\Sigma_0^{-1}U^* \\
+&=
+U\Sigma_0\Sigma_0^{-1}U^* \\
+&=
+U
+\begin{pmatrix}
+I_k & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}
+U^*,
+\end{align*}
+and
+\[
+\begin{pmatrix}
+I_k & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}
+\]
+is Hermitian, we get
+\[
+(AA^\dagger)^*
+=
+AA^\dagger.
+\]
+
+\textbf{Condition 4.}
+Since
+\begin{align*}
+A^\dagger A
+&=
+V\Sigma_0^{-1}U^*
+U\Sigma_0V^* \\
+&=
+V\Sigma_0^{-1}\Sigma_0V^* \\
+&=
+V
+\begin{pmatrix}
+I_k & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}
+V^*,
+\end{align*}
+and
+\[
+\begin{pmatrix}
+I_k & \mathbf{O} \\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}
+\]
+is Hermitian, we get
+\[
+(A^\dagger A)^*
+=
+A^\dagger A.
+\]
+
+Therefore, $A^\dagger$ satisfies all four Penrose conditions.
+\end{pfbox}
+
+\begin{theorem}[Penrose Uniqueness]
+If $X\in M_{n\times m}(\mathbb{C})$ satisfies the four Penrose conditions, then
+\[
+X=A^\dagger.
+\]
+\end{theorem}
+
+\begin{pfbox}
+Suppose both $X_1$ and $X_2$ satisfy the Penrose conditions.
+First observe the following two facts.
+
+\textbf{Observation 1.}
+By $(AX)^*=AX$ and $XAX=X$, we have
+\[
+X(AX)^*=XAX=X.
+\]
+Since $(AX)^*=X^*A^*$, this gives
+\[
+XX^*A^*=X.
+\]
+
+\textbf{Observation 2.}
+By $AXA=A$ and $(XA)^*=XA$, we have
+\[
+A(XA)^*=AXA=A.
+\]
+Since $(XA)^*=A^*X^*$, this gives
+\[
+AA^*X^*=A.
+\]
+Taking adjoints gives
+\[
+XA A^*=A^*.
+\]
+
+Now 
+\begin{align*}
+X_1
+&= X_1X_1^*A^*
+    && (\text{Obs 1 for } X_1) \\[2mm]
+&= X_1X_1^*(AX_2A)^*
+    && (\text{Condition 1 for } X_2) \\[2mm]
+&= X_1X_1^*A^*(AX_2)^* \\[2mm]
+&= X_1X_1^*A^*(AX_2)
+    && (\text{Condition 3 for } X_2) \\[2mm]
+&= X_1\textcolor{red}{A}X_2
+    && (\text{Obs 1 for } X_1) \\[2mm]
+&= X_1\textcolor{red}{AA^*X^*_2}X_2
+    && (\text{Obs 2 for } X_2) \\[2mm]
+&= A^*X^*_2X_2
+  && (\text{Obs 2 for } X_1) \\[2mm]
+&= (X_2A)^*X_2 = X_2AX_2 = X_2
+  && (\text{Condition 4 \& 2 for } X_2). \\[2mm]
+\end{align*}
+\end{pfbox}
+
+\begin{theorem}
+    Theoretical definition and computational definition of pseudoinverse are equivalent.
+\end{theorem}
+
+\begin{pfbox}
+Let $T^\dagger:W\to V$ be the pseudoinverse of $T:V\to W$.
+Recall $T^\dagger T=P_{\ker(T)^\perp}$ and $TT^\dagger=P_{\Ima(T)}$.
+
+For $v\in V$, we have 
+$TT^\dagger T(v)=P_{\Ima(T)}(T(v))=T(v)$. Hence
+\[
+TT^\dagger T=T.
+\]
+
+For $w\in W$, we have
+$T^\dagger TT^\dagger(w)
+=P_{\Ker(T)^\perp}(T^\dagger(w))
+=T^\dagger(w)$,\\
+since $T^\dagger(w)\in\ker(T)^\perp$. Hence
+\[
+T^\dagger TT^\dagger=T^\dagger.
+\]
+
+
+Let $\beta=\{v_1,\dots,v_k,v_{k+1},\dots,v_n\}$ be an ONB of $V$, where
+\[
+\spn\{v_1,\dots,v_k\}=\ker(T)^\perp,
+\qquad
+\spn\{v_{k+1},\dots,v_n\}=\ker(T).
+\]
+Then
+\[
+\left[P_{\ker(T)^\perp}\right]_{\beta}^{\beta}
+=
+\begin{pmatrix}
+I_k & \mathbf{O}\\
+\mathbf{O} & \mathbf{O}_{n-k}
+\end{pmatrix},
+\]
+which is Hermitian.
+
+Similarly, let $\gamma=\{w_1,\dots,w_k,w_{k+1},\dots,w_m\}$
+be an ONB of $W$, where
+\[
+\spn\{w_1,\dots,w_k\}=\Ima(T),
+\qquad
+\spn\{w_{k+1},\dots,w_m\}=\Ima(T)^\perp.
+\]
+Then
+\[
+\left[P_{\Ima(T)}\right]_{\gamma}^{\gamma}
+=
+\begin{pmatrix}
+I_k & \mathbf{O}\\
+\mathbf{O} & \mathbf{O}_{m-k}
+\end{pmatrix},
+\]
+which is Hermitian.
+
+Since orthogonal projections are Hermitian, we get
+\[
+(T^\dagger T)^*=T^\dagger T,
+\qquad
+(TT^\dagger)^*=TT^\dagger.
+\]
+
+Let $[T]_{\beta}^{\gamma}=A$, by Penrose conditions, $[T^\dagger]_{\gamma}^{\beta}=A^\dagger$.
+\end{pfbox}
+
+\subsubsection*{Solve System of Equations}
+
+\begin{theorem}[Least Square Method]
+Let $A\in M_{m\times n}(\mathbb{C})$ and fix $\mathbf{b}\in \mathbb{C}^m$.
+Then $\mathbf{x}=A^\dagger\mathbf{b}$ minimizes the norm
+$\|A\mathbf{x}-\mathbf{b}\|$.
+That is,
+\[
+\|A(A^\dagger\mathbf{b})-\mathbf{b}\|
+\le
+\|A\mathbf{x}-\mathbf{b}\|
+\qquad
+\text{for all } \mathbf{x}\in \mathbb{C}^n.
+\]
+\label{least square method}
+\end{theorem}
+
+\begin{pfbox}
+Recall that $AA^\dagger$ is the orthogonal projection onto $\Ima(A)$.
+Thus
+\[
+AA^\dagger\mathbf{b}
+=
+P_{\Ima(A)}(\mathbf{b}).
+\]
+By the minimal distance property of orthogonal projections, for any vector
+$\mathbf{y}\in \Ima(A)$, we have
+\[
+\|P_{\Ima(A)}(\mathbf{b})-\mathbf{b}\|
+\le
+\|\mathbf{y}-\mathbf{b}\|.
+\]
+Since any $\mathbf{y}\in \Ima(A)$ can be written as
+\[
+\mathbf{y}=A\mathbf{x}
+\]
+for some $\mathbf{x}\in \mathbb{C}^n$, we get
+\[
+\|A(A^\dagger\mathbf{b})-\mathbf{b}\|
+\le
+\|A\mathbf{x}-\mathbf{b}\|.
+\]
+\end{pfbox}
+
+\begin{corollary}[Linear Regression]
+For the linear regression problem, finding
+$\mathbf{x}=(c_1,\dots,c_n)^t$ that minimizes the sum of squared errors
+$\|A\mathbf{x}-\mathbf{b}\|^2$
+is achieved by $\mathbf{x}=A^\dagger\mathbf{b}$.
+\end{corollary}
+
+\begin{theorem}[Best Solution Problem]
+Let $A\in M_{m\times n}(\mathbb{C})$ and fix $\mathbf{b}\in\mathbb{C}^m$.
+Suppose the system of equations $A\mathbf{x}=\mathbf{b}$ is inconsistent. Then
+$\mathbf{x}=A^\dagger \mathbf{b}$ gives the best approximation of a solution of minimal norm, i.e. it satisfies:
+\begin{enumerate}
+    \item
+    \[
+    \|A(A^\dagger\mathbf{b})-\mathbf{b}\|
+    \le
+    \|A\mathbf{x}-\mathbf{b}\|
+    \qquad
+    \text{for all } \mathbf{x}\in\mathbb{C}^n.
+    \]
+    So $A^\dagger\mathbf{b}$ is a best solution.
+
+    \item
+    If $\mathbf{z}\in\mathbb{C}^n$ satisfies
+    \[
+    \|A\mathbf{z}-\mathbf{b}\|
+    =
+    \|A(A^\dagger\mathbf{b})-\mathbf{b}\|,
+    \]
+    then
+    \[
+    \|A^\dagger\mathbf{b}\|\le \|\mathbf{z}\|.
+    \]
+    So $A^\dagger\mathbf{b}$ has the minimal norm among all the best solutions.
+\end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+(1) has been proved in theorem~\eqref{least square method}.
+For (2), suppose $\mathbf{z}$ is another best solution, $\|A\mathbf{z}-\mathbf{b}\|=\|A(A^\dagger\mathbf{b})-\mathbf{b}\|$.
+Recall that if $E$ is a subspace and $\mathbf{v}\in V$, then
+\[
+\|P_E(\mathbf{v})-\mathbf{v}\|
+\le
+\|\mathbf{z}-\mathbf{v}\| \quad \forall \mathbf{z}\in E.
+\]
+Indeed,
+\[
+\mathbf{z}-\mathbf{v}
+=
+\underbrace{\bigl(P_E(\mathbf{v})-\mathbf{v}\bigr)}_{\in E^\perp}
++
+\underbrace{\bigl(\mathbf{z}-P_E(\mathbf{v})\bigr)}_{\in E}.
+\]
+Hence, by the Pythagorean theorem,
+\[
+\|\mathbf{z}-\mathbf{v}\|^2
+=
+\|P_E(\mathbf{v})-\mathbf{v}\|^2
++
+\|\mathbf{z}-P_E(\mathbf{v})\|^2
+\ge
+\|P_E(\mathbf{v})-\mathbf{v}\|^2.
+\]
+The equality holds when $\mathbf{z}=P_E(\mathbf{v})$.
+
+Now,
+\[
+AA^\dagger\mathbf{b}
+=
+P_{\Ima(A)}\mathbf{b}
+\in \Ima(A),
+\qquad
+A\mathbf{z}\in \Ima(A).
+\]
+Also,
+\begin{align*}
+\|A\mathbf{z}-\mathbf{b}\|^2
+&=
+\|P_{\Ima(A)}\mathbf{b}-A\mathbf{z}\|^2
++
+\|P_{\Ima(A)}\mathbf{b}-\mathbf{b}\|^2.
+\end{align*}
+Since $\mathbf{z}$ is another best solution,
+$\|A\mathbf{z}-\mathbf{b}\|=\|A(A^\dagger\mathbf{b})-\mathbf{b}\|$,
+\[
+A\mathbf{z}=P_{\Ima(A)}\mathbf{b}=A(A^\dagger\mathbf{b}).
+\]
+Multiply by $A^\dagger$ and by the Penrose conditions,
+\[
+\underbrace{A^\dagger A\mathbf{z}}_{P_{\ker(A)^\perp}(\mathbf{z})}=A^\dagger A(A^\dagger\mathbf{b}) = A^\dagger\mathbf{b}.
+\]
+
+Thus $A^\dagger\mathbf{b}$ is the projection of $\mathbf{z}$ onto $\ker(A)^\perp$,
+we have $\|A^\dagger\mathbf{b}\|\le\|\mathbf{z}\|$.
+\end{pfbox}
+
+\begin{theorem}[Minimal Solution Problem]
+Suppose the system $A\mathbf{x}=\mathbf{b}$ is consistent.
+$\mathbf{x}=A^\dagger\mathbf{b}$ gives the solution of minimal norm.
+If $\mathbf{z}\in \mathbb{C}^n$ is any other solution, then
+\[
+\|A^\dagger\mathbf{b}\|
+\le
+\|\mathbf{z}\|.
+\]
+\end{theorem}
+
+\begin{pfbox}
+Given $A\mathbf{x}=\mathbf{b}$ has a solution, we have
+$\mathbf{b}\in \Ima(A)$.
+Then $A(A^\dagger\mathbf{b})=P_{\Ima(A)}(\mathbf{b})=\mathbf{b}$,
+so $\mathbf{x}=A^\dagger\mathbf{b}$ is a solution.
+
+Suppose $\mathbf{z}$ satisfies $A\mathbf{z}=\mathbf{b}$.
+Multiply by $A^\dagger$: $A^\dagger A\mathbf{z}=A^\dagger\mathbf{b}$.
+Since $A^\dagger A=P_{\Ker(A)^\perp}$,
+this means $P_{\Ker(A)^\perp}(\mathbf{z})=A^\dagger\mathbf{b}$.
+Because the projection of $\mathbf{z}$ is $A^\dagger\mathbf{b}$, its norm must be
+less than or equal to the norm of the original vector $\mathbf{z}$.
+Therefore,
+\[
+\|A^\dagger\mathbf{b}\|
+\le
+\|\mathbf{z}\|.
+\]
+\end{pfbox}
+
+\begin{remark}
+    The power of pseudoinverse is that the method works in 'rank-deficient' setting.
+\end{remark}
+
+
+
+
+\subsection{Conclusion: SVD knows everything}
+
+\begin{theorem}
+Let $A\in M_{m\times n}(\mathbb{C})$, and suppose that a singular value decomposition of $A$ is given by
+\[
+A
+=
+U
+\begin{pmatrix}
+\Sigma & \mathbf{O}\\
+\mathbf{O} & \mathbf{O}
+\end{pmatrix}
+V^*
+\]
+with
+\[
+\sigma_1\ge \sigma_2\ge \dots \ge \sigma_k>0.
+\]
+Let
+\[
+\{\mathbf{u}_1,\dots,\mathbf{u}_m\}
+\]
+be the columns of $U$ and
+\[
+\{\mathbf{v}_1,\dots,\mathbf{v}_n\}
+\]
+be the columns of $V$. Then:
+\begin{enumerate}
+    \item[(a)] $\rank(A)=k$, $\nullity(A)=n-k$.
+    \item[(b)] A basis of $\Ker(A)$ is given by $\{\mathbf{v}_{k+1},\dots,\mathbf{v}_n\}$.
+    \item[(c)] A basis of $\Ima(A)$ is given by $\{\mathbf{u}_1,\dots,\mathbf{u}_k\}$.
+    \item[(d)] A basis of $\Ker(A^*)$ is given by $\{\mathbf{u}_{k+1},\dots,\mathbf{u}_m\}$.
+    \item[(e)] A basis of $\Ima(A^*)$ is given by $\{\mathbf{v}_1,\dots,\mathbf{v}_k\}$.
+    \item[(f)] The vector form of the SVD of $A$ is
+    \[
+    A=\sum_{i=1}^k \sigma_i\mathbf{u}_i\mathbf{v}_i^*.
+    \]
+    \item[(g)] The pseudoinverse of $A$ is
+    \[
+    A^\dagger
+    =
+    V
+    \begin{pmatrix}
+    \Sigma^{-1} & \mathbf{O}\\
+    \mathbf{O} & \mathbf{O}
+    \end{pmatrix}
+    U^*.
+    \]
+    \item[(h)] The vector form of the pseudoinverse is
+    \[
+    A^\dagger
+    =
+    \sum_{i=1}^k \sigma_i^{-1}\mathbf{v}_i\mathbf{u}_i^*.
+    \]
+    \item[(i)] The orthogonal projection onto $\Ima(A)$ is
+    \[
+    AA^\dagger
+    =
+    \sum_{i=1}^k \mathbf{u}_i\mathbf{u}_i^*.
+    \]
+    \item[(j)] The orthogonal projection onto $\Ima(A^*)$ is
+    \[
+    A^\dagger A
+    =
+    \sum_{i=1}^k \mathbf{v}_i\mathbf{v}_i^*.
+    \]
+    \item[(k)] The orthogonal projection onto $\Ker(A)$ is
+    \[
+    I_n-A^\dagger A
+    =
+    \sum_{i=k+1}^n \mathbf{v}_i\mathbf{v}_i^*.
+    \]
+    \item[(l)] The orthogonal projection onto $\Ker(A^*)$ is
+    \[
+    I_m-AA^\dagger
+    =
+    \sum_{i=k+1}^m \mathbf{u}_i\mathbf{u}_i^*.
+    \]
+    \item[(m)] For every $\mathbf{x}\in\mathbb{C}^n$, one has
+    \[
+    \norm{A\mathbf{x}}^2
+    =
+    \sum_{i=1}^k \sigma_i^2\abs{\innerproduct{\mathbf{x}}{\mathbf{v}_i}}^2.
+    \]
+    \item[(n)] The maximum value of $\norm{A\mathbf{x}}$ subject to $\mathbf{x}\in\mathbb{C}^n$ with $\norm{\mathbf{x}}=1$ is $\sigma_1$.
+    \item[(o)] For each integer $l$ with $1\le l\le k$, the best approximation to $A$ of rank $l$ with respect to the Frobenius norm is
+    \[
+    A_l
+    =
+    \sum_{i=1}^l \sigma_i\mathbf{u}_i\mathbf{v}_i^*.
+    \]
+    Moreover,
+    \[
+    \norm{A-A_l}_F
+    =
+    (\sigma_{l+1}^2+\dots+\sigma_k^2)^{1/2}.
+    \]
+    \item[(p)] If $A$ is square and invertible, then $A^\dagger=A^{-1}$.
+    \item[(q)] If $A\mathbf{x}=\mathbf{b}$ is consistent, then $A^\dagger\mathbf{b}$ is the unique solution of minimal norm among all solutions.
+    \item[(r)] If $A\mathbf{x}=\mathbf{b}$ is inconsistent, then $A^\dagger\mathbf{b}$ is a least-squares solution, and indeed the unique least-squares solution of minimal norm.
+\end{enumerate}
+\end{theorem}
+
+
+\begin{pfbox}
+\textbf{Common facts.}
+Since
+\[
+A=U\Sigma_0V^*
+\]
+and $U,V$ are invertible, we have
+\[
+\rank(A)=\rank(\Sigma_0)=k.
+\]
+Hence, by the rank-nullity theorem,
+\[
+\nullity(A)=n-k.
+\]
+
+Moreover, from
+\[
+AV=U\Sigma_0,
+\]
+we get
+\[
+A\mathbf{v}_i=
+\begin{cases}
+\sigma_i\mathbf{u}_i, & i\le k,\\
+\mathbf{0}, & i>k.
+\end{cases}
+\]
+Thus
+\[
+\Ker(A)=\spn\{\mathbf{v}_{k+1},\dots,\mathbf{v}_n\},
+\qquad
+\Ima(A)=\spn\{\mathbf{u}_1,\dots,\mathbf{u}_k\}.
+\]
+
+Similarly, taking adjoints gives
+\[
+A^*=V\Sigma_0^*U^*,
+\qquad
+A^*U=V\Sigma_0^*.
+\]
+So
+\[
+A^*\mathbf{u}_i=
+\begin{cases}
+\sigma_i\mathbf{v}_i, & i\le k,\\
+\mathbf{0}, & i>k.
+\end{cases}
+\]
+Therefore
+\[
+\Ker(A^*)=\spn\{\mathbf{u}_{k+1},\dots,\mathbf{u}_m\},
+\qquad
+\Ima(A^*)=\spn\{\mathbf{v}_1,\dots,\mathbf{v}_k\}.
+\]
+
+\begin{enumerate}
+    \item[(i)]
+    Since $P_{\Ima(A)}=AA^\dagger$, we have
+    \begin{align*}
+    P_{\Ima(A)}
+    &=
+    AA^\dagger \\
+    &=
+    \left(\sum_{i=1}^k \sigma_i\mathbf{u}_i\mathbf{v}_i^*\right)
+    \left(\sum_{j=1}^k \sigma_j^{-1}\mathbf{v}_j\mathbf{u}_j^*\right) \\
+    &=
+    \sum_{i=1}^k \mathbf{u}_i\mathbf{u}_i^*.
+    \end{align*}
+
+    \item[(j)]
+    Since $P_{\Ima(A^*)}=P_{\Ker(A)^\perp}=A^\dagger A$, we have
+    \[
+    P_{\Ima(A^*)}
+    =
+    A^\dagger A
+    =
+    \sum_{i=1}^k \mathbf{v}_i\mathbf{v}_i^*.
+    \]
+
+    \item[(k)]
+    For $\mathbf{v}\in V$, write
+    \[
+    \mathbf{v}=\mathbf{v}_1+\mathbf{v}_2,
+    \qquad
+    \mathbf{v}_1\in\Ker(A),
+    \quad
+    \mathbf{v}_2\in\Ker(A)^\perp.
+    \]
+    Then
+    \[
+    (I_n-A^\dagger A)\mathbf{v}
+    =
+    \mathbf{v}_1+\mathbf{v}_2-\mathbf{v}_2
+    =
+    \mathbf{v}_1
+    =
+    P_{\Ker(A)}(\mathbf{v}).
+    \]
+    Hence
+    \[
+    I_n-A^\dagger A
+    =
+    \sum_{i=1}^n \mathbf{v}_i\mathbf{v}_i^*
+    -
+    \sum_{i=1}^k \mathbf{v}_i\mathbf{v}_i^*
+    =
+    \sum_{i=k+1}^n \mathbf{v}_i\mathbf{v}_i^*.
+    \]
+
+    \item[(m)]
+    For $\mathbf{x}\in\mathbb{C}^n$,
+    \begin{align*}
+    A\mathbf{x}
+    &=
+    \left(\sum_{i=1}^k \sigma_i\mathbf{u}_i\mathbf{v}_i^*\right)\mathbf{x} \\
+    &=
+    \sum_{i=1}^k
+    \sigma_i(\mathbf{v}_i^*\mathbf{x})\mathbf{u}_i \\
+    &=
+    \sum_{i=1}^k
+    \sigma_i\innerproduct{\mathbf{x}}{\mathbf{v}_i}\mathbf{u}_i.
+    \end{align*}
+    Since $\{\mathbf{u}_i\}$ is an ONB,
+    \[
+    \norm{A\mathbf{x}}^2
+    =
+    \sum_{i=1}^k
+    \sigma_i^2
+    \abs{\innerproduct{\mathbf{x}}{\mathbf{v}_i}}^2.
+    \]
+
+    \item[(n)]
+    Suppose $\norm{\mathbf{x}}=1$. Since
+    \[
+    \mathbf{x}
+    =
+    \sum_{i=1}^n
+    \innerproduct{\mathbf{x}}{\mathbf{v}_i}\mathbf{v}_i,
+    \qquad
+    \norm{\mathbf{x}}^2
+    =
+    \sum_{i=1}^n
+    \abs{\innerproduct{\mathbf{x}}{\mathbf{v}_i}}^2
+    =
+    1,
+    \]
+    we have
+    \begin{align*}
+    \norm{A\mathbf{x}}^2
+    &=
+    \sum_{i=1}^k
+    \sigma_i^2
+    \abs{\innerproduct{\mathbf{x}}{\mathbf{v}_i}}^2 \\
+    &\le
+    \sigma_1^2
+    \sum_{i=1}^k
+    \abs{\innerproduct{\mathbf{x}}{\mathbf{v}_i}}^2 \\
+    &\le
+    \sigma_1^2
+    \sum_{i=1}^n
+    \abs{\innerproduct{\mathbf{x}}{\mathbf{v}_i}}^2 \\
+    &=
+    \sigma_1^2.
+    \end{align*}
+    Thus
+    \[
+    \norm{A\mathbf{x}}\le \sigma_1.
+    \]
+    Equality is attained when $\mathbf{x}=\mathbf{v}_1$, since
+    \[
+    A\mathbf{v}_1=\sigma_1\mathbf{u}_1
+    \quad\Longrightarrow\quad
+    \norm{A\mathbf{v}_1}^2
+    =
+    \sigma_1^2\norm{\mathbf{u}_1}^2
+    =
+    \sigma_1^2.
+    \]
+\end{enumerate}
+
+Parts (f), (g), (h), (l), (o), (p), (q), and (r) were proved earlier or follow by similar arguments, so they are left as exercises.
+\end{pfbox}
+
+
+
+\begin{remark}
+For $A\in M_{m\times n}(\mathbb{R})$, $A$ can be regarded as a bounded linear map from $V$ to $W$. The operator norm is
+\[
+\norm{A}_{op}
+=
+\sup_{\norm{\mathbf{x}}=1}\norm{A\mathbf{x}}
+=
+\sigma_1.
+\]
+\end{remark}

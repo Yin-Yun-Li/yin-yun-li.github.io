@@ -2,12 +2,12 @@
 \RequirePackage{style_for_LA}
 \title{Linear Algebra Notes}
 \author{Yin-Yun Li\thanks{Undergraduate student, Department of Economics, National Taiwan University. Please feel free to contact me at \texttt{b10302331@ntu.edu.tw} with any comments or corrections.}}
-\date{Fall 2025}
+\date{Summer 2026}
 
 \begin{document}
 \maketitle
 
-These notes are based on the course \emph{Introduction to Linear Algebra (Math4018)} taught by Prof. Kowk-Wing Tsoi at the Department of Mathematics, NTU. 
+These notes are based on two courses: \emph{Introduction to Linear Algebra I (Math4018)} \& \emph{Introduction to Linear Algebra II (Math4022)} taught by Prof. Kowk-Wing Tsoi at the Department of Mathematics, NTU. 
 The structure follows the material prepared by Prof. Tsoi, with some adjustments and simplifications to aid exercises and comprehension. 
 The details and complete arguments are documented in my handwritten notes.
 
@@ -19,7 +19,7 @@ The details and complete arguments are documented in my handwritten notes.
 
 
 \newpage
-\section{Fields and Vector Space}
+\section{Fields and Vector Spaces}
 
 Fields generalize the concepts of scalars. A set $F$ is called a field if we can define addition and multiplication operations to satisfy $11$ axioms.
 \begin{exercise}
@@ -406,7 +406,6 @@ Let $W_1$ and $W_2$ be two subspaces of a vector space $V$.
 
 \newpage
 \section{Linear Transformation}
-\subsection{Linear function}
 
 Let $f:V\rightarrow W$ be a linear transformation, and $V$ is finite dimensional.
 
@@ -574,7 +573,6 @@ This theorem shows that only square matrices can possibly be invertible.
 Check $[id_V]^{B_1}_{B_1}=I_n$. Use the definition of inverse matrix.
 
 
-\subsection{Matrix Operations}
 
 \begin{exercise}
     Row / column operations:
@@ -764,7 +762,6 @@ TFAE:
 \label{TFAE_ver1}
 \end{theorem}
 
-\subsection{Change of coordinate \& Linear Operator}
 
 \begin{definition}[Change of coordinate matrix]
     A matrix representing $id_V: V\rightarrow V$ w.r.t two bases of $V$.
@@ -1060,7 +1057,6 @@ Let $\textbf{A}$ and $\textbf{B}$ be square matrices of the same size, prove
 
 \newpage
 \section{Diagonalization}
-\subsection{Similarity}
 
 \begin{definition}
     We say $A$ and $B$ of $M_n(F)$ are similar if there exists an invertible $Q\in M_n(F)$ s.t. $B=Q^{-1}AQ$.
@@ -1170,7 +1166,6 @@ If we assume $A,B\in M_n(\mathbb{C})$, by the fundamental theorem of algebra,
 \end{remark}
 
 
-\subsection{Diagonalizability}
 \begin{theorem}[Diagonalizability Criterion I: Eigen-basis]
 $A\in M_n(F)$ is diagonalizable iff $\exists$ a basis ${\mathbf{v}_1,\mathbf{v}_2\cdots\mathbf{v}_n}$ in $F^n$ s.t. each $v_i$ is an eigenvector of $A$ w.r.t. some eigenvalue $\lambda_i$.
 \end{theorem}
@@ -1387,7 +1382,7 @@ Let $A\in M_n(\mathbb{C})$. TFAE:
 \end{pfbox}
 
 
-\subsection{Application of Diagonalization}
+\subsection*{Application of Diagonalization}
 \begin{definition}[T-invariant subspace]
     Let $T:V\rightarrow V$ be a linear operator. A subspace $W\subseteq V$ is said to be a \emph{T-invariant subspace} if $T(W)\subseteq W$.
     Moreover, the restriction of $T$ on $W$ is defined by $T|_{W}:W\rightarrow W$, where $T|_{W}(\mathbf{w})=T(\mathbf{w})\,\forall \mathbf{w}\in W$.
@@ -1505,6 +1500,24 @@ Let $A\in M_n(\mathbb{C})$. TFAE:
 \newpage
 \section{Inner Product Space}
 \input{inner_product.tex}
+
+\newpage
+\section{Singular Value Decomposition}
+\input{svd.tex}
+
+\newpage
+\section{Bilinear and Quadratic Forms}
+\input{bilinear_quadratic_definiteness.tex}
+
+\newpage
+\section{Markov Chain and Perron-Frobenius}
+\input{MC_PF.tex}
+
+\newpage
+\section{Matrix Calculus}
+\input{matrix_calculus.tex}
+
+
 
 
 \end{document}

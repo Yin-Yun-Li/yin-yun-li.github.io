@@ -153,6 +153,9 @@
 \newcommand{\plim}{\operatorname*{plim}}
 \newcommand{\argmax}{\operatorname*{argmax}}
 \newcommand{\argmin}{\operatorname*{argmin}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\ONB}{\operatorname{ONB}}
+
 
 % Brackets
 \newcommand{\bc}[1]{\left\lbrace #1 \right\rbrace} 
@@ -251,4 +254,4 @@ framesep=3mm}
 \newenvironment{thmbox}{\begin{gbox}\begin{theorem}}{\end{theorem}\end{gbox}}
 \newenvironment{quebox}{\begin{pbox}\begin{question}}{\end{question}\end{pbox}}
 \newenvironment{asnbox}{\begin{pbox}\begin{assumption}}{\end{assumption}\end{pbox}}
-\newenvironment{pfbox}{\begin{dbox}\begin{pf}}{\end{pf}\end{dbox}}
+\newenvironment{pfbox}[1][\proofname]{\begin{dbox}\begin{pf}[#1]}{\end{pf}\end{dbox}}

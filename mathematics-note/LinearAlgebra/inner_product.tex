@@ -1,3 +1,5 @@
+\subsection{Finite Dimensional Inner Product Spaces}
+
 \begin{definition}[Inner Product Space]
     Let $V$ be a vector space over $\mathbb{C}$ and $\langle-,-\rangle: V\times V\to\mathbb{C}$ be a function.
     We say the pair $(V,\langle-,-\rangle)$ is a complex inner product space if it satisfies:
@@ -387,7 +389,7 @@ $\Ima(AA^\top)=\Ima(A),$ then we are done.
 \end{theorem}
 
 \begin{theorem}
-    Let $T\in U(V)$ and $\lambda\in\mathrm{Spec}(T).$ Then $\norm{\lambda}=1,$ i.e. 
+    Let $T\in U(V)$ and $\lambda\in\mathrm{Spec}(T).$ Then $|\lambda|=1,$ i.e. 
     $$\lambda=e^{i\theta}=\cos\theta + i\sin\theta\,\, \forall\theta\in\mathbb{R}.$$
 \end{theorem}
 
@@ -397,8 +399,432 @@ On the other hand, $\langle Tv, Tv\rangle = \langle \lambda v, \lambda v\rangle 
 Compare them and $v\neq 0,$ we obtain $|\lambda| = 1.$
 \end{pfbox}
 
+\begin{lemma}
+Let $T$ be a linear operator on a finite-dimensional complex inner product space
+$(V,\langle -, -\rangle)$. If $\langle Tv,Tw\rangle = \langle v,w\rangle
+\,\,\forall v,w\in V$, then $T$ is unitary.
+\end{lemma}
+
+\begin{pfbox}
+Suppose $\langle Tv,Tw\rangle = \langle v,w\rangle
+\quad \forall v,w\in V$.
+Then
+\begin{align*}
+& \langle v,T^*Tw\rangle = \langle v,w\rangle\\
+& \langle v,(T^*T-I)w\rangle=0 \quad \forall v,w\in V.
+\end{align*}
+
+Since this holds for every $v\in V$,
+\begin{align*}
+    &(T^*T-I)w=0 \quad \forall w\in V \\ 
+    & T^*T=I.
+\end{align*}
+\end{pfbox}
+
+
+
+
 \begin{theorem}
     Let $(V,\langle-,-\rangle)$ be a finite-dimensional inner product space and $T: V \to V$ be a linear operator. 
     Then $T$ is a unitary operator if and only if $T$ is an isometry. That is,
-    $$ T \in U(V) \iff \norm{T\mathbf{v}} = \norm{\mathbf{v}} \quad \forall \mathbf{v} \in V. $$
+    $$ T \in U(V) \iff \norm{Tv} = \norm{v} \quad \forall v \in V. $$
 \end{theorem}
+
+\begin{pfbox}
+($\Rightarrow$) Suppose $T$ is unitary, $T^*T=I$. Then for any $v\in V$,
+\begin{align*}
+\|Tv\|^2 =\langle Tv,Tv\rangle =\langle v,T^*Tv\rangle =\langle v,v\rangle =\|v\|^2.
+\end{align*}\\
+($\Leftarrow$)
+Assume
+\[
+\|Tv\|=\|v\|
+\qquad \forall v\in V.
+\]
+
+For any $x,y\in V$, by the polarization identity,
+\begin{align*}
+\langle x,y\rangle
+&=
+\frac14\Big(
+\|x+y\|^2-\|x-y\|^2
+\Big)  \\
+&\quad
++\frac{i}{4}
+\Big(
+\|x+iy\|^2-\|x-iy\|^2
+\Big).
+\end{align*}
+
+Using the hypothesis,
+\begin{align*}
+\langle x,y\rangle
+&=
+\frac14
+\Big(
+\|T(x+y)\|^2
+-
+\|T(x-y)\|^2
+\Big) \\
+&\quad
++\frac{i}{4}
+\Big(
+\|T(x+iy)\|^2
+-
+\|T(x-iy)\|^2
+\Big).
+\end{align*}
+
+Since $T$ is linear,
+\begin{align*}
+\langle x,y\rangle
+&=
+\frac14
+\Big(
+\|Tx+Ty\|^2
+-
+\|Tx-Ty\|^2
+\Big) \\
+&\quad
++\frac{i}{4}
+\Big(
+\|Tx+iTy\|^2
+-
+\|Tx-iTy\|^2
+\Big) \\
+&=
+\langle Tx,Ty\rangle.
+\end{align*}
+
+Therefore
+\[
+\langle Tx,Ty\rangle
+=
+\langle x,y\rangle
+\qquad \forall x,y\in V.
+\]
+
+By the previous lemma, $T$ is unitary.
+\end{pfbox}
+
+\begin{theorem}
+Let $A\in M_{n}(\mathbb{C})$. The following are equivalent.
+\begin{enumerate}
+    \item $AA^{*}=A^{*}A=I_{n}.$
+    \item The rows of A form an orthonormal basis for $\mathbb{C}^{n}$.
+    \item The columns of A form an orthonormal basis for $\mathbb{C}^{n}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+Let $A = \begin{pmatrix} \text{---} & r_1 & \text{---} \\ \text{---} & r_2 & \text{---} \\ & \vdots & \\ \text{---} & r_n & \text{---} \end{pmatrix}$.
+Observe that:
+\[
+AA^{*} = \begin{pmatrix} \langle r_1, r_1 \rangle_{\text{dot}} & \langle r_1, r_2 \rangle_{\text{dot}} & \dots \\ \vdots & \ddots & \vdots \\ \dots & \dots & \langle r_n, r_n \rangle_{\text{dot}} \end{pmatrix}.
+\]
+(1) $\Leftrightarrow$ (2): $AA^{*}=I_{n} \Leftrightarrow \langle r_i, r_j \rangle_{\text{dot}} = \delta_{ij} \Leftrightarrow \{r_1, r_2, \dots, r_n\}$ forms an ONB.
+Similarly, replace rows by columns and $AA^*$ by $A^*A$ in the above argument to show (1) $\Leftrightarrow$ (3).
+\end{pfbox}
+
+\begin{theorem}
+If $T$ is a Hermitian operator on $V$, then all eigenvalues of $T$ are real.
+\end{theorem}
+
+\begin{pfbox}
+Let $T$ be a Hermitian operator. Take any eigenvalue $\lambda \in \Spec(T)$, so $Tv = \lambda v$ for some $v \neq 0$.
+Consider:
+
+\[
+\langle Tv, v \rangle = \langle \lambda v, v \rangle = \lambda \langle v, v \rangle
+\]
+On the other hand, since T is Hermitian ($T = T^*$):
+
+\[
+\langle Tv, v \rangle = \langle v, T^*v \rangle = \langle v, Tv \rangle = \langle v, \lambda v \rangle = \bar{\lambda} \langle v, v \rangle
+\]
+Hence, $\lambda \langle v, v \rangle = \bar{\lambda} \langle v, v \rangle$. Since $v \neq 0$, we have $\langle v, v \rangle \neq 0$, which implies:
+
+\[
+\lambda = \bar{\lambda} \Leftrightarrow \lambda \in \mathbb{R}.
+\]
+\end{pfbox}
+
+\begin{theorem}
+Let T be a Hermitian operator on V. Then any eigenvectors that correspond to different eigenvalues of T are orthogonal.
+\label{orthogonal eigenvectors Hermitian case}
+\end{theorem}
+
+\begin{pfbox}
+\textbf{WTS:} If $Tu = \lambda u$ and $Tw = \mu w$, where $\lambda \neq \mu$, then $\langle u, w \rangle = 0$.
+Consider:
+\[
+\langle Tu, w \rangle = \langle \lambda u, w \rangle = \lambda \langle u, w \rangle
+\]
+Also:
+\[
+\langle u, T^*w \rangle = \langle u, Tw \rangle = \langle u, \mu w \rangle = \bar{\mu} \langle u, w \rangle = \mu \langle u, w \rangle
+\]
+(Since T is Hermitian, its eigenvalues are real, so $\bar{\mu} = \mu \in \mathbb{R}$).
+
+Thus, $\lambda \langle u, w \rangle = \mu \langle u, w \rangle$, which implies:
+
+\[
+(\lambda - \mu) \langle u, w \rangle = 0
+\]
+Since $\lambda \neq \mu$, we must have $\langle u, w \rangle = 0$.
+\end{pfbox}
+
+
+\begin{proposition}
+Let $(V,\langle-,-\rangle)$ be a complex finite-dimensional inner product space and $T:V\to V$ be a normal operator. 
+Then:
+\begin{enumerate}
+    \item $\|T(v)\|=\|T^*(v)\| \,\, \forall v\in V.$
+    \item If $\lambda$ is an eigenvalue of $T$, then $\overline{\lambda}$ is an eigenvalue of $T^*.$
+\end{enumerate}
+\label{conjugate transpose of normal matrix}
+\end{proposition}
+
+
+\begin{pfbox}
+Fix any $v\in V$. Since $T$ is normal, $TT^*=T^*T$,
+\begin{align*}
+\|Tv\|^2 &=\langle Tv,Tv\rangle =\langle v,T^*Tv\rangle=\langle v,TT^*v\rangle \\
+&=\langle T^*v,T^*v\rangle =\|T^*v\|^2.
+\end{align*}
+
+Next, let $\lambda\in \Spec(T)$, then there exists $v\neq 0$ such that $Tv=\lambda v \Rightarrow (T-\lambda I)v=0$.
+One can verify that $T-\lambda I$ is normal.\\
+By the first part,
+$ \|(T-\lambda I)v\| = \|(T-\lambda I)^*v\|$.
+Since
+$(T-\lambda I)v=0$, we obtain $\|(T-\lambda I)^*v\|=0$.
+By non-degeneracy, $(T^*-\overline{\lambda}I)v=0$.
+Since $v\neq0$, $\overline{\lambda}\in \Spec(T^*)$.
+\end{pfbox}
+
+\begin{theorem}
+Let $T$ be a normal operator on V. Then any eigenvectors that correspond to different eigenvalues of T are orthogonal.
+\end{theorem}
+
+\begin{pfbox}
+We can apply the same argument as in the proof of theorem~\eqref{orthogonal eigenvectors Hermitian case},
+combining with the previous proposition.
+\end{pfbox}
+
+\begin{remark}
+    This is the generalization of theorem~\eqref{orthogonal eigenvectors Hermitian case}.
+\end{remark}
+
+
+\begin{definition}
+Let $A\in M_{n}(\mathbb{R})$. Then
+\begin{enumerate}
+    \item A is called \textbf{orthogonal} if $AA^{t}=A^{t}A=I_{n}$ (orthogonal = real unitary).
+    \item A is called \textbf{symmetric} if $A^{t}=A$ (symmetric = real Hermitian).
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+For convenience, we often write
+\[
+O(n) \overset{\text{def}}{=} \{A \in M_{n}(\mathbb{R}) : A^{t}A = AA^{t} = I_{n}\}
+\]
+to be the set of n by n orthogonal matrices. This is also a 'group' (closed under multiplication, inversion).
+\end{remark}
+
+\begin{theorem}
+If $A\in M_{n}(\mathbb{R})$ is an orthogonal matrix, then
+\begin{enumerate}
+    \item all the eigenvalues $\lambda$ of A satisfy $|\lambda|=1$;
+    \item $\det(A) = \pm 1$;
+    \item the columns/rows of A form an orthonormal basis of $\mathbb{R}^{n}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}
+Although A is real, it does not imply its eigenvalues are real (e.g., rotation matrix).
+\end{remark}
+
+\begin{pfbox}
+\textbf{Proof of 1 \& 3:} They follow directly from properties of unitary matrices. \\
+\textbf{Proof of 2:} By def, if A is orthogonal, $AA^{t}=I_{n}$.
+\begin{align*}
+&\det(AA^{t}) = \det(I_{n})\\ \Rightarrow 
+&\det(A)\det(A^{t}) = 1\\ \Rightarrow 
+&\det(A) = \pm 1.
+\end{align*}
+\end{pfbox}
+
+\begin{theorem}
+If $A\in M_{n}(\mathbb{R})$ is a symmetric matrix, then
+\begin{enumerate}
+    \item all the eigenvalues of A are real;
+    \item any eigenvectors that correspond to different eigenvalues of A are orthogonal (with respect to the real dot product).
+\end{enumerate}
+
+\end{theorem}
+
+\begin{pfbox}
+Symmetric = real Hermitian. (As A is real, $A^* = \overline{A^t} = A^t = A$).
+These matrices enjoy all properties of Hermitian matrices.
+\end{pfbox}
+
+
+
+\subsection{Spectral Theorem}
+
+\begin{definition}\ \vspace{-2em}
+\begin{enumerate}
+    \item $A\in M_{n}(\mathbb{C})$ is called \textbf{unitarily diagonalizable} if there exists an unitary matrix U ($U^* = U^{-1}$) such that $U^{*}AU$ is a diagonal matrix.
+    \item $A\in M_{n}(\mathbb{R})$ is called \textbf{orthogonally diagonalizable} if there exists an orthogonal matrix P ($P^t = P^{-1}$) such that $P^{t}AP$ is a diagonal matrix.
+\end{enumerate}
+\end{definition}
+
+
+
+\begin{theorem}[Refined Schur Triangulation]
+Let $T: V \rightarrow V$ be a linear operator. Then there exists an orthonormal basis $\beta$ of V such that the matrix $[T]_{\beta}^{\beta}$ is an upper triangular matrix.
+\label{refined schur}
+\end{theorem}
+
+\begin{pfbox}
+By Schur Triangulation,
+$\exists$ a basis $\beta' = \{v_1, v_2, \dots, v_n\}$ of V s.t.\\
+$[T]_{\beta'}^{\beta'}$ is upper triangular.
+Apply Gram-Schmidt and normalize,\\
+we obtain an ONB $\beta=\{u_1, u_2, \dots, u_n\}$.\\
+We want to show $T(u_k) \in \spn\{u_1, u_2, \dots, u_k\}$ for each $k=1,2,\dots,n$.
+We proceed by induction on $k$. $k=1$ is trivial.
+Now assume the claim is true up to $k-1$,
+by Gram-Schmidt, $u_k-v_k \in \spn\{u_1, u_2, \dots, u_{k-1}\}$.
+So $T(u_k)-T(v_k) \in \spn\{T(u_1), T(u_2), \dots, T(u_{k-1})\} \subseteq \spn\{u_1, u_2, \dots, u_{k-1}\}$ by induction hypothesis.
+Note that $T(v_k) \in \spn\{v_1, v_2, \dots, v_k\} = \spn\{u_1, u_2, \dots, u_k\}$.
+Hence, $T(u_k) \in \spn\{u_1, u_2, \dots, u_k\}$ for each $k=1,2,\dots,n$.
+\end{pfbox}
+
+
+\begin{theorem}[Hermitian Spectral Theorem]
+If $A\in M_{n}(\mathbb{C})$ is Hermitian, then $A$ is unitarily diagonalizable.
+\end{theorem}
+
+\begin{pfbox}
+By refined Schur's Triangulation, $\exists U \in U(n)$ s.t. $U^{*}AU = D$ is upper triangular.
+We should observe that $D$ is also Hermitian, and hence diagonal.
+\end{pfbox}
+
+\begin{theorem}
+Let $A\in M_{n}(\mathbb{C})$ be an upper triangular matrix. Then A is normal if and only if A is diagonal.
+\label{A is upper trig. then A is normal iff diagonal}
+\end{theorem}
+
+\begin{pfbox}
+Let A be upper triangular.\\
+$(\Leftarrow)$ Trivial.\\
+$(\Rightarrow)$ Suppose A is normal as well, $A^{*}A = AA^{*}$. Let $A=(a_{ij})$.
+Compare the $(1,1)$ entries of $AA^{*}$ and $A^{*}A$:
+\[
+(AA^{*})_{11} = |a_{11}|^2 + |a_{12}|^2 + \dots + |a_{1n}|^2
+\]
+
+\[
+(A^{*}A)_{11} = |a_{11}|^2
+\]
+As A is normal, $AA^{*} = A^{*}A$, which forces:
+\[
+|a_{12}|^2 + |a_{13}|^2 + \dots + |a_{1n}|^2 = 0 \Rightarrow a_{1j} = 0 \text{ for } j \geq 2.
+\]
+Repeat this argument to other diagonal entries of $AA^{*}$ and $A^{*}A$. We can deduce $a_{ij} = 0$ whenever $i \neq j$.
+So $A$ is diagonal.
+\end{pfbox}
+
+
+\begin{theorem}[$\mathbb{C}$omplex Spectral Theorem]
+$A\in M_{n}(\mathbb{C})$ is unitarily diagonalizable if and only if A is normal.
+\end{theorem}
+
+\begin{remark}
+Equivalently, in terms of 'operator language', the Complex Spectral Theorem states that $T:V\rightarrow V$ is a normal operator if and only if there exists an orthonormal basis $\beta$ such that $[T]_{\beta}^{\beta}$ is diagonal.
+\end{remark}
+
+
+\begin{pfbox}
+($\Rightarrow$): Let A be normal. By refined Schur triang., $\exists U \in U(n)$ s.t. $U^{*}AU = D$ is upper triangular.
+Observe that $D$ is normal, by theorem~\eqref{A is upper trig. then A is normal iff diagonal} $D$ must be diagonal.
+
+($\Leftarrow$): Exercise by direct compute.
+\end{pfbox}
+
+
+\begin{theorem}[$\mathbb{R}$eal Spectral Theorem]
+Let $A\in M_{n}(\mathbb{R})$. The following are equivalent.
+\begin{enumerate}
+    \item $A\in M_{n}(\mathbb{R})$ is symmetric. (i.e. $A^{t}=A$)
+    \item There exists $P\in O(n)$ such that $P^{t}AP$ is diagonal (or so-called 'orthogonally diagonalizable').
+\end{enumerate}
+
+\end{theorem}
+
+\begin{pfbox}
+(1) $\Rightarrow$ (2): Let A be symmetric.
+$A^{*} = \overline{A^{t}} = A^{t} = A$. So A is Hermitian (hence normal).
+By Complex Spectral Theorem, $\exists U \in U(n)$ such that $U^{*}AU = D$ is diagonal.
+Recall the columns of U consist of eigenvectors of A.
+As A is symmetric, all its eigenvalues are real. As $A \in M_{n}(\mathbb{R})$, the eigenvectors (solutions to $Ax = \lambda x$) can be chosen to be real.
+Hence, we can choose U to be a "real" matrix.
+Thus, U is orthogonal (real unitary), $U \in O(n)$.\\
+
+(2) $\Rightarrow$ (1): Suppose A is orthogonally diagonalizable. 
+$\exists P \in O(n)$ such that $P^{t}AP = D$ is diagonal, where $P^{t} = P^{-1}$.
+Note that $A = PDP^{t},\, A^{t} = (PDP^{t})^{t} = (P^{t})^{t}D^{t}P^{t} = PDP^{t} = A$ since $D$ is diagonal.
+A is symmetric.
+\end{pfbox}
+
+\begin{proposition}
+If $A\in M_{n}(\mathbb{C})$ is normal, then A and $A^{*}$ share the same eigenvectors.
+\end{proposition}
+
+\begin{pfbox}
+Given A is normal, by Spectral Theorem, $\exists\, U$ unitary such that $U^{*}AU = D$ is diagonal.
+Since the columns of $U$ forms an eigen-basis (and ONB as well) of $A$
+by taking the conjugate transpose on both sides, we have $U^{*}A^{*}U = \overline{D}$,
+$A^{*}$ can be diagonalized by the same matrix $U$. 
+Hence, the columns of $U$ are eigenvectors of $A^{*}$ as well.
+
+Explicitly,  fix every eigenvector $v$ of $A$ with eigenvalues $\lambda$, write
+$Av = \lambda v$, since $(A-\lambda I)$ is also normal, by proposition~\eqref{conjugate transpose of normal matrix}, $\norm{(A-\lambda I)v} = \norm{(A-\lambda I)^*v} = 0 \Rightarrow A^*v = \bar{\lambda}v$.
+\end{pfbox}
+
+
+
+\begin{theorem}[Riesz Representation (Finite-Dimensional Version)]
+Let $(V,\langle-,-\rangle)$ be a finite-dimensional complex inner product space. For each linear functional $\varphi\in V^{*}$, there exists a unique $u\in V$ such that
+\[
+\varphi(v)=\langle v,u\rangle \quad \text{for all } v\in V.
+\]
+\end{theorem}
+
+\begin{remark}
+In other words, there is a natural identification between the dual space $V^{*}$ and V.
+\end{remark}
+
+\begin{pfbox}
+\textbf{Existence} Fix $\{v_1, v_2, \dots, v_n\}$ to be an ONB of V.
+Then for any $v \in V$:
+\begin{align*}
+&v = \sum_{i=1}^{n}\langle v,v_i\rangle v_i\\\Rightarrow 
+&\varphi(v) = \varphi\left(\sum_{i=1}^{n}\langle v,v_i\rangle v_i\right) = \sum_{i=1}^{n}\langle v,v_i\rangle \varphi(v_i)
+\end{align*}
+
+Let $u = \sum_{i=1}^{n}\overline{\varphi(v_i)}v_i$.
+Then $\langle v, u \rangle = \left\langle v, \sum_{i=1}^{n}\overline{\varphi(v_i)}v_i \right\rangle = \sum_{i=1}^{n} \varphi(v_i)\langle v, v_i \rangle = \varphi(v)$.
+We are done by taking u.
+
+\textbf{Uniqueness} Suppose $\exists\, u_1, u_2$ s.t. for all $v \in V$:
+\begin{align*}
+&\varphi(v) = \langle v, u_1 \rangle = \langle v, u_2 \rangle\\ \Rightarrow
+&\langle v, u_1 - u_2 \rangle = 0 \quad \forall v \in V  
+\end{align*}
+
+Take $v = u_1 - u_2$, by non-degeneracy, we obtain $u_1 = u_2$.
+\end{pfbox}

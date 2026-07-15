@@ -1,0 +1,1030 @@
+\subsection{Perron-Frobenius Theorem}
+\begin{definition}
+Consider a Markov chain of $n$ finite states. Let $p_{ij}$ be the probability to transit from state $i$ to state $j$. Then $A=(p_{ij})^t$ is called the stochastic matrix of this Markov chain,
+where every entry $A_{ij} \ge 0$, and each column sums to $1$.
+\end{definition}
+
+\begin{remark}
+The official definition: A sequence of random variables $X_1, X_2, \dots$ is called a Markov chain if
+\[
+\mathbb{P}(X_n=x_n\mid X_1=x_1, \dots, X_{n-1}=x_{n-1})
+=
+\mathbb{P}(X_n=x_n\mid X_{n-1}=x_{n-1}).
+\]
+\end{remark}
+
+\begin{theorem}
+Let $A\in M_n(\mathbb{C})$. Then $\displaystyle\lim_{k\to\infty} A^k$ exists if and only if both of the following conditions are fulfilled:
+\begin{enumerate}
+    \item Every eigenvalue of $A$ belongs to $S=\{z\in\mathbb{C}: |z|<1 \text{ or } z=1\}$;
+    \item If $1$ is an eigenvalue of $A$, then its algebraic and geometric multiplicities are equal, i.e. $a_A(1)=g_A(1)$.
+\end{enumerate}
+\label{convergence of matrix}
+\end{theorem}
+
+\begin{pfbox}
+Proof of ($\Rightarrow$): Assume $\displaystyle\lim_{m\to\infty}A^m$ exists. By JCF Theorem, there exists an invertible matrix $P$ such that $A=PJP^{-1}$, where $J$ is the Jordan canonical form of $A$. Hence $A^m=PJ^mP^{-1}$, so
+\[
+J^m=P^{-1}A^mP.
+\]
+Since $\displaystyle\lim_{m\to\infty}A^m$ exists, $\displaystyle\lim_{m\to\infty}J^m$ also exists. Thus it is enough to study each Jordan block of $J$.
+
+Let $\lambda\in\Spec(A)$. Then some Jordan block $J_{\lambda,r}$ appears in $J$. The diagonal entries of $J_{\lambda,r}^m$ are all $\lambda^m$, so the convergence of $J^m$ implies that $\lambda^m$ converges as $m\to\infty$.
+
+If $|\lambda|>1$, then $|\lambda^m|\to\infty$, impossible. If $|\lambda|<1$, then $\lambda^m\to0$, which is allowed. Now suppose $|\lambda|=1$ and $\lambda^m\to L$. Since $|\lambda^m|=1$ for all $m$, we have $|L|=1$, so $L\neq0$. Also $\lambda^{m+1}$ is just the shifted sequence of $\lambda^m$, so it has the same limit $L$. On the other hand, $\lambda^{m+1}=\lambda\lambda^m\to\lambda L$. Hence $\lambda L=L$. Since $L\neq0$, we get $\lambda=1$. Therefore every eigenvalue of $A$ lies in
+\[
+S=\{z\in\mathbb{C}: |z|<1 \text{ or } z=1\}.
+\]
+
+Next suppose $1\in\Spec(A)$. We prove that $a_A(1)=g_A(1)$. Suppose not. Then there is a Jordan block for $\lambda=1$ with index at least $2$. That is, for some $r\ge2$,
+\[
+J_{1,r}
+=
+\begin{pmatrix}
+1 & 1 & 0 & \cdots & 0\\
+0 & 1 & 1 & \cdots & 0\\
+\vdots & \vdots & \vdots & \ddots & \vdots\\
+0 & 0 & 0 & \cdots & 1
+\end{pmatrix}
+=I_r+N,
+\]
+where $N$ is the nilpotent matrix with $1$ on the superdiagonal and $0$ elsewhere. By binomial expansion,
+\[
+J_{1,r}^m
+=(I_r+N)^m
+=I_r+mN+\binom{m}{2}N^2+\cdots+\binom{m}{r-1}N^{r-1}.
+\]
+In particular, the $(1,2)$-entry of $J_{1,r}^m$ is $m$, which diverges as $m\to\infty$. This contradicts the convergence of $J^m$. Therefore every Jordan block corresponding to $\lambda=1$ has index $1$, so $a_A(1)=g_A(1)$.
+
+Proof of ($\Leftarrow$): Assume $A$ satisfies (1) and (2). By JCF Theorem,
+\[
+A^m
+\sim
+J_{\lambda_1,k_1}^m
+\oplus
+J_{\lambda_2,k_2}^m
+\oplus
+\dots
+\oplus
+J_{\lambda_l,k_l}^m.
+\]
+It suffices to study the convergence of $J_{\lambda,k}^m$ as $m\to\infty$.
+By (1), $\lambda\in S$. There are two cases.
+
+\textbf{Case 1.} $|\lambda|<1$.
+\[
+J_{\lambda,k}
+=
+\lambda I+N
+\implies
+J_{\lambda,k}^m
+=
+(\lambda I+N)^m.
+\]
+Using binomial expansion, $a_{m,k}=\binom{m}{k}\lambda^{m-k}$ for the upper diagonal entries.
+By Ratio Test, as $m\to\infty$,
+\[
+\left|\frac{a_{m+1,k}}{a_{m,k}}\right|
+=
+\left|\frac{m+1}{m+1-k}\lambda\right|
+\to
+|\lambda|<1.
+\]
+Hence $\displaystyle\lim_{m\to\infty} a_{m,k}=0$, meaning $\displaystyle\lim_{m\to\infty} J_{\lambda,k}^m=\mathbf{O}$.
+
+\textbf{Case 2.} $\lambda=1$.
+By condition (2), $a_A(1)=g_A(1)$, meaning $A|_{E(1)}$ is diagonalizable.
+Every Jordan Block of $\lambda=1$ has index 1.
+In this case, $J_{1,1}^m=(1)^m$, which clearly converges as $m\to\infty$.
+In all cases, $\displaystyle\lim_{m\to\infty} A^m$ exists.
+\end{pfbox}
+
+
+\begin{definition}
+Let $A\in M_n(\mathbb{C})$. Set, for each $1\le i,j\le n$:
+\begin{enumerate}
+    \item $\rho_i(A)\overset{\mathrm{def}}{=} \displaystyle\sum_{j=1}^n |A_{ij}|$ (the modulus length of entries in the $i$-th row)
+    \item $\nu_j(A)\overset{\mathrm{def}}{=} \displaystyle\sum_{i=1}^n |A_{ij}|$ (the $j$-th column sum)
+\end{enumerate}
+In addition, we put $\rho(A)\overset{\mathrm{def}}{=} \displaystyle\max_{1\le i\le n}\{\rho_i(A)\}$ and $\nu(A)\overset{\mathrm{def}}{=} \displaystyle\max_{1\le j\le n}\{\nu_j(A)\}$.
+\end{definition}
+
+\begin{theorem}[Gershgorin's Disk]
+For $A\in M_n(\mathbb{C})$, for each $1\le i\le n$ define the $i$-th Gershgorin's disk as
+\[
+C_i
+=
+\{z\in\mathbb{C}: |z-A_{ii}|\le \rho_i(A)-|A_{ii}|\}.
+\]
+Then for any eigenvalue $\lambda$ of $A$, one has $\lambda\in C_1\cup C_2\cup\dots\cup C_n$.
+\end{theorem}
+
+\begin{pfbox}
+Let $A=(A_{ij})_{i,j}$ and $\lambda\in\Spec(A)$, with $\mathbf{v}=(v_1,\dots,v_n)^t$ being its eigenvector ($A\mathbf{v}=\lambda\mathbf{v}$).
+Let $1\le k\le n$ be such that $|v_k|\ge |v_j|$ for all $j$.
+From $A\mathbf{v}=\lambda\mathbf{v}$, we get
+\[
+|\lambda v_k-A_{kk}v_k|
+=
+\left|\sum_{j\neq k} A_{kj}v_j\right|.
+\]
+Using the triangle inequality:
+\[
+|\lambda-A_{kk}| |v_k|
+\le
+\sum_{j\neq k} |A_{kj}| |v_j|
+\le
+\sum_{j\neq k} |A_{kj}| |v_k|
+=
+(\rho_k(A)-|A_{kk}|)|v_k|.
+\]
+Since $|v_k|\neq 0$, after cancellation, $|\lambda-A_{kk}|\le \rho_k(A)-|A_{kk}|$, implying $\lambda\in C_k$.
+\end{pfbox}
+
+\begin{theorem}
+Let $\lambda$ be an eigenvalue of $A\in M_n(\mathbb{C})$. Then $|\lambda|\le \min\{\rho(A),\nu(A)\}$.
+\end{theorem}
+
+\begin{pfbox}
+By Gershgorin's Disk Theorem, $\lambda\in C_k$ for some $k$.
+\begin{align*}
+|\lambda|
+&=
+|\lambda-A_{kk}+A_{kk}|
+\le
+|\lambda-A_{kk}|+|A_{kk}|\\
+&\le
+\rho_k(A)-|A_{kk}|+|A_{kk}|
+=
+\rho_k(A)
+\le
+\rho(A).    
+\end{align*}
+
+Since $A\sim A^t$, if $\lambda\in\Spec(A)$, then $\lambda\in\Spec(A^t)$.
+Thus $|\lambda|\le \rho(A^t)=\nu(A)$, yielding $|\lambda|\le \min\{\rho(A),\nu(A)\}$.
+\end{pfbox}
+
+\begin{theorem}
+Let $A$ be a stochastic matrix.
+\begin{enumerate}
+    \item If $\lambda$ is an eigenvalue of $A$, then $|\lambda|\le 1$.
+    \item $1$ is an eigenvalue of $A$.
+\end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+\begin{enumerate}
+    \item For any $\lambda\in\Spec(A)$, we have $|\lambda|\le \nu(A)=1$ because the max column sum of a stochastic matrix is $1$.
+
+    \item Each row of $A^t$ sums to $1$. Thus $A^t\mathbf{e}=1\mathbf{e}$, where $\mathbf{e}=(1,1,\dots,1)^t$. This implies $1\in\Spec(A^t)$, and since $A\sim A^t$, $1\in\Spec(A)$.
+\end{enumerate}
+\end{pfbox}
+
+
+\begin{definition}
+A matrix $A$ is called positive if every entry of it is a strictly positive real number.
+\end{definition}
+
+\begin{theorem}[Perron-Frobenius, Positive Version]
+Let $A$ be a positive matrix. Suppose there exists an eigenvalue $\lambda$ of $A$ such that $|\lambda|=\rho(A)$, then:
+\begin{enumerate}
+    \item $\lambda=\rho(A)$ (i.e., $\lambda$ is a positive real number)
+    \item $\ker(A-\lambda I)=\spn\{\mathbf{e}\}$ where $\mathbf{e}=(1,1,\dots,1)^t$ (i.e., $g_A(\lambda)=1$)
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}
+This version does not assert the existence of an eigenvalue satisfying $|\lambda|=\rho(A)$. Rather, it tells us what can be concluded if such an eigenvalue exists.
+\end{remark}
+
+\begin{pfbox}
+Suppose $\lambda\in\Spec(A)$ such that $|\lambda|=\rho(A)$. Let $\mathbf{v}=(v_1,\dots,v_n)^t$ be any eigenvector of $A$ corresponding to $\lambda$. Thus $A\mathbf{v}=\lambda\mathbf{v}$ and $\mathbf{v}\neq\mathbf{0}$. Choose $k$ such that $|v_k|\ge |v_j|$ for every $j$. Then $|v_k|>0$.
+
+Looking at the $k$-th row of $A\mathbf{v}=\lambda\mathbf{v}$, we have $\lambda v_k=\displaystyle\sum_{j=1}^n A_{kj}v_j$. Hence
+\[
+\begin{aligned}
+|\lambda||v_k|
+&=
+|\lambda v_k|
+=
+\left|\sum_{j=1}^n A_{kj}v_j\right|\\
+&\le
+\sum_{j=1}^n |A_{kj}v_j|
+=
+\sum_{j=1}^n A_{kj}|v_j|\\
+&\le
+\sum_{j=1}^n A_{kj}|v_k|
+=
+\rho_k(A)|v_k|\\
+&\le
+\rho(A)|v_k|
+=
+|\lambda||v_k|.
+\end{aligned}
+\]
+The first and last terms are equal, so every inequality in this chain must be an equality.
+
+First, from
+\[
+\sum_{j=1}^n A_{kj}|v_j|
+=
+\sum_{j=1}^n A_{kj}|v_k|,
+\]
+we get
+\[
+\sum_{j=1}^n A_{kj}(|v_k|-|v_j|)=0.
+\]
+For every $j$, $A_{kj}>0$ because $A$ is positive, and $|v_k|-|v_j|\ge0$ by the choice of $k$. Hence $|v_j|=|v_k|$ for all $j$.
+
+Second, from
+\[
+\left|\sum_{j=1}^n A_{kj}v_j\right|
+=
+\sum_{j=1}^n |A_{kj}v_j|,
+\]
+we have equality in the triangle inequality. Recall that for nonzero complex numbers $z_1,z_2$, $|z_1+z_2|=|z_1|+|z_2|$ if and only if $z_1=rz_2$ for some $r>0$. Similarly, for finitely many nonzero complex numbers, $A_{kj}v_j$ are positive multiples of each other for all $j$.
+So $A_{kj}v_j=c_jz$ for some $c_j>0$, $z\in\mathbb{C}$ with $|z|=1$. Since $A_{kj}>0$, $v_j=\frac{c_j}{A_{kj}}z$. Moreover, $|v_j|=|v_k|$ for all $j$. Put $b=|v_k|>0$. Then $\frac{c_j}{A_{kj}}=b$, so $v_j=bz$ for all $j$. Thus
+\[
+\begin{aligned}
+\mathbf{v}
+&=
+\begin{pmatrix}
+v_1\\
+v_2\\
+\vdots\\
+v_n
+\end{pmatrix}
+=
+\begin{pmatrix}
+bz\\
+bz\\
+\vdots\\
+bz
+\end{pmatrix}
+=
+bz
+\begin{pmatrix}
+1\\
+1\\
+\vdots\\
+1
+\end{pmatrix}
+=bz\mathbf{e}.
+\end{aligned}
+\]
+Thus every eigenvector corresponding to $\lambda$ is a scalar multiple of $\mathbf{e}$,
+$\ker(A-\lambda I)=\spn\{\mathbf{e}\}$.
+Since $\mathbf{v}=bz\mathbf{e}$ and $bz\neq 0$, from $A\mathbf{v}=\lambda\mathbf{v}$ we get
+\[
+A(bz\mathbf{e})
+=
+\lambda(bz\mathbf{e}).
+\]
+Dividing both sides by $bz$, we obtain $A\mathbf{e}=\lambda\mathbf{e}$.
+Thus the $i$-th entry gives $\displaystyle\sum_{j=1}^n A_{ij}=\lambda$ for every $i$.
+Since $A$ is positive, each row sum $\displaystyle\sum_{j=1}^n A_{ij}$ is a positive real number.
+Hence $\lambda>0$.
+Together with $|\lambda|=\rho(A)$, we conclude that $\lambda=\rho(A)$.
+\end{pfbox}
+
+\begin{corollary}
+Let $A$ be a positive matrix. Suppose there exists an eigenvalue $\lambda$ of $A$ such that $|\lambda|=\nu(A)$, then:
+\begin{enumerate}
+    \item $\lambda=\nu(A)$ (i.e., $\lambda$ is a positive real number)
+    \item $g_A(\lambda)=\dim_{\mathbb{C}}\ker(A-\lambda I)=1$
+\end{enumerate}
+\end{corollary}
+
+\begin{remark}
+Unlike the row-sum version, the column-sum version does not give the concrete description $\ker(A-\lambda I)=\spn\{\mathbf{e}\}$. Instead, it only tells us that the eigenspace has dimension $1$.
+\end{remark}
+
+\begin{pfbox}
+Suppose $\lambda\in\Spec(A)$ such that $|\lambda|=\nu(A)$. Since $A$ and $A^t$ are similar, $\lambda\in\Spec(A^t)$. Also, $A^t$ is positive and $\rho(A^t)=\nu(A)$. Therefore
+\[
+|\lambda|
+=
+\nu(A)
+=
+\rho(A^t).
+\]
+
+Applying the row-sum Perron-Frobenius positive version to $A^t$, we obtain $\lambda=\rho(A^t)$. Hence $\lambda=\nu(A)$, so $\lambda$ is a positive real number. We also obtain
+\[
+\ker(A^t-\lambda I)
+=
+\spn\{\mathbf{e}\},
+\]
+so $g_{A^t}(\lambda) = g_{A}(\lambda)=1$.
+\end{pfbox}
+
+
+\begin{definition}
+A stochastic matrix $A$ is called regular if there exists integer $s$ such that $A^s$ is a positive matrix.
+\end{definition}
+
+\begin{remark}
+If $A$ is positive and $A$ is stochastic, then $A^{s+1}$ is also positive.
+\end{remark}
+
+
+\begin{theorem}[Perron-Frobenius, Regular Stochastic Version]
+Let $A$ be a regular stochastic matrix and $\lambda$ be an eigenvalue of $A$. Then:
+\begin{enumerate}
+    \item $|\lambda|\le 1$.
+    \item If $|\lambda|=1$ then $\lambda=1$ and $g_A(1)=1$.
+    \item There exists a `positive eigenvector' $\mathbf{v}=(v_1,\dots,v_n)^t$ of $A$ with eigenvalue $1$ such that $v_i>0$ for all $i$ and $\displaystyle\sum_{i=1}^n v_i=1$; This $\mathbf{v}$ is called the stationary probability vector.
+    \item $a_A(1)=1$.
+    \item $L=\lim_{m\to\infty} A^m$ exists.
+    \item The columns of $L$ are identical and are equal to the eigenvector $\mathbf{v}$ in (3).
+\end{enumerate}
+\end{theorem}
+
+
+
+\begin{pfbox}
+\textbf{Proof of (1) and (2).}
+Given $A$ is a regular, $A^s$ is a positive matrix for some $s$.
+Let $\lambda\in\Spec(A)$. By Spectral Mapping Theorem, $\lambda^s\in\Spec(A^s)$.
+Since $A$ is a stochastic matrix, (so is $A^s$), by Gershgorin Disk Theorem, $|\lambda|\le \nu(A)=1$.
+
+Suppose $|\lambda|=1$, then $|\lambda^s|=|1|^s=1=\nu(A^s)$.
+Apply Perron-Frobenius Theorem (positive ver., column) on $A^s$, $\lambda^s>0\implies \lambda^s=1$.
+Repeat the argument for $A^{s+1}$, we obtain $\lambda^{s+1}=1$.
+Hence, $\lambda=\dfrac{\lambda^{s+1}}{\lambda^s}=\dfrac{1}{1}=1$.
+
+Regarding geometric multiplicities:
+Note that $A\mathbf{v}=\lambda\mathbf{v}\implies A^s\mathbf{v}=\lambda^s\mathbf{v}$.
+Thus, $\ker(A-\lambda I)\subseteq \ker(A^s-\lambda^s I)$.
+For $\lambda=1$, take dimension:
+\[
+1
+\le
+ g_A(1)
+\le
+ g_{A^s}(1)
+=
+1
+\qquad
+\text{(by PF. Theorem for positive matrices)}.
+\]
+Hence $g_A(1)=1$.
+
+\textbf{Proof of (3).}
+Let $\mathbf{v}=(v_1,v_2,\dots,v_n)^t$ be an eigenvector of $A$ of $\lambda=1$.
+So $A\mathbf{v}=\mathbf{v}$. Entry-wise, we have $\displaystyle\sum_{j=1}^n A_{ij}v_j=v_i$ for each $i$.
+Then
+\[
+|v_i|
+=
+\left|\sum_{j=1}^n A_{ij}v_j\right|
+\le
+\sum_{j=1}^n A_{ij}|v_j|
+\]
+by triangle inequality and $A_{ij}\ge 0$.
+Let $\delta_i=\left(\displaystyle\sum_{j=1}^n A_{ij}|v_j|\right)-|v_i|\ge 0$.
+
+Now put $\boldsymbol{\delta}=(\delta_1,\delta_2,\dots,\delta_n)^t$ and $\mathbf{v}^+=(|v_1|,|v_2|,\dots,|v_n|)^t$.
+Then $\boldsymbol{\delta}=A\mathbf{v}^+-\mathbf{v}^+$. We want to show $\boldsymbol{\delta}=\mathbf{0}$.
+Let $\mathbf{e}=(1,1,\dots,1)^t$. Consider the inner product:
+\[
+\innerproduct{A\mathbf{v}^+}{\mathbf{e}}
+=
+\innerproduct{\mathbf{v}^+}{A^t\mathbf{e}}
+=
+\innerproduct{\mathbf{v}^+}{\mathbf{e}}
+\]
+since every column of $A$ sums to $1$, $A^t\mathbf{e}=\mathbf{e}$.
+On the other hand, $\innerproduct{A\mathbf{v}^+}{\mathbf{e}} = \innerproduct{\boldsymbol{\delta}}{\mathbf{e}} + \innerproduct{\mathbf{v}^+}{\mathbf{e}}$,
+this implies $\innerproduct{\boldsymbol{\delta}}{\mathbf{e}}=0$, so $\displaystyle\sum_{i=1}^n \delta_i=0$.
+Since $\delta_i\ge 0$, this forces $\delta_i=0$ for all $i$.
+Hence, $A\mathbf{v}^+=\mathbf{v}^+$.
+
+As $A$ is regular, $A^s$ is positive for some $s$.
+So $A^s\mathbf{v}^+=\mathbf{v}^+$. Entry-wise:
+\[
+|v_i|
+=
+\sum_{j=1}^n (A^s)_{ij}|v_j|
+>
+0
+\]
+since $(A^s)_{ij}>0$ and at least one $|v_j|>0$ because $\mathbf{v}\neq\mathbf{0}$.
+Thus $|v_i|>0$ for all $i$. We can rescale $\mathbf{v}^+$ by dividing by $\displaystyle\sum |v_i|$ to obtain a ``positive eigenvector'' whose entries sum to $1$.
+
+
+\textbf{Proof of (4).}
+By (2), we have $g_A(1)=1\implies$ There is only one Jordan block of eigenvalue $1$.
+$P^{-1}AP=J_{1,a}\oplus K$, where $K$ consists of Jordan blocks of other eigenvalues.
+So $P^{-1}A^mP=(J_{1,a})^m\oplus K^m$.
+
+As $A^m$ is stochastic, its entries are bounded between $0$ and $1$.
+So $P^{-1}A^mP$'s entries are bounded (independent of $m$).
+Suppose $a\ge 2$. Then
+\[
+(J_{1,a})^m
+=
+\begin{pmatrix}
+    1 & m & \dots \\
+    0 & 1 & m \\
+    \dots & \dots & \dots
+\end{pmatrix}
+\]
+which is unbounded, contradicting the boundedness. This forces $a=1$. Hence $a_A(1)=1$.
+
+\textbf{Proof of (5).}
+By (1) and (2), for any $\lambda\in\Spec(A)$, we have $\lambda\in S=\{z\in\mathbb{C}: |z|<1 \text{ or } z=1\}$.
+Secondly, for $\lambda=1$, by (2) and (4), $a_A(1)=g_A(1)=1$.
+By Theorem~\eqref{convergence of matrix}, $L=\displaystyle\lim_{m\to\infty} A^m$ converges.
+
+\textbf{Proof of (6).}
+Write the columns of $L$ as
+\[
+L
+=
+\begin{pmatrix}
+| & | & & |\\
+\mathbf{c}_1 & \mathbf{c}_2 & \cdots & \mathbf{c}_n\\
+| & | & & |
+\end{pmatrix}.
+\]
+Note: $A^{m+1}=A\cdot A^m\xrightarrow{m\to\infty} L=AL$.
+Thus
+\[
+\begin{pmatrix}
+| & | & & |\\
+\mathbf{c}_1 & \mathbf{c}_2 & \cdots & \mathbf{c}_n\\
+| & | & & |
+\end{pmatrix}
+=
+\begin{pmatrix}
+| & | & & |\\
+A\mathbf{c}_1 & A\mathbf{c}_2 & \cdots & A\mathbf{c}_n\\
+| & | & & |
+\end{pmatrix}.
+\]
+Hence $A\mathbf{c}_i=\mathbf{c}_i$, so $\mathbf{c}_i\in\ker(A-1I)=\spn\{\mathbf{v}\}$.
+As $\mathbf{c}_i$ have non-negative entries and sum to $1$, we have $\mathbf{c}_i=\mathbf{v}$ for all $i$.
+\end{pfbox}
+
+
+
+\subsubsection*{Existence of Positive Eigenvalue and Eigenvector}
+\begin{definition}
+Let $A\in M_n(\mathbb{R})$. We denote the spectral radius of $A$ by
+\[
+r(A)
+\overset{\mathrm{def}}{=}
+\max\{ |\lambda| : \lambda \text{ is an eigenvalue of } A \}.
+\]
+i.e. the maximum modulus of all eigenvalues of $A$.
+\end{definition}
+
+\begin{thmbox}[Brouwer's Fixed Point Theorem]
+Let $K\subseteq\mathbb{R}^n$ be a non-empty, compact and convex set. If $T:K\to K$ is continuous, then there exists $\mathbf{x}\in K$ such that $T(\mathbf{x})=\mathbf{x}$.
+\end{thmbox}
+
+\begin{pfbox}
+    Beyond the scope.
+\end{pfbox}
+
+\begin{theorem}
+\label{thm:positive-matrix-positive-eigenpair}
+Let $A=(A_{ij})\in M_n(\mathbb{R})$ be a positive matrix, i.e. $A_{ij}>0$ for all $i,j$. Then there exist $\lambda>0$ and a vector $\mathbf{v}=(v_1,\dots,v_n)^t$ such that
+\[
+A\mathbf{v}=\lambda\mathbf{v},
+\qquad
+v_i>0
+\text{ for every }i.
+\]
+\end{theorem}
+
+\begin{pfbox}
+Consider the set (the collection of all ``probability vectors'')
+\[
+\Delta
+=
+\left\{
+\mathbf{x}=(x_1,\dots,x_n)^t\in\mathbb{R}^n:
+ x_i\ge 0 \text{ for all } i,
+ \sum_{i=1}^n x_i=1
+\right\}.
+\]
+(Exercise: show that $\Delta$ is compact and convex). 
+Let $A=(A_{ij})_{i,j}$ and $\mathbf{x}=(x_1,x_2,\dots,x_n)^t\in\Delta$ ($\mathbf{x}\neq\mathbf{0}$).
+Observe that
+\[
+(A\mathbf{x})_i
+=
+\sum_{j=1}^n A_{ij}x_j
+>
+0.
+\]
+Define a function $T:\Delta\to\Delta$ by
+\[
+T(\mathbf{x})
+=
+\frac{A\mathbf{x}}{\displaystyle\sum_{i=1}^n (A\mathbf{x})_i}.
+\]
+By Brouwer's Fixed Point Theorem, $\exists\,\mathbf{v}\in\Delta$ such that $T(\mathbf{v})=\mathbf{v}$.\\
+Let $\lambda=\displaystyle\sum_{i=1}^n (A\mathbf{v})_i$. By the observation, $\lambda>0$.\\
+Write $A\mathbf{v}=\lambda\mathbf{v}$, $\lambda>0$ is an eigenvalue of $A$ and $\mathbf{v}=\dfrac{1}{\lambda}(A\mathbf{v})$ is a positive eigenvector.
+\end{pfbox}
+
+\begin{theorem}
+\label{thm:positive-eigenpair-spectral-radius}
+Let $A\in M_n(\mathbb{R})$ be a positive matrix. Suppose $A\mathbf{v}=\lambda\mathbf{v}$ where $\lambda>0$ and $\mathbf{v}$ has positive coordinates. Then $\lambda=r(A)$.
+\end{theorem}
+
+\begin{pfbox}
+Given $A\mathbf{v}=\lambda\mathbf{v}$ where $\lambda>0$ and $\mathbf{v}\in(\mathbb{R}_{>0})^n$. We want to show $\lambda=r(A)$.
+Let $\mu\in\Spec(A)$ and $\mathbf{z}=(z_1,z_2,\dots,z_n)^t$ be its eigenvector (i.e. $A\mathbf{z}=\mu\mathbf{z}$).
+Let $k\in\{1,2,\dots,n\}$ be such that
+\[
+c
+=
+\frac{|z_k|}{v_k}
+\ge
+\frac{|z_i|}{v_i}
+\qquad
+\text{for all } i.
+\]
+Since $A\mathbf{z}=\mu\mathbf{z}$, we have $\displaystyle\sum_{j=1}^n A_{kj}z_j=\mu z_k$.
+Hence
+\[
+\begin{aligned}
+|\mu| |z_k|
+&\le
+\sum_{j=1}^n A_{kj}|z_j| \\
+&\le
+\sum_{j=1}^n A_{kj}(cv_j)
+=
+ c\sum_{j=1}^n A_{kj}v_j.
+\end{aligned}
+\]
+Since $A\mathbf{v}=\lambda\mathbf{v}$, we have
+\[
+c\sum_{j=1}^n A_{kj}v_j
+=
+c(\lambda v_k)
+=
+\lambda\frac{|z_k|}{v_k}v_k
+=
+\lambda |z_k|.
+\]
+In particular, $|\mu||z_k|\le \lambda|z_k|$.
+After cancellation, $|\mu|\le \lambda$.
+Hence, $\lambda=r(A)$.
+\end{pfbox}
+
+
+\begin{theorem}
+Let $A\in M_n(\mathbb{R})$ be a positive matrix. Suppose $\lambda=r(A)$. Then $a_A(\lambda)=g_A(\lambda)=1$.
+\end{theorem}
+
+\begin{pfbox}
+Let $A\in M_n(\mathbb{R})$ be a positive matrix.\\
+Since $A^t$ is also positive, Theorem~\eqref{thm:positive-matrix-positive-eigenpair} gives a positive eigenpair
+\[
+A^t\mathbf{w}
+=
+\eta\mathbf{w},
+\qquad
+\eta>0,
+\qquad
+w_i>0
+\text{ for every }i.
+\]
+By Theorem~\eqref{thm:positive-eigenpair-spectral-radius}, this positive eigenvalue must be the spectral radius of $A^t$. Hence
+\[
+\eta
+=
+r(A^t)
+=
+r(A)
+=
+\lambda.
+\]
+Therefore there exists a positive vector $\mathbf{w}=(w_1,w_2,\dots,w_n)^t$ such that
+\[
+A^t\mathbf{w}
+=
+\lambda\mathbf{w},
+\qquad
+w_i>0
+\text{ for every }i.
+\]
+Consider
+\[
+D
+=
+\begin{pmatrix}
+w_1 & 0 & \cdots & 0\\
+0 & w_2 & \cdots & 0\\
+\vdots & \vdots & \ddots & \vdots\\
+0 & 0 & \cdots & w_n
+\end{pmatrix}
+\in GL_n(\mathbb{R}).
+\]
+Let $P=\frac{1}{\lambda}DAD^{-1}$.\\
+We claim that $P$ is positive stochastic. Indeed,
+\[
+P_{ij}
+=
+\frac{1}{\lambda}w_iA_{ij}\frac{1}{w_j}
+>
+0
+\]
+for all $i,j$. Moreover, for every fixed $j$,
+\[
+\begin{aligned}
+\sum_{i=1}^n P_{ij}
+&=
+\sum_{i=1}^n \frac{1}{\lambda}\frac{w_iA_{ij}}{w_j}
+=
+\frac{1}{\lambda w_j}\sum_{i=1}^n A_{ij}w_i\\
+&=
+\frac{1}{\lambda w_j}(A^t\mathbf{w})_j
+=
+\frac{1}{\lambda w_j}\lambda w_j
+=
+1.
+\end{aligned}
+\]
+Thus $P$ is positive stochastic. In particular, $P$ is regular stochastic. By Perron-Frobenius regular stochastic version, $a_P(1)=g_P(1)=1$.
+
+On the other hand, $P$ is similar to $\frac{1}{\lambda}A$, we have $a_{\frac{1}{\lambda}A}(1)=g_{\frac{1}{\lambda}A}(1)=1$.
+
+For the geometric multiplicity,
+\[
+\ker\left(\frac{1}{\lambda}A-I\right)
+=
+\ker(A-\lambda I),
+\]
+so $g_A(\lambda)=1$. For the algebraic multiplicity, suppose
+\[
+p_A(x)
+=
+(x-\lambda)^\ell(x-\mu_1)(x-\mu_2)\cdots(x-\mu_{n-\ell}).
+\]
+Then
+\[
+\begin{aligned}
+p_{\frac{1}{\lambda}A}(x)
+&=
+\det\left(\frac{1}{\lambda}A-xI\right)
+=
+\det\left(\frac{1}{\lambda}(A-\lambda xI)\right)\\
+&=
+\left(\frac{1}{\lambda}\right)^n p_A(\lambda x)\\
+&=
+(x-1)^\ell
+\left(x-\frac{\mu_1}{\lambda}\right)
+\left(x-\frac{\mu_2}{\lambda}\right)
+\cdots
+\left(x-\frac{\mu_{n-\ell}}{\lambda}\right).
+\end{aligned}
+\]
+Hence $a_{\frac{1}{\lambda}A}(1)=a_A(\lambda)$. Since $a_{\frac{1}{\lambda}A}(1)=1$, we get $a_A(\lambda)=1$. Therefore
+\[
+a_A(\lambda)=g_A(\lambda)=1.
+\]
+\end{pfbox}
+
+
+\begin{theorem}[Perron-Frobenius Existence Theorem]
+\label{thm:pf-existence-nonnegative}
+Let $A=(a_{ij})\in M_n(\mathbb{R})$ be a nonzero matrix such that all its entries are non-negative (i.e. $a_{ij}\ge 0$ for all $i,j$). Then:
+\begin{enumerate}
+    \item $r(A)$ is an eigenvalue of $A$;
+    \item there exists an eigenvector $\mathbf{v}=(v_1,\dots,v_n)^t$ with $v_i\ge 0$ for all $i$ such that $A\mathbf{v}=r(A)\mathbf{v}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+Recall the simplex
+\[
+\Delta
+=
+\left\{
+\mathbf{x}=(x_1,\dots,x_n)^t\in\mathbb{R}^n:
+x_i\ge 0\text{ for all }i,\ 
+\sum_{i=1}^n x_i=1
+\right\}.
+\]
+Every vector in $\Delta$ is nonzero and has non-negative entries. Also, $\Delta$ is closed and bounded in $\mathbb{R}^n$, hence compact.
+
+Let $J$ be the all-one matrix. For each $\epsilon>0$, define
+\[
+A_\epsilon
+=
+A+\epsilon J.
+\]
+Since $A_{ij}\ge0$ and $\epsilon>0$, every entry of $A_\epsilon$ is strictly positive. Hence $A_\epsilon$ is a positive matrix.
+
+By Theorem~\eqref{thm:positive-matrix-positive-eigenpair} and Theorem~\eqref{thm:positive-eigenpair-spectral-radius}, $r(A_\epsilon)$ is an eigenvalue of $A_\epsilon$ with a positive eigenvector. Thus there exists $\mathbf{u}_\epsilon=(u_{\epsilon,1},\dots,u_{\epsilon,n})^t$ such that
+\[
+A_\epsilon\mathbf{u}_\epsilon
+=
+r(A_\epsilon)\mathbf{u}_\epsilon,
+\qquad
+u_{\epsilon,i}>0
+\text{ for every }i.
+\]
+Normalize this eigenvector by setting
+\[
+\mathbf{v}_\epsilon
+=
+\frac{\mathbf{u}_\epsilon}{\displaystyle\sum_{i=1}^n u_{\epsilon,i}}.
+\]
+Then $\mathbf{v}_\epsilon\in\Delta$, and the eigenvector equation is unchanged:
+\[
+A_\epsilon\mathbf{v}_\epsilon
+=
+r(A_\epsilon)\mathbf{v}_\epsilon.
+\]
+
+Now take a sequence $\epsilon_m=\dfrac{1}{m}$. For each $m$, choose $\mathbf{v}_{\epsilon_m}\in\Delta$ as above. Since $\Delta$ is compact, by Bolzano-Weierstrass there exists a subsequence $\{\mathbf{v}_{\epsilon_{m_\ell}}\}_{\ell=1}^\infty$ and a vector $\mathbf{v}\in\Delta$ such that
+\[
+\mathbf{v}_{\epsilon_{m_\ell}}
+\longrightarrow
+\mathbf{v}
+\qquad
+\text{as }\ell\to\infty.
+\]
+Since $\epsilon_{m_\ell}\to0$, we also have
+\[
+A_{\epsilon_{m_\ell}}
+=
+A+\epsilon_{m_\ell}J
+\longrightarrow
+A.
+\]
+Moreover, the spectral radius is continuous as a function of the entries of a matrix. Hence
+\[
+r(A_{\epsilon_{m_\ell}})
+\longrightarrow
+r(A).
+\]
+
+For every $\ell$, we have
+\[
+A_{\epsilon_{m_\ell}}\mathbf{v}_{\epsilon_{m_\ell}}
+=
+r(A_{\epsilon_{m_\ell}})\mathbf{v}_{\epsilon_{m_\ell}}.
+\]
+Taking $\ell\to\infty$ on both sides, matrix multiplication and scalar multiplication are continuous, so
+\[
+A\mathbf{v}
+=
+r(A)\mathbf{v}.
+\]
+Finally, since $\mathbf{v}\in\Delta$, we have $\mathbf{v}\neq\mathbf{0}$ and $v_i\ge0$ for every $i$. Therefore $r(A)$ is an eigenvalue of $A$, and $\mathbf{v}$ is a non-negative eigenvector corresponding to $r(A)$.
+\end{pfbox}
+
+
+
+
+
+\subsection{Google PageRank algorithm}
+
+PageRank, developed by Larry Page and Sergey Brin in 1996, is an algorithm used by Google Search to rank webpages in their search engine results. It assigns a ranking to each page on the web based on the structure of the hyperlinks between pages. The basic idea is that a page is important if it is linked to by other important pages.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    >=Stealth,
+    page/.style={circle, draw, minimum size=8mm, inner sep=0pt},
+    link/.style={->, thick}
+]
+\node[page] (A) at (90:1.7) {$1$};
+\node[page] (B) at (0:1.9) {$2$};
+\node[page] (C) at (-90:1.7) {$3$};
+\node[page] (D) at (180:1.9) {$4$};
+
+\draw[link] (A) to[bend left=12] (B);
+\draw[link] (B) to[bend left=12] (C);
+\draw[link] (C) to[bend left=12] (A);
+\draw[link] (A) to[bend left=12] (D);
+\draw[link] (D) to[bend left=12] (C);
+\end{tikzpicture}
+\caption{A small web as a directed graph. Each arrow represents a hyperlink from one page to another.}
+\label{fig:pagerank-small-web}
+\end{figure}
+
+In the column-stochastic convention, the $j$-th column describes what happens when the surfer is currently on page $j$. If page $j$ links to $d_j$ pages, then each linked page receives probability $\frac{1}{d_j}$ in column $j$.
+
+A dangling page is a page with no outgoing links. In the raw link matrix, this gives a zero column, so the matrix is not stochastic. The usual fix is to replace each zero column by $\frac{1}{n}\mathbf{e}$, meaning that if the surfer lands on a dangling page, the next page is chosen uniformly from all pages.
+
+The random surfing idea has one more ingredient. At each step, with probability $\alpha$, the surfer follows the hyperlink structure encoded by $P$; with probability $1-\alpha$, the surfer ignores the links and jumps uniformly to one of the $n$ pages. This uniform jump is called teleportation. It prevents the surfer from getting trapped and makes every page reachable with positive probability.
+
+\begin{definition}
+Let $P$ be the stochastic matrix associated with a given directed graph of $n$ vertices. Fix a constant $0<\alpha<1$. The matrix
+\[
+G
+=
+\alpha P
++
+\frac{1-\alpha}{n}\mathbf{e}\mathbf{e}^t
+\]
+is called the Google matrix associated with this graph. Here $\mathbf{e}=(1,1,\dots,1)^t$, and $\alpha$ is called the `damping factor'.
+\end{definition}
+
+
+\begin{theorem}
+For any $0<\alpha<1$, the Google matrix $G$ is a positive stochastic matrix. In particular,
+\begin{enumerate}
+    \item $L=\displaystyle\lim_{k\to\infty} G^k$ exists.
+    \item There exists an eigenvector $\mathbf{v}_{PR}=(v_1,\dots,v_n)^t$ of $G$ with eigenvalue $1$ such that each $v_i>0$ and $\displaystyle\sum_{i=1}^n v_i=1$.
+    \item The columns of $L$ are identical and are equal to $\mathbf{v}_{PR}$.
+\end{enumerate}
+The vector $\mathbf{v}_{PR}$ is called the PageRank vector for the Google matrix $G$.
+\end{theorem}
+
+\begin{pfbox}
+\textbf{Positivity:} $G_{ij}=\alpha P_{ij}+\dfrac{1-\alpha}{n}\cdot 1>0$.
+
+\textbf{Stochastic:}
+\[
+\sum_{i=1}^n G_{ij}
+=
+\alpha\sum_{i=1}^n P_{ij}
++
+\frac{1-\alpha}{n}\sum_{i=1}^n 1
+=
+\alpha(1)+\frac{1-\alpha}{n}(n)
+=
+1.
+\]
+Hence, $G$ is a positive stochastic matrix. By Perron-Frobenius Theorem for regular stochastic matrices, $L=\displaystyle\lim_{k\to\infty} G^k$ converges, and
+\[
+L
+=
+\begin{pmatrix}
+| & | & & |\\
+\mathbf{v}_{PR} & \mathbf{v}_{PR} & \cdots & \mathbf{v}_{PR}\\
+| & | & & |
+\end{pmatrix}.
+\]
+\end{pfbox}
+
+In reality, it is difficult to compute the PageRank vector $\mathbf{v}_{PR}$ explicitly. By the Perron-Frobenius theorem for regular stochastic matrices, for any probability vector $\mathbf{v}$, we have
+\[
+\lim_{k\to\infty}G^k\mathbf{v}
+=
+\mathbf{v}_{PR}.
+\]
+For convenience, we may take
+\[
+\mathbf{v}
+=
+\mathbf{v}_n
+=
+\left(\frac{1}{n},\frac{1}{n},\dots,\frac{1}{n}\right)^t.
+\]
+So $G^k\mathbf{v}_n\approx \mathbf{v}_{PR}$ when $k$ is large. In the following, we derive an upper bound for the difference $G^k\mathbf{v}_n-\mathbf{v}_{PR}$.
+
+\begin{definition}
+Let $\mathbf{x}\in\mathbb{R}^n$. The 1-norm of $\mathbf{x}$ is defined to be the sum of the absolute values of its coordinates. i.e. if $\mathbf{x}=(x_1,x_2,\dots,x_n)^t$ then
+\[
+\|\mathbf{x}\|_1
+\overset{\mathrm{def}}{=}
+|x_1|+|x_2|+\dots+|x_n|.
+\]
+\end{definition}
+
+\begin{remark}\ \vspace{-2em}
+\begin{enumerate}
+    \item $\|\mathbf{x}\|_1=0$ if and only if $\mathbf{x}=\mathbf{0}$.
+    \item $\|\mathbf{x}+\mathbf{y}\|_1\le \|\mathbf{x}\|_1+\|\mathbf{y}\|_1$.
+\end{enumerate} 
+\end{remark}
+
+
+
+\begin{lemma}
+If $P$ is stochastic, then for any $\mathbf{x}\in\mathbb{R}^n$,
+\begin{equation}
+\label{eq:stochastic-l1-contraction}
+\|P\mathbf{x}\|_1
+\le
+\|\mathbf{x}\|_1.
+\end{equation}
+\end{lemma}
+
+\begin{pfbox}
+Let $\mathbf{x}=(x_1,x_2,\dots,x_n)^t$. Since $P$ is stochastic, $P_{ij}\ge0$ and $\displaystyle\sum_{i=1}^n P_{ij}=1$ for every $j$. Hence
+\[
+\begin{aligned}
+\|P\mathbf{x}\|_1
+&=
+\sum_{i=1}^n\left|\sum_{j=1}^n P_{ij}x_j\right|
+\le
+\sum_{i=1}^n\sum_{j=1}^n P_{ij}|x_j|\\
+&=
+\sum_{j=1}^n\left(\sum_{i=1}^n P_{ij}\right)|x_j|
+=
+\sum_{j=1}^n |x_j|
+=
+\|\mathbf{x}\|_1.
+\end{aligned}
+\]
+\end{pfbox}
+
+\begin{theorem}
+Let $G$ be a Google matrix and $\mathbf{v}_{PR}$ be its PageRank vector of a directed graph of $n$ vertices. For any integer $k\ge0$,
+\begin{equation}
+\label{eq:google-power-iteration-bound}
+\|G^k\mathbf{v}_n-\mathbf{v}_{PR}\|_1
+\le
+\alpha^k\|\mathbf{v}_n-\mathbf{v}_{PR}\|_1.
+\end{equation}
+where $\alpha$ is the damping factor.
+\end{theorem}
+
+\begin{pfbox}
+We use induction on $k$.
+
+For $k=0$, there is nothing to prove. Suppose the inequality is true for $k$. Consider the case $k+1$. Since $G\mathbf{v}_{PR}=\mathbf{v}_{PR}$,
+\[
+G^{k+1}\mathbf{v}_n-\mathbf{v}_{PR}
+=
+G(G^k\mathbf{v}_n-\mathbf{v}_{PR}).
+\]
+Write $G=\alpha P+(1-\alpha)E_n$, where
+\[
+E_n
+=
+\frac{1}{n}\mathbf{e}\mathbf{e}^t.
+\]
+For any probability vector $\mathbf{p}$,
+\[
+E_n\mathbf{p}
+=
+\frac{1}{n}\mathbf{e}(\mathbf{e}^t\mathbf{p})
+=
+\frac{1}{n}\mathbf{e}
+=
+\mathbf{v}_n.
+\]
+Since $G^k\mathbf{v}_n$ and $\mathbf{v}_{PR}$ are both probability vectors,
+\[
+E_nG^k\mathbf{v}_n
+=
+E_n\mathbf{v}_{PR}
+=
+\mathbf{v}_n.
+\]
+Hence
+\[
+\begin{aligned}
+G^{k+1}\mathbf{v}_n-\mathbf{v}_{PR}
+&=
+\left(\alpha P+(1-\alpha)E_n\right)G^k\mathbf{v}_n
+-
+\left(\alpha P+(1-\alpha)E_n\right)\mathbf{v}_{PR}\\
+&=
+\alpha P(G^k\mathbf{v}_n-\mathbf{v}_{PR})
++(1-\alpha)E_nG^k\mathbf{v}_n
+-(1-\alpha)E_n\mathbf{v}_{PR}\\
+&=
+\alpha P(G^k\mathbf{v}_n-\mathbf{v}_{PR}).
+\end{aligned}
+\]
+Apply the 1-norm and use \eqref{eq:stochastic-l1-contraction}:
+\[
+\begin{aligned}
+\|G^{k+1}\mathbf{v}_n-\mathbf{v}_{PR}\|_1
+&=
+\alpha\|P(G^k\mathbf{v}_n-\mathbf{v}_{PR})\|_1\\
+&\le
+\alpha\|G^k\mathbf{v}_n-\mathbf{v}_{PR}\|_1\\
+&\le
+\alpha\cdot\alpha^k\|\mathbf{v}_n-\mathbf{v}_{PR}\|_1\\
+&=
+\alpha^{k+1}\|\mathbf{v}_n-\mathbf{v}_{PR}\|_1.
+\end{aligned}
+\]
+By induction, the proof is complete.
+\end{pfbox}
+
+\begin{remark}
+From \eqref{eq:google-power-iteration-bound},
+\[
+\begin{aligned}
+\|G^k\mathbf{v}_n-\mathbf{v}_{PR}\|_1
+&\le
+\alpha^k\|\mathbf{v}_n-\mathbf{v}_{PR}\|_1\\
+&\le
+\alpha^k(\|\mathbf{v}_n\|_1+\|\mathbf{v}_{PR}\|_1)\\
+&=
+\alpha^k(1+1)
+=
+2\alpha^k.
+\end{aligned}
+\]
+Therefore, for large $k$, $G^k\mathbf{v}_n$ approximates $\mathbf{v}_{PR}$, and the error is bounded by $2\alpha^k$.
+\end{remark}
+
+

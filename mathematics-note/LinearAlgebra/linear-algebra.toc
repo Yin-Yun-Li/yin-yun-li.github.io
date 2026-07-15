@@ -1,14 +1,24 @@
-\contentsline {section}{\numberline {1}Fields and Vector Space}{3}{section.1}%
+\contentsline {section}{\numberline {1}Fields and Vector Spaces}{3}{section.1}%
 \contentsline {section}{\numberline {2}Basis and Dimension}{6}{section.2}%
 \contentsline {section}{\numberline {3}Linear Transformation}{11}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Linear function}{11}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Matrix Operations}{14}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Change of coordinate \& Linear Operator}{18}{subsection.3.3}%
 \contentsline {section}{\numberline {4}Determinants}{20}{section.4}%
 \contentsline {section}{\numberline {5}Diagonalization}{25}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Similarity}{25}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Diagonalizability}{27}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Application of Diagonalization}{32}{subsection.5.3}%
 \contentsline {section}{\numberline {6}Linear Duality}{35}{section.6}%
 \contentsline {section}{\numberline {7}Jordan Canonical Form}{40}{section.7}%
 \contentsline {section}{\numberline {8}Inner Product Space}{48}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Finite Dimensional Inner Product Spaces}{48}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Spectral Theorem}{61}{subsection.8.2}%
+\contentsline {section}{\numberline {9}Singular Value Decomposition}{65}{section.9}%
+\contentsline {subsection}{\numberline {9.1}SVD}{65}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Pseudoinverse}{72}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Conclusion: SVD knows everything}{79}{subsection.9.3}%
+\contentsline {section}{\numberline {10}Bilinear and Quadratic Forms}{84}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Bilinear and Quadratic Forms}{84}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Definiteness}{91}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Min--Max Theorem \& Weyl's Inequality}{107}{subsection.10.3}%
+\contentsline {section}{\numberline {11}Markov Chain and Perron-Frobenius}{121}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Perron-Frobenius Theorem}{121}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Google PageRank algorithm}{133}{subsection.11.2}%
+\contentsline {section}{\numberline {12}Matrix Calculus}{138}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Differentiation}{138}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Applications}{160}{subsection.12.2}%

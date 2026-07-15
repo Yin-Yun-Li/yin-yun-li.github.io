@@ -6,11 +6,53 @@
 \begin{document}
 \maketitle
 
+\section{Prerequisite}
+\subsection{System of Linear Equations}
+
+\begin{definition}
+    Let $(A\mid \mathbf{b})$ be the augmented matrix associated with a system of linear equations $A\mathbf{x}=\mathbf{b}$.
+    We say the system is homogeneous if $\mathbf{b}=\mathbf{0}$ and inhomogeneous otherwise.
+\end{definition}
+
+\begin{theorem}
+    Let $(A\mid\mathbf{b})$ be a general system of equations.
+    The system is consistent (has at least one solution) iff $\rank(A)=\rank(A\mid \mathbf{b})$.
+\end{theorem}
+
+\begin{pfbox}
+    Let $A=(\mathbf{c}_1,\mathbf{c}_2,\cdots,\mathbf{c}_n)$ (formed by $n$ columns).\\
+    Suppose $\mathbf{x}=(x_1,x_2,\cdots,x_n)^\top$ is a solution to the system. Write $\mathbf{b}=x_1\mathbf{c}_1+x_2\mathbf{c}_2+\cdots +x_n\mathbf{c}_n,$ so $\mathbf{b}\in\Ima(A).$
+    This means $\mathrm{Span}(\{\mathbf{c}_1,\mathbf{c}_2,\cdots,\mathbf{c}_n\})=\mathrm{Span}(\{\mathbf{c}_1,\mathbf{c}_2,\cdots,\mathbf{c}_n,\mathbf{b}\})\Rightarrow \rank(A)=\rank(A\mid \mathbf{b}).$\\
+    The argument is reversible, so this completes the proof.
+\end{pfbox}
+
+\begin{theorem}[Principle of linearity]
+Suppose $\mathbf{v}$ is a solution to the system of equation $(A\mid \mathbf{b})$,
+then the general solution of $(A\mid \mathbf{b})$ is
+\[\mathbf{v}+\Ker(A)=\{\mathbf{v}+\mathbf{w}:\mathbf{w}\in \Ker(A)\}.\]
+\end{theorem}
+
+\begin{pfbox}
+Let $\mathbf{v}$ be a solution to the system and $\mathbf{u}$ be another solution to $(A\mid \mathbf{b}).$
+If we can show $\mathbf{u}-\mathbf{v}\in\Ker(A),$ then the general solution is given by $\mathbf{u}=\mathbf{v}+\underbrace{(\mathbf{u}-\mathbf{v})}_{\in\Ker(A)}.$
+\end{pfbox}
+
+\begin{corollary}
+    The system $(A\mid\mathbf{b})$ has a unique solution iff
+    \begin{enumerate}
+        \item $\rank(A)=\rank(A\mid\mathbf{b})$.
+        \item $\Ker(A)=\{\mathbf{0}\}$.
+    \end{enumerate}
+\end{corollary}
+
+
+\subsection{Inner Product Space}
+
 \begin{theorem}[Gram-Schmidt Process]
     Let $(V,\langle-,-\rangle)$ be an inner product space. Given a linearly independent set $S=\{\mathbf{v}_1,\mathbf{v}_2,\cdots,\mathbf{v}_l\}$ in $V$, if
     \begin{enumerate}
         \item $\mathbf{w}_1=\mathbf{v}_1$,
-        \item $\mathbf{w}_k=\mathbf{v}_k-\sum_{j=1}^{k-1}\frac{\langle \mathbf{v}_k, \mathbf{w}_j\rangle}{\norm{\mathbf{w}_j}^2}\mathbf{w}_j\,$ for $\,2\le k\le l.$
+        \item $\mathbf{w}_k=\mathbf{v}_k-\displaystyle\sum_{j=1}^{k-1}\frac{\langle \mathbf{v}_k, \mathbf{w}_j\rangle}{\norm{\mathbf{w}_j}^2}\mathbf{w}_j\,$ for $\,2\le k\le l.$
     \end{enumerate} 
     Then:
     \begin{enumerate}
@@ -134,41 +176,7 @@ Inspired by the construction of orthogonal set via Gram-Schmidt, we can extend t
     In addition, both $A$ and $A^\top A$ shares the same dimension of domain (The matrices have the same number of columns). By rank-nullity, $\rank(A^\top A)=\rank(A).$
 \end{pfbox}
 
-\begin{definition}
-    Let $(A\mid \mathbf{b})$ be the augmented matrix associated with a system of linear equations $A\mathbf{x}=\mathbf{b}$.
-    We say the system is homogeneous if $\mathbf{b}=\mathbf{0}$ and inhomogeneous otherwise.
-\end{definition}
 
-\begin{theorem}
-    Let $(A\mid\mathbf{b})$ be a general system of equations.
-    The system is consistent (has at least one solution) iff $\rank(A)=\rank(A\mid \mathbf{b})$.
-\end{theorem}
-
-\begin{pfbox}
-    Let $A=(\mathbf{c}_1,\mathbf{c}_2,\cdots,\mathbf{c}_n)$ (formed by $n$ columns).\\
-    Suppose $\mathbf{x}=(x_1,x_2,\cdots,x_n)^\top$ is a solution to the system. Write $\mathbf{b}=x_1\mathbf{c}_1+x_2\mathbf{c}_2+\cdots +x_n\mathbf{c}_n,$ so $\mathbf{b}\in\Ima(A).$
-    This means $\mathrm{Span}(\{\mathbf{c}_1,\mathbf{c}_2,\cdots,\mathbf{c}_n\})=\mathrm{Span}(\{\mathbf{c}_1,\mathbf{c}_2,\cdots,\mathbf{c}_n,\mathbf{b}\})\Rightarrow \rank(A)=\rank(A\mid \mathbf{b}).$\\
-    The argument is reversible, so this completes the proof.
-\end{pfbox}
-
-\begin{theorem}[Principle of linearity]
-Suppose $\mathbf{v}$ is a solution to the system of equation $(A\mid \mathbf{b})$,
-then the general solution of $(A\mid \mathbf{b})$ is
-\[\mathbf{v}+\Ker(A)=\{\mathbf{v}+\mathbf{w}:\mathbf{w}\in \Ker(A)\}.\]
-\end{theorem}
-
-\begin{pfbox}
-Let $\mathbf{v}$ be a solution to the system and $\mathbf{u}$ be another solution to $(A\mid \mathbf{b}).$
-If we can show $\mathbf{u}-\mathbf{v}\in\Ker(A),$ then the general solution is given by $\mathbf{u}=\mathbf{v}+\underbrace{(\mathbf{u}-\mathbf{v})}_{\in\Ker(A)}.$
-\end{pfbox}
-
-\begin{corollary}
-    The system $(A\mid\mathbf{b})$ has a unique solution iff
-    \begin{enumerate}
-        \item $\rank(A)=\rank(A\mid\mathbf{b})$.
-        \item $\Ker(A)=\{\mathbf{0}\}$.
-    \end{enumerate}
-\end{corollary}
 
 \begin{gbox}
 \begin{question}[Best Solution Problem]
@@ -209,22 +217,10 @@ To solve the best solution problem, we employ the following method:
     For 2, it is an easy exercise.
 \end{pfbox}
 
-The least square method can help us find the best linear predictor of $\mathbf{Y}$ given $X$.
-Suppose we have a set of data points $(y_i,\mathbf{x}_i)\in\mathbb{R}\times\mathbb{R}^n$ and the system is given to be $\mathbf{Y}=X\boldsymbol{\beta}+\boldsymbol{\varepsilon}$.
-Let 
-\begin{align*}
-    \mathrm{SSE}(\beta) &= \sum_{i=1}^m (y_i - \mathbf{x}_i^\top\beta)^2 \\
-    &= \left\| \begin{bmatrix} y_1 - \mathbf{x}_1^\top\beta \\ y_2 - \mathbf{x}_2^\top\beta \\ \vdots \\ y_m - \mathbf{x}_m^\top\beta \end{bmatrix} \right\|^2 
-    = \norm{\mathbf{Y} - \mathbf{X}\beta}^2
-    = (\mathbf{Y} - \mathbf{X}\beta)^\top (\mathbf{Y} - \mathbf{X}\beta).
-\end{align*}
-
-Using the theorem~\eqref{least square}, we can find the projection coefficients explicitly.
-Alternatively, we can derive the coefficients by calculus. We first show some results about matrix calculus.
-
+\subsection{Matrix Calculus}
 \begin{definition}[Gradient]
-Let $f: \mathbb{R}^n \to \mathbb{R}$ be a differentiable function. The gradient of $f$ is defined as:
-$$ \nabla f = \frac{\partial f}{\partial \mathbf{x}} = \left( \frac{\partial f}{\partial x_1}, \frac{\partial f}{\partial x_2}, \dots, \frac{\partial f}{\partial x_n} \right)^\top.$$
+Let $f: \mathbb{R}^n \to \mathbb{R}$ be a differentiable function. The gradient of $f$ at $p$ is defined as:
+$$ \nabla f(p) = \frac{\partial f}{\partial \mathbf{x}}(p) = \left( \frac{\partial f}{\partial x_1}(p), \frac{\partial f}{\partial x_2}(p), \dots, \frac{\partial f}{\partial x_n}(p) \right).$$
 \end{definition} 
 
 \begin{theorem}
@@ -249,7 +245,7 @@ Let $A = (\mathbf{c}_1, \mathbf{c}_2, \dots, \mathbf{c}_n)$ where $\mathbf{c}_i$
 $$ \frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^\top A) = \frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^\top \mathbf{c}_1, \mathbf{x}^\top \mathbf{c}_2, \dots, \mathbf{x}^\top \mathbf{c}_n) \stackrel{(1)}{=} (\mathbf{c}_1, \mathbf{c}_2, \dots, \mathbf{c}_n) = A. $$
 Similarly, $\frac{\partial}{\partial \mathbf{x}^\top} (A\mathbf{x}) = (\mathbf{c}_1, \mathbf{c}_2, \dots, \mathbf{c}_n) = A$.
 
-For (3),
+For (3), we first prove it by definition.
 Let $f: \mathbb{R}^n \to \mathbb{R}$ be defined by $f(\mathbf{x}) = \mathbf{x}^\top A \mathbf{x}$. 
 The function $f$ is differentiable if and only if there exists a linear map $f'(\mathbf{x})$ such that
 $$ \lim_{\mathbf{h} \to \mathbf{0}} \frac{\|f(\mathbf{x} + \mathbf{h}) - f(\mathbf{x}) - f'(\mathbf{x})\mathbf{h}\|}{\|\mathbf{h}\|} = 0. $$
@@ -265,7 +261,8 @@ $$ \frac{\|f(\mathbf{x} + \mathbf{h}) - f(\mathbf{x}) - f'(\mathbf{x})\mathbf{h}
 By the Sandwich Theorem, $\lim_{\mathbf{h} \to \mathbf{0}} \frac{\|\mathbf{h}^\top A \mathbf{h}\|}{\|\mathbf{h}\|} = 0$. 
 By the uniqueness of the derivative, $f'(\mathbf{x}) = \mathbf{x}^\top(A + A^\top)$. Taking the transpose yields the gradient $\nabla f(\mathbf{x}) = (A + A^\top)\mathbf{x}$.\\
 
-Alternatively, define mappings $\phi$ and $\psi$ such that $f(\mathbf{x}) = (\psi \circ \phi)(\mathbf{x})$:
+Alternatively, we can prove it by chain rule for fun. 
+Define mappings $\phi$ and $\psi$ such that $f(\mathbf{x}) = (\psi \circ \phi)(\mathbf{x})$:
 \begin{align*}
     \phi &: \mathbb{R}^n \to \mathbb{R}^n \times \mathbb{R}^n, \quad \phi(\mathbf{x}) = (\mathbf{x}, \mathbf{x}) \\
     \psi &: \mathbb{R}^n \times \mathbb{R}^n \to \mathbb{R}, \quad \psi(\mathbf{y}, \mathbf{z}) = \mathbf{y}^\top A \mathbf{z}
@@ -296,8 +293,23 @@ For (4), by Clairaut's Theorem, the mixed partial derivatives of a smooth polyno
 $$ \frac{\partial^2}{\partial \mathbf{x} \partial \mathbf{x}^\top} (\mathbf{x}^\top A \mathbf{x}) = \frac{\partial}{\partial \mathbf{x}^\top} \left( \frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^\top A \mathbf{x}) \right) \stackrel{\text{(3)}}{=} \frac{\partial}{\partial \mathbf{x}^\top} \Big( (A + A^\top)\mathbf{x} \Big) \stackrel{\text{(2)}}{=} A + A^\top. $$
 \end{pfbox}
 
-Recall our goal is to minimize the $\mathrm{SSE}(\beta)$.
-Expand it to have:
+
+\section{Best Linear Predicator}
+
+The least square method can help us find the best linear predictor of $\mathbf{Y}$ given $X$.
+Suppose we have a set of data points $(y_i,\mathbf{x}_i)\in\mathbb{R}\times\mathbb{R}^n$ and the system is given to be $\mathbf{Y}=X\boldsymbol{\beta}+\boldsymbol{\varepsilon}$.
+Let 
+\begin{align*}
+    \mathrm{SSE}(\beta) &= \sum_{i=1}^m (y_i - \mathbf{x}_i^\top\beta)^2 \\
+    &= \left\| \begin{bmatrix} y_1 - \mathbf{x}_1^\top\beta \\ y_2 - \mathbf{x}_2^\top\beta \\ \vdots \\ y_m - \mathbf{x}_m^\top\beta \end{bmatrix} \right\|^2 
+    = \norm{\mathbf{Y} - \mathbf{X}\beta}^2
+    = (\mathbf{Y} - \mathbf{X}\beta)^\top (\mathbf{Y} - \mathbf{X}\beta).
+\end{align*}
+
+Using the theorem~\eqref{least square}, we can find the projection coefficients explicitly.
+Alternatively, we can derive the coefficients by calculus. 
+
+First expand $\mathrm{SSE}(\beta)$ to have:
 \begin{align*}
     \mathrm{SSE}(\beta) &= \mathbf{Y}^\top \mathbf{Y} - \mathbf{Y}^\top \mathbf{X}\beta - \beta^\top \mathbf{X}^\top \mathbf{Y} + \beta^\top \mathbf{X}^\top \mathbf{X}\beta \\
              &= \mathbf{Y}^\top \mathbf{Y} - 2\beta^\top \mathbf{X}^\top \mathbf{Y} + \beta^\top \mathbf{X}^\top \mathbf{X}\beta,

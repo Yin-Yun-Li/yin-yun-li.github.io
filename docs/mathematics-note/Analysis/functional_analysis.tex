@@ -1,0 +1,927 @@
+\begin{definition}[Normed Vector Space]
+Let $V$ be a vector space over $\mathcal{F} = \mathbb{R}$ (or $\mathbb{C}$). A norm is a function $||\cdot||: V \rightarrow [0, \infty)$ satisfying the following properties for all $\mathbf{x}, \mathbf{y} \in V$ and $\alpha \in \mathcal{F}$:
+\begin{enumerate}
+    \item $||\mathbf{x}|| \ge 0 $ and $||\mathbf{x}|| = 0 \iff \mathbf{x} = \mathbf{0}.$
+    \item $||\alpha \mathbf{x}|| = |\alpha| ||\mathbf{x}||$
+    \item $||\mathbf{x}+\mathbf{y}|| \le ||\mathbf{x}|| + ||\mathbf{y}||$
+\end{enumerate}
+A vector space equipped with a norm is called a normed vector space and is denoted by $(V, ||\cdot||)$.
+\end{definition}
+
+\begin{remark}
+Every normed space $(V, ||\cdot||)$ induces a natural metric $d(\mathbf{x},\mathbf{y}) := ||\mathbf{x}-\mathbf{y}||$.
+\end{remark}
+
+\begin{definition}[Banach Space]
+A normed space $(V, ||\cdot||)$ is called a Banach space if it is complete with respect to the metric induced by the norm. That is, every Cauchy sequence $\{\mathbf{v}_i\}_{i=1}^\infty \subseteq V$ converges to an element $\mathbf{v}\in V$.
+\end{definition}
+
+
+\begin{definition}[Hilbert Space]
+    We say $(V, ||\cdot||)$ is a Hilbert space if
+    \begin{enumerate}
+        \item $V$ is an inner product space.
+        \item $V$ is a Banach space.
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}\ \vspace{-1em}
+    \begin{enumerate}
+        \item Every inner product induces a norm via $||\mathbf{v}|| = \sqrt{\langle \mathbf{v}, \mathbf{v} \rangle}$. However, not every norm is induced by an inner product. For example, the $\ell^1$-norm on $\mathbb{R}^n$ is not induced by any inner product.
+        \item Hence, innner product space is also a normed space, if it is complete, it is a Hilbert space.
+    \end{enumerate}
+\end{remark}
+
+
+\begin{definition}
+Let $(X, d_X)$ and $(Y, d_Y)$ be two metric spaces. Define $\mathcal{B}(X \rightarrow Y) := \{ f \mid f: X \rightarrow Y \text{ is a bounded function} \}$. We can define a uniform/sup norm metric $d_\infty(f,g) := \displaystyle\sup_{x \in X} d_Y(f(x), g(x))$.
+\end{definition}
+
+One can show that $(\mathcal{B}(X\rightarrow Y), d_\infty)$ is a metric space.
+Next, define $\mathcal{C}(X \rightarrow Y) := \{ f \in \mathcal{B}(X \rightarrow Y) \mid f: X \rightarrow Y \text{ is continuous} \}$.
+Clearly, $\mathcal{C}(X \rightarrow Y)\subset \mathcal{B}(X \rightarrow Y)$.
+
+\begin{remark}
+Let $\{f_n\}_{n\in\mathbf{N}}$ be a sequnce in $\mathcal{B}(X \rightarrow Y)$ and anthoer function $f\in \mathcal{B}(X \rightarrow Y).$ TFAE:
+\begin{enumerate}
+    \item $f_n \rightarrow f$ converges in the $d_\infty$-metric.
+    \item $f_n$ converges to $f$ uniformly.
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}
+    Let $(X, d_X)$ be a metric space and $(Y, d_Y)$ a complete metric space. Then $\mathcal{C}(X \rightarrow Y)$ equipped with the metric $d_\infty$ is a complete metric subspace of $\mathcal{B}(X \rightarrow Y)$.
+    \label{complete codomain and complete continuous function space}
+\end{theorem}
+
+\begin{pfbox}
+    Let $\{f_n\} \subseteq \mathcal{C}(X \rightarrow Y)$ be a Cauchy sequence in the $d_\infty$ metric. We will show that it converges to a function $f \in \mathcal{C}(X \rightarrow Y)$.
+
+    \textbf{Step 1: Pointwise convergence.} \\
+    Let $\epsilon > 0$. Since $\{f_n\}$ is Cauchy, there exists an $N \in \mathbb{N}$ such that for all $n, m \ge N$, we have $d_\infty(f_n, f_m) < \epsilon$.
+    By the definition of the supremum metric, for any fixed $x \in X$,
+    $$ d_Y(f_n(x), f_m(x)) \le d_\infty(f_n, f_m) < \epsilon $$
+    This shows that for each $x \in X$, the sequence $\{f_n(x)\}$ is a Cauchy sequence in $Y$. Since $(Y, d_Y)$ is complete, this sequence converges to some point in $Y$. We define the limit function $f: X \rightarrow Y$ by $f(x) := \displaystyle\lim_{n \to \infty} f_n(x)$.
+
+    \textbf{Step 2: Uniform convergence.} \\
+    We need to show that $f_n \rightarrow f$ uniformly. 
+    From Step 1, we know that for all $n, m \ge N$ and all $x \in X$, $d_Y(f_n(x), f_m(x)) < \epsilon$.
+    Fixing $n \ge N$ and taking the limit as $m \to \infty$, the continuity of the metric $d_Y$ gives:
+    $$ d_Y(f_n(x), f(x)) = \lim_{m \to \infty} d_Y(f_n(x), f_m(x)) \le \epsilon \quad \text{for all } x \in X $$
+    Taking the supremum over all $x \in X$, we get $d_\infty(f_n, f) \le \epsilon$. Thus, $f_n$ converges to $f$ uniformly. (This also implies $f$ is bounded, so $f \in \mathcal{B}(X \rightarrow Y)$).
+
+    \textbf{Step 3: Continuity of the limit function (The $\epsilon/3$ argument).} \\
+    To show $f \in \mathcal{C}(X \rightarrow Y)$, we must prove $f$ is continuous at any arbitrary point $x_0 \in X$.
+    Let $\epsilon > 0$. 
+    First, by uniform convergence, choose an integer $K$ such that for all $x \in X$,
+    $$ d_Y(f_K(x), f(x)) < \frac{\epsilon}{3} $$
+    Second, since $f_K$ is continuous at $x_0$, there exists a $\delta > 0$ such that for all $x \in X$ with $d_X(x, x_0) < \delta$,
+    $$ d_Y(f_K(x), f_K(x_0)) < \frac{\epsilon}{3} $$
+    Now, for any $x \in X$ with $d_X(x, x_0) < \delta$, we apply the triangle inequality:
+    \begin{align*}
+        d_Y(f(x), f(x_0)) &\le d_Y(f(x), f_K(x)) + d_Y(f_K(x), f_K(x_0)) + d_Y(f_K(x_0), f(x_0)) \\
+        &< \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} = \epsilon
+    \end{align*}
+    Therefore, $f$ is continuous at $x_0$. Since $x_0$ was arbitrary, $f \in \mathcal{C}(X \rightarrow Y)$.
+    This concludes the proof that $\mathcal{C}(X \rightarrow Y)$ is a complete metric space.
+\end{pfbox}
+
+
+\begin{proposition}
+Let $(K, d)$ be a non-empty compact metric space. Let $\mathcal{B}(K) := \mathcal{B}(K \rightarrow \mathbb{R})$ and $\mathcal{C}(K) := \mathcal{C}(K \rightarrow \mathbb{R})$. Then $\mathcal{B}(K)$ is a vector space over $\mathbb{R}$, and $\mathcal{C}(K)$ is a closed vector subspace in $\mathcal{B}(K)$.
+\end{proposition}
+\begin{pfbox}
+We can check that $(f+g)(x) = f(x) + g(x)$ and $(cf)(x) = cf(x)$ are well-defined. Also, $|(\alpha f + \beta g)(x)| \le |\alpha||f(x)| + |\beta||g(x)|$, which guarantees closure under linear combinations. Furthermore, since $K$ is compact, any continuous function $f \in \mathcal{C}(K)$ attains its maximum and minimum, meaning $f$ is bounded ($\mathcal{C}(K) \subset \mathcal{B}(K)$). 
+By uniform convergence, the limit of any convergent sequence in $\mathcal{C}(K)$ is also continous on $K$, proving closedness.
+\end{pfbox}
+
+
+\begin{theorem}
+On $\mathcal{B}(K)$ or $\mathcal{C}(K)$, we define the sup-norm $||f||_\infty := \displaystyle\sup_{x \in K} |f(x)|$. Both $(\mathcal{B}(K), ||\cdot||_\infty)$ and $(\mathcal{C}(K), ||\cdot||_\infty)$ are Banach spaces.
+\end{theorem}
+\begin{proof}
+This is the direct consequence of the previous proposition and theorem~\eqref{complete codomain and complete continuous function space}.
+\end{proof}
+
+\subsection{Arzelà-Ascoli Theorem}
+
+\begin{definition}
+Let $\mathcal{F} \subset \mathcal{C}(K)$.
+\begin{enumerate}
+    \item The family $\mathcal{F}$ is called pointwise bounded if for all $x \in K$, there exists a constant $M_x < \infty$ such that $|f(x)| \le M_x$ for every $f \in \mathcal{F}$ (independent of $f$).
+    \item The family $\mathcal{F}$ is called uniformly bounded if there exists a constant $M < \infty$ such that $|f(x)| \le M$ for every $x \in K$ and $f \in \mathcal{F}$ (independent of $f$ and $x$).
+    \item The family $\mathcal{F}$ is called equicontinuous if for all $\epsilon > 0$, there exists $\delta > 0$ such that $d(x,y) < \delta \Rightarrow |f(x) - f(y)| < \epsilon$ for all $x, y \in K$ and $f \in \mathcal{F}$ (independent of $f$ and $x$).
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}
+If $\mathcal{F} \subset \mathcal{C}(K)$ is pointwise bounded and equicontinuous, then $\mathcal{F}$ is uniformly bounded.
+\end{theorem}
+\begin{pfbox}
+Since $\mathcal{F}$ is equicontinuous, take $\epsilon = 1$, then there exists $\delta > 0$ such that $d(x,y) < \delta \Rightarrow |f(x) - f(y)| < 1$ for all $f \in \mathcal{F}$.
+Let $\displaystyle\bigcup_{x \in K} B(x, \delta)$ be an open cover of $K$. Since $K$ is compact, there exists a finite subcover such that $K \subseteq \displaystyle\bigcup_{i=1}^r B(x_i, \delta)$.
+By pointwise boundedness, $|f(x_i)| \le M_i$ for each $i = 1, \dots, r$ and for all $f \in \mathcal{F}$.
+Choose $M = \displaystyle\max_{1 \le i \le r} (M_i + 1)$.
+Given any $f \in \mathcal{F}$ and $x \in K$, there exists $x_i$ such that $d(x, x_i) < \delta$. Therefore,
+$$|f(x)| \le |f(x) - f(x_i)| + |f(x_i)| \le 1 + M_i \le M.$$
+Hence, $\mathcal{F}$ is uniformly bounded.
+\end{pfbox}
+
+
+\begin{theorem}[Arzelà-Ascoli I]
+Let $(K, d)$ be a compact metric space. If $\{f_n\} \subset \mathcal{C}(K)$ is bounded and equicontinuous, then $\{f_n\}$ has a subsequence which converges uniformly to a continuous function on $K$.
+\end{theorem}
+\begin{pfbox}
+\textbf{Step 1: A compact set is separable (has a countable, dense subset).}
+For each $k \in \mathbb{N}$, $\displaystyle\bigcup_{x \in K} B\left(x, \frac{1}{k}\right)$ forms an open cover of $K$. Since $K$ is compact, there exists a finite subcover $\{B(x_{k,j}, \frac{1}{k})\}_{j=1}^{N_k}$. Let $S_k = \{x_{k,j}\}_{j=1}^{N_k}$. Define $S := \displaystyle\bigcup_{k=1}^\infty S_k$. Clearly, $S$ is countable.
+We claim $S$ is dense. Fix $\epsilon > 0$. There exists $k_0$ such that $\frac{1}{k_0} < \epsilon$. Since $K \subseteq \displaystyle\bigcup_{j=1}^{N_{k_0}} B(x_{k_0,j}, \frac{1}{k_0})$, for any $x \in K$, there exists $x_{k_0,j} \in S$ such that $d(x, x_{k_0,j}) < \frac{1}{k_0} < \epsilon$. Thus, $S$ is dense.
+
+\textbf{Step 2: Diagonal Process.}
+Let $S = \{p_1, p_2, \dots\}$. We construct a uniformly convergent subsequence.
+Consider $\{f_n(p_1)\}_{n=1}^\infty$. Since $\{f_n\}$ is uniformly bounded, this scalar sequence is bounded in $\mathbb{R}$. By Bolzano-Weierstrass, there exists a convergent subsequence $\{f_n^{(1)}(p_1)\}$.
+Next, consider $\{f_n^{(1)}(p_2)\}_{n=1}^\infty$. By BW again, there exists a subsequence $\{f_n^{(2)}\}$ such that $\{f_n^{(2)}(p_2)\}$ converges. Note that $\{f_n^{(2)}(p_1)\}$ still converges as it is a subsequence of the first.
+By induction, there exists $\{f_n^{(k)}\}_{n=1}^\infty$ which is a subsequence of $\{f_n^{(k-1)}\}_{n=1}^\infty$ such that $\{f_n^{(k)}(p_j)\}_{n=1}^\infty$ converges for $j = 1, 2, \dots, k$.
+Take $g_n = f_n^{(n)}$. Then the sequence $\{g_n(p_j)\}_{n=1}^\infty$ converges for all $p_j \in S$.
+
+\textbf{Step 3: Uniform convergence in $\mathcal{C}(K)$.}
+Let $\epsilon > 0$. By equicontinuity, there exists $\delta > 0$ such that $d(x,y) < \delta \Rightarrow |g_n(x) - g_n(y)| < \frac{\epsilon}{3}$ for all $n$.
+Choose $k$ such that $\frac{1}{k} < \delta$. For each $x \in K$, there exists $s \in S_k \subset S$ such that $d(x, s) < \frac{1}{k} < \delta$. Thus, $|g_n(x) - g_n(s)| < \frac{\epsilon}{3}$.
+Since $S_k$ is finite, $\{g_n(s)\}$ converges uniformly for $s \in S_k$. Thus, there exists $N$ such that for all $m, n \ge N$ and all $s \in S_k$, $|g_n(s) - g_m(s)| < \frac{\epsilon}{3}$.
+Then for any $x \in K$ and $m, n \ge N$, pick $s \in S_k$ such that $d(x,s) < \delta$. We have:
+$$|g_n(x) - g_m(x)| \le |g_n(x) - g_n(s)| + |g_n(s) - g_m(s)| + |g_m(s) - g_m(x)| \le \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} = \epsilon$$
+Therefore, $\{g_n\}$ is uniformly Cauchy in $\mathcal{C}(K)$. Since $\mathcal{C}(K)$ is complete, $g_n$ converges uniformly to some $g \in \mathcal{C}(K)$.
+\end{pfbox}
+
+\begin{theorem}[Arzelà-Ascoli II]
+    Let $(K,d)$ be a compact metric space and $\mathcal{F}$ be a family of $\mathcal{C}(K)$. 
+    $\mathcal{F}$ is relatively compact iff $\mathcal{F}$ is uniformly bounded and equicontinous.
+\end{theorem}
+
+\begin{remark}
+    We say $\mathcal{F}$ is relatively compact if the closure of $\mathcal{F}$ is compact.
+    Take any sequence in $\mathcal{F}$, if the sequence has a convergent subsequence, the limit of this subsequence, $f$, belongs to $\overline{\mathcal{F}}$. By definition, $\overline{\mathcal{F}}$ is sequentially compact and hence compact.
+    Note that the first version of Arzelà-Ascoli tells us $f\in\mathcal{C}(K)$, but $f$ may not be in $\mathcal{F}.$
+\end{remark}
+
+\begin{pfbox}
+    $(\Leftarrow)$ Proved in Arzel\`a-Ascoli (I).
+    
+    $(\Rightarrow)$ Suppose $\mathcal{F}$ is relatively compact, i.e., Take any sequence $\{f_n\}_{n \in \mathbb{N}} \subseteq \mathcal{F}$, $\exists$ a convergent subsequence $f_{n_k} \rightrightarrows f$ for some $f \in C(K)$.
+
+    \textbf{Suppose, by contradiction, $\{f_n\}_{n \in \mathbb{N}}$ is not uniformly bounded.} \\
+    For each $k \in \mathbb{N}$, $\exists x_k \in K$ and $\exists f_{n_k}$ s.t. $|f_{n_k}(x_k)| > k$. \\
+    Consider the sequence $\{f_{n_k}\}$. By assumption, $\exists$ convergent subsequence, denoted by $\{g_j\}_{j \in \mathbb{N}}$ s.t. $g_j \rightrightarrows g$, where $g \in C(K)$. \\
+    Since $g$ is continuous on the compact set $K$, $g$ is bounded. \\
+    Note that $\|g_j\|_\infty > j$ for each $j$ (by our construction). \\
+    Now let $j \to \infty$, we have $\lim_{j \to \infty} \|g_j\|_\infty \to \infty$, which contradicts the fact that $g_j$ converges uniformly to a bounded function $g$.
+
+    \vspace{1em}
+    \textbf{Suppose, by contradiction, $\{f_n\}_{n \in \mathbb{N}}$ is not equicontinuous.} \\
+    $\exists \epsilon > 0$ s.t. $\forall \delta > 0$, $\exists x, y \in K$ s.t. $|x - y| < \delta \Rightarrow |f_n(x) - f_n(y)| > \epsilon$ for some $n$. \\
+    For each $k \in \mathbb{N}$, set $\displaystyle \delta = \frac{1}{k}$, $\exists x_k, y_k \in K$ and $f_{n_k}$ s.t.
+    \[ |x_k - y_k| < \frac{1}{k} \Rightarrow |f_{n_k}(x_k) - f_{n_k}(y_k)| > \epsilon \]
+    Consider the sequence $\{f_{n_k}\}$. By assumption, $\exists$ convergent subsequence, denoted by $\{h_j\}_{j \in \mathbb{N}}$ s.t. $h_j \rightrightarrows h$ for some $h \in C(K)$. \\
+    For this $\epsilon > 0$, $\exists N \in \mathbb{N}$ s.t. $\displaystyle \|h_j - h\|_\infty < \frac{\epsilon}{3} \quad \forall j \ge N$. \\
+    Moreover, since $K$ is compact, $h$ is uniformly continuous. \\
+    For this $\epsilon > 0$, $\exists \eta > 0$ s.t. $\displaystyle |x - y| < \eta \Rightarrow |h(x) - h(y)| < \frac{\epsilon}{3} \quad \forall x, y \in K$.
+
+    \vspace{1em}
+    Note: $\displaystyle |x_j - y_j| < \frac{1}{j} \Rightarrow |h_j(x_j) - h_j(y_j)| > \epsilon \quad (*)$ \\
+    Now take $j \to \infty$ large enough s.t. $|x_j - y_j| < \eta$. We apply the triangle inequality:
+    \[ |h_j(x_j) - h_j(y_j)| \le |h_j(x_j) - h(x_j)| + |h(x_j) - h(y_j)| + |h(y_j) - h_j(y_j)| \]
+    \[ \le \displaystyle \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} = \epsilon \]
+    This directly contradicts our construction in $(*)$. Therefore, $\mathcal{F}$ must be equicontinuous.
+\end{pfbox}
+
+% ---------------------------------------------------------
+
+\begin{corollary}
+    Let $(K,d)$ be a compact metric space and $\mathcal{F}$ be a family of $\mathcal{C}(K)$. 
+    $\mathcal{F}$ is compact iff $\mathcal{F}$ is closed, uniformly bounded and equicontinous.
+\end{corollary}
+
+\begin{pfbox}
+    $(\Leftarrow)$ Bounded and equicontinuous $\Rightarrow$ there exists a convergent subsequence. Since $\mathcal{F}$ is closed $\Rightarrow$ this subsequence converges to a function within $\mathcal{F}$. Thus, sequentially compact implies compact.
+    
+    $(\Rightarrow)$ It suffices to show compact implies closed and bounded.
+    
+    \textbf{Proof of Boundedness:} \\
+    Fix any $r > 0$ and let $\displaystyle \bigcup_{f \in \mathcal{F}} B(f, r)$ be an open cover of $\mathcal{F}$. \\
+    By compactness, there exists a finite subcover $\{f_1, f_2, \dots, f_n\}$ s.t. $\displaystyle \bigcup_{i=1}^n B(f_i, r) \supseteq \mathcal{F}$. \\
+    By definition, $\mathcal{F}$ is totally bounded and hence bounded.
+    
+    To see this explicitly, fix $f \in \mathcal{F}$ and take any $g \in \mathcal{F}$. \\
+    WTS: $\exists M > 0$ s.t. $g \in B(f, M) \Leftrightarrow \|g - f\|_\infty \le M$. \\
+    Since $f, g$ belong to the union of the finite balls, they are near some centers $f_i, f_j$. By the triangle inequality:
+    \[ \|f - g\|_\infty \le \|f - f_i\|_\infty + \|f_i - f_j\|_\infty + \|f_j - g\|_\infty \]
+    \[ \le \displaystyle r + \max_{i \neq j}\{\|f_i - f_j\|_\infty\} + r = M. \]
+    This provides a uniform bound $M$ for any pair in $\mathcal{F}$.
+
+    \textbf{Proof of Closedness}:
+    Take any sequence $f_n \Rightarrow f$, where $f \in C(K)$. \\
+    By (sequential) compactness, $\exists f_{\phi(n)} \Rightarrow g$, where $g \in \mathcal{F}$. \\
+    By uniqueness of limit, we have $f = g \implies f \in \mathcal{F}$. \\
+    Therefore, $\mathcal{F}$ is closed.
+\end{pfbox}
+
+
+
+
+
+\subsection*{Application: Compactness of Integral Operators}
+Let $K: [a,b] \times [a,b] \rightarrow \mathbb{R}$ be continuous. Define $T: \mathcal{C}([a,b]) \rightarrow \mathcal{C}([a,b])$ by
+$$ (Tf)(x) = \displaystyle\int_a^b K(x,y)f(y) dy $$
+Then $T$ is a compact operator. That is, for any bounded sequence $\{f_n\}_{n=1}^\infty \subseteq \mathcal{C}([a,b])$ under the sup-norm, $\{Tf_n\}$ has a uniformly convergent subsequence in $\mathcal{C}([a,b])$.
+
+\begin{pfbox}
+\textbf{Step 1: $T$ is well-defined.}
+We must show $Tf \in \mathcal{C}([a,b])$. Given $f \in \mathcal{C}([a,b])$, since $f$ is continuous on a compact set, it is bounded, say $|f(y)| \le M_f$. Also, $[a,b] \times [a,b]$ is compact, so $K$ is uniformly continuous on it. 
+For any fixed $x$, the integral is well-defined. By uniform continuity of $K$, for any $\epsilon > 0$, there exists $\delta > 0$ such that $|x - x'| < \delta \Rightarrow |K(x,y) - K(x',y)| < \frac{\epsilon}{M_f(b-a)}$.
+For $|x - x'| < \delta$:
+\begin{align*}
+|Tf(x) - Tf(x')| &= \left| \displaystyle\int_a^b (K(x,y) - K(x',y))f(y) dy \right|\\ 
+                 & \le \displaystyle\int_a^b |K(x,y) - K(x',y)||f(y)| dy < \displaystyle\int_a^b \frac{\epsilon}{M_f(b-a)} M_f dy = \epsilon.
+\end{align*}
+Thus $Tf$ is continuous. $T$ is well-defined.
+
+\textbf{Step 2: $\{Tf_n\}$ is uniformly bounded and equicontinuous.}
+Assume $\{f_n\}$ is bounded by $M$, i.e., $||f_n||_\infty \le M$.
+Since $K$ is continuous on a compact set, there exists $C > 0$ such that $|K(x,y)| \le C$. Then:
+$$|(Tf_n)(x)| \le \displaystyle\int_a^b |K(x,y)||f_n(y)| dy \le \displaystyle\int_a^b CM dy = CM(b-a)$$
+So $\{Tf_n\}$ is uniformly bounded.
+By uniform continuity of $K$, there exists $\delta > 0$ such that $|x - x'| < \delta \Rightarrow |K(x,y) - K(x',y)| < \frac{\epsilon}{M(b-a)}$.
+Then for $|x - x'| < \delta$:
+$$|Tf_n(x) - Tf_n(x')| \le \displaystyle\int_a^b |K(x,y) - K(x',y)||f_n(y)| dy < \displaystyle\int_a^b \frac{\epsilon}{M(b-a)} M dy = \epsilon$$
+This bound is independent of $n$. Hence $\{Tf_n\}$ is equicontinuous.
+By Arzelà-Ascoli, $\{Tf_n\}$ has a uniformly convergent subsequence in $\mathcal{C}([a,b])$.
+\end{pfbox}
+
+
+
+
+\subsection{Finite-Dimensional Normed Spaces}
+
+\begin{definition}[Operator Norm]
+Let $(X, ||\cdot||_X)$ and $(Y, ||\cdot||_Y)$ be real normed vector spaces. A linear operator $T: X \rightarrow Y$ is called bounded if there exists a constant $c \ge 0$ such that $||T\mathbf{x}||_Y \le c||\mathbf{x}||_X$ for all $\mathbf{x} \in X$.
+The smallest such constant is called the operator norm, defined as $||T||_{op} := \displaystyle\sup_{\mathbf{x} \ne \mathbf{0}} \frac{||T\mathbf{x}||_Y}{||\mathbf{x}||_X}$.
+\end{definition}
+
+Let $\mathcal{L}(X,Y)$ be the space of all bounded linear operators from $X$ to $Y$. One can verify that $(\mathcal{L}(X,Y), \norm{.}_{op})$ is a normed space.
+The topology on $\mathcal{L}(X,Y)$ induced by the operator norm $\| \cdot \|_{\mathrm{op}}$ is called the \textbf{uniform operator topology}.
+
+
+\begin{theorem}
+Let $X, Y$ be normed vector spaces, and let $T: X \to Y$ be a bounded linear operator. Then the operator norm $\|T\|_{\mathrm{op}}$ satisfies the following equalities:
+\begin{align}
+\label{norm:inf_bound} \|T\|_{\mathrm{op}} &= \inf \{c \ge 0 : \|T\mathbf{x}\| \le c\|\mathbf{x}\| \quad \text{for all } \mathbf{x} \in X\} \\
+\label{norm:sup_closed_ball} &= \sup \{\|T\mathbf{x}\| : \|\mathbf{x}\| \le 1 \quad \text{and} \quad \mathbf{x} \in X\} \\
+\label{norm:sup_open_ball} &= \sup \{\|T\mathbf{x}\| : \|\mathbf{x}\| < 1 \quad \text{and} \quad \mathbf{x} \in X\} \\
+\label{norm:sup_zero_one} &= \sup \{\|T\mathbf{x}\| : \|\mathbf{x}\| \in \{0, 1\} \quad \text{and} \quad \mathbf{x} \in X\}
+\end{align}
+Furthermore, if $X \neq \{\mathbf{0}\}$, the following equalities also hold:
+\begin{align}
+\label{norm:sup_sphere} \|T\|_{\mathrm{op}} &= \sup \{\|T\mathbf{x}\| : \|\mathbf{x}\| = 1 \quad \text{and} \quad \mathbf{x} \in X\} \\
+\label{norm:sup_ratio} &= \sup \left\{ \frac{\|T\mathbf{x}\|}{\|\mathbf{x}\|} : \mathbf{x} \neq \mathbf{0} \quad \text{and} \quad \mathbf{x} \in X \right\}
+\end{align}
+\end{theorem}
+
+\begin{pfbox}
+We will prove that all six expressions are equal through a series of inequalities.
+
+\textbf{Step 1: Prove $\eqref{norm:sup_sphere} = \eqref{norm:sup_ratio}$ (assuming $X \neq \{\mathbf{0}\}$)} \\
+For any $\mathbf{x} \neq \mathbf{0}$, we can define the unit vector $\mathbf{u} = \frac{\mathbf{x}}{\|\mathbf{x}\|}$, which satisfies $\|\mathbf{u}\| = 1$. By the linearity of $T$, we have:
+\[
+\frac{\|T\mathbf{x}\|}{\|\mathbf{x}\|} = \left\| T\left(\frac{\mathbf{x}}{\|\mathbf{x}\|}\right) \right\| = \|T\mathbf{u}\|
+\]
+This shows that the set of values for \eqref{norm:sup_ratio} is exactly the same as the set for \eqref{norm:sup_sphere}. Therefore, their supremums are identical, meaning $\eqref{norm:sup_ratio} = \eqref{norm:sup_sphere}$.
+
+\textbf{Step 2: Prove $\eqref{norm:sup_sphere} \le \eqref{norm:sup_closed_ball}$} \\
+Let
+\vspace{-1em}
+\begin{align*}
+    A &= \{ \|T\mathbf{x}\| : \|\mathbf{x}\| = 1 \} \\
+    B &= \{ \|T\mathbf{x}\| : \|\mathbf{x}\| \le 1 \},
+\end{align*}
+it is an easy exercise $\sup A\le\sup B$.
+
+\textbf{Step 3: Prove $\eqref{norm:sup_closed_ball} = \eqref{norm:sup_open_ball}$} \\
+Clearly, $\{\mathbf{x} : \|\mathbf{x}\| < 1\} \subset \{\mathbf{x} : \|\mathbf{x}\| \le 1\}$, which immediately gives $\eqref{norm:sup_open_ball} \le \eqref{norm:sup_closed_ball}$. \\
+Conversely, given any $\mathbf{x}$ satisfying $\|\mathbf{x}\| \le 1$ and any scalar $r \in (0,1)$, the vector $r\mathbf{x}$ satisfies $\|r\mathbf{x}\| = r\|\mathbf{x}\| < 1$. Thus:
+\[
+r\|T\mathbf{x}\| = \|T(r\mathbf{x})\| \le \sup_{\|\mathbf{z}\| < 1} \|T\mathbf{z}\| = \eqref{norm:sup_open_ball}
+\]
+Taking the limit as $r \to 1^-$, we obtain $\|T\mathbf{x}\| \le \eqref{norm:sup_open_ball}$. Since this holds for all $\mathbf{x}$ with $\|\mathbf{x}\| \le 1$, taking the supremum yields $\eqref{norm:sup_closed_ball} \le \eqref{norm:sup_open_ball}$. Therefore, $\eqref{norm:sup_closed_ball} = \eqref{norm:sup_open_ball}$.
+
+\textbf{Step 4: Prove $\eqref{norm:sup_closed_ball} \le \eqref{norm:inf_bound}$} \\
+By the definition of \eqref{norm:inf_bound}, for any constant $c$ in the set (meaning $c \ge 0$ and $\|T\mathbf{x}\| \le c\|\mathbf{x}\|$ for all $\mathbf{x} \in X$), if we restrict our attention to $\|\mathbf{x}\| \le 1$, we get:
+\[
+\|T\mathbf{x}\| \le c\|\mathbf{x}\| \le c \cdot 1 = c
+\]
+This implies that for all vectors in the closed unit ball, $c$ is an upper bound for $\|T\mathbf{x}\|$. Consequently, the supremum $\eqref{norm:sup_closed_ball} \le c$. Since \eqref{norm:sup_closed_ball} is less than or equal to every such bound $c$, it must be less than or equal to their infimum. Hence, $\eqref{norm:sup_closed_ball} \le \eqref{norm:inf_bound}$.
+
+\textbf{Step 5: Prove $\eqref{norm:inf_bound} \le \eqref{norm:sup_ratio}$} \\
+Let $p = \eqref{norm:sup_ratio}$. By definition, for all $\mathbf{x} \neq \mathbf{0}$, we have $\frac{\|T\mathbf{x}\|}{\|\mathbf{x}\|} \le p$.
+Since $\|\mathbf{x}\| > 0$ for $\mathbf{x} \neq \mathbf{0}$, we can safely multiply both sides by $\|\mathbf{x}\|$ to obtain:
+\[ \|T\mathbf{x}\| \le p\|\mathbf{x}\| \quad \text{for all } \mathbf{x} \neq \mathbf{0}. \]
+Now, we separately check the case where $\mathbf{x} = \mathbf{0}$. By the linearity of $T$, $\|T(\mathbf{0})\| = 0$, and $p\|\mathbf{0}\| = 0$. Thus, the inequality $\|T\mathbf{x}\| \le p\|\mathbf{x}\|$ becomes $0 \le 0$, which holds trivially.
+
+Combining both cases, the inequality $\|T\mathbf{x}\| \le p\|\mathbf{x}\|$ holds for \textit{all} $\mathbf{x} \in X$.
+This means $p$ satisfies the condition to be in the set defining \eqref{norm:inf_bound}. Since \eqref{norm:inf_bound} is defined as the infimum of this set, $\eqref{norm:inf_bound} \le p = \eqref{norm:sup_ratio}$.
+
+\textbf{Summary of Steps 1-5:} 
+Combining the inequalities established above, we have:
+\[
+\eqref{norm:sup_ratio} = \eqref{norm:sup_sphere} \le \eqref{norm:sup_closed_ball} = \eqref{norm:sup_open_ball} \le \eqref{norm:inf_bound} \le \eqref{norm:sup_ratio}
+\]
+This forces all the values to be strictly equal.
+
+\textbf{Step 6: Handle \eqref{norm:sup_zero_one}} \\
+\eqref{norm:sup_zero_one} is the supremum of the set $\{ \|T\mathbf{x}\| : \|\mathbf{x}\| = 0 \text{ or } \|\mathbf{x}\| = 1 \}$. \\
+If $\mathbf{x} = \mathbf{0}$, then $\|T\mathbf{0}\| = 0$. If $\|\mathbf{x}\| = 1$, the supremum over these elements is precisely \eqref{norm:sup_sphere}. Since the operator norm $\eqref{norm:sup_sphere} \ge 0$, including the $\mathbf{x}=\mathbf{0}$ case does not change the maximum possible value. Thus, $\eqref{norm:sup_zero_one} = \max(0, \eqref{norm:sup_sphere}) = \eqref{norm:sup_sphere}$.
+
+This completes the proof for all the equalities.
+\end{pfbox}
+
+\begin{definition}
+Let $(X, \|\cdot\|_X)$ and $(Y, \|\cdot\|_Y)$ be normed vector spaces, and let $\mathcal{L}(X,Y)$ denote the space of all bounded linear operators from $X$ to $Y$.
+Let $(T_n)_{n\in\mathbb{N}}$ be a sequence of operators in $\mathcal{L}(X,Y)$ and another operator $T\in \mathcal{L}(X,Y)$.
+We say that $T_n$ converges to $T$ in the uniform operator topology (denoted $T_n \xrightarrow{\|\cdot\|_{\mathrm{op}}} T$) if and only if:
+\[
+\lim_{n \to \infty} \|T_n - T\|_{\mathrm{op}} = 0 \iff \lim_{n\to\infty} \sup_{\norm{\mathbf{x}}_X\le 1}\norm{(T_n-T)(\mathbf{x})}_Y = 0
+\]
+\end{definition}
+
+This means that the error $\|T_n \mathbf{x} - T\mathbf{x}\|_Y$ converges to $0$ uniformly for all vectors $\mathbf{x}$ within the unit ball.
+
+
+\begin{theorem}
+Let $T: X \rightarrow Y$ be a linear operator. The following are equivalent:
+\begin{enumerate}
+    \item $T$ is bounded.
+    \item $T$ is continuous on $X$.
+    \item $T$ is continuous at $\mathbf{0}$.
+\end{enumerate}
+\end{theorem}
+\begin{pfbox}
+$(2 \Rightarrow 3)$: Trivial.\\
+$(1 \Rightarrow 2)$: If $T$ is bounded, $\|T\mathbf{x} - T\mathbf{z}\|_Y = \|T(\mathbf{x}-\mathbf{z})\|_Y \le \|T\|_{op} \|\mathbf{x}-\mathbf{z}\|_X$. Thus $T$ is Lipschitz continuous, hence continuous.\\
+$(3 \Rightarrow 1)$: If $T$ is continuous at $\mathbf{0}$, for $\epsilon = 1$, there exists $\delta > 0$ such that $\|\mathbf{x}\| < \delta \Rightarrow \|T\mathbf{x}\| < 1$. For any $\mathbf{x} \ne \mathbf{0}$, consider $\mathbf{z} = \frac{\delta}{2}\frac{\mathbf{x}}{\|\mathbf{x}\|}$. Since $\|\mathbf{z}\| = \frac{\delta}{2} < \delta$, we have $\|T\mathbf{z}\| < 1$. By linearity, $\|T\left(\frac{\delta}{2}\frac{\mathbf{x}}{\|\mathbf{x}\|}\right)\| < 1$, which simplifies to $\|T\mathbf{x}\| < \frac{2}{\delta}\|\mathbf{x}\|$, meaning $T$ is bounded.
+\end{pfbox}
+
+
+\begin{theorem}
+Let $(X, d)$ be a metric space. If $\{x_n\}_{n=1}^\infty$ is a Cauchy sequence in $X$, then it is a bounded sequence.
+\end{theorem}
+
+\begin{pfbox}
+Since $\{x_n\}$ is a Cauchy sequence, we can choose a specific error bound, say $\epsilon = 1$. 
+By the definition of a Cauchy sequence, there exists an integer $N \in \mathbb{N}$ such that for all $m, n \ge N$:
+\[ d(x_n, x_m) < 1 \]
+In particular, if we fix $m = N$, then for all $n \ge N$, we have:
+\[ d(x_n, x_N) < 1 \]
+This means that all terms from $x_N$ onwards are contained within the open ball $B(x_N, 1)$ centered at $x_N$ with radius $1$.
+
+Now, consider the terms before the $N$-th term. There are only finitely many such terms: $x_1, x_2, \dots, x_{N-1}$. 
+We define a constant $R$ to be the maximum distance from these finite terms to the center $x_N$, ensuring it is at least $1$ to cover the tail:
+\[ R = \max \{ d(x_1, x_N), d(x_2, x_N), \dots, d(x_{N-1}, x_N), 1 \} \]
+Since this is a maximum of a \textit{finite} set of real numbers, $R$ is a well-defined, finite positive constant.
+
+Therefore, for all $n \in \mathbb{N}$, we have:
+\[ d(x_n, x_N) < R+1 \]
+This shows that the entire sequence is contained within the closed ball $B(x_N, R+1)$. By definition, the sequence $\{x_n\}$ is bounded in the metric space $X$.
+\end{pfbox}
+
+
+\begin{corollary}
+Let $(X, \|\cdot\|)$ be a normed vector space. If $\{x_n\}_{n=1}^\infty$ is a Cauchy sequence in $X$, then it is a bounded sequence.
+\end{corollary}
+
+\begin{pfbox}
+We may apply the previous theorem directly. 
+Alternatively, we can use $\mathbf{0}$ as the center of the ball.
+Since $\{x_n\}$ is a Cauchy sequence, we can choose a specific error bound, say $\epsilon = 1$. 
+By the definition of a Cauchy sequence, there exists an integer $N \in \mathbb{N}$ such that for all $m, n \ge N$:
+\[ \|x_n - x_m\| < 1 \]
+In particular, if we fix $m = N$, then for all $n \ge N$, we have:
+\[ \|x_n - x_N\| < 1 \]
+By the triangle inequality, for any $n \ge N$, the norm of $x_n$ can be bounded by:
+\[ \|x_n\| = \|(x_n - x_N) + x_N\| \le \|x_n - x_N\| + \|x_N\| < 1 + \|x_N\| \]
+This shows that all terms from the $N$-th term onwards are bounded by the constant $1 + \|x_N\|$.
+
+Now, consider the terms before the $N$-th term. There are only finitely many such terms: $x_1, x_2, \dots, x_{N-1}$. 
+We can define a constant $M$ to be the maximum of the norms of all these terms, including our bound for the tail:
+\[ M = \max \left\{ \|x_1\|, \|x_2\|, \dots, \|x_{N-1}\|, 1 + \|x_N\| \right\} \]
+Since this is a maximum of a \textit{finite} set of real numbers, $M$ is a well-defined, finite positive constant.
+Therefore, for all $n \in \mathbb{N}$, we have:
+\[ \|x_n\| \le M \]
+This proves that the Cauchy sequence $\{x_n\}$ is bounded.
+\end{pfbox}
+
+
+\begin{theorem}
+Let $X$ be a normed vector space. If $Y$ is a Banach space, then the space of all bounded linear operators $\mathcal{L}(X,Y)$ is a Banach space under the operator norm.
+\end{theorem}
+
+\begin{pfbox}
+Let $\{T_n\}_{n=1}^\infty$ be a Cauchy sequence in $\mathcal{L}(X,Y)$. By definition, for every $\epsilon > 0$, there exists an integer $N \in \mathbb{N}$ such that for all $m, n \ge N$,
+\[ \|T_n - T_m\|_{\mathrm{op}} < \epsilon \]
+
+\textbf{Step 1: Pointwise convergence.} \\
+Fix any $\mathbf{x} \in X$. For $m, n \ge N$, we have:
+\[ \|(T_n - T_m)\mathbf{x}\|_Y \le \|T_n - T_m\|_{\mathrm{op}} \|\mathbf{x}\|_X < \epsilon \|\mathbf{x}\|_X \]
+Since $\|\mathbf{x}\|_X$ is a fixed constant, this shows that $\{T_n \mathbf{x}\}_{n=1}^\infty$ is a Cauchy sequence in $Y$. 
+Because $Y$ is a complete space, this sequence must converge to some limit point in $Y$. We can therefore define a limit operator $T: X \to Y$ pointwise:
+\[ T\mathbf{x} := \lim_{n \to \infty} T_n \mathbf{x} \quad \text{for all } \mathbf{x} \in X. \]
+
+\textbf{Step 2: Uniform convergence ($T_n \to T$ in operator norm).} \\
+We need to show that $T_n \to T$ in the uniform operator topology. 
+Let $\epsilon > 0$. Since $\{T_n\}$ is Cauchy, there exists $N \in \mathbb{N}$ such that for all $n, m \ge N$, $\|T_n - T_m\|_{\mathrm{op}} < \frac{\epsilon}{2}$. \\
+For any $\mathbf{x} \in X$ with $\|\mathbf{x}\|_X \le 1$, and for a fixed $n \ge N$, we apply the triangle inequality for any $m \ge N$:
+\[ \|(T_n - T)\mathbf{x}\|_Y \le \|(T_n - T_m)\mathbf{x}\|_Y + \|(T_m - T)\mathbf{x}\|_Y \]
+Since $T_m \mathbf{x} \to T\mathbf{x}$ as $m \to \infty$, we can choose $m$ large enough (with $m \ge N$) such that the second term $\|(T_m - T)\mathbf{x}\|_Y < \frac{\epsilon}{2}$. 
+For the first term, since $n, m \ge N$ and $\|\mathbf{x}\|_X \le 1$, we have $\|(T_n - T_m)\mathbf{x}\|_Y \le \|T_n - T_m\|_{\mathrm{op}} \|\mathbf{x}\|_X < \frac{\epsilon}{2} \cdot 1 = \frac{\epsilon}{2}$. \\
+Thus,
+\[ \|(T_n - T)\mathbf{x}\|_Y < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon \]
+Since this holds for all $\mathbf{x}$ with $\|\mathbf{x}\|_X \le 1$, taking the supremum yields $\|T_n - T\|_{\mathrm{op}} \le \epsilon$ for all $n \ge N$. Hence, $T_n \to T$ uniformly.
+
+\textbf{Step 3: $T$ is linear.} \\
+Let $\alpha, \beta \in \mathbb{R}$ and $\mathbf{x}, \mathbf{z} \in X$. Since each operator $T_n$ is linear, we can use the algebraic properties of limits:
+\begin{align*}
+    T(\alpha \mathbf{x} + \beta \mathbf{z}) &= \lim_{n \to \infty} T_n(\alpha \mathbf{x} + \beta \mathbf{z}) \\
+    &= \lim_{n \to \infty} (\alpha T_n \mathbf{x} + \beta T_n \mathbf{z}) \\
+    &= \alpha \lim_{n \to \infty} T_n \mathbf{x} + \beta \lim_{n \to \infty} T_n \mathbf{z} \\
+    &= \alpha T\mathbf{x} + \beta T\mathbf{z}
+\end{align*}
+Therefore, $T$ is a linear operator.
+
+\textbf{Step 4: $T$ is bounded.} \\
+Since $\{T_n\}$ is a Cauchy sequence in a normed space, it is uniformly bounded. This means there exists a constant $C > 0$ such that $\|T_n\|_{\mathrm{op}} \le C$ for all $n$. \\
+For any $\mathbf{x} \in X$:
+\[ \|T\mathbf{x}\|_Y = \lim_{n \to \infty} \|T_n \mathbf{x}\|_Y \le \lim_{n \to \infty} \big( \|T_n\|_{\mathrm{op}} \|\mathbf{x}\|_X \big) \le C \|\mathbf{x}\|_X \]
+This shows that $T$ is bounded, and its operator norm satisfies $\|T\|_{\mathrm{op}} \le C$.
+
+\textbf{Conclusion:} \\
+We have found a bounded linear operator $T \in \mathcal{L}(X,Y)$ such that $T_n \to T$ in the uniform operator topology. Thus, every Cauchy sequence in $\mathcal{L}(X,Y)$ converges and $T\in\mathcal{L}(X,Y)$, proving that $\mathcal{L}(X,Y)$ is a Banach space.
+\end{pfbox}
+
+
+\begin{proposition}
+Let $X$ and $Y$ be normed vector spaces.
+If $T: X \to Y$ is a bounded linear operator, then $\ker(T)$ is a closed linear subspace.
+\end{proposition}
+
+\begin{pfbox}
+    First, we show that the singleton set $\{\mathbf{0}\}$ is closed in $Y$. By the properties of the norm (non-degeneracy and non-negativity), $\|\mathbf{y}\| > 0$ for any $\mathbf{y} \ne \mathbf{0}$. We can construct an open ball $B\left(\mathbf{y}, \frac{\|\mathbf{y}\|}{2}\right) \subset Y \setminus \{\mathbf{0}\}$. This implies $Y \setminus \{\mathbf{0}\}$ is open, and thus $\{\mathbf{0}\}$ is closed.
+    By definition, $\ker(T) = T^{-1}(\{\mathbf{0}\})$. Since $T$ is a bounded linear operator, $T$ is continuous. Because the preimage of a closed set under a continuous mapping is closed, $\ker(T)$ is a closed set in $X$.
+    To show linear subspace, we left as an exercise.
+\end{pfbox}
+
+\begin{remark}
+Unlike the kernel, the image of a bounded linear operator, $\operatorname{Im}(T)$, is not necessarily closed. 
+Consider the space of square-summable sequences $X = Y = \ell^2$. We define a linear operator $T: \ell^2 \to \ell^2$ by:
+\[ T(x_1, x_2, x_3, \dots) = \left( x_1, \frac{1}{2}x_2, \frac{1}{3}x_3, \dots, \frac{1}{n}x_n, \dots \right) \]
+
+\textbf{1. $T$ is bounded:} \\
+Clearly, $\|T\mathbf{x}\|_{\ell^2} \le \|\mathbf{x}\|_{\ell^2}$, so $T$ is bounded (with operator norm $\|T\|_{\mathrm{op}} = 1$) and therefore continuous.
+
+\textbf{2. $\operatorname{Im}(T)$ is not closed:} \\
+Consider a sequence of points $\{\mathbf{y}^{(k)}\}_{k=1}^\infty$ in $Y$, defined as:
+\[ \mathbf{y}^{(k)} = \left( 1, \frac{1}{2}, \frac{1}{3}, \dots, \frac{1}{k}, 0, 0, \dots \right) \]
+Notice that every $\mathbf{y}^{(k)} \in \operatorname{Im}(T)$ because it is the image of $\mathbf{x}^{(k)} = (1, 1, 1, \dots, 1, 0, 0, \dots)$, which is a sequence with $k$ ones and is perfectly well-defined in $\ell^2$.
+
+As $k \to \infty$, the sequence $\mathbf{y}^{(k)}$ converges in $\ell^2$ to the limit point:
+\[ \mathbf{y} = \left( 1, \frac{1}{2}, \frac{1}{3}, \dots, \frac{1}{n}, \dots \right) \]
+Since $\sum \frac{1}{n^2}$ converges, this limit point $\mathbf{y}$ is indeed in $\ell^2$. 
+Thus, $\mathbf{y}$ belongs to the closure of the image, $\mathbf{y} \in \overline{\operatorname{Im}(T)}$.
+
+However, does $\mathbf{y}$ belong to $\operatorname{Im}(T)$? If it did, there must exist some $\mathbf{x} \in \ell^2$ such that $T\mathbf{x} = \mathbf{y}$. 
+Comparing the coordinates, we would need $\frac{1}{n}x_n = \frac{1}{n}$, which forces $x_n = 1$ for all $n$. 
+This means $\mathbf{x} = (1, 1, 1, \dots)$. But this sequence has infinite length and is \textbf{not} in $\ell^2$. 
+Therefore, no such $\mathbf{x} \in \ell^2$ exists, meaning $\mathbf{y} \notin \operatorname{Im}(T)$.
+
+Since the image contains a convergent sequence whose limit is strictly outside the image, $\operatorname{Im}(T)$ is not a closed set.
+\end{remark}
+
+\begin{definition}[Topological Equivalence]
+Let $X$ be a set. Two metrics $d_1$ and $d_2$ on $X$ are called \textbf{topologically equivalent} if they generate the same topology on $X$. 
+That is, any set is $d_1$-open iff it is $d_2$-open.
+\end{definition}
+
+\begin{remark}
+Equivalently, topological equivalence implies that a sequence converges under $d_1$ if and only if it converges to the same limit under $d_2$.
+\end{remark}
+
+\begin{theorem}
+    If there exist positive constants $c, C > 0$ such that for any $\mathbf{x}, \mathbf{y} \in X$
+    \begin{equation} \label{topo_condition}
+    c d_1(\mathbf{x},\mathbf{y}) \le d_2(\mathbf{x},\mathbf{y}) \le C d_1(\mathbf{x},\mathbf{y}),
+    \end{equation}
+    then $d_1$ and $d_2$ are topologically equivalent. 
+\end{theorem}
+
+\begin{pfbox}
+Let $U$ be a $d_1$-open set. To show that $U$ is also $d_2$-open, we take any $\mathbf{x} \in U$. Since $U$ is $d_1$-open, there exists $r > 0$ such that the open ball $B_{d_1}(\mathbf{x}, r) \subseteq U$. 
+
+Consider the $d_2$-open ball $B_{d_2}(\mathbf{x}, cr)$. We want to show $B_{d_2}(\mathbf{x}, cr) \subseteq B_{d_1}(\mathbf{x}, r)$.
+Let $\mathbf{z} \in B_{d_2}(\mathbf{x}, cr)$, which means $d_2(\mathbf{x},\mathbf{z}) < cr$. 
+Using the first inequality in \eqref{topo_condition}, we have:
+\[
+d_1(\mathbf{x},\mathbf{z}) \le \frac{1}{c}d_2(\mathbf{x},\mathbf{z}) < \frac{1}{c}(cr) = r
+\]
+This implies $\mathbf{z} \in B_{d_1}(\mathbf{x}, r)$. Thus, we have established the nesting of open balls:
+\[
+B_{d_2}(\mathbf{x}, cr) \subseteq B_{d_1}(\mathbf{x}, r) \subseteq U
+\]
+Since for every $\mathbf{x} \in U$ we can find a $d_2$-open ball fully contained within $U$, the set $U$ is also $d_2$-open.
+
+The converse argument (showing any $d_2$-open set is $d_1$-open) can be proved analogously using the right side of the inequality $d_2(\mathbf{x},\mathbf{y}) \le C d_1(\mathbf{x},\mathbf{y})$, which is left as an exercise. 
+\end{pfbox}
+
+\begin{remark}
+Metrics satisfying this condition are often called \textbf{Lipschitz equivalent} or \textbf{strongly equivalent}.
+\end{remark}
+
+
+\begin{definition}[Equivalent Norms]
+Two norms $\|\cdot\|_1$ and $\|\cdot\|_2$ on a vector space $X$ are said to be equivalent if there exists a constant $\alpha \ge 1$ such that:
+$$ \frac{1}{\alpha}\|\mathbf{x}\|_1 \le \|\mathbf{x}\|_2 \le \alpha\|\mathbf{x}\|_1 \quad \text{for all } \mathbf{x} \in X. $$
+\end{definition}
+
+\begin{remark}[Symmetrization of the Equivalence Constant]
+In some literature, norm equivalence is initially defined using two distinct positive constants $c, C > 0$ such that $c\|\mathbf{x}\|_1 \le \|\mathbf{x}\|_2 \le C\|\mathbf{x}\|_1$. 
+We can always elegantly symmetrize these constants into a single constant $\alpha \ge 1$ by defining $\alpha := \max\left(C, \frac{1}{c}, 1\right)$. 
+\begin{itemize}
+    \item Since $\alpha \ge C$, the upper bound naturally holds: $\|\mathbf{x}\|_2 \le C\|\mathbf{x}\|_1 \le \alpha\|\mathbf{x}\|_1$.
+    \item Since $\alpha \ge \frac{1}{c}$, taking the reciprocal gives $\frac{1}{\alpha} \le c$, which satisfies the lower bound: $\frac{1}{\alpha}\|\mathbf{x}\|_1 \le c\|\mathbf{x}\|_1 \le \|\mathbf{x}\|_2$.
+\end{itemize}
+This construction strictly guarantees $\alpha \ge 1$, which perfectly captures the symmetric nature of the equivalence relation.
+\end{remark}
+
+\begin{remark}[Connection to Lipschitz Equivalence]
+Norm equivalence is essentially the vector space counterpart of Lipschitz equivalence. 
+Using our symmetric definition, if $\|\cdot\|_1$ and $\|\cdot\|_2$ are equivalent with constant $\alpha \ge 1$:
+$$ \frac{1}{\alpha}\|\mathbf{x}\|_1 \le \|\mathbf{x}\|_2 \le \alpha\|\mathbf{x}\|_1 \quad \text{for all } \mathbf{x} \in X. $$
+By substituting $\mathbf{x}$ with $\mathbf{u} - \mathbf{v}$, we immediately obtain the relationship between their induced metrics $d_1$ and $d_2$:
+$$ \frac{1}{\alpha}d_1(\mathbf{u}, \mathbf{v}) \le d_2(\mathbf{u}, \mathbf{v}) \le \alpha d_1(\mathbf{u}, \mathbf{v}) $$
+This exactly matches the condition for Lipschitz equivalence (with constants $c = \frac{1}{\alpha}$ and $C = \alpha$). Consequently, equivalent norms always generate the exact same topology.
+\end{remark}
+
+
+
+\begin{theorem}
+Let $X$ be a vector space, and let $\|\cdot\|_1$ and $\|\cdot\|_2$ be two norms on $X$. Let $d_1$ and $d_2$ be their respectively induced metrics, defined by $d_i(\mathbf{x}, \mathbf{y}) = \|\mathbf{x} - \mathbf{y}\|_i$. 
+TFAE:
+\begin{enumerate}
+    \item $\|\cdot\|_1$ and $\|\cdot\|_2$ are equivalent norms.
+    \item $d_1$ and $d_2$ are Lipschitz equivalent.
+    \item $d_1$ and $d_2$ are topologically equivalent.
+\end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+We will prove the most non-trivial implication: $(3) \Rightarrow (1)$. (The implications $(1) \Rightarrow (2)$ and $(2) \Rightarrow (3)$ follow directly from previous definitions and theorems regarding metric spaces).
+
+Assume $d_1$ and $d_2$ are topologically equivalent. 
+Consider the identity operator $I: (X, \|\cdot\|_1) \to (X, \|\cdot\|_2)$ defined by $I(\mathbf{x}) = \mathbf{x}$. Clearly, $I$ is a linear operator.
+
+Because $d_1$ and $d_2$ generate the same topology, any sequence converging to the origin $\mathbf{0}$ in $(X, \|\cdot\|_1)$ also converges to $\mathbf{0}$ in $(X, \|\cdot\|_2)$. Therefore, the operator $I$ is continuous at the origin $\mathbf{0}$.
+
+A fundamental property of bounded linear operators states that a linear operator is continuous at $\mathbf{0}$ if and only if it is bounded. 
+Since $I$ is bounded, there exists a constant $C_1 > 0$ such that for all $\mathbf{x} \in X$:
+\[ \|I(\mathbf{x})\|_2 \le C_1\|\mathbf{x}\|_1 \Rightarrow \|\mathbf{x}\|_2 \le C_1\|\mathbf{x}\|_1 \]
+
+Next, consider the inverse identity operator $I^{-1}: (X, \|\cdot\|_2) \to (X, \|\cdot\|_1)$, which is also defined as $I^{-1}(\mathbf{x}) = \mathbf{x}$. 
+By the exact same topological argument (since topological equivalence is symmetric), $I^{-1}$ is continuous at $\mathbf{0}$, and therefore bounded. 
+Thus, there exists a constant $C_2 > 0$ such that for all $\mathbf{x} \in X$:
+\[ \|I^{-1}(\mathbf{x})\|_1 \le C_2\|\mathbf{x}\|_2 \Rightarrow \|\mathbf{x}\|_1 \le C_2\|\mathbf{x}\|_2 \Rightarrow \frac{1}{C_2}\|\mathbf{x}\|_1 \le \|\mathbf{x}\|_2 \]
+
+To symmetrize these bounds, let $\alpha = \max(C_1, C_2, 1)$. We then have:
+\[ \frac{1}{\alpha}\|\mathbf{x}\|_1 \le \frac{1}{C_2}\|\mathbf{x}\|_1 \le \|\mathbf{x}\|_2 \le C_1\|\mathbf{x}\|_1 \le \alpha\|\mathbf{x}\|_1 \]
+This establishes that there exists a constant $\alpha \ge 1$ such that:
+\[ \frac{1}{\alpha}\|\mathbf{x}\|_1 \le \|\mathbf{x}\|_2 \le \alpha\|\mathbf{x}\|_1 \quad \text{for all } \mathbf{x} \in X. \]
+Hence, $\|\cdot\|_1$ and $\|\cdot\|_2$ are equivalent norms.
+\end{pfbox}
+
+
+
+\begin{theorem}
+Let $X$ be a finite-dimensional real vector space. Then any two norms on $X$ are equivalent.
+\end{theorem}
+\begin{pfbox}
+Let $\{\mathbf{v}_i\}_{i=1}^n$ be a basis for $X$. For $\mathbf{x} = \displaystyle\sum x_i \mathbf{v}_i$, define the standard Euclidean norm $\|\mathbf{x}\|_2 = \left(\displaystyle\sum x_i^2\right)^{1/2}$. We just need to show any norm $||\cdot||$ is equivalent to $||\cdot||_2$.
+First, 
+\begin{align*}
+\|\mathbf{x}\| &\le \displaystyle\sum |x_i|\|\mathbf{v}_i\|\,\,(\text{Triangle inequality})\\
+&\le \left(\displaystyle\sum x_i^2\right)^{1/2} \left(\displaystyle\sum \|\mathbf{v}_i\|^2\right)^{1/2} (\text{Cauchy-Schwarz for } (\mathbb{R}^n, \langle-,-\rangle_{\text{dot}}).
+\end{align*}
+So we can take $C = \left(\displaystyle\sum \|\mathbf{v}_i\|^2\right)^{1/2}$ to get $\|\mathbf{x}\| \le C \|\mathbf{x}\|_2$.
+
+Now, consider the unit sphere $S = \{\mathbf{x} \in X : \|\mathbf{x}\|_2 = 1\}$. Under $||\cdot||_2$, $S$ is closed and bounded in $\mathbb{R}^n$, hence compact. The function $f(\mathbf{x}) = \|\mathbf{x}\|$ is continuous on $S$ (since $\left| \|\mathbf{x}\| - \|\mathbf{y}\| \right| \le \|\mathbf{x}-\mathbf{y}\| \le C \|\mathbf{x}-\mathbf{y}\|_2$). 
+Since $S$ is compact, $f$ attains an absolute minimum $\delta$ at some $\mathbf{z} \in S$. Since $\mathbf{z} \ne \mathbf{0}$, $\delta = \|\mathbf{z}\| > 0$.
+Thus $\|\mathbf{x}\| \ge \delta$ for all $\mathbf{x} \in S$. For any non-zero $\mathbf{w} \in X$, $\frac{\mathbf{w}}{\|\mathbf{w}\|_2} \in S$, so $\left\|\frac{\mathbf{w}}{\|\mathbf{w}\|_2}\right\| \ge \delta \Rightarrow \|\mathbf{w}\| \ge \delta \|\mathbf{w}\|_2$. This establishes equivalence.
+\end{pfbox}
+
+
+\begin{remark}
+    This equivalence fails in infinite-dimensional spaces. For instance, on $(C[0,1], \mathbb{R})$, we can define two norms:
+    \[ \|f\|_\infty = \sup_{t \in [0,1]} |f(t)| \quad \text{and} \quad \|f\|_2 = \left( \int_0^1 f^2(t) dt \right)^{\frac{1}{2}} \]
+    These two norms are not equivalent since there exists a sequence $f_n$ that is Cauchy in $L^2$ but not in $L^\infty$, which directly implies $\dim(C[0,1]) = \infty$.
+\end{remark}
+
+% ---------------------------------------------------------
+
+\begin{theorem}
+    Every finite-dimensional normed space $X$ is complete.
+\end{theorem}
+
+\begin{pfbox}
+    By the previous theorem regarding equivalent norms, we know that $(X, \|\cdot\|_2) \cong (\mathbb{R}^n, \|\cdot\|_2)$, and we know $(\mathbb{R}^n, \|\cdot\|_2)$ is complete. \\
+    Therefore, $X$ is complete with respect to the $l_2$-metric induced by $\|\cdot\|_2$. \\
+    For any arbitrary norm $\|\cdot\|$ on $X$, it induces a metric $d: X \times X \to \mathbb{R}$. \\
+    Since all norms are equivalent, the metric spaces $(X, d)$ and $(X, l_2)$ generate the exact same topology. \\
+    Because $(X, l_2)$ is complete and the topologies are equivalent via Lipschitz bounds, $(X, d)$ is also complete.
+\end{pfbox}
+
+% ---------------------------------------------------------
+
+\begin{theorem}
+    Let $X$ be a normed space. Every finite-dimensional subspace of $X$ is closed.
+\end{theorem}
+
+\begin{pfbox}
+    Let $Y \subset X$ be a finite-dimensional subspace. \\
+    Take any sequence $\{\mathbf{y}_n\}_{n \in \mathbb{N}}$ in $Y$ such that $\displaystyle \lim_{n \to \infty} \mathbf{y}_n = \mathbf{x}$ for some $\mathbf{x} \in X$. \\
+    Since convergent sequences are Cauchy, $\{\mathbf{y}_n\}_{n \in \mathbb{N}}$ is also a Cauchy sequence in $Y$. \\
+    Because $\dim(Y) < \infty$, the subspace $Y$ itself is a complete normed space (by the previous theorem). \\
+    Therefore, this Cauchy sequence must converge to a limit within $Y$, meaning $\displaystyle \lim_{n \to \infty} \mathbf{y}_n = \mathbf{y}$ for some $\mathbf{y} \in Y$. \\
+    By the uniqueness of limits in metric spaces, we must have $\mathbf{y} = \mathbf{x}$. \\
+    This implies $\mathbf{x} \in Y$. Since $Y$ contains all its limit points, $Y$ is closed.
+\end{pfbox}
+
+
+\begin{example}[Dense proper subspace may not be closed]\ \vspace{-1em}
+    \begin{enumerate}
+        \item Let $C^1[0,1] \subsetneq C[0,1]$. 
+        Consider the function $\displaystyle f(t) = \left| t - \frac{1}{2} \right|$.
+        
+        \item By the Stone-Weierstrass theorem, $\forall f \in C[0,1]$, $\exists \{f_n\}_{n \in \mathbb{N}} \subseteq C^1[0,1]$ such that $f_n \Rightarrow f$. 
+        But $f \notin C^1[0,1]$ (since it is not differentiable at $t = \frac{1}{2}$), so $C^1[0,1]$ is not closed.
+    \end{enumerate}
+\end{example}
+
+% ---------------------------------------------------------
+
+\begin{theorem}
+    Let $X$ be a finite-dimensional normed space and $K \subseteq X$. Then $K$ is compact if and only if $K$ is closed and bounded.
+\end{theorem}
+
+\begin{pfbox}
+    $(\Rightarrow)$ The forward direction (compact implies closed and bounded) is always true in any metric space. \\
+    $(\Leftarrow)$ For the reverse direction, since $X$ is finite-dimensional, the topology induced by $(X, \|\cdot\|)$ and $(\mathbb{R}^n, \|\cdot\|_2)$ are equivalent. \\
+    The condition that $K$ is closed and bounded in $X$ is topologically equivalent to an associated set $S$ being closed and bounded in $\mathbb{R}^n$. \\
+    By the standard Heine-Borel theorem in $\mathbb{R}^n$, $S$ is compact in $\mathbb{R}^n$. \\
+    Due to the equivalence of topologies, this immediately implies $K$ is compact in $X$.
+\end{pfbox}
+
+\begin{example}[Closed and bounded may not be compact]
+    Consider the Banach space $(C([0,1]), \|\cdot\|_\infty)$. 
+    Let $B = \{f \in C([0,1]) \mid \|f\|_\infty \le 1\}$. This set is clearly closed and bounded.
+    
+    To verify closedness, take any $\{f_n\}_{n \in \mathbb{N}} \subset B \subseteq C([0,1])$ s.t. $f_n \Rightarrow f, f \in C([0,1])$. \\
+    $\|f\|_\infty \le \|f - f_n\|_\infty + \|f_n\|_\infty < \epsilon + 1 \quad \forall \epsilon > 0 \implies \|f\|_\infty \le 1 \implies f \in B.$
+
+    Let $f_n(x) = x^n$ for $x \in [0,1]$. 
+    The sequence $\{f_n\}_{n \in \mathbb{N}}$ is not equicontinuous. 
+    By the Arzel\`a-Ascoli theorem, $B$ is not relatively compact, and hence not compact.
+\end{example}
+
+
+
+
+\begin{theorem}
+    Let $(X, \|\cdot\|_X)$ and $(Y, \|\cdot\|_Y)$ be normed vector spaces. If $\dim X < \infty$, then every linear operator $A: X \to Y$ is bounded.
+\end{theorem}
+
+\begin{pfbox}
+    Let $A: X \to Y$ be a linear operator. We define a new norm on $X$ by:
+    \[ \|\mathbf{x}\|_A := \|\mathbf{x}\|_X + \|A\mathbf{x}\|_Y \]
+    (It is a straightforward exercise to verify that $\|\cdot\|_A$ indeed satisfies the axioms of a norm, utilizing the linearity of $A$ and the triangle inequality of the norms).
+
+    Since $X$ is finite-dimensional ($\dim X < \infty$), any two norms on $X$ are equivalent. Therefore, the newly defined norm $\|\cdot\|_A$ is equivalent to the original norm $\|\cdot\|_X$. 
+    By the definition of equivalent norms, there exists a constant $C > 0$ such that for all $\mathbf{x} \in X$:
+    \[ \frac{1}{C}\|\mathbf{x}\|_X \le \|\mathbf{x}\|_A \le C\|\mathbf{x}\|_X \]
+    
+    Substituting the definition of $\|\mathbf{x}\|_A$ into the right side of the inequality, we obtain:
+    \[ \|\mathbf{x}\|_X + \|A\mathbf{x}\|_Y \le C\|\mathbf{x}\|_X \]
+    \[ \Rightarrow \|A\mathbf{x}\|_Y \le (C - 1)\|\mathbf{x}\|_X \]
+    
+    This shows that there exists a constant $M = C - 1$ such that $\|A\mathbf{x}\|_Y \le M\|\mathbf{x}\|_X$ for all $\mathbf{x} \in X$. Thus, $A$ is a bounded linear operator.
+\end{pfbox}
+
+\begin{example}[Linear operator may not be bounded]
+    Consider the space $(C([-\pi, \pi], \mathbb{R}), \|\cdot\|_2)$, where $f \in C([-\pi, \pi], \mathbb{R})$ and 
+    $\displaystyle \|f\|_2 = \left( \int_{-\pi}^{\pi} |f(t)|^2 dt \right)^{\frac{1}{2}}$.
+    Let $\displaystyle \mathbf{e}_n^c = \frac{\cos(nt)}{\sqrt{\pi}}$ with $\|\mathbf{e}_n^c\| = 1$. Let $X = \text{Span} \left[ \frac{\cos(nt)}{\sqrt{\pi}} \right]_{n \in \mathbb{N}}$, which implies $\dim X = \infty$. \\
+    Define a linear operator $T$ to be such that $T(\mathbf{e}_n^c) = n$. i.e.,\\
+    for $\mathbf{x} \in X, \mathbf{x} = \sum_{j=1}^m \alpha_j \mathbf{e}_j^c \implies T(\mathbf{x}) = \sum_{j=1}^m \alpha_j j$.
+
+    Note that the operator norm is bounded below by its action on basis vectors:
+    \[ \|T\| = \sup_{\mathbf{x} \neq \mathbf{0}} \frac{\|T\mathbf{x}\|_Y}{\|\mathbf{x}\|_X} \ge \sup_{\|\mathbf{x}\|=1} \|T\mathbf{x}\| \ge \|T\mathbf{e}_n^c\| = n \quad \forall n \in \mathbb{N} \quad (\because T\mathbf{e}_n^c = n, \|\mathbf{e}_n^c\| = 1) \]
+    Hence, $\|T\| = \infty$. 
+\end{example}
+
+
+
+% ---------------------------------------------------------
+
+\begin{definition}[Dual Space]
+    Let $X$ be a normed vector space. The dual space of $X$, denoted as $X^*$, is defined as the space of all continuous linear functionals on $X$:
+    \[ X^* = \mathcal{L}(X, \mathbb{R}) = \{ \Lambda : X \to \mathbb{R} \mid \Lambda \text{ is linear and bounded} \} \]
+\end{definition}
+
+\begin{remark}
+    Because $(\mathbb{R}, |\cdot|)$ is a complete normed space (a Banach space), the operator space $X^*$ is also a Banach space, regardless of whether $X$ itself is complete.
+\end{remark}
+
+\begin{example}[Dual of $L^p$ Spaces]
+    Let $(M, \mathcal{A}, \mu)$ be a measurable space (Think of $\mathbb{R}^n$, measurable sets on $\mathbb{R}^n$, Lebesgue measure). \\
+    Let $1 < p < \infty$, and let $q$ be the conjugate exponent of $p$ such that:
+    \[ \frac{1}{p} + \frac{1}{q} = 1 \quad \left(\text{i.e., } \frac{1}{q} = \frac{p-1}{p} \Rightarrow q(p-1) = p \right) \]
+    Recall the Hölder inequality: if $f \in L^p(\mu)$ and $g \in L^q(\mu)$, then $fg \in L^1(\mu)$, and:
+    \[ \int_M fg \, d\mu \le \int_M |f||g| \, d\mu \le \|f\|_p \|g\|_q \quad \text{where } \|f\|_p = \left( \int_M |f|^p \, d\mu \right)^{\frac{1}{p}} \]
+    Note that $(L^p(\mu), \|\cdot\|_p)$ is a Banach space.
+
+    Now, given $g \in L^q(\mu)$, we can define a linear functional $\Lambda_g : L^p(\mu) \to \mathbb{R}$ by:
+    \[ \Lambda_g(f) = \int_M fg \, d\mu \quad \text{for all } f \in L^p(\mu) \]
+    This implies $\Lambda_g \in (L^p(\mu))^*$. We can verify its properties:
+    \begin{itemize}
+        \item \textbf{Linearity:} $\Lambda_g$ is linear on $L^p(\mu)$ because integrals are linear: 
+        \[ \Lambda_g(\alpha f_1 + \beta f_2) = \alpha \Lambda_g(f_1) + \beta \Lambda_g(f_2) \quad \forall \alpha, \beta \in \mathbb{R}, \ f_1, f_2 \in L^p(\mu) \]
+        \item \textbf{Boundedness:} By Hölder's inequality, we have:
+        \[ |\Lambda_g(f)| = \left| \int_M fg \, d\mu \right| \le \|f\|_p \|g\|_q \]
+        Therefore, the operator norm is bounded by $\|g\|_q$:
+        \[ \|\Lambda_g\| = \sup_{\substack{f \in L^p(\mu) \\ f \neq 0}} \frac{|\Lambda_g(f)|}{\|f\|_p} \le \|g\|_q \]
+        This proves that $\Lambda_g$ is a bounded linear operator.
+    \end{itemize}
+\end{example}
+
+
+
+% ---------------------------------------------------------
+
+\begin{lemma}[Riesz]
+    Let $(X, \|\cdot\|)$ be a normed vector space and $Y \subset X$ be a proper closed linear subspace. Then for any constant $0 < \delta < 1$, there exists $\mathbf{x} \in X$ such that $\|\mathbf{x}\| = 1$ and 
+    \[ \inf_{\mathbf{y} \in Y} \|\mathbf{x} - \mathbf{y}\| \ge 1 - \delta \]
+\end{lemma}
+
+\begin{pfbox}
+    Suppose $Y \subsetneq X$ and $Y$ is closed. Since $Y \neq X$, there exists some $\mathbf{x}_0 \in X \setminus Y$.
+    Because $\mathbf{x}_0 \notin Y$ and $Y$ is a closed set, the infimum distance from $\mathbf{x}_0$ to $Y$ must be strictly positive. Let this distance be $d$:
+    \[ d = \inf_{\mathbf{y} \in Y} \|\mathbf{x}_0 - \mathbf{y}\| > 0 \]
+    
+    Given $0 < \delta < 1$, we clearly have $\displaystyle d < \frac{d}{1-\delta}$. By the definition of the infimum, there must exist some $\mathbf{y}_0 \in Y$ such that:
+    \[ \|\mathbf{x}_0 - \mathbf{y}_0\| \le \frac{d}{1-\delta} \]
+    
+    Now, we choose the normalized vector $\displaystyle \mathbf{x} = \frac{\mathbf{x}_0 - \mathbf{y}_0}{\|\mathbf{x}_0 - \mathbf{y}_0\|}$. It is obvious that $\|\mathbf{x}\| = 1$.
+    For any arbitrary $\mathbf{y} \in Y$, we compute its distance to $\mathbf{x}$:
+    \[ \|\mathbf{x} - \mathbf{y}\| = \left\| \frac{\mathbf{x}_0 - \mathbf{y}_0}{\|\mathbf{x}_0 - \mathbf{y}_0\|} - \mathbf{y} \right\| = \frac{1}{\|\mathbf{x}_0 - \mathbf{y}_0\|} \left\| \mathbf{x}_0 - \left( \mathbf{y}_0 + \|\mathbf{x}_0 - \mathbf{y}_0\|\mathbf{y} \right) \right\| \]
+    
+    Since $Y$ is a linear subspace, and both $\mathbf{y}_0, \mathbf{y} \in Y$, the linear combination $\mathbf{y}_0 + \|\mathbf{x}_0 - \mathbf{y}_0\|\mathbf{y}$ is also an element of $Y$.
+    By the definition of our infimum distance $d$, the distance from $\mathbf{x}_0$ to any element in $Y$ is bounded below by $d$. Therefore:
+    \[ \left\| \mathbf{x}_0 - \left( \mathbf{y}_0 + \|\mathbf{x}_0 - \mathbf{y}_0\|\mathbf{y} \right) \right\| \ge d \]
+    
+    Substituting this back into our equation, we obtain:
+    \[ \|\mathbf{x} - \mathbf{y}\| \ge \frac{d}{\|\mathbf{x}_0 - \mathbf{y}_0\|} \ge \frac{d}{\displaystyle \frac{d}{1-\delta}} = 1 - \delta \]
+    This completes the proof.
+\end{pfbox}
+
+\begin{remark}
+    This lemma highlights a fundamental difference between general normed spaces and inner product spaces. In an inner product space, we can easily construct a vector that is perfectly orthogonal to a closed subspace, guaranteeing a distance of exactly $1$. 
+    
+    However, in a general normed space, the notion of "orthogonality" does not exist. More importantly, the infimum distance $d = \inf_{\mathbf{y} \in Y} \|\mathbf{x}_0 - \mathbf{y}\|$ might not be attained by any actual vector in $Y$. Therefore, Riesz's Lemma acts as an analytic compromise: instead of demanding a perfectly perpendicular vector (which may not exist), we rely on the infimum property to find a point $\mathbf{y}_0$ that is "close enough" to the ideal shortest distance. By rescaling this imperfect vector, we ensure the distance is at least $1 - \delta$. We cannot always achieve $1$, but we can get arbitrarily close.
+\end{remark}
+
+\vspace{1em} % Optional spacing
+
+\begin{theorem}[Riesz's Lemma in Hilbert Spaces]
+    Let $H$ be a Hilbert space and $Y \subset H$ be a proper closed subspace. Then there exists $\mathbf{x} \in H$ such that $\|\mathbf{x}\| = 1$ and 
+    \[ \inf_{\mathbf{y} \in Y} \|\mathbf{x} - \mathbf{y}\| = 1 \]
+\end{theorem}
+
+\begin{pfbox}
+    Since $H$ is a Hilbert space and $Y$ is a proper closed subspace, we can invoke the Orthogonal Decomposition Theorem, which states that $H = Y \oplus Y^\perp$. 
+    
+    Because $Y \subsetneq H$, its orthogonal complement $Y^\perp$ is non-trivial. Therefore, there exists some non-zero vector $\mathbf{z} \in Y^\perp$.
+    
+    We define the normalized vector:
+    \[ \mathbf{x} = \frac{\mathbf{z}}{\|\mathbf{z}\|} \]
+    It is immediate that $\|\mathbf{x}\| = 1$ and $\mathbf{x} \in Y^\perp$.
+    
+    For any arbitrary $\mathbf{y} \in Y$, since $\mathbf{x} \in Y^\perp$, the vectors $\mathbf{x}$ and $\mathbf{y}$ are orthogonal ($\mathbf{x} \perp \mathbf{y}$). We can strictly evaluate the distance using the Pythagorean theorem:
+    \[ \|\mathbf{x} - \mathbf{y}\|^2 = \|\mathbf{x}\|^2 + \|-\mathbf{y}\|^2 = 1 + \|\mathbf{y}\|^2 \]
+    
+    Since the norm is non-negative ($\|\mathbf{y}\|^2 \ge 0$), it directly follows that:
+    \[ \|\mathbf{x} - \mathbf{y}\|^2 \ge 1 \implies \|\mathbf{x} - \mathbf{y}\| \ge 1 \]
+    
+    Furthermore, since the zero vector $\mathbf{0} \in Y$ and $\|\mathbf{x} - \mathbf{0}\| = \|\mathbf{x}\| = 1$, the infimum of the distance from $\mathbf{x}$ to $Y$ is exactly attained at the origin (which corresponds to the orthogonal projection of $\mathbf{x}$ onto $Y$). Thus:
+    \[ \inf_{\mathbf{y} \in Y} \|\mathbf{x} - \mathbf{y}\| = 1 \]
+    This completes the proof.
+\end{pfbox}
+
+% ---------------------------------------------------------
+
+\begin{theorem}[Compactness of the Unit Ball]
+    Let $(X, \|\cdot\|)$ be a normed vector space. Let $B$ be the closed unit ball and $S$ be the unit sphere. The following statements are equivalent:
+    \begin{enumerate}
+        \item $\dim X < \infty$.
+        \item The closed unit ball $B$ is compact.
+        \item The unit sphere $S$ is compact.
+    \end{enumerate}
+\end{theorem}
+
+\begin{pfbox}
+    We will prove the implication $(2) \Rightarrow (1)$ (or equivalently $(3) \Rightarrow (1)$) by demonstrating its contrapositive: if $\dim X = \infty$, then $S$ is not compact.
+
+    Suppose, by contradiction, that $\dim X = \infty$.
+    Choose an arbitrary $\mathbf{x}_1 \in X$ with $\|\mathbf{x}_1\| = 1$. The subspace spanned by it, $Y_1 = \text{Span}\{\mathbf{x}_1\}$, is a finite-dimensional vector subspace and is therefore closed. Since $\dim X = \infty$, $Y_1$ is a proper subspace ($Y_1 \neq X$).
+    By applying Riesz's Lemma with $\displaystyle \delta = \frac{1}{2}$, there exists $\mathbf{x}_2 \in X \setminus Y_1$ such that $\|\mathbf{x}_2\| = 1$ and $\displaystyle \|\mathbf{x}_2 - \mathbf{x}_1\| \ge \frac{1}{2}$.
+    
+    We can proceed inductively. Suppose we have already chosen a set of linearly independent vectors $\{\mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_k\}$ on the unit sphere such that $\displaystyle \|\mathbf{x}_i - \mathbf{x}_j\| \ge \frac{1}{2}$ for all $i \neq j$.
+    Let $Y_k = \text{Span}\{\mathbf{x}_1, \dots, \mathbf{x}_k\}$. Because $Y_k$ is finite-dimensional, it is a closed proper subspace of $X$.
+    By Riesz's Lemma again with $\displaystyle \delta = \frac{1}{2}$, there exists $\mathbf{x}_{k+1} \in X$ such that $\|\mathbf{x}_{k+1}\| = 1$ and $\displaystyle \|\mathbf{x}_{k+1} - \mathbf{y}\| \ge \frac{1}{2}$ for all $\mathbf{y} \in Y_k$. In particular, $\displaystyle \|\mathbf{x}_{k+1} - \mathbf{x}_i\| \ge \frac{1}{2}$ for $i = 1, 2, \dots, k$.
+
+    This inductive process constructs an infinite sequence $\{\mathbf{x}_j\}_{j=1}^\infty$ situated entirely on the unit sphere $S$, possessing the property that the distance between any two distinct terms is at least $\displaystyle \frac{1}{2}$.
+    Such a sequence cannot possess any Cauchy subsequence, and consequently, it cannot have any convergent subsequence.
+    Therefore, $S$ is not sequentially compact, which implies $S$ (and hence $B$) is not compact.
+\end{pfbox}
+
+% ---------------------------------------------------------
+
+\begin{theorem}[Projection Theorem]
+    Let $H$ be a Hilbert space and let $E \subset H$ be a nonempty closed convex subset. Then there exists a unique element $\mathbf{x}_0 \in E$ such that:
+    \[ \|\mathbf{x}_0\| \le \|\mathbf{x}\| \quad \text{for all } \mathbf{x} \in E \]
+\end{theorem}
+
+\begin{pfbox}
+    Let $\delta := \inf \{ \|\mathbf{x}\| \mid \mathbf{x} \in E \}$.
+
+    \textbf{Uniqueness:} 
+    First, we prove uniqueness. Suppose there exist two elements $\mathbf{x}_0, \mathbf{x}_1 \in E$ such that $\|\mathbf{x}_0\| = \|\mathbf{x}_1\| = \delta$. We want to show $\mathbf{x}_0 = \mathbf{x}_1$.
+    Because $E$ is a convex set, the midpoint $\displaystyle \frac{1}{2}\mathbf{x}_0 + \frac{1}{2}\mathbf{x}_1 \in E$. 
+    By the definition of the infimum $\delta$, we must have $\displaystyle \left\| \frac{\mathbf{x}_0 + \mathbf{x}_1}{2} \right\| \ge \delta$, which implies $\|\mathbf{x}_0 + \mathbf{x}_1\|^2 \ge 4\delta^2$.
+    
+    In a Hilbert space, the norm is induced by an inner product, so the parallelogram law holds. Applying it, we get:
+    \[ 0 \le \|\mathbf{x}_0 - \mathbf{x}_1\|^2 = 2\|\mathbf{x}_0\|^2 + 2\|\mathbf{x}_1\|^2 - \|\mathbf{x}_0 + \mathbf{x}_1\|^2 \]
+    \[ \le 2(\delta^2) + 2(\delta^2) - 4\delta^2 = 0 \]
+    This forces $\|\mathbf{x}_0 - \mathbf{x}_1\|^2 = 0$, which means $\mathbf{x}_0 = \mathbf{x}_1$. The element is unique.
+
+    \textbf{Existence:} 
+    By the definition of the infimum, there must exist a sequence $\{\mathbf{x}_i\}_{i=1}^\infty$ in $E$ such that $\displaystyle \lim_{i \to \infty} \|\mathbf{x}_i\| = \delta$.
+    Given any $\epsilon > 0$, there exists an index $i_0$ such that if $i \ge i_0$, $\displaystyle \left| \|\mathbf{x}_i\|^2 - \delta^2 \right| < \frac{\epsilon^2}{4}$, which implies $\displaystyle \|\mathbf{x}_i\|^2 < \delta^2 + \frac{\epsilon^2}{4}$.
+    
+    For any $i, j \ge i_0$, convexity implies $\displaystyle \frac{\mathbf{x}_i + \mathbf{x}_j}{2} \in E$, so its norm is bounded below by $\delta$: $\displaystyle \left\| \frac{\mathbf{x}_i + \mathbf{x}_j}{2} \right\| \ge \delta$.
+    Applying the parallelogram law again to $\mathbf{x}_i$ and $\mathbf{x}_j$:
+    \[ \|\mathbf{x}_i - \mathbf{x}_j\|^2 = 2\|\mathbf{x}_i\|^2 + 2\|\mathbf{x}_j\|^2 - \|\mathbf{x}_i + \mathbf{x}_j\|^2 \]
+    \[ < 2\left(\delta^2 + \frac{\epsilon^2}{4}\right) + 2\left(\delta^2 + \frac{\epsilon^2}{4}\right) - 4\delta^2 = \epsilon^2 \]
+    
+    Taking the square root, we get $\|\mathbf{x}_i - \mathbf{x}_j\| < \epsilon$ for all $i, j \ge i_0$. This demonstrates that $\{\mathbf{x}_i\}_{i=1}^\infty$ is a Cauchy sequence.
+    Since $E$ is a closed subset residing within a complete Hilbert space $H$, $E$ itself is complete. 
+    Therefore, the Cauchy sequence converges to some element $\mathbf{x}_0 \in E$. 
+    By the continuity of the norm function, we conclude:
+    \[ \|\mathbf{x}_0\| = \lim_{i \to \infty} \|\mathbf{x}_i\| = \delta = \inf_{\mathbf{x} \in E} \|\mathbf{x}\| \]
+    This establishes the existence of the closest point.
+\end{pfbox}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{corollary}
+For any $p_1, p_2 \geq 1$, the $\ell_{p_1} \text{ and } \ell_{p_2}$-metrics on $\mathbb{R}^n$ are topologically equivalent.
+\end{corollary}
+
+\begin{corollary}
+If $X$ is a finite-dimensional normed vector space, a subset $K \subseteq X$ is compact if and only if it is closed and bounded.
+\end{corollary}
+
+\begin{corollary}
+If $\dim X < \infty$, then every linear operator $T: X \rightarrow Y$ is bounded.
+\end{corollary}
+
+\begin{remark}
+On $\mathcal{C}([0,1], \mathbb{R})$, we can define $||\cdot||_\infty$ and $||\cdot||_2$. These two norms are not equivalent. Consequently, $\dim(\mathcal{C}([0,1])) = \infty$.
+\end{remark}

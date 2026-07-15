@@ -1,0 +1,105 @@
+\subsection{The Stone-Weierstrass Theorem}
+
+\begin{definition}
+Let $X$ be a compact metric space. A subset $A \subseteq \mathcal{C}(X)$ is called an algebra if:
+\begin{enumerate}
+    \item $A$ is a vector subspace of $\mathcal{C}(X)$ ($\alpha f + \beta g \in A$).
+    \item $A$ is closed under pointwise multiplication ($f, g \in A \implies fg \in A$).
+\end{enumerate}
+\end{definition}
+
+For $f, g \in \mathcal{C}(X)$, we define:
+$$ (f \vee g)(x) := \max\{f(x), g(x)\} = \frac{1}{2}(f(x) + g(x)) + \frac{1}{2}|f(x) - g(x)| $$
+$$ (f \wedge g)(x) := \min\{f(x), g(x)\} = \frac{1}{2}(f(x) + g(x)) - \frac{1}{2}|f(x) - g(x)| $$
+
+\begin{definition}
+A subset $L \subseteq \mathcal{C}(X)$ is called a vector lattice if it is a vector subspace, and for any $f, g \in L$, we have $f \vee g \in L$ and $f \wedge g \in L$.
+\end{definition}
+
+\begin{proposition}
+A vector subspace $L \subseteq \mathcal{C}(X)$ is a vector lattice if and only if $f \in L \implies |f| \in L$.
+\end{proposition}
+\begin{proof}
+$(\implies)$ Take $g = -f \in L$. Then $f \vee (-f) = \max\{f, -f\} = |f| \in L$.
+$(\impliedby)$ For $f, g \in L$, since $L$ is a subspace, $f-g \in L$, implying $|f-g| \in L$. Thus $f \vee g = \frac{1}{2}(f+g) + \frac{1}{2}|f-g| \in L$, and similarly for $f \wedge g$.
+\end{proof}
+
+\begin{definition}
+Let $S$ be a set of functions on $X$.
+\begin{itemize}
+    \item We say $S$ "separates points" if for every distinct $x, y \in X$, there exists $f \in S$ such that $f(x) \ne f(y)$.
+    \item We say $S$ "vanishes at $x_0 \in X$" if $f(x_0) = 0$ for all $f \in S$.
+\end{itemize}
+\end{definition}
+
+\begin{lemma}
+Let $n \in \mathbb{N}$ and $0 \le x \le 1$. Then $\displaystyle\sum_{k=0}^n \left(\frac{k}{n} - x\right)^2 \binom{n}{k} x^k (1-x)^{n-k} = \frac{x(1-x)}{n}$.
+\end{lemma}
+\begin{proof}
+Recall the binomial theorem: $(x+y)^n = \displaystyle\sum_{k=0}^n \binom{n}{k} x^k y^{n-k}$.
+Taking the partial derivative with respect to $x$ and multiplying by $x$ gives:
+$$ nx(x+y)^{n-1} = \displaystyle\sum_{k=0}^n k \binom{n}{k} x^k y^{n-k} $$
+Plugging in $y = 1-x$, we get $\displaystyle\sum_{k=0}^n k \binom{n}{k} x^k (1-x)^{n-k} = nx$.
+Taking a second partial derivative of the original identity with respect to $x$ and multiplying by $x^2$ yields:
+$$ n(n-1)x^2(x+y)^{n-2} = \displaystyle\sum_{k=0}^n k(k-1) \binom{n}{k} x^k y^{n-k} $$
+Setting $y = 1-x$ gives $\displaystyle\sum_{k=0}^n k(k-1) \binom{n}{k} x^k (1-x)^{n-k} = n(n-1)x^2$.
+Now we expand the target summation:
+$$ \displaystyle\sum_{k=0}^n \left( \frac{k^2}{n^2} - \frac{2kx}{n} + x^2 \right) \binom{n}{k} x^k (1-x)^{n-k} $$
+Using $k^2 = k(k-1) + k$ and substituting our established identities simplifies the expression exactly to $\frac{x(1-x)}{n}$.
+\end{proof}
+
+\begin{theorem}[Weierstrass Approximation Theorem]
+Let $h: [a,b] \rightarrow \mathbb{R}$ be continuous. There exists a sequence of polynomials $\{p_n\}_{n \in \mathbb{N}}$ such that $p_n \rightarrow h$ uniformly on $[a,b]$.
+\end{theorem}
+\begin{proof}
+We first work on $[0,1]$. Define the Bernstein polynomials $B_n h(x) := \displaystyle\sum_{k=0}^n h\left(\frac{k}{n}\right) \binom{n}{k} x^k (1-x)^{n-k}$.
+We claim $\lim_{n \rightarrow \infty} ||B_n h - h||_\infty = 0$.
+Since $\displaystyle\sum \binom{n}{k} x^k (1-x)^{n-k} = 1$, we write:
+$$ B_n h(x) - h(x) = \displaystyle\sum_{k=0}^n \left( h\left(\frac{k}{n}\right) - h(x) \right) \binom{n}{k} x^k (1-x)^{n-k} $$
+Since $h$ is continuous on a compact set, it is uniformly continuous and bounded (say by $M$). For any $\epsilon > 0$, there exists $\delta > 0$ such that $|u-v| < \delta \implies |h(u)-h(v)| < \frac{\epsilon}{2}$.
+Split the sum into indices where $|\frac{k}{n} - x| < \delta$ (call this $A_n$) and $|\frac{k}{n} - x| \ge \delta$ (call this $A_n^c$).
+For $k \in A_n$, the difference is bounded by $\frac{\epsilon}{2}$, so the sum is bounded by $\frac{\epsilon}{2}$.
+For $k \in A_n^c$, we have $1 \le \frac{(\frac{k}{n}-x)^2}{\delta^2}$. The difference is bounded by $2M$, so this part of the sum is bounded by:
+$$ \frac{2M}{\delta^2} \displaystyle\sum_{k \in A_n^c} \left(\frac{k}{n} - x\right)^2 \binom{n}{k} x^k (1-x)^{n-k} \le \frac{2M}{\delta^2} \frac{x(1-x)}{n} \le \frac{2M}{4n\delta^2} $$
+Choosing $n$ large enough such that $\frac{M}{2n\delta^2} < \frac{\epsilon}{2}$, the total error is bounded by $\epsilon$. Thus $B_n h \rightarrow h$ uniformly.
+For a general interval $[a,b]$, use the transformation $t = \frac{x-a}{b-a}$ and define $\phi(t) = h(a + (b-a)t)$ to shift the domain to $[0,1]$, run the approximation, and shift back.
+\end{proof}
+
+\begin{lemma}
+Let $A \subseteq \mathcal{C}(X)$ be an algebra. Then its uniform closure $\overline{A}$ is a closed algebra and a vector lattice.
+\end{lemma}
+\begin{proof}
+$A$ is a vector subspace, so standard limit arguments show $\overline{A}$ is also a vector subspace. To show it is an algebra, take $f, g \in \overline{A}$. There exist sequences $f_n, g_n \in A$ such that $f_n \rightarrow f$ and $g_n \rightarrow g$ uniformly. Since continuous functions on a compact set are bounded, standard analysis shows $f_n g_n \rightarrow fg$ uniformly. Since $A$ is an algebra, $f_n g_n \in A$, meaning $fg \in \overline{A}$.
+To show $\overline{A}$ is a vector lattice, it suffices to prove $f \in \overline{A} \implies |f| \in \overline{A}$. Let $h(t) = |t|$. By Weierstrass Approximation, there exists a sequence of polynomials $p_n(t)$ converging uniformly to $h(t)$ on $[-||f||_\infty, ||f||_\infty]$. By defining $q_n(t) = p_n(t) - p_n(0)$, we ensure $q_n(0) = 0$ while still converging uniformly to $|t|$. Since $q_n$ has no constant term, $q_n(f)$ is a polynomial in $f$ without constant term, so $q_n(f) \in \overline{A}$ (since $\overline{A}$ is an algebra). As $q_n(f) \rightarrow |f|$ uniformly, $|f| \in \overline{A}$.
+\end{proof}
+
+\begin{lemma}
+Let $A \subseteq \mathcal{C}(X)$ be an algebra that separates points and does not vanish at any point. Then for any distinct $x, y \in X$ and any $\alpha, \beta \in \mathbb{R}$, there exists a function $h \in A$ such that $h(x) = \alpha$ and $h(y) = \beta$.
+\end{lemma}
+\begin{proof}
+Since $A$ separates points, there is $f \in A$ with $f(x) \ne f(y)$. If neither is zero, we construct $h = af + bf^2 \in A$. We solve the linear system for $a$ and $b$ which is guaranteed to have a unique solution since the determinant $f(x)f(y)(f(y)-f(x)) \ne 0$. If one is zero, say $f(x)=0, f(y) \ne 0$, we find $g \in A$ such that $g(x) \ne 0$ (since $A$ doesn't vanish at $x$) and construct a combination that works.
+\end{proof}
+
+\begin{theorem}[Stone-Weierstrass Theorem]
+Let $X$ be a compact metric space, and $A \subseteq \mathcal{C}(X)$ be an algebra. If $A$ separates points and does not vanish at any point of $X$, then $A$ is dense in $\mathcal{C}(X)$ under the uniform topology, i.e., $\overline{A} = \mathcal{C}(X)$.
+\end{theorem}
+\begin{proof}
+Let $f \in \mathcal{C}(X)$. We want to show that for any $\epsilon > 0$, there exists $h \in A$ (or $\overline{A}$) such that $||f - h||_\infty < \epsilon$.
+Fix $y \in X$. For each $x \in X$ with $x \ne y$, by the previous lemma, there exists $h_{x,y} \in A$ such that $h_{x,y}(x) = f(x)$ and $h_{x,y}(y) = f(y)$.
+Define the open set $U_{x,y} = \{z \in X : h_{x,y}(z) > f(z) - \epsilon\}$. Since $h_{x,y}(x) = f(x) > f(x) - \epsilon$, $x \in U_{x,y}$. Also $y \in U_{x,y}$.
+The sets $\{U_{x,y}\}_{x \in X}$ form an open cover of $X$. By compactness, there is a finite subcover $U_{x_1,y}, \dots, U_{x_k,y}$.
+Define $H_y := h_{x_1,y} \vee \dots \vee h_{x_k,y}$. Since $\overline{A}$ is a vector lattice, $H_y \in \overline{A}$. By construction, $H_y(z) > f(z) - \epsilon$ for all $z \in X$, and $H_y(y) = f(y)$.
+Now define $V_y = \{z \in X : H_y(z) < f(z) + \epsilon\}$. Since $H_y(y) = f(y) < f(y) + \epsilon$, $y \in V_y$.
+The sets $\{V_y\}_{y \in X}$ form an open cover of $X$. By compactness, there is a finite subcover $V_{y_1}, \dots, V_{y_l}$.
+Define $h = H_{y_1} \wedge \dots \wedge H_{y_l} \in \overline{A}$.
+By construction, since every $H_y(z) > f(z) - \epsilon$, we have $h(z) > f(z) - \epsilon$ everywhere. Furthermore, for any $z$, $z \in V_{y_j}$ for some $j$, meaning $H_{y_j}(z) < f(z) + \epsilon$. The minimum $h(z)$ must therefore be strictly less than $f(z) + \epsilon$.
+Thus, $f(z) - \epsilon < h(z) < f(z) + \epsilon$ for all $z \in X$, which means $||f-h||_\infty < \epsilon$.
+\end{proof}
+
+\begin{corollary}
+Let $X \subseteq \mathbb{R}^n$ be compact. The algebra of all polynomials in the coordinate functions is dense in $\mathcal{C}(X)$.
+\end{corollary}
+
+\begin{corollary}
+The set of trigonometric polynomial functions is dense in $\mathcal{C}_{per}([-\pi, \pi])$.
+\end{corollary}

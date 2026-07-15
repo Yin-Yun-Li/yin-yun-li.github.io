@@ -1,0 +1,674 @@
+\documentclass[12pt]{article}
+\RequirePackage{style_for_LA}
+\usepackage{amsmath,amssymb}
+\usepackage{natbib}
+\title{Dimensionality Reduction}
+\author{Yin-Yun Li}
+\date{\today}
+
+\begin{document}
+\maketitle
+This note introduces the fundamental concepts of dimensionality reduction, with a focus on mathematical proofs and derivations. I originally studied these materials during the Summer 2025 workshop at the Institute for Social Science Methodology (ISSM), Academia Sinica, taught by Prof. Tse-Min Lin. At that time, I had no prior knowledge of linear algebra. Having recently built a solid theoretical foundation in diagonalization theroems, inner product spaces, and the spectral theorem, I am now revisiting these materials to internalize the concepts from a more rigorous mathematical perspective. The note is documented for personal reference and to invite open discussion with experts in the field.
+Google's Gemini AI was utilized as an interactive learning tool to clarify dimensionality reduction concepts and to polish the writing of this document.
+\\
+\tableofcontents
+
+\newpage
+\section{Principal Component Analysis}
+
+Suppose we have a dataset with $n$ observations and $k$ variables, represented as a matrix:
+\[X = 
+\begin{bmatrix}
+x_{11} & x_{12} & \cdots & x_{1k} \\
+x_{21} & x_{22} & \cdots & x_{2k} \\
+\vdots & \vdots & \ddots & \vdots \\
+x_{n1} & x_{n2} & \cdots & x_{nk}
+\end{bmatrix}.\]
+
+For convenience, we usually center the data by subtracting the sample mean across individual for each variable.
+Let each column vector $\mathbf{x}_i\in\mathbb{R}^k$ be $i$-th observation with $k$ dimensions, we can also write $X$ as:
+\[\begin{bmatrix}
+\rule[2pt]{20pt}{0.5pt} \quad \mathbf{x}_1^\top \quad \rule[2pt]{20pt}{0.5pt} \\
+\rule[2pt]{20pt}{0.5pt} \quad \mathbf{x}_2^\top \quad \rule[2pt]{20pt}{0.5pt} \\
+\vdots \\
+\rule[2pt]{20pt}{0.5pt} \quad \mathbf{x}_n^\top \quad \rule[2pt]{20pt}{0.5pt}
+\end{bmatrix}.\]
+
+Intuitively, PCA aims to find a new coordinate system such that the first direction (principal component) caputures the largest variance, and the second one captures the maximum remaining variance unrelated to the previous one, and so forth.
+We will introduce two methods to solve this problem.
+
+
+\subsection{First Attempt: Calculus}
+
+Let the first new variable $z_{i1} = \displaystyle\sum_{q=1}^{k}x_{iq}\omega_{q1}$ for each $i=1,2,\cdots n,$ or equivalently in matrix form:
+\[
+\underbrace{\begin{bmatrix}
+z_{11} \\
+z_{21} \\
+\vdots \\
+z_{n1}
+\end{bmatrix}}_{\mathbf{z}_1}
+=
+\underbrace{\begin{bmatrix}
+x_{11} & x_{12} & \cdots & x_{1k} \\
+x_{21} & x_{22} & \cdots & x_{2k} \\
+\vdots & \vdots & \ddots & \vdots \\
+x_{n1} & x_{n2} & \cdots & x_{nk}
+\end{bmatrix}}_{X}
+\underbrace{\begin{bmatrix}
+\omega_{11} \\
+\omega_{21} \\
+\vdots \\
+\omega_{k1}
+\end{bmatrix}}_{\boldsymbol{\omega}_1}.
+\]
+
+Our goal is to choose $\boldsymbol{\omega}_1$ such that the variance of $\mathbf{z}_1$ is maximized, subject to the constraint that $\boldsymbol{\omega}_1$ is a unit vector, so we can write down the maximization problem as:
+\begin{equation}
+\begin{split}
+\max_{ \boldsymbol{\omega}_1} \quad &  \Var(\mathbf{z}_1) = \frac{1}{n-1}  (X \boldsymbol{\omega}_1)^\top X \boldsymbol{\omega}_1 \\
+\text{subject to} \quad & \boldsymbol{\omega}_1^\top \boldsymbol{\omega}_1 = \left\|\boldsymbol{\omega}_1\right\|^2 = 1,
+\end{split}
+\end{equation}
+
+where 
+
+\[
+ X \boldsymbol{\omega}_1 = \begin{bmatrix}
+\mathbf{x}_1^\top \boldsymbol{{\omega}_1}\\
+\mathbf{x}_2^\top \boldsymbol{{\omega}_1}\\
+\vdots \\
+\mathbf{x}_n^\top \boldsymbol{{\omega}_1}
+\end{bmatrix}, \quad
+(X \boldsymbol{\omega}_1)^\top X \boldsymbol{\omega}_1 = \sum_{i=1}^{n} (\mathbf{x}_i^\top \boldsymbol{\omega}_1)^2 = \sum_{i=1}^{n}(\mathbf{x}_i^\top \boldsymbol{\omega}_1)^\top (\mathbf{x}_i^\top \boldsymbol{\omega}_1) = 
+\boldsymbol{\omega}_1^\top \left(\sum_{i=1}^{n} \mathbf{x}_i \mathbf{x}_i^\top \right) \boldsymbol{\omega}_1.
+\]
+
+Note that we first focus on the sum of squares of $\mathbf{z}_1$. The Lagrangian function is given by:
+\begin{align}
+\mathcal{L}(\boldsymbol{\omega}_1, \lambda_1) = \boldsymbol{\omega}_1^\top X^\top X \boldsymbol{\omega}_1 - \lambda_1 (\boldsymbol{\omega}_1^\top \boldsymbol{\omega}_1 - 1)
+\end{align}
+
+The First-order condition yields: 
+\begin{equation}
+\begin{split}
+\frac{\partial \mathcal{L}}{\partial \boldsymbol{\omega}_1} &=  2X^\top X \boldsymbol{\omega}_1 - 2\lambda_1 \boldsymbol{\omega}_1 = \mathbf{0} \\
+X^\top X \boldsymbol{\omega}_1 &= \lambda_1 \boldsymbol{\omega}_1.
+\end{split}
+\label{ev1}
+\end{equation}
+
+The above equation shows that $\boldsymbol{\omega}_1$ is an eigenvector of $X^\top X$ w.r.t. the eigenvalue $\lambda_1$.
+
+Next, we try to find the second principal component $\mathbf{z}_2 = X \boldsymbol{\omega}_2$, which is uncorrelated with the first one. Thus, we need to solve the following maximization problem:
+\begin{equation}
+\begin{split}
+\max_{ \boldsymbol{\omega}_2} \quad &  \Var(\mathbf{z}_2) = \frac{1}{n-1}  (X \boldsymbol{\omega}_2)^\top X \boldsymbol{\omega}_2 \\
+\text{subject to} \quad & \boldsymbol{\omega}_2^\top \boldsymbol{\omega}_2 = \left\|\boldsymbol{\omega}_2\right\|^2 = 1; \quad \boldsymbol{\omega}_1^\top \boldsymbol{\omega}_2 = 0.
+\end{split}
+\end{equation}
+
+Apply the Lagrangian method again:
+\begin{align}
+\mathcal{L}(\boldsymbol{\omega}_2, \lambda_2, \gamma) = \boldsymbol{\omega}_2^\top X^\top X \boldsymbol{\omega}_2 - \lambda_2 (\boldsymbol{\omega}_2^\top \boldsymbol{\omega}_2 - 1) - \gamma (\boldsymbol{\omega}_1^\top \boldsymbol{\omega}_2).
+\end{align}
+
+The First-order condition yields: 
+\begin{align}
+\frac{\partial \mathcal{L}}{\partial \boldsymbol{\omega}_2} =  2X^\top X \boldsymbol{\omega}_2 - 2\lambda_2 \boldsymbol{\omega}_2 - \gamma \boldsymbol{\omega}_1 = \mathbf{0} 
+\label{foc-2nd-component}
+\end{align}
+
+Multiplying both sides of Equation \eqref{foc-2nd-component} by $\boldsymbol{\omega}_1^\top$ gives:
+\begin{align}
+2\boldsymbol{\omega}_1^\top X^\top X \boldsymbol{\omega}_2 - \gamma \boldsymbol{\omega}_1^\top\boldsymbol{\omega}_1 = \mathbf{0}.
+\end{align}
+
+Note that $\boldsymbol{\omega}_1^\top X^\top X = \lambda_1 \boldsymbol{\omega}_1^\top$ from \eqref{ev1}, and this forces $\gamma=0$ and hence
+
+\begin{align}
+X^\top X \boldsymbol{\omega}_2 &= \lambda_2 \boldsymbol{\omega}_2.
+\label{ev2}
+\end{align}
+
+Repeat the Lagrangian method under additional constraints for each component $i=\{1,2,\cdots,k\}$, we will obtain the matrix $\mathcal{W} = [\boldsymbol{\omega}_1, \boldsymbol{\omega}_2, \cdots \boldsymbol{\omega}_k]$.
+Thus, we have $Z = X\mathcal{W}$.
+
+\subsection{Second Attempt: Linear Algebra}
+
+Using calculus, we might find that $\boldsymbol{\omega}_i$ is an eigenvector of the sample covariance matrix $X^\top X$ w.r.t. the eigenvalue $\lambda_i,\,i\in\{1,2,\cdots,k\}.$
+This is not a coincidence, but rather a direct consequence in linear algebra.
+Note that $X^\top X$ is a symmetric matrix. By the real spectral theorem, $X^\top X$ is orthogonally diagonalizable. 
+Namely, there exists an orthogonal matrix $\mathcal{W}\in O(k)$ such that
+
+\[
+Z^\top Z = \mathcal{W}^\top X^\top X \mathcal{W} = \begin{bmatrix}
+\lambda_1 & 0 & \cdots & 0 \\
+0 & \lambda_2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \lambda_k
+\end{bmatrix}.
+\]
+
+Since
+\[\Var(\mathbf{z}_j) = \frac{1}{n-1} (X \boldsymbol{\omega}_j)^\top X \boldsymbol{\omega}_j = \frac{1}{n-1}\boldsymbol{\omega}_j^\top X^\top X \boldsymbol{\omega}_j = \frac{1}{n-1}\boldsymbol{\omega}_j^\top \lambda_j \boldsymbol{\omega}_j = \frac{1}{n-1}\lambda_j,\]
+
+the diagonal elements $\lambda_j$ (up to a constant) represent the variance explained by the $j$-th principal component (PC$j$), and the columns of $\mathcal{W}$ admit an ONB $S$. In the context of PCA, $\mathcal{W}$ is referred to as the \textbf{loadings matrix}, and each column $\boldsymbol{\omega}_j$ is the $j$-th \textbf{loading vector} (or principal direction).
+
+Let the projection operator $P_{\text{span}\{S\}}(\boldsymbol{x})=\displaystyle\sum_{j=1}^{k}\langle \boldsymbol{x}, \boldsymbol{\omega}_j\rangle \boldsymbol{\omega}_j.$
+For each observation $\boldsymbol{x}_i\in\mathbb{R}^k$, we change the coordinate from the standard basis $B$ to the ONB $S$ via projection. This linear transformation yields the \textbf{Principal Component Scores} matrix $Z$:
+
+\begin{align*}
+\underbrace{\begin{pmatrix}
+\langle \mathbf{x}_1, \mathbf{w}_1 \rangle & \langle \mathbf{x}_1, \mathbf{w}_2 \rangle & \cdots & \langle \mathbf{x}_1, \mathbf{w}_k \rangle \\
+\vdots & \vdots & \ddots & \vdots \\
+\langle \mathbf{x}_n, \mathbf{w}_1 \rangle & \langle \mathbf{x}_n, \mathbf{w}_2 \rangle & \cdots & \langle \mathbf{x}_n, \mathbf{w}_k \rangle
+\end{pmatrix}}_{\text{Scores } Z \text{ (PC1, PC2, }\dots\text{, PC}k\text{)}}
+&= 
+\underbrace{\begin{pmatrix}
+\text{---} & \mathbf{x}_1^\top & \text{---} \\
+\text{---} & \mathbf{x}_2^\top & \text{---} \\
+ & \vdots & \\
+\text{---} & \mathbf{x}_n^\top & \text{---}
+\end{pmatrix}}_{\text{Original Data } X}
+\underbrace{\begin{pmatrix}
+| & | & & | \\
+\mathbf{w}_1 & \mathbf{w}_2 & \cdots & \mathbf{w}_k \\
+| & | & & |
+\end{pmatrix}}_{\text{Loadings } \mathcal{W}}.
+\end{align*}
+
+Equivalently, let $\mathcal{W}=[id]^B_S,$ then $\mathcal{W}^\top[\boldsymbol{x}_i]_B = \mathcal{W}^{-1}[\boldsymbol{x}_i]_B=[\boldsymbol{x}_i]_S.$
+Hence, the observation $i$ in the new principal component coordinate system is given by $[\boldsymbol{x}_i]_S^\top = [\boldsymbol{x}_i]_B^\top \mathcal{W}.$ 
+By truncating the loadings matrix $\mathcal{W}$ to its first $d$ columns, we project the data onto the subspace spanned by the first $d$ principal components, achieving dimensionality reduction.
+
+Let us pose for a moment and ask the question: Why discarding the last $k-d$ components is reasonable?
+Before delving into this, we first need to understand a powerful factorization to any matrix.
+
+\section{Singular Value Decomposition}
+
+\begin{thmbox}[SVD (Complex Version)]
+    Let $X\in M_{n\times k}(\mathbb{C})$ be a $n\times k$ matrix of rank $p$, then there exist:
+    \begin{itemize}
+        \item $\mathcal{U}\in U(n),\,\mathcal{V}\in U(k),$
+        \item $\Sigma=\text{diag}(\sigma_1,\sigma_2,\cdots,\sigma_p)$ with $\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_p>0,$ 
+    \end{itemize}
+    such that $X$ admits a factorization called SVD as follows:
+    \[X=\mathcal{U}\underbrace{\begin{pmatrix}
+    \Sigma & \mathbf{0}\\
+    \mathbf{0} & \mathbf{0}
+    \end{pmatrix}}_{\Sigma_0}\mathcal{V}^*\]
+\end{thmbox}
+
+\begin{remark}
+    In our setting, we are working with real-valued matrices. The SVD can be simplified by replacing the unitary group with the orthogonal group.
+\end{remark}
+
+\subsection{Solving PCA}
+
+Instead of diagonalizing $X^\top X$, we rely on the SVD to solve PCA for efficiency.
+Theoretically, the computation of SVD agrees with the previous results.
+\begin{mybox}
+Given $X\in M_{n\times k}(\mathbb{R})$, where $\rank(X)=p.$
+\begin{enumerate}
+    \item Find $\mathcal{W}\in O(k)$ s.t. $\mathcal{W}^\top X^\top X\mathcal{W} = \Sigma^2,$
+    where $\Sigma=\text{diag}(\sigma_1,\sigma_2,\cdots,\sigma_p),$ where $\sigma_i=\sqrt{\lambda_i}$. For convenience, we order the eigenvalues in descending order.
+    \item Let $\mathcal{U}_1=X\mathcal{W}_1\Sigma^{-1},$ where $\mathcal{W}_1$ is the first $p$ columns of $\mathcal{W}.$
+    \item Find any orthogonal matrix of the form $\mathcal{U}=[\mathcal{U}_1\mid *]\in O(n).$
+    \item Compute $X=\mathcal{U}\Sigma_0\mathcal{W}^\top,$ as desired.
+\end{enumerate}
+\end{mybox}
+
+
+\begin{defbox}[SVD components in PCA]
+Let $X = \mathcal{U}\Sigma_0\mathcal{W}^\top$ be the SVD of the mean-centered data matrix $X$ with rank $p$. 
+\begin{itemize}
+    \item \textbf{Left-singular vectors:} The columns $\boldsymbol{u}_j$ of the matrix $\mathcal{U}$ are called the left-singular vectors of $X$.
+    \item \textbf{Right-singular vectors:} The columns $\boldsymbol{w}_j$ of the matrix $\mathcal{W}$ are called the right-singular vectors of $X$.
+    \item \textbf{Singular values:} The diagonal entries $\sigma_j$ of $\Sigma$ are the singular values of $X$, which are defined as the positive square roots of the non-zero eigenvalues $\lambda_j$ of $X^\top X$ (i.e., $\sigma_j = \sqrt{\lambda_j}$ for $j=1,2,\cdots,p).$
+\end{itemize}
+\end{defbox}
+
+\begin{remark}
+In the context of PCA, the components of the SVD carry some statistical and geometric meanings:
+\begin{itemize}
+    \item \textbf{Scores ($\mathcal{U}$):} The left-singular vectors represent the \textbf{Standardized Principal Component Scores}. They are the coordinates of the data points in the new principal subspace, normalized such that each vector has a unit sum of squares. The unstandardized raw scores are given by $Z = \mathcal{U}\Sigma_0$.
+    \item \textbf{Loadings ($\mathcal{W}$):} The right-singular vectors $\boldsymbol{w}_j$ act as the \textbf{loadings} or principal directions. They form an orthonormal basis for the feature space, representing the axes of maximum variance.
+    \item \textbf{Variance Explained ($\Sigma_0$):} The squared singular values $\sigma_j^2 = \lambda_j$ represent the variance (or the sum of squares) captured by the $j$-th principal component. They quantify the "importance" of each corresponding principal direction.
+\end{itemize}
+\end{remark}
+
+
+
+In the previous section, we established the PCA "formula": $Z=X\mathcal{W}.$
+Plugging the SVD of $X$ into this formula yields $Z=(\mathcal{U}\Sigma_0\mathcal{W}^\top)\mathcal{W}=\mathcal{U}\Sigma_0,$ which directly shows that $\mathcal{U}\Sigma_0$ corresponds to the principal component scores.
+
+Now, focusing on the first $p$ principal components associated with the non-zero singular values, denoted by $Z_p = X\mathcal{W}_1$, we have:
+\[
+Z_p = \mathcal{U}_1\Sigma.
+\]
+
+By post-multiplying $Z_p$ with $\Sigma^{-1}$, we can recover the partial left-singular vectors:
+\[
+\mathcal{U}_1 = Z_p\Sigma^{-1} = X\mathcal{W}_1\Sigma^{-1}.
+\]
+
+This operation amounts to dividing each principal component vector $\mathbf{z}_j$ (the $j$-th column of $Z_p$) by its corresponding singular value $\sigma_j$. 
+
+To see the geometric effect, we compute the squared length (sum of squares) of $\mathbf{z}_j = X \mathbf{w}_j$ for each $j \in \{1,2,\cdots,p\}$:
+\[
+\norm{\mathbf{z}_j}^2 = \langle\mathbf{z}_j, \mathbf{z}_j\rangle =  (X \mathbf{w}_j)^\top (X \mathbf{w}_j) = \mathbf{w}_j^\top X^\top X \mathbf{w}_j.
+\]
+Since $\mathbf{w}_j$ is an eigenvector of $X^\top X$ corresponding to the eigenvalue $\lambda_j = \sigma_j^2$, we have $X^\top X \mathbf{w}_j = \lambda_j \mathbf{w}_j$. Thus:
+\[
+\norm{\mathbf{z}_j}^2 = \mathbf{w}_j^\top (\lambda_j \mathbf{w}_j) = \lambda_j (\mathbf{w}_j^\top \mathbf{w}_j) = \lambda_j,
+\]
+where the last equality holds because $\mathbf{w}_j$ is a unit vector.
+
+Since the squared length of $\mathbf{z}_j$ is exactly $\lambda_j = \sigma_j^2$, dividing the vector by the singular value $\sigma_j$ yields a new re-scaled vector $\mathbf{u}_j = \mathbf{z}_j / \sigma_j$ that has a unit length:
+\[
+\norm{\mathbf{u}_j}^2 = \langle\mathbf{u}_j, \mathbf{u}_j\rangle =  \mathbf{u}_j^\top \mathbf{u}_j = \frac{\mathbf{z}_j^\top \mathbf{z}_j}{\sigma_j^2} = \frac{\lambda_j}{\lambda_j} = 1.
+\]
+This structurally echoes that $\mathcal{U}\in O(n),$ after completing an ONB in $\mathbb{R}^n.$
+
+\begin{remark}[Statistical Implication]
+Assuming the original data matrix $X$ is mean-centered, the principal components $\mathbf{z}_j$ and the left-singular vectors $\mathbf{u}_j$ are also mean-centered. The sample variance of $\mathbf{z}_j$ is closely related to its squared length:
+\[
+\Var(\mathbf{z}_j) = \frac{1}{n-1} \norm{\mathbf{z}_j}^2 = \frac{\lambda_j}{n-1}.
+\]
+Consequently, the re-scaling step elegantly normalizes the variance of all left-singular vectors. For any $\mathbf{u}_j$ in $\mathcal{U}_1$, its sample variance becomes a constant:
+\[
+\Var(\mathbf{u}_j) = \frac{1}{n-1} \norm{\mathbf{u}_j}^2 = \frac{1}{n-1}.
+\]
+\end{remark}
+
+
+
+
+
+\subsection{Reconstruction Error}
+
+Recall what we have done. Given a mean-centered data matrix $X \in \mathbb{R}^{n \times k}$. By SVD, one has $X=\mathcal{U}\Sigma_0\mathcal{W}^\top$.
+We have shown that this decomposition corresponds to the PCA solution $(\boldsymbol{\omega}_1,\boldsymbol{\omega}_2,\cdots,\boldsymbol{\omega}_k)$, maximizing the variance of the original data. 
+
+Although we change the coordinate system, the data is still fully represented in the $k$-dimensional space. The ultimate goal of PCA is to achieve dimension reduction by retaining only the most important components.
+Fix an integer $d\le k,$ we aim to find a rank $d$ matrix $\widehat{X}$ such that it is the closest to the original data matrix $X$:
+
+\[
+\widehat{X}_{opt} = \underset{\rank(\widehat{X}) \le d}\argmin \, \|X - \widehat{X}\|_F.
+\]
+
+This problem can be solved by the following theorem, originally established by \citet{eckart1936approximation}:
+\begin{thmbox}[Low-Rank Approximation]
+    Let $X\in M_{n\times k}(\mathbb{R})$ of rank $p$ with singular values $\sigma_1\ge\sigma_2\ge\cdots\sigma_p>0.$
+    Fix an integer $d<p$, then:
+    \begin{enumerate}
+        \item For any $Y\in M_{n\times k}(\mathbb{R})$ of rank $d$, one has:
+        \[\|X-Y\|_F\ge\sqrt{\sigma^2_{d+1} + \sigma^2_{d+2}+\cdots+\sigma^2_{p}},\]
+        \item The above equality holds if $Y$ is the truncated SVD of $X$, i.e.
+        $$Y=\mathcal{U}_1\cdot \text{diag}(\sigma_1, \sigma_2,\cdots,\sigma_d)\cdot\mathcal{W}_1^\top,$$
+        where $\mathcal{U}_1\in\mathbb{R}^{n\times d}$ and $\mathcal{W}_1\in\mathbb{R}^{k\times d}$.
+    \end{enumerate}
+\end{thmbox}
+
+
+\begin{pfbox}
+Let $\mu_1\ge\mu_2\ge\cdots\mu_d>0$ be the singular values of $Y$.
+\begin{align*}
+    \|X-Y\|^2_F &= \tr((X-Y)^\top(X-Y)) = \tr((X-Y)(X-Y)^\top)\\
+                &= \tr(XX^\top) + \tr(YY^\top) -\tr(XY^\top)-\tr(YX^\top)\\
+                &= \sum_{i=1}^{p}\sigma_i^2 + \sum_{i=1}^{d}\mu_i^2-2\tr(XY^\top)\\
+                &\ge \sum_{i=1}^{p}\sigma_i^2 + \sum_{i=1}^{d}\mu_i^2-2\sum_{i=1}^{d}\sigma_i\mu_i \quad \text{(Von Neumann's Trace Inequality)}\\
+                &=\sum_{i=1}^{d}\sigma_i^2 + \sum_{i=1}^{d}\mu_i^2-2\sum_{i=1}^{d}\sigma_i\mu_i + \sum_{i=d+1}^{p}\sigma_i^2\\
+                &=\sum_{i=1}^{d}(\sigma_i-\mu_i)^2 + \sum_{i=d+1}^{p}\sigma_i^2\\
+                &\ge \sum_{i=d+1}^{p}\sigma_i^2.
+\end{align*}
+The equality holds if $\sigma_i=\mu_i$ for $i=1,2,\cdots,d.$
+\end{pfbox}
+
+In the above proof, we used a inequality proved by Von Neumann:
+\begin{thmbox}[Von Neumann's Trace Inequality]
+Let $A,B\in M_{m\times n}(\mathbb{R})$. Suppose $\rank(A)=k$ and $\rank(B)=k'$,
+and let $\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_k>0$ and $\mu_1\ge\mu_2\ge\cdots\ge\mu_{k'}>0$ be the singular values of $A$ and $B$, respectively. Then:
+\[|\tr(AB^\top)|\le\sum_{i=1}^{\min\{k,k'\}}\sigma_i\mu_i.\]
+\end{thmbox}
+
+\begin{pfbox}
+Define $\displaystyle\sum_{i=1}^{\min\{k,k'\}}\sigma_i\mu_i = \sum_{i=1}^{N}\sigma_i\mu_i,$ where $N>k,k'$.\\
+Set $\sigma_i=0$ if $i>k$, and $\mu_i=0$ if $i>k'$.
+By SVD,
+\[
+    A = \sum_{i=1}^{N}\sigma_i\mathbf{u}_i\mathbf{v}_i^\top,\quad
+    B = \sum_{i=1}^{N}\sigma_i\mathbf{x}_i\mathbf{y}_i^\top,
+\]
+
+where $\{\mathbf{u}_i\}^m_{i=1}$ and $\{\mathbf{x}_i\}^m_{i=1}$ are ONBs of $\mathbb{R}^m$, and $\{\mathbf{v}_i\}^n_{i=1}$ and $\{\mathbf{y}_i\}^n_{i=1}$ are ONBs of $\mathbb{R}^n$.
+
+Define, for $\ell,s\le N,\, A_\ell = \displaystyle\sum_{i=1}^{\ell}\mathbf{u}_i\mathbf{v}_i^\top,\,\, B_s = \displaystyle\sum_{j=1}^{s}\mathbf{x}_j\mathbf{y}_j^\top$.\\
+Von Neumann \textcolor{red}{observes} $A=\displaystyle\sum_{\ell=1}^{N}(\sigma_\ell-\sigma_{\ell+1})A_\ell$ and $B = \displaystyle\sum_{s=1}^{N}(\mu_s-\mu_{s+1})B_s$. 
+
+Then $\tr(AB^\top)=\displaystyle\sum_{\ell=1}^{N}\displaystyle\sum_{s=1}^{N}(\sigma_\ell-\sigma_{\ell+1})(\mu_s-\mu_{s+1})\tr(A_\ell B_s^\top).$
+
+Next, we show that $\tr(A_\ell B_s^\top)\le\min\{\ell,s\}$ for any $\ell,s\le N.$
+\begin{align*}
+    |\tr(A_\ell B_s^\top)| &= |\sum_{i=1}^{\ell}\sum_{j=1}^{s}\tr(\mathbf{u}_i\mathbf{v}_i^\top\mathbf{y}_j\mathbf{x}_j^\top)|\\
+    &= |\sum_{i=1}^{\ell}\sum_{j=1}^{s}\tr(\mathbf{v}_i^\top\mathbf{y}_j\mathbf{x}_j^\top \mathbf{u}_i)| = |\sum_{i=1}^{\ell}\sum_{j=1}^{s}\mathbf{v}_i^\top\mathbf{y}_j\mathbf{x}_j^\top \mathbf{u}_i|\\
+    &= |\sum_{i=1}^{\ell}\sum_{j=1}^{s} \langle\mathbf{y}_j\mathbf{x}_j^\top \mathbf{u}_i, \mathbf{v}_i\rangle| =  |\sum_{i=1}^{\ell}\sum_{j=1}^{s} \langle \mathbf{v}_i, \mathbf{y}_j\mathbf{x}_j^\top \mathbf{u}_i\rangle|.
+\end{align*}
+
+Let $\mathbf{w}_i=\displaystyle\sum_{j=1}^{s}\mathbf{y}_j\mathbf{x}_j^\top \mathbf{u}_i=\displaystyle\sum_{j=1}^{s}\langle \mathbf{x}_j, \mathbf{u}_i\rangle \mathbf{y}_j.$
+Claim: $\norm{\mathbf{w}_i} = 1$ for any $i\in\{1,2,\cdots,\ell\}.$
+By Pythagorean theorem,
+\begin{align*}
+\norm{\mathbf{w}_i}&=\sqrt{\sum_{j=1}^{s}\norm{\langle \mathbf{x}_j, \mathbf{u}_i\rangle \mathbf{y}_j}^2}
+\le\sqrt{\sum_{j=1}^{m}\norm{\langle \mathbf{x}_j, \mathbf{u}_i\rangle \mathbf{y}_j}^2}
+=\sqrt{\sum_{j=1}^{m}|\langle \mathbf{x}_j, \mathbf{u}_i\rangle |^2\norm{\mathbf{y}_j}^2}\\
+&=\sqrt{\sum_{j=1}^{m}|\langle \mathbf{x}_j, \mathbf{u}_i\rangle |^2} 
+=\norm{\mathbf{u}_i}=1.  \quad \text{($\{y_j\}$ and $\{x_j\}$ are ONBs)}
+\end{align*}
+
+So
+\begin{align*}
+|\tr(A_\ell B_s^\top)|& = |\sum_{i=1}^{\ell}\sum_{j=1}^{s} \langle \mathbf{v}_i, \mathbf{y}_j\mathbf{x}_j^\top \mathbf{u}_i\rangle|\\
+& = |\sum_{i=1}^{\ell}\langle \mathbf{v}_i, w_i\rangle|\le \sum_{i=1}^{\ell}\norm{\mathbf{v}_i}\norm{\mathbf{w}_i}=\sum_{i=1}^{\ell}1\times 1 = \ell.    
+\end{align*}
+
+By symmetry, we also have $|\tr(A_\ell B_s^\top)|\le s$.
+
+Hence,
+\begin{align*}
+|\tr(AB^\top)|&=|\sum_{\ell=1}^{N}\sum_{s=1}^{N}(\sigma_\ell-\sigma_{\ell+1})(\mu_s-\mu_{s+1})\tr(A_\ell B_s^\top)|\\
+&\le \sum_{\ell=1}^{N}\sum_{s=1}^{N}(\sigma_\ell-\sigma_{\ell+1})(\mu_s-\mu_{s+1})|\tr(A_\ell B^\top_s)|\\
+&\le\sum_{\ell=1}^{N}\sum_{s=1}^{N}(\sigma_\ell-\sigma_{\ell+1})(\mu_s-\mu_{s+1})\min\{\ell,s\}\\
+&\le \sum_{s=1}^{N}(\mu_s-\mu_{s+1})(\sum_{\ell=1}^{s}(\sigma_\ell-\sigma_{\ell+1})\ell + \sum_{\ell=s+1}^{N}(\sigma_\ell-\sigma_{\ell+1})s)\\
+&\le \sum_{s=1}^{N}(\mu_s-\mu_{s+1})(\sum_{\ell=1}^{s}\sigma_\ell - s\sigma_{s+1} + s\sigma_{s+1})\\
+&\le \sum_{s=1}^{N}(\mu_s-\mu_{s+1})\sum_{\ell=1}^{s}\sigma_\ell = \sum_{s=1}^{N}\mu_s\sigma_s = \sum_{i=1}^{\min\{k,k'\}}\sigma_i\mu_i.
+\end{align*}
+This completes the proof.
+\end{pfbox}
+
+
+Let $\mathcal{W}_d = [\mathbf{w}_1, \dots, \mathbf{w}_d] \in \mathbb{R}^{k \times d}$ be the \textbf{truncated loadings matrix}. The reduced principal component scores are given by $Z_d = X \mathcal{W}_d \in \mathbb{R}^{n \times d}$.
+
+We define the \textbf{rank-$d$ reconstruction matrix} $\widehat{X}\in\mathbb{R}^{n\times k}$ as mapping the scores back to the original feature space:
+\begin{equation}
+\widehat{X} = Z_d \mathcal{W}_d^\top = X \mathcal{W}_d \mathcal{W}_d^\top.
+\end{equation}
+
+Consequently, the \textbf{reconstruction error matrix} $E$, which captures the information lost during compression, is:
+\begin{equation}
+E = X - \widehat{X} = X (I_k - \mathcal{W}_d \mathcal{W}_d^\top).
+\end{equation}
+
+
+We want to minimize the error caused by discarding the last $k-d$ principal components. 
+By low-rank approximation theorem, we have $\|E\|_F=\sqrt{\displaystyle\sum_{j=d+1}^k \lambda_j}.$
+
+To see this, we first expand the original matrix $X$ as a sum of rank-1 matrices:
+\begin{equation*}
+X = X \mathcal{W} \mathcal{W}^\top = \sum_{j=1}^k X \mathbf{w}_j \mathbf{w}_j^\top.
+\end{equation*}
+Similarly, the rank-$d$ reconstruction matrix is $\widehat{X}_d = \displaystyle\sum_{j=1}^d X \mathbf{w}_j \mathbf{w}_j^\top$. Thus, the error matrix $E$ consists of the discarded components:
+\begin{equation*}
+E = X - \widehat{X}_d = \sum_{j=d+1}^k X \mathbf{w}_j \mathbf{w}_j^\top.
+\end{equation*}
+Evaluate the squared Frobenius norm of the error matrix:
+\begin{align*}
+\|E\|_F^2 = \tr(E^\top E) &= \tr \left( \left( \sum_{i=d+1}^k \mathbf{w}_i \mathbf{w}_i^\top X^\top \right) \left( \sum_{j=d+1}^k X \mathbf{w}_j \mathbf{w}_j^\top \right) \right) \\
+&= \sum_{j=d+1}^k \tr \left( \sum_{i=d+1}^k \mathbf{w}_i \mathbf{w}_i^\top X^\top X \mathbf{w}_j \mathbf{w}_j^\top \right)  \\
+&= \sum_{j=d+1}^k \tr \left( \mathbf{w}_j\mathbf{w}_j^\top X^\top X \mathbf{w}_j \mathbf{w}_j^\top \right) \quad \text{(Only $i=j$ survives)} \\
+&= \sum_{j=d+1}^k \mathbf{w}_j^\top (X^\top X \mathbf{w}_j) \quad \text{(Trace of a scalar is itself)}\\ 
+&= \sum_{j=d+1}^k \mathbf{w}_j^\top (\lambda_j \mathbf{w}_j) = \sum_{j=d+1}^k \lambda_j.
+\end{align*}
+
+This result demonstrates that the total squared reconstruction error achieves the lower bound when using the top $d$ principal components.
+Hence, this is the best approximation of the original data.
+
+
+\section{Factor Analysis}
+
+In this section, we will introduce a common statistical model used to describe observed variables in terms of lower number of unobserved variables called factors.
+Fix $i\in\{1,2,\ldots,n\}$. For the $i$-th individual, the de-meaned observation is a column vector $\mathbf{x}_i \in \mathbb{R}^k$. The factor model takes the form of:
+
+\[
+\underbrace{\begin{bmatrix}
+x_{i1} \\
+x_{i2} \\
+\vdots \\
+x_{ik}
+\end{bmatrix}}_{\mathbf{x}_i}
+=
+\underbrace{\begin{bmatrix}
+\lambda_{11} & \lambda_{12} & \cdots & \lambda_{1m} \\
+\lambda_{21} & \lambda_{22} & \cdots & \lambda_{2m} \\
+\vdots & \vdots & \ddots & \vdots \\
+\lambda_{k1} & \lambda_{k2} & \cdots & \lambda_{km}
+\end{bmatrix}}_{\Lambda}
+\underbrace{\begin{bmatrix}
+f_{i1} \\
+f_{i2} \\
+\vdots \\
+f_{im}
+\end{bmatrix}}_{\mathbf{f}_i}
++
+\underbrace{\begin{bmatrix}
+\epsilon_{i1} \\
+\epsilon_{i2} \\
+\vdots \\
+\epsilon_{ik}
+\end{bmatrix}}_{\boldsymbol{\epsilon}_i},
+\]
+
+where $m < k$, and:
+\begin{itemize}
+    \item $\mathbf{x}_i = \begin{bmatrix} x_{i1} & x_{i2} & \cdots & x_{ik} \end{bmatrix}^\top$ is the observed variables in deviation form.
+    \item $\Lambda$ is the $k \times m$ \textbf{factor loadings} matrix.
+    \item $\mathbf{f}_i = \begin{bmatrix} f_{i1} & f_{i2} & \cdots & f_{im} \end{bmatrix}^\top$ is the vector of latent \textbf{common factors} for the $i$-th observation.
+    \item $\boldsymbol{\epsilon}_i = \begin{bmatrix} \epsilon_{i1} & \epsilon_{i2} & \cdots & \epsilon_{ik} \end{bmatrix}^\top$ is the vector of latent \textbf{unique factors}.
+\end{itemize}
+
+\subsection{Identification}
+
+\begin{asnbox}\ \vspace{-1em}
+\begin{enumerate}
+    \item $\mathbb{E}[\mathbf{f}_i] = \mathbf{0}$
+    \item $\mathbb{E}[\boldsymbol{\epsilon}_i] = \mathbf{0}$
+    \item $\Cov(\mathbf{f}_i) = I_m \quad$ (Common factors are uncorrelated and have unit variance)
+    \item $\Cov(\boldsymbol{\epsilon}_i) = \Psi = \text{diag}(\psi_1, \psi_2, \cdots, \psi_k) \quad$ (Unique factors are mutually uncorrelated)
+    \item $\Cov(\mathbf{f}_i, \boldsymbol{\epsilon}_i) = \mathbf{0}_{m \times k} \quad$ (Common factors and unique factors are uncorrelated)
+\end{enumerate}
+\end{asnbox}
+By assumption (3), this model is also called orthogonal factor model.
+
+Under these assumptions, we can derive the population covariance matrix of the observed variables, denoted by $\Sigma$:
+\begin{align*}
+\Sigma &= \Cov(\mathbf{x}_i) \\
+&= \Cov(\Lambda \mathbf{f}_i + \boldsymbol{\epsilon}_i) \\
+&= \Cov(\Lambda \mathbf{f}_i) + \Cov(\boldsymbol{\epsilon}_i) \quad \text{(since $\mathbf{f}_i$ and $\boldsymbol{\epsilon}_i$ are uncorrelated)} \\
+&= \Lambda \Cov(\mathbf{f}_i) \Lambda^\top + \Psi \\
+&= \Lambda I_m \Lambda^\top + \Psi \\
+&= \Lambda \Lambda^\top + \Psi.
+\end{align*}
+
+
+\begin{remark}
+Since the orthogonal factor model assumes $\mathbb{E}[\mathbf{f}_i] = \mathbf{0}$, the expected value of our transformed vector is also zero: $\mathbb{E}[\Lambda \mathbf{f}_i] = \Lambda \mathbb{E}[\mathbf{f}_i] = \mathbf{0}$. 
+Thus, the covariance matrix simplifies to the expected value of the outer product:
+\begin{align*}
+\Cov(\Lambda \mathbf{f}_i) &= \mathbb{E} \left[ (\Lambda \mathbf{f}_i)(\Lambda \mathbf{f}_i)^\top \right] \\
+&= \mathbb{E} \left[ \Lambda \mathbf{f}_i \mathbf{f}_i^\top \Lambda^\top \right] \\
+&= \Lambda \, \mathbb{E} \left[ \mathbf{f}_i \mathbf{f}_i^\top \right] \, \Lambda^\top \\
+&= \Lambda \Cov(\mathbf{f}_i) \Lambda^\top.
+\end{align*}
+\end{remark}
+
+
+
+The fundamental goal of factor analysis is to reproduce the population covariance matrix $\Sigma$ using a simplified structure with fewer dimensions ($m < k$). Recall the covariance structure derived previously:
+\[
+\Sigma = \Lambda\Lambda^\top + \Psi.
+\]
+
+To estimate the unknown matrices $\Lambda$ and $\Psi$, we rely on the sample covariance matrix $S$. A necessary condition for the model to be identifiable (i.e., having a unique mathematical solution) is that the number of unknown parameters must not exceed the number of unique pieces of information provided by the data.
+
+\begin{itemize}
+    \item \textbf{Known Information:} Since the covariance matrix $\Sigma$ (or $S$) is a $k \times k$ symmetric matrix, it contains $k$ variances on the diagonal and $\frac{k(k-1)}{2}$ unique covariances off the diagonal. The total number of unique non-redundant elements is:
+    \[ \text{Knowns} = \frac{k(k+1)}{2}. \]
+    \item \textbf{Unknown Parameters:} The model requires estimating the $k \times m$ loadings matrix $\Lambda$ and the $k$ diagonal elements of the unique variance matrix $\Psi$. The total number of free parameters to estimate is:
+    \[ \text{Unknowns} = km + k. \]
+\end{itemize}
+
+To ensure the system of equations is not under-determined, the \textbf{necessary condition for identification} is:
+\begin{align*}
+    \text{Unknowns} &\le \text{Knowns} \\
+    km + k &\le \frac{k(k+1)}{2} \\
+    k(m + 1) &\le \frac{k(k+1)}{2}\\
+    m + 1 &\le \frac{k+1}{2} \\
+    m &\le \frac{k-1}{2}.
+\end{align*}
+
+\begin{remark}[Degrees of Freedom]
+The inequality $m \le \frac{k-1}{2}$ imposes a strict upper bound on the number of latent factors $m$ we can extract from $k$ observed variables. For instance, if a dataset contains only $k=3$ variables, the maximum number of common factors we can validly estimate is $m \le \frac{3-1}{2} = 1$. Attempting to extract more factors would result in negative degrees of freedom, rendering the factor model under-identified and mathematically unsolvable without additional constraints.
+\end{remark}
+
+Indeed, we can stack all $n$ observations as row vectors to form the full data matrix $X$. Taking the transpose of the single observation model $\mathbf{x}_i^\top = \mathbf{f}_i^\top \Lambda^\top + \boldsymbol{\epsilon}_i^\top$, we have:
+
+\[
+\underbrace{\begin{bmatrix}
+\rule[2pt]{20pt}{0.5pt} \quad \mathbf{x}_1^\top \quad \rule[2pt]{20pt}{0.5pt} \\
+\rule[2pt]{20pt}{0.5pt} \quad \mathbf{x}_2^\top \quad \rule[2pt]{20pt}{0.5pt} \\
+\vdots \\
+\rule[2pt]{20pt}{0.5pt} \quad \mathbf{x}_n^\top \quad \rule[2pt]{20pt}{0.5pt}
+\end{bmatrix}}_{X_{n \times k}}
+=
+\underbrace{\begin{bmatrix}
+\rule[2pt]{20pt}{0.5pt} \quad \mathbf{f}_1^\top \quad \rule[2pt]{20pt}{0.5pt} \\
+\rule[2pt]{20pt}{0.5pt} \quad \mathbf{f}_2^\top \quad \rule[2pt]{20pt}{0.5pt} \\
+\vdots \\
+\rule[2pt]{20pt}{0.5pt} \quad \mathbf{f}_n^\top \quad \rule[2pt]{20pt}{0.5pt}
+\end{bmatrix}}_{F_{n \times m}}
+\underbrace{\vphantom{\begin{bmatrix} \vdots \\ \vdots \\ \vdots \\ \vdots \end{bmatrix}} \Lambda^\top}_{m \times k}
++
+\underbrace{\begin{bmatrix}
+\rule[2pt]{20pt}{0.5pt} \quad \boldsymbol{\epsilon}_1^\top \quad \rule[2pt]{20pt}{0.5pt} \\
+\rule[2pt]{20pt}{0.5pt} \quad \boldsymbol{\epsilon}_2^\top \quad \rule[2pt]{20pt}{0.5pt} \\
+\vdots \\
+\rule[2pt]{20pt}{0.5pt} \quad \boldsymbol{\epsilon}_n^\top \quad \rule[2pt]{20pt}{0.5pt}
+\end{bmatrix}}_{E_{n \times k}}.
+\]
+
+\subsubsection{PCA as a Special Case of FA}
+
+Suppose we do not reduce the dimensionality (i.e., we set $m = k$) and assume there are no unique factors or errors (i.e., $\boldsymbol{\epsilon}_i = \mathbf{0}$). By replacing the loading matrix $\Lambda$ with the orthogonal eigenvector matrix $\mathcal{W}$, and the latent factors $\mathbf{f}_i$ with the principal component scores $\mathbf{z}_i$, the model becomes:
+\[
+\mathbf{x}_i = \mathcal{W} \mathbf{z}_i.
+\]
+Since $\mathcal{W} \in O(k)$, multiplying both sides by $\mathcal{W}^\top$ recovers the familiar PCA projection formula for a single observation:
+\[
+\mathbf{z}_i = \mathcal{W}^\top \mathbf{x}_i.
+\]
+Stacking all $n$ observations, the full matrix form is exactly what we derived in the previous section:
+\[
+X = Z \mathcal{W}^\top \implies Z = X \mathcal{W}.
+\]
+In summary, PCA simply applies a rigid orthogonal rotation to the data without separating the variance into "common" and "unique" components. Everything is treated as common variance.
+
+
+\subsection{Principal Component Method}
+
+While PCA and FA are conceptually distinct, the former one provides a practical way to estimate the parameters $\Lambda$ and $\Psi$ in FA model. This estimation technique is known as the \textbf{Principal Component Method}.
+
+Let $S = \frac{1}{n-1} X^\top X$ be the sample covariance matrix. Using the SVD of $X$, we know that $S$ can be orthogonally diagonalized as:
+\[
+S = \mathcal{W} D \mathcal{W}^\top = \sum_{j=1}^{k} \lambda^*_j \mathbf{w}_j \mathbf{w}_j^\top,
+\]
+where $D = \frac{1}{n-1}\Sigma^2 = \text{diag}(\lambda^*_1, \lambda^*_2, \cdots, \lambda^*_k)$ contains the eigenvalues of $S$ (i.e., the sample variances of the principal components), and $\mathcal{W}$ contains the corresponding eigenvectors. 
+
+Notice that we can factorize $S$ symmetrically:
+\[
+S = (\mathcal{W} D^{1/2}) (\mathcal{W} D^{1/2})^\top.
+\]
+To approximate the factor structure $\Sigma \approx \Lambda\Lambda^\top + \Psi$, we truncate the spectral decomposition to the first $m$ largest eigenvalues. Let $D_m$ be the $m \times m$ diagonal submatrix of $D$, and $\mathcal{W}_m$ be the $k \times m$ matrix containing the first $m$ principal directions.
+
+We estimate the factor loadings matrix $\widehat{\Lambda}$ as:
+\begin{equation}
+\widehat{\Lambda} = \mathcal{W}_m D_m^{1/2} = 
+\begin{bmatrix}
+| & | & & | \\
+\sqrt{\lambda^*_1}\mathbf{w}_1 & \sqrt{\lambda^*_2}\mathbf{w}_2 & \cdots & \sqrt{\lambda^*_m}\mathbf{w}_m \\
+| & | & & |
+\end{bmatrix}.
+\end{equation}
+This illustrates that the estimated factor loadings for the $j$-th factor are directly proportional to the $j$-th principal component direction $\mathbf{w}_j$, scaled by its standard deviation.
+
+Finally, since the fundamental equation is $S \approx \widehat{\Lambda}\widehat{\Lambda}^\top + \widehat{\Psi}$, the specific variances (the diagonal elements representing unique factors) are estimated from the residuals:
+\begin{equation}
+\widehat{\Psi} = \text{diag}(S - \widehat{\Lambda}\widehat{\Lambda}^\top).
+\end{equation}
+
+\subsubsection{Communalities and Variance Decomposition}
+
+The covariance structure $\Sigma = \Lambda \Lambda^\top + \Psi$ implies a specific decomposition of the variance for each observed variable. By examining the $j$-th diagonal element of $\Sigma$, we can partition the total variance of variable $x_j$ (denoted as $\sigma_{jj}$) into two parts:
+
+\begin{equation}
+\sigma_{jj} = \underbrace{\sum_{r=1}^{m} \lambda_{jr}^2}_{h_j^2} + \psi_j.
+\end{equation}
+
+\begin{itemize}
+    \item \textbf{Communality ($h_j^2$):} The term $h_j^2 = \displaystyle\sum_{r=1}^{m} \lambda_{jr}^2$ is known as the \textbf{communality} of variable $x_j$. It represents the portion of the variance in the $j$-th variable that is accounted for by the $m$ common factors. A high $h_j^2$ suggests that the variable is well-represented by the factor model.
+    \item \textbf{Unique Variance ($\psi_j$):} The term $\psi_j$ is the \textbf{unique variance} (or specific variance). It captures the variation in $x_j$ that cannot be explained by the common factors, including measurement error and attributes unique to that variable.
+\end{itemize}
+
+When the variables are standardized (i.e., $\sigma_{jj} = 1$), the communality $h_j^2$ is simply the proportion of variance explained by the model for that specific variable.
+
+\subsubsection{Factor Rotation}
+
+One characteristic of the factor model is that the loading matrix $\Lambda$ is not uniquely determined. 
+To choose a particular solution for easier interpretation, we can apply factor rotation.
+
+\begin{thmbox}
+    Let $V$ be a finite-dimensional inner product space over $\mathbb{C}$, and
+    $T:V\to V$ be a linear operator. TFAE:
+    \begin{enumerate}
+        \item $T$ is unitary, i.e., $T^*T=TT^*=id$.
+        \item $T$ is isometric, i.e., $\|T\mathbf{v}\| = \|\mathbf{v}\|$ for all $\mathbf{v} \in V$. 
+    \end{enumerate}
+\end{thmbox}
+
+\begin{remark}
+    When the underlying field is $\mathbb{R}$ ($V = \mathbb{R}^m$), a unitary operator is called an \textbf{orthogonal operator}. Its matrix representation $Q$ is an \textbf{orthogonal matrix}, satisfying $Q^\top Q = Q Q^\top = I_m$. 
+    Geometrically, the set of all isometries in Euclidean space is generated by \textbf{rotations} ($\det(Q) = 1$) and \textbf{reflections} ($\det(Q) = -1$).
+\end{remark}
+
+Hence, any orthogonal transformation of the factors yields an equally valid solution that reproduces the same covariance matrix $\Sigma$.
+
+Let $T$ be an $m \times m$ \textbf{orthogonal matrix}. We can define a new set of loadings $\Lambda^*$ and factors $\mathbf{f}^*_i$ as:
+\begin{align*}
+\Lambda^* &= \Lambda T \\
+\mathbf{f}^*_i &= T^\top \mathbf{f}_i
+\end{align*}
+
+Substituting these into the factor model $\mathbf{x}_i = \Lambda \mathbf{f}_i + \boldsymbol{\epsilon}_i$, we observe that the reconstructed observation remains unchanged:
+\[
+\Lambda^* \mathbf{f}^*_i = (\Lambda T)(T^\top \mathbf{f}_i) = \Lambda (T T^\top) \mathbf{f}_i = \Lambda \mathbf{f}_i.
+\]
+
+Furthermore, the model-implied covariance matrix $\Sigma$ is invariant under orthogonal rotation:
+\[
+\Lambda^* (\Lambda^*)^\top = (\Lambda T)(\Lambda T)^\top = \Lambda (T T^\top) \Lambda^\top = \Lambda \Lambda^\top.
+\]
+
+\begin{remark}
+Since the total communality and the fit of the model are preserved under rotation, we choose $T$ such that the resulting $\Lambda^*$ has a \textbf{simple structure}. In a simple structure, each variable tends to have high loadings on only one factor and near-zero loadings on others, making the latent factors much easier to interpret.
+\end{remark}
+
+\nocite{tsoi_linalg, lin_dimensionality}
+
+\bibliographystyle{apalike}
+\bibliography{reference_of_dimension_reduction}
+
+
+
+
+\end{document}
+

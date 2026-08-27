@@ -1,11 +1,18 @@
 ---
 title: "Notes"
+toc: false
+format:
+  html:
+    body-classes: notes-page
 ---
 
+::: {.notes-intro}
 Here is a collection of my course notes and study materials.
+:::
 
-* **Mathematics**
-    * [Linear Algebra](mathematics-note/LinearAlgebra/linear-algebra.pdf){target="_blank"}
-    * [Introduction to Real Analysis](mathematics-note/Analysis/analysis_II_note.pdf){target="_blank"}
+::: {.notes-content}
+## Mathematics
 
- 
+- [Linear Algebra](mathematics-note/LinearAlgebra/linear-algebra.pdf){target="_blank"}
+- [Dimension Reduction](mathematics-note/LinearAlgebra/dimension_reduction.pdf){target="_blank"}
+:::

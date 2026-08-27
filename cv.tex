@@ -95,6 +95,14 @@ anchorcolor=[rgb]={0.0,0.1,0.2}%
     \end{tabular*}\vspace{-7pt}
 }
 
+\newcommand{\resumeDegree}[3]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textit{\small #1} & \textit{\small #2} \\
+      \textit{\small #3} &
+    \end{tabular*}\vspace{-5pt}
+}
+
 \newcommand{\resumeProjectHeading}[2]{
     \item
     \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
@@ -125,7 +133,7 @@ anchorcolor=[rgb]={0.0,0.1,0.2}%
 \small
 \href{https://github.com/Yin-Yun-Li}{\faGithubSquare\, Yin-Yun-Li} 
 $|$
-\href{mailto:b10302331@ntu.edu.tw}{b10302331@ntu.etu.tw} 
+\href{mailto:r15323012@ntu.edu.tw}{r15323012@ntu.edu.tw}
 $|$
 Taipei, Taiwan
 \end{center}
@@ -135,11 +143,13 @@ Taipei, Taiwan
   \resumeSubHeadingListStart
     \resumeSubheading
       {National Taiwan University}{Taipei, Taiwan}
-      {Bachelor of Arts\ in Economics}{Expected Jun 2026}{Double Major in Political Science, Public Administration Division}
+      {M.A. in Economics}{Sep 2026--Present}{}
+    \resumeDegree
+      {B.A.\ in Economics}{Sep 2021--Jun 2026}{Double Major in Political Science, Public Administration Division}
       \resumeItemListStart
-        \resumeItem{GPA: 4.12/4.3 (Overall); 4.26/4.3 (All economics courses)}
-        \resumeItem{Dean's List Award: Fall 2023, Fall 2025, Spring 2026 (Top 5\% of the department)}
-        \resumeItem{NTU Presidential Award, 2023 (Top 2\% of the department)}
+        \resumeItem{GPA: 4.12/4.3 overall; 4.26/4.3 in economics coursework}
+        \resumeItem{Dean's List Award: Fall 2022, Fall 2024, Spring 2025 (Top 5\% of the department)}
+        \resumeItem{NTU Presidential Award, 2022 (Top 2\% of the department)}
         \resumeItem{Courses: Introduction to Mathematical Analysis, Introduction to Linear Algebra, Labor Economics, Game Theory}
       \resumeItemListEnd
   \resumeSubHeadingListEnd
@@ -152,28 +162,37 @@ Taipei, Taiwan
 
 \section{\textbf{Research Experience}}
 \resumeSubHeadingListStart
-\resumeSubheading{C2L2 Lab, National Taiwan University}{Taipei, Taiwan}{Research Assistant}{Sep 2024-Present}{}
+\resumeSubheading{C2L2 Lab, National Taiwan University}{Taipei, Taiwan}{Research Assistant}{Sep 2024--Present}{}
 \resumeItemListStart
-\resumeItem{Examine how a retired worker's political preference and trust in government affect pension scheme choice.}
+\resumeItem{Examined how political trust shapes retirees' choice between lump-sum and monthly pension benefits using weighted least squares.}
+\resumeItemListEnd
 
-\resumeItem{Cleaned and merged administrative labor insurance records with village-level election data in Taiwan for regression analysis.}
-
-% \resumeItem{Analyzed real-world and synthetic data using R to enhance understanding of various identification strategies, including IV, DiD, and RD.}
+\resumeSubheading{Institute for Social Science Methodology, Academia Sinica}{Taipei, Taiwan}{Program Participant}{Jul 2025}{}
+\resumeItemListStart
+\resumeItem{Received the Professor Jih-wen Lin Scholarship for a research proposal examining the effect of military service reform on subsequent earnings.}
+\resumeItem{Diagnosed threats to identification in the RD design using survey data, employed an event-study specification as an alternative, and explored how a structural model could extend the analysis.}
 \resumeItemListEnd
 \resumeSubHeadingListEnd
 
-\section{\textbf{Selected Projects}}
+\section{\textbf{Projects}}
 \resumeSubHeadingListStart
-\resumeSubheading{College of Social Sciences, National Taiwan University}{Taipei, Taiwan}{The Effect of Substitute and Adjunct Teachers on High School Students' Academic Achievement}{Jun 2025}{}
+\resumeSubheading{Cash or Commitment? Political Beliefs and Pension Decisions in Taiwan}{}{Advisor: Kuan-Ming Chen}{Sep 2024--Jul 2026}{}
 \resumeItemListStart
-\resumeItem{Validated that students taught by non-regular teachers and those experiencing teacher reassignment in the third year had significantly lower GSAT scores in Math and English, controlling for covariates through linear regression.}
+\resumeItem{Built a 2009--2022 village-level panel for Taiwan by combining administrative pension records, public opinion surveys, and election outcomes.}
+\resumeItem{Found more lump-sum claims when trust in the incumbent was lower or local political preferences differed from the governing party. The results varied across income levels and population density.}
+\resumeItem{Calculated that lump-sum recipients would need annual returns of 9.36--12.20\% to match the value of the monthly pension. Distrust-driven claims raise short-run cash outflows but reduce the pension system's future liabilities.}
 \resumeItemListEnd
 
-\resumeSubSubheading{Career Pathways: Advanced Study or Immediate Work}{Jan 2025}
-\resumeItemListStart
-\resumeItem{Constructed and numerically solved a single agent's dynamic discrete choice model.}
-\resumeItem{Simulated career trajectory data and estimated predetermined parameters via the nested fixed point algorithm.}
-\resumeItemListEnd
+% \resumeSubheading{College of Social Sciences, National Taiwan University}{Taipei, Taiwan}{The Effect of Substitute and Adjunct Teachers on High School Students' Academic Achievement}{Jun 2025}{}
+% \resumeItemListStart
+% \resumeItem{Validated that students taught by non-regular teachers and those experiencing teacher reassignment in the third year had significantly lower GSAT scores in Math and English, controlling for covariates through linear regression.}
+% \resumeItemListEnd
+
+% \resumeSubSubheading{Career Pathways: Advanced Study or Immediate Work}{Jan 2025}
+% \resumeItemListStart
+% \resumeItem{Constructed and numerically solved a single agent's dynamic discrete choice model.}
+% \resumeItem{Simulated career trajectory data and estimated predetermined parameters via the nested fixed point algorithm.}
+% \resumeItemListEnd
 
 % \resumeSubSubheading{Monte Carlo Study: Stochastic Frontier Model}{May 2023}
 % \resumeItemListStart
@@ -182,25 +201,6 @@ Taipei, Taiwan
 % \resumeItemListEnd
 
 \resumeSubHeadingListEnd
-
-
-
-
-%-----Activities-----
-
-\section{\textbf{Activities}}
-\resumeSubHeadingListStart
-\resumeSubheading{Institute for Social Science Methodology, Academia Sinica}{Taipei, Taiwan}{Annual Student}{Jul 2025}{}
-\resumeItemListStart
-\resumeItem{Participated in the program on advanced social science techniques, including machine learning, social network analysis, and agent-based modeling.}
-
-\resumeItem{Received the Professor Jih-wen Lin Scholarship for a proposal on the effect of military service reform on future income, employing reduced-form and structural models and addressing identification issues in RD analysis.}
-
-\resumeItemListEnd
-\resumeSubHeadingListEnd
-
-
-
 
 
 

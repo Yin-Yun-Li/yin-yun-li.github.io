@@ -1,7 +1,15 @@
 ---
 title: "About"
+toc: false
+format:
+  html:
+    body-classes: home-page
 ---
 
-I am an undergraduate student at [Department of Economics, National Taiwan University](https://econ.ntu.edu.tw/).
+::: {.home-intro}
+I am currently a master's student in the [Department of Economics at National Taiwan University](https://econ.ntu.edu.tw/).
+:::
 
-You can contact me at [b10302331@ntu.edu.tw](mailto:b10302331@ntu.edu.tw).
+::: {.home-links}
+[GitHub](https://github.com/Yin-Yun-Li) | [CV](cv.pdf) | [Mail](mailto:r15323012@ntu.edu.tw)
+:::

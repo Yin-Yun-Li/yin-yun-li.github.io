@@ -4,13 +4,20 @@
     "href": "notes.html",
     "title": "Notes",
     "section": "",
-    "text": "Here is a collection of my course notes and study materials.\n\nMathematics\n\nLinear Algebra\nIntroduction to Real Analysis"
+    "text": "Here is a collection of my course notes and study materials."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "About",
     "section": "",
-    "text": "I am an undergraduate student at Department of Economics, National Taiwan University.\nYou can contact me at b10302331@ntu.edu.tw."
+    "text": "I am currently a master’s student in the Department of Economics at National Taiwan University.\n\n\nGitHub | CV | Mail"
+  },
+  {
+    "objectID": "notes.html#mathematics",
+    "href": "notes.html#mathematics",
+    "title": "Notes",
+    "section": "Mathematics",
+    "text": "Mathematics\n\nLinear Algebra\nDimension Reduction"
   }
 ]
